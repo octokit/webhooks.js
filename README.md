@@ -15,23 +15,13 @@
 ```js
 // install with: npm install @octokit/webhooks
 const Webhooks = require('@octokit/webhooks')
-const receiver = Webhooks.receiver({secret: 'mysecret'})
+const middleware = Webhooks.createMiddleware({ secret: 'mysecret' })
 
-// called with installation webhook payload
-// see https://developer.github.com/v3/activity/events/types/#installationevent
-receiver.on('installation.deleted', {installation, sender} => {
-  console.log(`${sender.login} deleted installation for ${installation.account.login}`)
-  // logs e.g. "octocat deleted installation for octocat"
-})
-
-// called with installation event payload, same as above.
-// Hook handlers can return a promise or throw errors
-receiver.hook('installation.deleted', {installation} => {
+middleware.hook('installation.deleted', {installation} => {
   return myApp.installations.remove(installation)
 })
 
-// called with installation event payload, same as above
-receiver.hook('installation.created', async {installation, sender} => {
+middleware.hook('installation.created', async {installation, sender} => {
   const numAvailableInstallations = await myApp.installations.availableFor(sender.id)
   if (numAvailableInstallations === 0) {
     throw Error(`${sender.id} is out of installations`)
@@ -40,13 +30,7 @@ receiver.hook('installation.created', async {installation, sender} => {
   return myApp.installations.add(installation)
 })
 
-// pass in the webhook name, request payload and request signature and handle
-// errors that might have been thrown in hook handlers
-receiver.handle({
-  name: 'installation',
-  data: eventPayload,
-  signature
-}).catch(handleErrorsFromHooks)
+http.createServer(middleware).listen(3000)
 ```
 
 ## APIs
