@@ -174,7 +174,7 @@ receiver.handle({
 }).catch(handleErrorsFromHooks)
 ```
 
-`createReceiver({secret})` returns a `receiver` instance. The `secret` option is _not_ required.
+`createReceiver({secret})` returns a `receiver` instance.
 
 <a name="receiver-handle"></a>
 
@@ -220,7 +220,7 @@ The `receiver` has a `.handle({name, data, signature})` method which returns a P
       String
     </td>
     <td>
-      <strong>Required if <code>secret</code> passed to <code>createReceiver</code>.</strong>
+      <strong>Required</strong>.
       Passed as <a href="https://developer.github.com/webhooks/#delivery-headers"><code>X-Hub-Signature</code> header</a>
       in the webhook request.
     </td>
@@ -269,7 +269,7 @@ server.hook('installation', installationEventHook)
 server.listen(3000)
 ```
 
-`createServer({secret})` returns a `server` instance. The `secret` option is _not_ required.
+`createServer({secret})` returns a `server` instance.
 
 The `server` instance also exposes the [Events & Hook](#events-and-hooks) methods.
 
