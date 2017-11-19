@@ -8,7 +8,7 @@
 2. Using the REST API for [repositories](https://developer.github.com/v3/repos/hooks/) or [organizations](https://developer.github.com/v3/orgs/hooks/)
 3. By installing a [GitHub App](https://developer.github.com/apps/).
 
-`@octokit/webhooks` helps you handle the webhooks sent by GitHub to your server.
+`@octokit/webhooks` helps to handle the webhook events sent by GitHub to your server.
 
 ## Example
 
@@ -17,11 +17,11 @@
 const Webhooks = require('@octokit/webhooks')
 const middleware = Webhooks.createMiddleware({ secret: 'mysecret' })
 
-middleware.hook('installation.deleted', {installation} => {
+middleware.hook('installation.deleted', {data: installation} => {
   return myApp.installations.remove(installation)
 })
 
-middleware.hook('installation.created', async {installation, sender} => {
+middleware.hook('installation.created', async {data: {installation, sender}} => {
   const numAvailableInstallations = await myApp.installations.availableFor(sender.id)
   if (numAvailableInstallations === 0) {
     throw Error(`${sender.id} is out of installations`)
