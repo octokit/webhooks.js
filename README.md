@@ -8,7 +8,7 @@
 2. Using the REST API for [repositories](https://developer.github.com/v3/repos/hooks/) or [organizations](https://developer.github.com/v3/orgs/hooks/)
 3. By installing a [GitHub App](https://developer.github.com/apps/).
 
-`@octokit/webhooks` helps to handle the webhook events sent by GitHub to your server.
+`@octokit/webhooks` helps to handle webhook events sent by GitHub to your server.
 
 ## Example
 
@@ -17,11 +17,11 @@
 const Webhooks = require('@octokit/webhooks')
 const middleware = Webhooks.createMiddleware({ secret: 'mysecret' })
 
-middleware.hook('installation.deleted', {data: installation} => {
+middleware.on('installation.deleted', {data: installation} => {
   return myApp.installations.remove(installation)
 })
 
-middleware.hook('installation.created', async {data: {installation, sender}} => {
+middleware.on('installation.created', async {data: {installation, sender}} => {
   const numAvailableInstallations = await myApp.installations.availableFor(sender.id)
   if (numAvailableInstallations === 0) {
     throw Error(`${sender.id} is out of installations`)
@@ -30,7 +30,8 @@ middleware.hook('installation.created', async {data: {installation, sender}} => 
   return myApp.installations.add(installation)
 })
 
-http.createServer(middleware).listen(3000)
+webhooks.server.listen(3000)
+// can now receive webhook events at port 3000
 ```
 
 ## APIs
@@ -163,8 +164,7 @@ const createReceiver = require('@octokit/webhooks').receiver
 
 const receiver = createReceiver({secret: 'mysecret'})
 
-receiver.on('installation', handleInstallationEvent)
-receiver.hook('installation', asyncInstallationHook)
+receiver.on('installation', asyncInstallationHook)
 
 // assuming request is an object with .headers & .body properties
 receiver.handle({
@@ -237,8 +237,7 @@ const createMiddleware = require('@octokit/webhooks').middleware
 
 const middleware = createMiddleware({ secret: 'mysecret' })
 
-middleware.on('installation', handleInstallationEvent)
-middleware.hook('installation', installationEventHook)
+middleware.on('installation', asyncInstallationHook)
 
 http.createServer(function (request, response) {
   if (request.url !== '/github-webhooks' || request.method !== 'POST') {
@@ -263,8 +262,7 @@ const createServer = require('@octokit/webhooks').server
 
 const server = createServer({ secret: 'mysecret' })
 
-server.on('installation', handleInstallationEvent)
-server.hook('installation', installationEventHook)
+server.on('installation', asyncInstallationHook)
 
 server.listen(3000)
 ```
@@ -286,36 +284,18 @@ api.on('installation', handleInstallationEvent)
 api.on(['installation.created', 'installation.deleted'], handleInstallationEvent)
 ```
 
-Behaves just like Node’s built-in EventEmitter’s [`.on` method](https://nodejs.org/docs/latest/api/events.html#events_emitter_on_eventname_listener). The only difference is that `api.on()` also accepts an array of event names as first argument.
+⚠️ Does _not_ behave like Node EventEmitter’s [`.on` method](https://nodejs.org/docs/latest/api/events.html#events_emitter_on_eventname_listener).
 
-Event handlers are run synchronously. Return values are ignored. Thrown errors are caught and logged in the [receiver’s handle method](#receiver-handle).
+An event handler can be an asynchronous method returning a promise or throw an error. The [receiver’s handle method](#receiver-handle) runs all defined hooks in parallel and waits until they finish before either resolving or rejecting in case an error occurred in any of the hooks.
 
 #### .removeListener()
 
 ```js
-api.removeListener('installation', handleInstallationEvent)
-api.removeListener(['installation.created', 'installation.deleted'], handleInstallationEvent)
+api.removeListener('installation', installationHook)
+api.removeListener(['installation.created', 'installation.deleted'], installationHook)
 ```
 
-Behaves just like Node’s built-in EventEmitter’s [`.removeListener` method](https://nodejs.org/docs/latest/api/events.html#events_emitter_removelistener_eventname_listener). The only difference is that `api.removeListener()` also accepts an array of event names as first argument.
-
-#### .hook()
-
-```js
-api.hook('installation', installationHook)
-api.hook(['installation.created', 'installation.deleted'], installationHook)
-```
-
-A hook can be an asynchronous method returning a promise. The [receiver’s handle method](#receiver-handle) runs all defined hooks in parallel and waits until they finish before either resolving or rejecting in case any error occurred in one of the hooks.
-
-#### .removeHook()
-
-```js
-api.removeHook('installation', installationHook)
-api.removeHook(['installation.created', 'installation.deleted'], installationHook)
-```
-
-Removes a hook for one or multiple events.
+Removes an event handler from one or multiple events.
 
 #### List of all webhook names
 
