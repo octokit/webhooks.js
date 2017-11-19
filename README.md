@@ -8,216 +8,183 @@
 2. Using the REST API for [repositories](https://developer.github.com/v3/repos/hooks/) or [organizations](https://developer.github.com/v3/orgs/hooks/)
 3. By installing a [GitHub App](https://developer.github.com/apps/).
 
-`@octokit/webhooks` helps to handle webhook events sent by GitHub to your server.
+`@octokit/webhooks` helps to handle webhook events sent by GitHub to your server. Note that while setting a secret is optional on GitHub, it is required to be set in order to use `@octokit/webhooks`.
 
 ## Example
 
 ```js
 // install with: npm install @octokit/webhooks
-const Webhooks = require('@octokit/webhooks')
-const middleware = Webhooks.createMiddleware({ secret: 'mysecret' })
-
-middleware.on('installation.deleted', {data: installation} => {
-  return myApp.installations.remove(installation)
+const WebhooksApi = require('@octokit/webhooks')
+const webhooks = new WebhooksApi({
+  secret: 'mysecret'
 })
 
-middleware.on('installation.created', async {data: {installation, sender}} => {
-  const numAvailableInstallations = await myApp.installations.availableFor(sender.id)
-  if (numAvailableInstallations === 0) {
-    throw Error(`${sender.id} is out of installations`)
-  }
-
-  return myApp.installations.add(installation)
+webhooks.on('*', ({id, name, payload}) => {
+  console.log(name, 'event received')
 })
 
-webhooks.server.listen(3000)
+require('http').createServer(webhooks.middleware).listen(3000)
 // can now receive webhook events at port 3000
 ```
 
-## APIs
+## API
 
-`@octokit/webhooks` provides 5 APIs that build upon each other.
+1. [Constructor](#constructor)
+2. [webhooks.sign()](#webhookssign)
+3. [webhooks.verify()](#webhooksverify)
+4. [webhooks.handle()](#webhookshandle)
+5. [webhooks.on()](#webhookson)
+6. [webhooks.removeListener()](#webhooksremoveListener)
+7. [webhooks.middleware()](#webhooksmiddleware)
+8. [List of all webhook names](#listofalleventnames)
 
-1. [**sign**](#sign)  
-   Create a signature based on a secret and webhook payload
-2. [**verify**](#verify)  
-   Verify a signature based on a secret and webhook payload
-3. [**Receiver**](#receiver)  
-   Provides events & hook APIs which are emitted based on webhook payloads you pass in.
-4. [**Middleware**](#middleware)  
-   Module that can be directly passed into a [Node HTTP Server](https://nodejs.org/api/http.html#http_class_http_server), [connect](https://github.com/senchalabs/connect) or [express](http://expressjs.com/).
-5. [**Server**](#server)  
-   Standalone server if all you need is receiving & handling webhooks without custom routes.
-
-Instances of `Receiver`, `Middleware` and `Server` expose [Events & Hook APIs](#events-and-hooks).
-
-### Sign
+### Constructor
 
 ```js
-const sign = require('@octokit/webhooks').sign
-// or: const sign = require('@octokit/webhooks/sign')
-
-const signature = sign({
-  data: webhookRequestBody,
-  secret: 'mysecret'
-})
+new WebhooksApi({secret[, path]})
 ```
-
-`sign({data, secret})` returns a signature as String.
 
 <table width="100%">
   <tr>
-    <th>
-      <code>
-        data
-      </code>
-    </th>
     <td>
-      Object
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Webhook request body as received from GitHub
-    </td>
-  </tr>
-  <tr>
-    <th>
       <code>
         secret
       </code>
-    </th>
-    <td>
-      String
+      <em>(String)</em>
     </td>
     <td>
       <strong>Required.</strong>
-      Secret as configured in GitHub Settings. If no <code>secret</code> was configured, don’t use the <code>sign()</code> method.
+      Secret as configured in GitHub Settings.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        path
+      </code>
+      <em>(String)</em>
+    </td>
+    <td>
+      Only relevant for <a href="#webhooksmiddleware"><code>middleware</code></a>.
+      Custom path to match requests against. Defaults to <code>/</code>.
     </td>
   </tr>
 </table>
 
-### Verify
+Returns the `webhooks` API.
+
+### webhooks.sign()
 
 ```js
-const verify = require('@octokit/webhooks').verify
-// or: const verify = require('@octokit/webhooks/verify')
-
-const signatureMatches = verify({
-  data: webhookRequestBody,
-  secret: 'mysecret',
-  signature: 'sha1=0544bd735451ecd85a1297d2242ed9c38083aba7'
-})
+weebhooks.sign(eventData)
 ```
-
-`verify({data, secret, signature})` returns either `true` or `false`.
 
 <table width="100%">
   <tr>
-    <th>
+    <td>
       <code>
         data
       </code>
-    </th>
-    <td>
-      Object
+      <em>
+        (Object)
+      </em>
     </td>
     <td>
       <strong>Required.</strong>
       Webhook request body as received from GitHub
     </td>
   </tr>
+</table>
+
+Returns a `signature` string. Throws error if `data` is not passed.
+
+Can also be used [standalone](sign/).
+
+### webhooks.verify()
+
+```js
+weebhooks.verify(eventData, signature)
+```
+
+<table width="100%">
   <tr>
-    <th>
-      <code>
-        secret
-      </code>
-    </th>
     <td>
-      String
+      <code>
+        data
+      </code>
+      <em>
+        (Object)
+      </em>
     </td>
     <td>
       <strong>Required.</strong>
-      Secret as configured in GitHub Settings. If no <code>secret</code> was configured, don’t use the <code>verify()</code> method.
+      Webhook event request body as received from GitHub.
     </td>
   </tr>
   <tr>
-    <th>
+    <td>
       <code>
         signature
       </code>
-    </th>
-    <td>
-      String
+      <em>
+        (String)
+      </em>
     </td>
     <td>
       <strong>Required.</strong>
-      Signature string as calculated by <code><a href="#sign">sign()</a></code>.
+      Signature string as calculated by <code><a href="#webhookssign">webhooks.sign()</a></code>.
     </td>
   </tr>
 </table>
 
-### Receiver
+Returns `true` or `false`. Throws error if `data` or `signature` not passed.
+
+Can also be used [standalone](verify/).
+
+### webhooks.handle()
 
 ```js
-const createReceiver = require('@octokit/webhooks').receiver
-// or: const createReceiver = require('@octokit/webhooks/receiver')
-
-const receiver = createReceiver({secret: 'mysecret'})
-
-receiver.on('installation', asyncInstallationHook)
-
-// assuming request is an object with .headers & .body properties
-receiver.handle({
-  name: request.headers['X-GitHub-Event'],
-  data: request.body,
-  signature: request.headers['X-Hub-Signature']
-}).catch(handleErrorsFromHooks)
+webhooks.handle({name, data, signature})
 ```
-
-`createReceiver({secret})` returns a `receiver` instance.
-
-<a name="receiver-handle"></a>
-
-The `receiver` has a `.handle({name, data, signature})` method which returns a Promise and expects the following options
 
 <table width="100%">
   <tr>
-    <th>
+    <td>
       <code>
         name
       </code>
-    </th>
-    <td>
-      String
+      <em>
+        String
+      </em>
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. Passed as <a href="https://developer.github.com/webhooks/#delivery-headers"><code>X-GitHub-Event</code> header</a>
-      in the webhook request.
+      Name of the event. (Event names are set as <a href="https://developer.github.com/webhooks/#delivery-headers"><code>X-GitHub-Event</code> header</a>
+      in the webhook event request.)
     </td>
   </tr>
   <tr>
-    <th>
+    <td>
       <code>
         data
       </code>
-    </th>
-    <td>
-      Object
+      <em>
+        Object
+      </em>
     </td>
     <td>
       <strong>Required.</strong>
-      Webhook request body as received from GitHub
+      Webhook event request body as received from GitHub.
     </td>
   </tr>
   <tr>
-    <th>
+    <td>
       <code>
         signature
       </code>
-    </th>
-    <td>
-      String
+      <em>
+        String
+      </em>
     </td>
     <td>
       <strong>Required</strong>.
@@ -227,77 +194,173 @@ The `receiver` has a `.handle({name, data, signature})` method which returns a P
   </tr>
 </table>
 
-Besides the `.handle({name, data, signature})` method, the `receiver` instance also exposes the [Events & Hook](#events-and-hooks) methods.
+Returns a promise. Runs all event handlers set with [`webhooks.on()`](#webhookson) in paralell and waits for them to finish. If one of the handlers rejects or throws an error, then `webhooks.handle()` rejects. The returned error has an `.errors` property which holds an array of all errors caught from the handlers. If no errors occur, `webhooks.handle()` resolves without passing any value.
 
-### Middleware
+The `.handle()` method belongs to the [receiver](receiver/) module which can be used standalone if you don’t need the server middleware.
 
-```js
-const createMiddleware = require('@octokit/webhooks').middleware
-// or: const createMiddleware = require('@octokit/webhooks/middleware')
-
-const middleware = createMiddleware({ secret: 'mysecret' })
-
-middleware.on('installation', asyncInstallationHook)
-
-http.createServer(function (request, response) {
-  if (request.url !== '/github-webhooks' || request.method !== 'POST') {
-    response.statusCode = 404
-    response.end('Not found')
-    return
-  }
-
-  middleware(request, response)
-}).listen(3000)
-```
-
-`createMiddleware({secret})` returns a `middleware` function. The `secret` option is _not_ required.
-
-The `middleware` function also exposes the [Events & Hook](#events-and-hooks) methods.
-
-### Server
+### webhooks.on()
 
 ```js
-const createServer = require('@octokit/webhooks').server
-// or: const createServer = require('@octokit/webhooks/server')
-
-const server = createServer({ secret: 'mysecret' })
-
-server.on('installation', asyncInstallationHook)
-
-server.listen(3000)
+webhooks.on(eventName, handler)
+webhooks.on(eventNames, handler)
 ```
 
-`createServer({secret})` returns a `server` instance.
+<table width="100%">
+  <tr>
+    <td>
+      <code>
+        eventName
+      </code>
+      <em>
+        String
+      </em>
+    </td>
+    <td>
+      <strong>Required.</strong>
+      Name of the event. One of <a href="#listofalleventnames">GitHub’s supported event names</a>.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        eventNames
+      </code>
+      <em>
+        Array
+      </em>
+    </td>
+    <td>
+      <strong>Required.</strong>
+      Array of event names.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        handler
+      </code>
+      <em>
+        Function
+      </em>
+    </td>
+    <td>
+      <strong>Required.</strong>
+      Method to be run each time the event with the passed name is received.
+      the <code>handler</code> function can be an async function, throw an error or
+      return a Promise.
+    </td>
+  </tr>
+</table>
 
-The `server` instance also exposes the [Events & Hook](#events-and-hooks) methods.
+The `.on()` method belongs to the [receiver](receiver/) module which can be used standalone if you don’t need the server middleware.
 
-### Events & Hooks
-
-Instances of `receiver`, `middleware` and `server` expose additional methods to handle synchronous events as well as hook into events with asynchronous handlers which can return a promise or throw an error, in which case the asynchronous `receiver.handle()` method rejects and the `middleware` / `server` route handlers respond with an error.
-
-See a [list of all available webhooks](#list-of-all-webhook-names) below.
-
-#### .on()
+### webhooks.removeHandler()
 
 ```js
-api.on('installation', handleInstallationEvent)
-api.on(['installation.created', 'installation.deleted'], handleInstallationEvent)
+webhooks.removeHandler(eventName, handler)
+webhooks.removeHandler(eventNames, handler)
 ```
 
-⚠️ Does _not_ behave like Node EventEmitter’s [`.on` method](https://nodejs.org/docs/latest/api/events.html#events_emitter_on_eventname_listener).
+<table width="100%">
+  <tr>
+    <td>
+      <code>
+        eventName
+      </code>
+      <em>
+        String
+      </em>
+    </td>
+    <td>
+      <strong>Required.</strong>
+      Name of the event. One of <a href="#listofalleventnames">GitHub’s supported event names</a>.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        eventNames
+      </code>
+      <em>
+        Array
+      </em>
+    </td>
+    <td>
+      <strong>Required.</strong>
+      Array of event names.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        handler
+      </code>
+      <em>
+        Function
+      </em>
+    </td>
+    <td>
+      <strong>Required.</strong>
+      Method which was previously passed to <code><a href="webhookson">webhooks.on()</a></code>. If the same handler was registered multiple times for the same event, only the most recent handler gets removed.
+    </td>
+  </tr>
+</table>
 
-An event handler can be an asynchronous method returning a promise or throw an error. The [receiver’s handle method](#receiver-handle) runs all defined hooks in parallel and waits until they finish before either resolving or rejecting in case an error occurred in any of the hooks.
+The `.removeHandler()` method belongs to the [receiver](receiver/) module which can be used standalone if you don’t need the server middleware.
 
-#### .removeListener()
+### webhooks.middleware()
 
 ```js
-api.removeListener('installation', installationHook)
-api.removeListener(['installation.created', 'installation.deleted'], installationHook)
+webhooks.middleware(request, response[, next])
 ```
 
-Removes an event handler from one or multiple events.
+<table width="100%">
+  <tr>
+    <td>
+      <code>
+        request
+      </code>
+      <em>
+        Object
+      </em>
+    </td>
+    <td>
+      <strong>Required.</strong>
+      A Node.js <a href="https://nodejs.org/docs/latest/api/http.html#http_class_http_clientrequest">http.ClientRequest</a>.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        response
+      </code>
+      <em>
+        Object
+      </em>
+    </td>
+    <td>
+      <strong>Required.</strong>
+      A Node.js <a href="https://nodejs.org/docs/latest/api/http.html#http_class_http_serverresponse">http.ServerResponse</a>.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        next
+      </code>
+      <em>
+        Function
+      </em>
+    </td>
+    <td>
+      Optional function which invokes the next middleware, as used by <a href="https://github.com/senchalabs/connect">Connect</a> and <a href="http://expressjs.com/">Express</a>.
+    </td>
+  </tr>
+</table>
 
-#### List of all webhook names
+Returns a `requestListener` (or _middleware_) method which can be directly passed to [`http.createServer()`](https://nodejs.org/docs/latest/api/http.html#http_http_createserver_requestlistener), <a href="http://expressjs.com/">Express</a> and other compatible Node.js server frameworks.
+
+#### List of all event names
 
 See the full list of [event types with example payloads](https://developer.github.com/v3/activity/events/types/).
 
