@@ -49,6 +49,17 @@ function middleware (state, request, response, next) {
   request.on('end', () => {
     const payload = Buffer.concat(dataChunks).toString()
 
+    const matchesSignature = state.eventHandler.verify(
+      payload,
+      signature
+    )
+
+    if (!matchesSignature) {
+      response.statusCode = 400
+      response.end('x-hub-signature does not match event payload and secret')
+      return
+    }
+
     state.eventHandler.receive({
       id: id,
       name: eventName,
