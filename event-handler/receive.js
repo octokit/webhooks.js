@@ -2,7 +2,6 @@
 
 module.exports = receiverHandle
 
-const verify = require('../verify')
 const wrapErrorHandler = require('./wrap-error-handler')
 
 // main handler function
@@ -21,23 +20,6 @@ function receiverHandle (state, options) {
 
   if (!options.data) {
     throw new Error('Event data not passed')
-  }
-
-  if (!options.signature) {
-    throw new Error('Event signature not passed')
-  }
-
-  const matchesSignature = verify(
-    state.secret,
-    options.data,
-    options.signature
-  )
-
-  if (!matchesSignature) {
-    const error = new Error('Signature does not match')
-    error.status = 400
-
-    return Promise.reject(error)
   }
 
   let hooks = [].concat(
