@@ -1,4 +1,4 @@
-# Middleware
+# middleware
 
 If you only need the middleware with access to the `.sign()`, `.verify()` or the receiver’s `.receive()` method, you can use the webhooks middleware directly
 
