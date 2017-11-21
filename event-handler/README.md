@@ -1,4 +1,4 @@
-# Receiver
+# event-handler
 
 If you implement the route to receive webhook events from GitHub yourself then you can use the `event-handler` as a standalone module
 
