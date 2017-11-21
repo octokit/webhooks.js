@@ -153,7 +153,7 @@ Can also be used [standalone](verify/).
 ### webhooks.receive()
 
 ```js
-webhooks.receive({name, data, signature})
+webhooks.receive({name, data})
 ```
 
 <table width="100%">
@@ -184,21 +184,6 @@ webhooks.receive({name, data, signature})
     <td>
       <strong>Required.</strong>
       Webhook event request body as received from GitHub.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        signature
-      </code>
-      <em>
-        String
-      </em>
-    </td>
-    <td>
-      <strong>Required</strong>.
-      Passed as <a href="https://developer.github.com/webhooks/#delivery-headers"><code>X-Hub-Signature</code> header</a>
-      in the webhook request.
     </td>
   </tr>
 </table>
