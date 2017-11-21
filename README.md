@@ -263,11 +263,11 @@ webhooks.on(eventNames, handler)
 
 The `.on()` method belongs to the [receiver](receiver/) module which can be used standalone.
 
-### webhooks.removeHandler()
+### webhooks.removeListener()
 
 ```js
-webhooks.removeHandler(eventName, handler)
-webhooks.removeHandler(eventNames, handler)
+webhooks.removeListener(eventName, handler)
+webhooks.removeListener(eventNames, handler)
 ```
 
 <table width="100%">
@@ -315,7 +315,7 @@ webhooks.removeHandler(eventNames, handler)
   </tr>
 </table>
 
-The `.removeHandler()` method belongs to the [receiver](receiver/) module which can be used standalone.
+The `.removeListener()` method belongs to the [receiver](receiver/) module which can be used standalone.
 
 ### webhooks.middleware()
 
