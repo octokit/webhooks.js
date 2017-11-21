@@ -51,16 +51,14 @@ test('events', t => {
   eventHandler.receive({
     id: '123',
     name: 'push',
-    data: pushEventPayload,
-    signature: 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
+    data: pushEventPayload
   })
 
   .then(() => {
     return eventHandler.receive({
       id: '456',
       name: 'installation',
-      data: installationCreatedPayload,
-      signature: 'sha1=eb212f42b999ccdf2e027bcf9025eb498a8d75f8'
+      data: installationCreatedPayload
     })
   })
 
@@ -79,8 +77,7 @@ test('events', t => {
     return eventHandler.receive({
       id: '123',
       name: 'push',
-      data: pushEventPayload,
-      signature: 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
+      data: pushEventPayload
     })
   })
 

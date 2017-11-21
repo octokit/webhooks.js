@@ -27,10 +27,3 @@ test('options: id, name', t => {
   })
   t.end()
 })
-
-test('options: id, name, data', t => {
-  t.throws(() => {
-    receive(state, {id: '123', name: 'foo', data: {}})
-  })
-  t.end()
-})
