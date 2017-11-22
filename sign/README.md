@@ -4,7 +4,7 @@ The `sign` method can be used as a standalone method.
 
 ```js
 const sign = require('@octokit/webhooks/sign')
-const signature = sign(secret, eventData)
+const signature = sign(secret, eventPayload)
 // string like "sha1=d03207e4b030cf234e3447bac4d93add4c6643d8"
 ```
 
@@ -24,7 +24,7 @@ const signature = sign(secret, eventData)
   <tr>
     <td>
       <code>
-        data
+        eventPayload
       </code>
       <em>
         (Object)
@@ -32,7 +32,7 @@ const signature = sign(secret, eventData)
     </td>
     <td>
       <strong>Required.</strong>
-      Webhook request body as received from GitHub
+      Webhook request payload as received from GitHub
     </td>
   </tr>
 </table>
