@@ -24,7 +24,7 @@ const matchesSignature = verify(secret, eventData, signature)
   <tr>
     <td>
       <code>
-        data
+        eventPayload
       </code>
       <em>
         (Object)
@@ -32,7 +32,7 @@ const matchesSignature = verify(secret, eventData, signature)
     </td>
     <td>
       <strong>Required.</strong>
-      Webhook request body as received from GitHub
+      Webhook request payload as received from GitHub
     </td>
   </tr>
   <tr>
@@ -51,6 +51,6 @@ const matchesSignature = verify(secret, eventData, signature)
   </tr>
 </table>
 
-Returns `true` or `false`. Throws error if `secret, ``data` or `signature` not passed.
+Returns `true` or `false`. Throws error if `secret, ``eventPayload` or `signature` not passed.
 
 Back to [@octokit/webhooks README](..).
