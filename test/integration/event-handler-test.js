@@ -7,7 +7,7 @@ const installationCreatedPayload = require('../fixtures/installation-created-pay
 test('events', t => {
   t.plan(5)
 
-  const eventHandler = EventHandler({secret: 'mysecret'})
+  const eventHandler = new EventHandler()
 
   const hooksCalled = []
   function hook1 () {
@@ -32,8 +32,8 @@ test('events', t => {
   function hook6 () {
     hooksCalled.push('installation.created')
   }
-  function hook7 (event, meta) {
-    hooksCalled.push(`* (${meta.name})`)
+  function hook7 (event) {
+    hooksCalled.push(`* (${event.name})`)
   }
 
   eventHandler.on('push', hook1)
@@ -51,14 +51,14 @@ test('events', t => {
   eventHandler.receive({
     id: '123',
     name: 'push',
-    data: pushEventPayload
+    payload: pushEventPayload
   })
 
   .then(() => {
     return eventHandler.receive({
       id: '456',
       name: 'installation',
-      data: installationCreatedPayload
+      payload: installationCreatedPayload
     })
   })
 
@@ -77,7 +77,7 @@ test('events', t => {
     return eventHandler.receive({
       id: '123',
       name: 'push',
-      data: pushEventPayload
+      payload: pushEventPayload
     })
   })
 
@@ -87,4 +87,44 @@ test('events', t => {
   })
 
   .catch(t.error)
+})
+
+test('options.transform', t => {
+  t.plan(2)
+
+  const eventHandler = EventHandler({
+    transform: (event) => {
+      t.is(event.id, '123')
+      return 'funky'
+    }
+  })
+
+  eventHandler.on('push', (event) => {
+    t.is(event, 'funky')
+  })
+
+  eventHandler.receive({
+    id: '123',
+    name: 'push',
+    payload: pushEventPayload
+  })
+})
+
+test('async options.transform', t => {
+  const eventHandler = EventHandler({
+    transform: (event) => {
+      return Promise.resolve('funky')
+    }
+  })
+
+  eventHandler.on('push', (event) => {
+    t.is(event, 'funky')
+    t.end()
+  })
+
+  eventHandler.receive({
+    id: '123',
+    name: 'push',
+    payload: pushEventPayload
+  })
 })

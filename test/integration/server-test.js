@@ -54,7 +54,7 @@ test('GET /', (t) => {
   .catch(t.error)
 })
 
-test('POST / with push event payload', (t) => {
+test('POST / with push event payload', {only: true}, (t) => {
   const api = new Webhooks({secret: 'mysecret'})
   const server = http.createServer(api.middleware)
 
