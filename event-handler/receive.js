@@ -6,11 +6,7 @@ const wrapErrorHandler = require('./wrap-error-handler')
 
 // main handler function
 function receiverHandle (state, event) {
-  if (!event || !event.id) {
-    throw new Error('Event id not passed')
-  }
-
-  if (!event.name) {
+  if (!event || !event.name) {
     throw new Error('Event name not passed')
   }
 
