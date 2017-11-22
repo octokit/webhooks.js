@@ -2,7 +2,7 @@ const test = require('tap').test
 
 const verify = require('../../verify')
 
-const data = {
+const eventPayload = {
   foo: 'bar'
 }
 const secret = 'mysecret'
@@ -13,37 +13,37 @@ test('verify() without options throws', (t) => {
   t.end()
 })
 
-test('verify(data) without options.secret throws', (t) => {
-  t.throws(verify.bind(null, undefined, data))
+test('verify(undefined, eventPayload) without secret throws', (t) => {
+  t.throws(verify.bind(null, undefined, eventPayload))
   t.end()
 })
 
-test('verify(secret) without options.data throws', (t) => {
+test('verify(secret) without eventPayload throws', (t) => {
   t.throws(verify.bind(null, secret))
   t.end()
 })
 
-test('verify(data, secret) without options.signature throws', (t) => {
-  t.throws(verify.bind(null, secret, data))
+test('verify(secret, eventPayload) without options.signature throws', (t) => {
+  t.throws(verify.bind(null, secret, eventPayload))
   t.end()
 })
 
-test('verify(data, secret, signature) returns true for correct signature', (t) => {
-  const signatureMatches = verify(secret, data, signature)
+test('verify(secret, eventPayload, signature) returns true for correct signature', (t) => {
+  const signatureMatches = verify(secret, eventPayload, signature)
   t.is(signatureMatches, true)
 
   t.end()
 })
 
-test('verify(data, secret, signature) returns false for incorrect signature', (t) => {
-  const signatureMatches = verify(secret, data, 'foo')
+test('verify(secret, eventPayload, signature) returns false for incorrect signature', (t) => {
+  const signatureMatches = verify(secret, eventPayload, 'foo')
   t.is(signatureMatches, false)
 
   t.end()
 })
 
-test('verify(data, secret, signature) returns false for correct secret', (t) => {
-  const signatureMatches = verify('foo', data, signature)
+test('verify(secret, eventPayload, signature) returns false for correct secret', (t) => {
+  const signatureMatches = verify('foo', eventPayload, signature)
   t.is(signatureMatches, false)
 
   t.end()
