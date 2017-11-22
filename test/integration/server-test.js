@@ -55,8 +55,14 @@ test('GET /', (t) => {
 })
 
 test('POST / with push event payload', {only: true}, (t) => {
+  t.plan(2)
+
   const api = new Webhooks({secret: 'mysecret'})
   const server = http.createServer(api.middleware)
+
+  api.on('push', (event) => {
+    t.is(event.id, '123e4567-e89b-12d3-a456-426655440000')
+  })
 
   promisify(server.listen.bind(server))(this.port)
 
@@ -77,37 +83,7 @@ test('POST / with push event payload', {only: true}, (t) => {
   })
 
   .then(() => {
-    server.close(t.end)
-  })
-
-  .catch(t.error)
-})
-
-test('POST / with push event payload (without signature)', (t) => {
-  const api = new Webhooks({secret: 'mysecret'})
-  const server = http.createServer(api.middleware)
-
-  promisify(server.listen.bind(server))(this.port)
-
-  .then(() => {
-    return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
-      headers: {
-        'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
-        'X-GitHub-Event': 'push'
-      }
-    })
-  })
-
-  .then(() => {
-    t.fail('should return a 400')
-  })
-
-  .catch(error => {
-    t.is(error.response.status, 400)
-  })
-
-  .then(() => {
-    server.close(t.end)
+    server.close()
   })
 
   .catch(t.error)
