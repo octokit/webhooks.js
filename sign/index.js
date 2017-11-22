@@ -2,11 +2,11 @@ module.exports = sign
 
 const crypto = require('crypto')
 
-function sign (secret, data) {
-  if (!secret || !data) {
-    throw new TypeError('secret & data required')
+function sign (secret, payload) {
+  if (!secret || !payload) {
+    throw new TypeError('secret & payload required')
   }
 
-  data = typeof data === 'string' ? data : JSON.stringify(data)
-  return 'sha1=' + crypto.createHmac('sha1', secret).update(data).digest('hex')
+  payload = typeof payload === 'string' ? payload : JSON.stringify(payload)
+  return 'sha1=' + crypto.createHmac('sha1', secret).update(payload).digest('hex')
 }
