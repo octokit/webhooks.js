@@ -4,13 +4,13 @@ const Buffer = require('buffer').Buffer
 
 const sign = require('../sign')
 
-function verify (secret, data, signature) {
-  if (!secret || !data || !signature) {
-    throw new TypeError('secret, data & signature required')
+function verify (secret, eventPayload, signature) {
+  if (!secret || !eventPayload || !signature) {
+    throw new TypeError('secret, eventPayload & signature required')
   }
 
   return Buffer.compare(
     Buffer.from(signature),
-    Buffer.from(sign(secret, data))
+    Buffer.from(sign(secret, eventPayload))
   ) === 0
 }

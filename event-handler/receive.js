@@ -5,26 +5,23 @@ module.exports = receiverHandle
 const wrapErrorHandler = require('./wrap-error-handler')
 
 // main handler function
-function receiverHandle (state, options) {
-  if (!options) {
-    options = {}
-  }
-
-  if (!options.id) {
+function receiverHandle (state, event) {
+  if (!event || !event.id) {
     throw new Error('Event id not passed')
   }
 
-  if (!options.name) {
+  if (!event.name) {
     throw new Error('Event name not passed')
   }
 
-  if (!options.data) {
-    throw new Error('Event data not passed')
+  if (!event.payload) {
+    throw new Error('Event payload not passed')
   }
 
+  // flatten arrays of event listeners and remove undefined values
   let hooks = [].concat(
-    state.hooks[`${options.name}.${options.data.action}`],
-    state.hooks[options.name],
+    state.hooks[`${event.name}.${event.payload.action}`],
+    state.hooks[event.name],
     state.hooks['*']
   ).filter(Boolean)
 
@@ -34,22 +31,17 @@ function receiverHandle (state, options) {
 
   const errors = []
   const promises = hooks.map(handler => {
-    return Promise.resolve()
+    let promise = Promise.resolve(event)
 
-    .then(() => {
-      return handler(options.data, {
-        id: options.id,
-        name: options.name
-      })
+    if (state.transform) {
+      promise = promise.then(state.transform)
+    }
+
+    return promise.then((event) => {
+      return handler(event)
     })
 
-    .catch(error => errors.push(Object.assign(error, {
-      event: {
-        id: options.id,
-        name: options.name,
-        data: options.data
-      }
-    })))
+    .catch(error => errors.push(Object.assign(error, {event})))
   })
 
   return Promise.all(promises).then(() => {
@@ -64,6 +56,7 @@ function receiverHandle (state, options) {
 
     const error = new Error('Webhook handler error')
     error.errors = errors
+
     throw error
   })
 }

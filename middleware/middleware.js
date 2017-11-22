@@ -2,6 +2,7 @@ module.exports = middleware
 
 const isntWebhook = require('./isnt-webhook')
 const getMissingHeaders = require('./get-missing-headers')
+const verify = require('../verify')
 
 const debug = require('debug')('webhooks:receiver')
 function middleware (state, request, response, next) {
@@ -48,8 +49,8 @@ function middleware (state, request, response, next) {
 
   request.on('end', () => {
     const payload = Buffer.concat(dataChunks).toString()
-
-    const matchesSignature = state.eventHandler.verify(
+    const matchesSignature = verify(
+      state.secret,
       payload,
       signature
     )
@@ -63,7 +64,7 @@ function middleware (state, request, response, next) {
     state.eventHandler.receive({
       id: id,
       name: eventName,
-      data: JSON.parse(payload),
+      payload: JSON.parse(payload),
       signature
     })
 
