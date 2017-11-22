@@ -641,7 +641,7 @@ The `*` event is emitted for all webhook events [listed above](#listofwebhookeve
 
 ```js
 webhooks.on('*', (event) => {
-  console.log(`"${event.name}" event received (id: ${event.id})"`)
+  console.log(`"${event.name}" event received"`)
 })
 ```
 
