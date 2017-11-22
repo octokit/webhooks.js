@@ -25,7 +25,7 @@ const webhooks = new WebhooksApi({
   secret: 'mysecret'
 })
 
-webhooks.on('*', (data, {id, name}) => {
+webhooks.on('*', ({id, name, payload}) => {
   console.log(name, 'event received')
 })
 
@@ -69,12 +69,24 @@ new WebhooksApi({secret[, path]})
   <tr>
     <td>
       <code>
+        transform
+      </code>
+      <em>(Function)</em>
+    </td>
+    <td>
+      Only relevant for <a href="#webhookson"><code>webhooks.on</code></a>.
+      Transform emitted event before calling handlers. Can be asynchronous.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
         path
       </code>
       <em>(String)</em>
     </td>
     <td>
-      Only relevant for <a href="#webhooksmiddleware"><code>middleware</code></a>.
+      Only relevant for <a href="#webhooksmiddleware"><code>webhooks.middleware</code></a>.
       Custom path to match requests against. Defaults to <code>/</code>.
     </td>
   </tr>
@@ -85,14 +97,14 @@ Returns the `webhooks` API.
 ### webhooks.sign()
 
 ```js
-weebhooks.sign(eventData)
+weebhooks.sign(eventPayload)
 ```
 
 <table width="100%">
   <tr>
     <td>
       <code>
-        data
+        eventPayload
       </code>
       <em>
         (Object)
@@ -100,26 +112,26 @@ weebhooks.sign(eventData)
     </td>
     <td>
       <strong>Required.</strong>
-      Webhook request body as received from GitHub
+      Webhook request payload as received from GitHub
     </td>
   </tr>
 </table>
 
-Returns a `signature` string. Throws error if `data` is not passed.
+Returns a `signature` string. Throws error if `eventPayload` is not passed.
 
 Can also be used [standalone](sign/).
 
 ### webhooks.verify()
 
 ```js
-weebhooks.verify(eventData, signature)
+weebhooks.verify(eventPayload, signature)
 ```
 
 <table width="100%">
   <tr>
     <td>
       <code>
-        data
+        eventPayload
       </code>
       <em>
         (Object)
@@ -127,7 +139,7 @@ weebhooks.verify(eventData, signature)
     </td>
     <td>
       <strong>Required.</strong>
-      Webhook event request body as received from GitHub.
+      Webhook event request payload as received from GitHub.
     </td>
   </tr>
   <tr>
@@ -146,14 +158,14 @@ weebhooks.verify(eventData, signature)
   </tr>
 </table>
 
-Returns `true` or `false`. Throws error if `data` or `signature` not passed.
+Returns `true` or `false`. Throws error if `eventPayload` or `signature` not passed.
 
 Can also be used [standalone](verify/).
 
 ### webhooks.receive()
 
 ```js
-webhooks.receive({name, data})
+webhooks.receive({id, name, payload})
 ```
 
 <table width="100%">
@@ -175,7 +187,7 @@ webhooks.receive({name, data})
   <tr>
     <td>
       <code>
-        data
+        payload
       </code>
       <em>
         Object
@@ -183,7 +195,7 @@ webhooks.receive({name, data})
     </td>
     <td>
       <strong>Required.</strong>
-      Webhook event request body as received from GitHub.
+      Webhook event request payload as received from GitHub.
     </td>
   </tr>
 </table>
@@ -241,7 +253,7 @@ webhooks.on(eventNames, handler)
       <strong>Required.</strong>
       Method to be run each time the event with the passed name is received.
       the <code>handler</code> function can be an async function, throw an error or
-      return a Promise. The handler is called with two arguments: <code>data</code> (the event payload) and <code>{id, name}</code>.
+      return a Promise. The handler is called with an event object: <code>{id, name, payload}</code>.
     </td>
   </tr>
 </table>
@@ -628,8 +640,8 @@ Besides the webhook events, there are [special events](#specialevents) emitted b
 The `*` event is emitted for all webhook events [listed above](#listofwebhookevents).
 
 ```js
-webhooks.on('*', (eventPayload, eventMeta) => {
-  console.log(`"${eventMeta.name}" event received (id: ${eventMeta.id})"`)
+webhooks.on('*', (event) => {
+  console.log(`"${event.name}" event received (id: ${event.id})"`)
 })
 ```
 
@@ -639,7 +651,7 @@ If a webhook event handler throws an error or returns a promise that rejects, an
 
 - `id`: The unique webhook event request id
 - `name`: The name of the event
-- `data`: The event request payload
+- `payload`: The event request payload
 
 ```js
 webhooks.on('error', (error) => {
