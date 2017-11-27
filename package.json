@@ -10,7 +10,9 @@
     "lib": "lib",
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "buffer-equal-constant-time": "^1.0.1"
+  },
   "devDependencies": {
     "axios": "^0.17.1",
     "coveralls": "^3.0.0",
