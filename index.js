@@ -4,6 +4,7 @@ const createEventHandler = require('./event-handler')
 const middleware = require('./middleware/middleware')
 const sign = require('./sign')
 const verify = require('./verify')
+const verifyAndReceive = require('./middleware/verify-and-receive')
 
 function createWebhooksApi (options) {
   if (!options || !options.secret) {
@@ -16,14 +17,13 @@ function createWebhooksApi (options) {
     secret: options.secret
   }
 
-  const webhooksMiddleware = middleware.bind(null, state)
-
   return {
     sign: sign.bind(null, options.secret),
     verify: verify.bind(null, options.secret),
     on: state.eventHandler.on,
     removeListener: state.eventHandler.removeListener,
     receive: state.eventHandler.receive,
-    middleware: webhooksMiddleware
+    middleware: middleware.bind(null, state),
+    verifyAndReceive: verifyAndReceive.bind(null, state)
   }
 }
