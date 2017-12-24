@@ -6,6 +6,14 @@ const wrapErrorHandler = require('./wrap-error-handler')
 
 // main handler function
 function receiverHandle (state, event) {
+  const errorHandlers = state.hooks.error || []
+
+  if (event instanceof Error) {
+    errorHandlers.forEach(handler => wrapErrorHandler(handler, event))
+
+    return Promise.reject(event)
+  }
+
   if (!event || !event.name) {
     throw new Error('Event name not passed')
   }
@@ -45,10 +53,7 @@ function receiverHandle (state, event) {
       return
     }
 
-    const errorHandlers = state.hooks.error
-    if (errorHandlers) {
-      errorHandlers.forEach(handler => errors.forEach(wrapErrorHandler.bind(null, handler)))
-    }
+    errorHandlers.forEach(handler => errors.forEach(wrapErrorHandler.bind(null, handler)))
 
     const error = new Error('Webhook handler error')
     error.errors = errors
