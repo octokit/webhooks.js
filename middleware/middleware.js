@@ -64,8 +64,7 @@ function middleware (state, request, response, next) {
     state.eventHandler.receive({
       id: id,
       name: eventName,
-      payload: JSON.parse(payload),
-      signature
+      payload: JSON.parse(payload)
     })
 
     .then(() => {
