@@ -172,6 +172,19 @@ webhooks.receive({id, name, payload})
   <tr>
     <td>
       <code>
+        id
+      </code>
+      <em>
+        String
+      </em>
+    </td>
+    <td>
+      Unique webhook event request id
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
         name
       </code>
       <em>
