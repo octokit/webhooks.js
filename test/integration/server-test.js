@@ -3,6 +3,7 @@ const http = require('http')
 const axios = require('axios')
 const getPort = require('get-port')
 const promisify = require('pify')
+const simple = require('simple-mock')
 const Tap = require('tap')
 
 const Webhooks = require('../../')
@@ -54,7 +55,7 @@ test('GET /', (t) => {
   .catch(t.error)
 })
 
-test('POST / with push event payload', {only: true}, (t) => {
+test('POST / with push event payload', (t) => {
   t.plan(2)
 
   const api = new Webhooks({secret: 'mysecret'})
@@ -122,6 +123,8 @@ test('POST / with push event payload (no signature)', (t) => {
 test('POST / with push event payload (invalid signature)', (t) => {
   const api = new Webhooks({secret: 'mysecret'})
   const server = http.createServer(api.middleware)
+  const errorHandler = simple.spy()
+  api.on('error', errorHandler)
 
   promisify(server.listen.bind(server))(this.port)
 
@@ -144,6 +147,7 @@ test('POST / with push event payload (invalid signature)', (t) => {
   })
 
   .then(() => {
+    t.is(errorHandler.callCount, 1, 'calls "error" event handler')
     server.close(t.end)
   })
 
