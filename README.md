@@ -38,6 +38,7 @@ require('http').createServer(webhooks.middleware).listen(3000)
 1. [Constructor](#constructor)
 2. [webhooks.sign()](#webhookssign)
 3. [webhooks.verify()](#webhooksverify)
+4. [webhooks.verifyAndReceive()](#webhooksverifyandreceive)
 4. [webhooks.receive()](#webhooksreceive)
 5. [webhooks.on()](#webhookson)
 6. [webhooks.removeListener()](#webhooksremoveListener)
@@ -161,6 +162,95 @@ weebhooks.verify(eventPayload, signature)
 Returns `true` or `false`. Throws error if `eventPayload` or `signature` not passed.
 
 Can also be used [standalone](verify/).
+
+### webhooks.verifyAndReceive()
+
+```js
+weebhooks.verifyAndReceive({id, name, payload, signature})
+```
+
+<table width="100%">
+  <tr>
+    <td>
+      <code>
+        id
+      </code>
+      <em>
+        String
+      </em>
+    </td>
+    <td>
+      Unique webhook event request id
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        name
+      </code>
+      <em>
+        String
+      </em>
+    </td>
+    <td>
+      <strong>Required.</strong>
+      Name of the event. (Event names are set as <a href="https://developer.github.com/webhooks/#delivery-headers"><code>X-GitHub-Event</code> header</a>
+      in the webhook event request.)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        payload
+      </code>
+      <em>
+        Object
+      </em>
+    </td>
+    <td>
+      <strong>Required.</strong>
+      Webhook event request payload as received from GitHub.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        signature
+      </code>
+      <em>
+        (String)
+      </em>
+    </td>
+    <td>
+      <strong>Required.</strong>
+      Signature string as calculated by <code><a href="#webhookssign">webhooks.sign()</a></code>.
+    </td>
+  </tr>
+</table>
+
+Returns a promise.
+
+Verifies event using [webhooks.verify()](#webhooksverify), then handles the event using [webhooks.receive()](#webhooksreceive).
+
+Additionally, if verification fails, rejects return promise and emits an `error` event.
+
+Example
+
+```js
+const WebhooksApi = require('@octokit/webhooks')
+const webhooks = new WebhooksApi({
+  secret: 'mysecret'
+})
+eventHandler.on('error', handleSignatureVerificationError)
+
+// put this inside your webhooks route handler
+eventHandler.verifyAndReceive({
+  id: request.headers['x-github-delivery'],
+  name: request.headers['x-github-event'],
+  payload: request.body,
+  signature: request.headers['x-github-signature']
+}).catch(handleErrorsFromHooks)
+```
 
 ### webhooks.receive()
 
