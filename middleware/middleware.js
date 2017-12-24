@@ -2,7 +2,7 @@ module.exports = middleware
 
 const isntWebhook = require('./isnt-webhook')
 const getMissingHeaders = require('./get-missing-headers')
-const verify = require('../verify')
+const verifyAndReceive = require('./verify-and-receive')
 
 const debug = require('debug')('webhooks:receiver')
 function middleware (state, request, response, next) {
@@ -49,22 +49,12 @@ function middleware (state, request, response, next) {
 
   request.on('end', () => {
     const payload = Buffer.concat(dataChunks).toString()
-    const matchesSignature = verify(
-      state.secret,
-      payload,
-      signature
-    )
 
-    if (!matchesSignature) {
-      response.statusCode = 400
-      response.end('x-hub-signature does not match event payload and secret')
-      return
-    }
-
-    state.eventHandler.receive({
+    verifyAndReceive(state, {
       id: id,
       name: eventName,
-      payload: JSON.parse(payload)
+      payload: JSON.parse(payload),
+      signature
     })
 
     .then(() => {
