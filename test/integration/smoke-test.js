@@ -10,6 +10,7 @@ test('@octokit/webhooks', (t) => {
   t.type(api.removeListener, 'function')
   t.type(api.receive, 'function')
   t.type(api.middleware, 'function')
+  t.type(api.verifyAndReceive, 'function')
 
   t.end()
 })
