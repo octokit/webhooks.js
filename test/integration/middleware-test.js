@@ -18,7 +18,7 @@ test('request error', t => {
   requestMock.url = '/'
 
   const responseMock = {
-    end: simple.stub()
+    end: simple.spy()
   }
 
   const middleware = createMiddleware({secret: 'mysecret'})
