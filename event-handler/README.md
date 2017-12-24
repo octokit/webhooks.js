@@ -15,7 +15,7 @@ const eventHandler = new EventHandler({
 eventHandler.on('installation', asyncInstallationHook)
 
 // put this inside your webhooks route handler
-eventHandler.reiceive({
+eventHandler.receive({
   id: request.headers['x-github-delivery'],
   name: request.headers['x-github-event'],
   payload: request.body
@@ -37,6 +37,6 @@ if (!verify(secret, request.payload, request.headers['x-github-signature'])) {
 
 ## API
 
-The `event-handler` API implements [`.reiceive()`](../#webhooksreceive), [`.on()`](../#webhookson) and [`.removeListener()`](../#webhooksremovelistener).
+The `event-handler` API implements [`.receive()`](../#webhooksreceive), [`.on()`](../#webhookson) and [`.removeListener()`](../#webhooksremovelistener).
 
 Back to [@octokit/webhooks README](..).
