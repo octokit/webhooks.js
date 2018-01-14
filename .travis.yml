@@ -11,10 +11,6 @@ node_js:
   - '6'
   - '4'
 
-after_success:
-  - npm run semantic-release
-  - npm run coverage:upload
-
 # Trigger a push build on master and greenkeeper branches + PRs build on every branches
 # Avoid double build on PRs (See https://github.com/travis-ci/travis-ci/issues/1147)
 branches:
