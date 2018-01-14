@@ -24,6 +24,7 @@ jobs:
     - stage: release
       node_js: lts/*
       script: npm run semantic-release
-    - script:
+    - node_js: lts/*
+      script:
         - npm run test
         - npm run coverage:upload
