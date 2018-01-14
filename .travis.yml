@@ -20,7 +20,11 @@ branches:
 
 jobs:
   include:
-    - stage: release
+    - stage: coverage
       node_js: lts/*
       script:
-        - npm run semantic-release
+        - npm run test
+        - npm run coverage:upload
+    - stage: release
+      node_js: lts/*
+      script: npm run semantic-release
