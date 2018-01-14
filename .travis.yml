@@ -21,3 +21,10 @@ branches:
   only:
     - master
     - /^greenkeeper.*$/
+
+jobs:
+  include:
+    - stage: release
+      node_js: lts/*
+      script:
+        - npm run semantic-release
