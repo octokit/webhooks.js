@@ -57,13 +57,13 @@ function middleware (state, request, response, next) {
       signature
     })
 
-    .then(() => {
-      response.end('ok\n')
-    })
+      .then(() => {
+        response.end('ok\n')
+      })
 
-    .catch(error => {
-      response.statusCode = error.status || 500
-      response.end(error.toString())
-    })
+      .catch(error => {
+        response.statusCode = error.status || 500
+        response.end(error.toString())
+      })
   })
 }

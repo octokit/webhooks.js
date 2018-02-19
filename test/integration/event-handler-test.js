@@ -13,9 +13,9 @@ test('events', t => {
   function hook1 () {
     return Promise.resolve()
 
-    .then(() => {
-      hooksCalled.push('hook1')
-    })
+      .then(() => {
+        hooksCalled.push('hook1')
+      })
   }
   function hook2 () {
     hooksCalled.push('hook2')
@@ -54,39 +54,39 @@ test('events', t => {
     payload: pushEventPayload
   })
 
-  .then(() => {
-    return eventHandler.receive({
-      id: '456',
-      name: 'installation',
-      payload: installationCreatedPayload
-    })
-  })
-
-  .then(() => {
-    t.deepEqual(hooksCalled, ['hook2', '* (push)', 'hook1', 'installation.created', 'installation', '* (installation)'])
-
-    eventHandler.on('error', (error) => {
-      t.pass('error event triggered')
-      t.is(error.message, 'oops')
+    .then(() => {
+      return eventHandler.receive({
+        id: '456',
+        name: 'installation',
+        payload: installationCreatedPayload
+      })
     })
 
-    eventHandler.on('push', () => {
-      throw new Error('oops')
+    .then(() => {
+      t.deepEqual(hooksCalled, ['hook2', '* (push)', 'hook1', 'installation.created', 'installation', '* (installation)'])
+
+      eventHandler.on('error', (error) => {
+        t.pass('error event triggered')
+        t.is(error.message, 'oops')
+      })
+
+      eventHandler.on('push', () => {
+        throw new Error('oops')
+      })
+
+      return eventHandler.receive({
+        id: '123',
+        name: 'push',
+        payload: pushEventPayload
+      })
     })
 
-    return eventHandler.receive({
-      id: '123',
-      name: 'push',
-      payload: pushEventPayload
+    .catch(error => {
+      t.is(error.errors.length, 1)
+      t.is(error.errors[0].message, 'oops')
     })
-  })
 
-  .catch(error => {
-    t.is(error.errors.length, 1)
-    t.is(error.errors[0].message, 'oops')
-  })
-
-  .catch(t.error)
+    .catch(t.error)
 })
 
 test('options.transform', t => {

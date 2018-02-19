@@ -15,9 +15,9 @@ const beforeEach = Tap.beforeEach
 beforeEach(() => {
   return getPort()
 
-  .then((port) => {
-    this.port = port
-  })
+    .then((port) => {
+      this.port = port
+    })
 })
 
 test('initialised without options', (t) => {
@@ -36,23 +36,23 @@ test('GET /', (t) => {
 
   promisify(server.listen.bind(server))(this.port)
 
-  .then(() => {
-    return axios.get(`http://localhost:${this.port}`)
-  })
+    .then(() => {
+      return axios.get(`http://localhost:${this.port}`)
+    })
 
-  .then(() => {
-    t.fail('should return a 404')
-  })
+    .then(() => {
+      t.fail('should return a 404')
+    })
 
-  .catch(error => {
-    t.is(error.response.status, 404)
-  })
+    .catch(error => {
+      t.is(error.response.status, 404)
+    })
 
-  .then(() => {
-    server.close(t.end)
-  })
+    .then(() => {
+      server.close(t.end)
+    })
 
-  .catch(t.error)
+    .catch(t.error)
 })
 
 test('POST / with push event payload', (t) => {
@@ -67,27 +67,27 @@ test('POST / with push event payload', (t) => {
 
   promisify(server.listen.bind(server))(this.port)
 
-  .then(() => {
-    return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
-      headers: {
-        'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
-        'X-GitHub-Event': 'push',
-        'X-Hub-Signature': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
-      }
+    .then(() => {
+      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
+        headers: {
+          'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
+          'X-GitHub-Event': 'push',
+          'X-Hub-Signature': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
+        }
+      })
     })
-  })
 
-  .catch(t.error)
+    .catch(t.error)
 
-  .then(result => {
-    t.is(result.status, 200)
-  })
+    .then(result => {
+      t.is(result.status, 200)
+    })
 
-  .then(() => {
-    server.close()
-  })
+    .then(() => {
+      server.close()
+    })
 
-  .catch(t.error)
+    .catch(t.error)
 })
 
 test('POST / with push event payload (no signature)', (t) => {
@@ -96,28 +96,28 @@ test('POST / with push event payload (no signature)', (t) => {
 
   promisify(server.listen.bind(server))(this.port)
 
-  .then(() => {
-    return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
-      headers: {
-        'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
-        'X-GitHub-Event': 'push'
-      }
+    .then(() => {
+      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
+        headers: {
+          'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
+          'X-GitHub-Event': 'push'
+        }
+      })
     })
-  })
 
-  .then(() => {
-    t.fail('should return a 400')
-  })
+    .then(() => {
+      t.fail('should return a 400')
+    })
 
-  .catch(error => {
-    t.is(error.response.status, 400)
-  })
+    .catch(error => {
+      t.is(error.response.status, 400)
+    })
 
-  .then(() => {
-    server.close(t.end)
-  })
+    .then(() => {
+      server.close(t.end)
+    })
 
-  .catch(t.error)
+    .catch(t.error)
 })
 
 test('POST / with push event payload (invalid signature)', (t) => {
@@ -128,30 +128,30 @@ test('POST / with push event payload (invalid signature)', (t) => {
 
   promisify(server.listen.bind(server))(this.port)
 
-  .then(() => {
-    return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
-      headers: {
-        'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
-        'X-GitHub-Event': 'push',
-        'X-Hub-Signature': 'sha1=foo'
-      }
+    .then(() => {
+      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
+        headers: {
+          'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
+          'X-GitHub-Event': 'push',
+          'X-Hub-Signature': 'sha1=foo'
+        }
+      })
     })
-  })
 
-  .then(() => {
-    t.fail('should return a 400')
-  })
+    .then(() => {
+      t.fail('should return a 400')
+    })
 
-  .catch(error => {
-    t.is(error.response.status, 400)
-  })
+    .catch(error => {
+      t.is(error.response.status, 400)
+    })
 
-  .then(() => {
-    t.is(errorHandler.callCount, 1, 'calls "error" event handler')
-    server.close(t.end)
-  })
+    .then(() => {
+      t.is(errorHandler.callCount, 1, 'calls "error" event handler')
+      server.close(t.end)
+    })
 
-  .catch(t.error)
+    .catch(t.error)
 })
 
 test('POST / with hook error', (t) => {
@@ -164,27 +164,27 @@ test('POST / with hook error', (t) => {
 
   promisify(server.listen.bind(server))(this.port)
 
-  .then(() => {
-    return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
-      headers: {
-        'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
-        'X-GitHub-Event': 'push',
-        'X-Hub-Signature': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
-      }
+    .then(() => {
+      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
+        headers: {
+          'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
+          'X-GitHub-Event': 'push',
+          'X-Hub-Signature': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
+        }
+      })
     })
-  })
 
-  .then(() => {
-    t.fail('should return a 500')
-  })
+    .then(() => {
+      t.fail('should return a 500')
+    })
 
-  .catch(error => {
-    t.is(error.response.status, 500)
-  })
+    .catch(error => {
+      t.is(error.response.status, 500)
+    })
 
-  .then(() => {
-    server.close(t.end)
-  })
+    .then(() => {
+      server.close(t.end)
+    })
 
-  .catch(t.error)
+    .catch(t.error)
 })
