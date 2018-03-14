@@ -11,12 +11,12 @@
     "test": "test"
   },
   "dependencies": {
-    "buffer-equal-constant-time": "^1.0.1"
+    "buffer-equal-constant-time": "^1.0.1",
+    "debug": "^3.1.0"
   },
   "devDependencies": {
     "axios": "^0.18.0",
     "coveralls": "^3.0.0",
-    "debug": "^3.1.0",
     "get-port": "^3.2.0",
     "pify": "^3.0.0",
     "proxyquire": "^2.0.0",
