@@ -9,7 +9,7 @@ function receiverOn (state, webhookNameOrNames, handler) {
   }
 
   if (webhookNames.indexOf(webhookNameOrNames) === -1) {
-    throw new Error(`${webhookNameOrNames} is not a valid webhook name`)
+    console.warn(`"${webhookNameOrNames}" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)`)
   }
 
   if (!state.hooks[webhookNameOrNames]) {
