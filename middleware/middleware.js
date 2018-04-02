@@ -55,6 +55,7 @@ function middleware (state, request, response, next) {
 
   debug(`${eventName} event received (id: ${id})`)
 
+  // this check is necessary when request.body already exists, since the data event will not fire
   if (request.body) {
     handlePayload(request.body)
   } else {
