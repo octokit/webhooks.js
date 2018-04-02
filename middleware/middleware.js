@@ -6,7 +6,7 @@ const verifyAndReceive = require('./verify-and-receive')
 
 const debug = require('debug')('webhooks:receiver')
 function middleware (state, request, response, next) {
-  function handlePayload(payload) {
+  function handlePayload (payload) {
     verifyAndReceive(state, {
       id: id,
       name: eventName,
@@ -63,14 +63,14 @@ function middleware (state, request, response, next) {
       response.statusCode = 500
       response.end(error.toString())
     })
-  
+
     request.on('data', (chunk) => {
       dataChunks.push(chunk)
     })
-  
+
     request.on('end', () => {
       const payload = Buffer.concat(dataChunks).toString()
       handlePayload(JSON.parse(payload))
-    }) 
+    })
   }
 }
