@@ -6,6 +6,24 @@ const verifyAndReceive = require('./verify-and-receive')
 
 const debug = require('debug')('webhooks:receiver')
 function middleware (state, request, response, next) {
+  function handlePayload (payload) {
+    verifyAndReceive(state, {
+      id: id,
+      name: eventName,
+      payload,
+      signature
+    })
+
+      .then(() => {
+        response.end('ok\n')
+      })
+
+      .catch(error => {
+        response.statusCode = error.status || 500
+        response.end(error.toString())
+      })
+  }
+
   if (isntWebhook(request, {path: state.path})) {
     // the next callback is set when used as an express middleware. That allows
     // it to define custom routes like /my/custom/page while the webhooks are
@@ -37,33 +55,23 @@ function middleware (state, request, response, next) {
 
   debug(`${eventName} event received (id: ${id})`)
 
-  const dataChunks = []
-  request.on('error', (error) => {
-    response.statusCode = 500
-    response.end(error.toString())
-  })
-
-  request.on('data', (chunk) => {
-    dataChunks.push(chunk)
-  })
-
-  request.on('end', () => {
-    const payload = Buffer.concat(dataChunks).toString()
-
-    verifyAndReceive(state, {
-      id: id,
-      name: eventName,
-      payload: JSON.parse(payload),
-      signature
+  // this check is necessary when request.body already exists, since the data event will not fire
+  if (request.body) {
+    handlePayload(request.body)
+  } else {
+    const dataChunks = []
+    request.on('error', (error) => {
+      response.statusCode = 500
+      response.end(error.toString())
     })
 
-      .then(() => {
-        response.end('ok\n')
-      })
+    request.on('data', (chunk) => {
+      dataChunks.push(chunk)
+    })
 
-      .catch(error => {
-        response.statusCode = error.status || 500
-        response.end(error.toString())
-      })
-  })
+    request.on('end', () => {
+      const payload = Buffer.concat(dataChunks).toString()
+      handlePayload(JSON.parse(payload))
+    })
+  }
 }
