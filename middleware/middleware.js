@@ -77,4 +77,10 @@ function middleware (state, request, response, next) {
         response.end(error.toString())
       })
   })
+
+  // refiring data and end event if request.body exists since they won't fire on their own
+  if (request.body) {
+    request.emit('data', Buffer.from(JSON.stringify(request.body)))
+    request.emit('end')
+  }
 }

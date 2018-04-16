@@ -96,8 +96,8 @@ test('POST / with push event payload (request.body already parsed)', (t) => {
   const api = new Webhooks({secret: 'mysecret'})
   const dataChunks = []
   const server = http.createServer((req, res) => {
-    req.on('data', chunk => dataChunks.push(chunk))
-    req.on('end', () => {
+    req.once('data', chunk => dataChunks.push(chunk))
+    req.once('end', () => {
       req.body = JSON.parse(Buffer.concat(dataChunks).toString())
       api.middleware(req, res)
 
