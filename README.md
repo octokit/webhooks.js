@@ -98,7 +98,7 @@ Returns the `webhooks` API.
 ### webhooks.sign()
 
 ```js
-weebhooks.sign(eventPayload)
+webhooks.sign(eventPayload)
 ```
 
 <table width="100%">
@@ -125,7 +125,7 @@ Can also be used [standalone](sign/).
 ### webhooks.verify()
 
 ```js
-weebhooks.verify(eventPayload, signature)
+webhooks.verify(eventPayload, signature)
 ```
 
 <table width="100%">
@@ -166,7 +166,7 @@ Can also be used [standalone](verify/).
 ### webhooks.verifyAndReceive()
 
 ```js
-weebhooks.verifyAndReceive({id, name, payload, signature})
+webhooks.verifyAndReceive({id, name, payload, signature})
 ```
 
 <table width="100%">
