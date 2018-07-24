@@ -17,7 +17,7 @@
   "devDependencies": {
     "axios": "^0.18.0",
     "coveralls": "^3.0.0",
-    "get-port": "^3.2.0",
+    "get-port": "^4.0.0",
     "pify": "^3.0.0",
     "proxyquire": "^2.0.0",
     "semantic-release": "^15.0.0",
