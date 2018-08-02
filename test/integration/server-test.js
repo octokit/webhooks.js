@@ -93,6 +93,8 @@ test('POST / with push event payload', (t) => {
 test('POST / with push event payload (no signature)', (t) => {
   const api = new Webhooks({secret: 'mysecret'})
   const server = http.createServer(api.middleware)
+  const errorHandler = simple.spy()
+  api.on('error', errorHandler)
 
   promisify(server.listen.bind(server))(this.port)
 
@@ -114,6 +116,7 @@ test('POST / with push event payload (no signature)', (t) => {
     })
 
     .then(() => {
+      t.is(errorHandler.callCount, 1, 'calls "error" event handler')
       server.close(t.end)
     })
 
