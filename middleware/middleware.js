@@ -24,11 +24,13 @@ function middleware (state, request, response, next) {
 
   const missingHeaders = getMissingHeaders(request).join(', ')
   if (missingHeaders) {
-    debug(`ignored: ${request.method} ${request.url} due to missing headers: ${missingHeaders}`)
+    const error = new Error(`Required headers missing: ${missingHeaders}`)
 
-    response.statusCode = 400
-    response.end(`Required headers missing: ${missingHeaders}`)
-    return
+    return state.eventHandler.receive(error)
+      .catch(() => {
+        response.statusCode = 400
+        response.end(error.message)
+      })
   }
 
   const eventName = request.headers['x-github-event']
