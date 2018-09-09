@@ -7,7 +7,7 @@ const state = {}
 test('next() callback', t => {
   const next = simple.spy()
 
-  middleware(state, {method: 'POST', url: '/foo'}, {}, next)
+  middleware(state, { method: 'POST', url: '/foo' }, {}, next)
   t.is(next.callCount, 1)
   t.end()
 })

@@ -16,14 +16,14 @@ test('options: none', t => {
 
 test('options: name', t => {
   t.throws(() => {
-    receive(state, {name: 'foo'})
+    receive(state, { name: 'foo' })
   })
   t.end()
 })
 
 test('options: name, payload', t => {
   t.doesNotThrow(() => {
-    receive(state, {name: 'foo', payload: {}})
+    receive(state, { name: 'foo', payload: {} })
   })
   t.end()
 })

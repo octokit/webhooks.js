@@ -45,7 +45,7 @@ function receiverHandle (state, event) {
       return handler(event)
     })
 
-      .catch(error => errors.push(Object.assign(error, {event})))
+      .catch(error => errors.push(Object.assign(error, { event })))
   })
 
   return Promise.all(promises).then(() => {

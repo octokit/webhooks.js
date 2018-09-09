@@ -31,7 +31,7 @@ test('initialised without options', (t) => {
 })
 
 test('GET /', (t) => {
-  const api = new Webhooks({secret: 'mysecret'})
+  const api = new Webhooks({ secret: 'mysecret' })
   const server = http.createServer(api.middleware)
 
   promisify(server.listen.bind(server))(this.port)
@@ -58,7 +58,7 @@ test('GET /', (t) => {
 test('POST / with push event payload', (t) => {
   t.plan(2)
 
-  const api = new Webhooks({secret: 'mysecret'})
+  const api = new Webhooks({ secret: 'mysecret' })
   const server = http.createServer(api.middleware)
 
   api.on('push', (event) => {
@@ -91,7 +91,7 @@ test('POST / with push event payload', (t) => {
 })
 
 test('POST / with push event payload (no signature)', (t) => {
-  const api = new Webhooks({secret: 'mysecret'})
+  const api = new Webhooks({ secret: 'mysecret' })
   const server = http.createServer(api.middleware)
   const errorHandler = simple.spy()
   api.on('error', errorHandler)
@@ -124,7 +124,7 @@ test('POST / with push event payload (no signature)', (t) => {
 })
 
 test('POST / with push event payload (invalid signature)', (t) => {
-  const api = new Webhooks({secret: 'mysecret'})
+  const api = new Webhooks({ secret: 'mysecret' })
   const server = http.createServer(api.middleware)
   const errorHandler = simple.spy()
   api.on('error', errorHandler)
@@ -158,7 +158,7 @@ test('POST / with push event payload (invalid signature)', (t) => {
 })
 
 test('POST / with hook error', (t) => {
-  const api = new Webhooks({secret: 'mysecret'})
+  const api = new Webhooks({ secret: 'mysecret' })
   const server = http.createServer(api.middleware)
 
   api.on('push', () => {

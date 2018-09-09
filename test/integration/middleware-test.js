@@ -21,7 +21,7 @@ test('request error', t => {
     end: simple.spy()
   }
 
-  const middleware = createMiddleware({secret: 'mysecret'})
+  const middleware = createMiddleware({ secret: 'mysecret' })
   middleware(requestMock, responseMock)
 
   const error = new Error('oops')

@@ -6,7 +6,7 @@ const verifyAndReceive = require('./verify-and-receive')
 
 const debug = require('debug')('webhooks:receiver')
 function middleware (state, request, response, next) {
-  if (isntWebhook(request, {path: state.path})) {
+  if (isntWebhook(request, { path: state.path })) {
     // the next callback is set when used as an express middleware. That allows
     // it to define custom routes like /my/custom/page while the webhooks are
     // expected to be sent to the / root path. Otherwise the root path would

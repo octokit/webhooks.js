@@ -2,7 +2,7 @@ const test = require('tap').test
 
 test('@octokit/webhooks', (t) => {
   const Webhooks = require('../..')
-  const api = new Webhooks({secret: 'mysecret'})
+  const api = new Webhooks({ secret: 'mysecret' })
 
   t.type(api.sign, 'function')
   t.type(api.verify, 'function')
