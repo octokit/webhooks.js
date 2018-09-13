@@ -50,12 +50,21 @@ function middleware (state, request, response, next) {
   })
 
   request.on('end', () => {
-    const payload = Buffer.concat(dataChunks).toString()
+    const data = Buffer.concat(dataChunks).toString()
+    let payload
+
+    try {
+      payload = JSON.parse(data)
+    } catch (error) {
+      response.statusCode = 400
+      response.end('Invalid JSON')
+      return
+    }
 
     verifyAndReceive(state, {
       id: id,
       name: eventName,
-      payload: JSON.parse(payload),
+      payload,
       signature
     })
 
