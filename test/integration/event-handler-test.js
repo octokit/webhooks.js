@@ -5,7 +5,7 @@ const pushEventPayload = require('../fixtures/push-payload')
 const installationCreatedPayload = require('../fixtures/installation-created-payload')
 
 test('events', t => {
-  t.plan(5)
+  t.plan(6)
 
   const eventHandler = new EventHandler()
 
@@ -66,6 +66,7 @@ test('events', t => {
       t.deepEqual(hooksCalled, ['hook2', '* (push)', 'hook1', 'installation.created', 'installation', '* (installation)'])
 
       eventHandler.on('error', (error) => {
+        t.ok(error.event.payload)
         t.pass('error event triggered')
         t.is(error.message, 'oops')
       })
