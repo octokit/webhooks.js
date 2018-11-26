@@ -248,7 +248,7 @@ eventHandler.verifyAndReceive({
   id: request.headers['x-github-delivery'],
   name: request.headers['x-github-event'],
   payload: request.body,
-  signature: request.headers['x-github-signature']
+  signature: request.headers['x-hub-signature']
 }).catch(handleErrorsFromHooks)
 ```
 
