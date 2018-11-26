@@ -30,7 +30,7 @@ If you receive events through a publicly accessible URL, make sure to verify tha
 const verify = require('@octokit/webhooks/verify')
 const secret = 'mysecret'
 
-if (!verify(secret, request.payload, request.headers['x-github-signature'])) {
+if (!verify(secret, request.payload, request.headers['x-hub-signature'])) {
   throw new Error('Signature does not match event payload & secret')
 }
 ```
