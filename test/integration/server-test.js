@@ -93,7 +93,7 @@ test('POST / with push event payload', (t) => {
 test('POST / with push event payload (request.body already parsed)', (t) => {
   t.plan(2)
 
-  const api = new Webhooks({secret: 'mysecret'})
+  const api = new Webhooks({ secret: 'mysecret' })
   const dataChunks = []
   const server = http.createServer((req, res) => {
     req.once('data', chunk => dataChunks.push(chunk))
