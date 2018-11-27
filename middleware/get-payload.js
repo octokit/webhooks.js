@@ -9,14 +9,9 @@ function getPayload (request) {
 
   return new Promise((resolve, reject) => {
     const dataChunks = []
-    request.on('error', (error) => {
-      reject(error)
-    })
 
-    request.on('data', (chunk) => {
-      dataChunks.push(chunk)
-    })
-
+    request.on('error', reject)
+    request.on('data', (chunk) => dataChunks.push(chunk))
     request.on('end', () => {
       const data = Buffer.concat(dataChunks).toString()
       try {

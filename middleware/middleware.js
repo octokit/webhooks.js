@@ -40,7 +40,7 @@ function middleware (state, request, response, next) {
 
   debug(`${eventName} event received (id: ${id})`)
 
-  getPayload(request)
+  return getPayload(request)
 
     .then((payload) => {
       return verifyAndReceive(state, {
