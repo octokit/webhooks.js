@@ -2,6 +2,7 @@ module.exports = middleware
 
 const isntWebhook = require('./isnt-webhook')
 const getMissingHeaders = require('./get-missing-headers')
+const getPayload = require('./get-payload')
 const verifyAndReceive = require('./verify-and-receive')
 
 const debug = require('debug')('webhooks:receiver')
@@ -39,48 +40,23 @@ function middleware (state, request, response, next) {
 
   debug(`${eventName} event received (id: ${id})`)
 
-  const dataChunks = []
-  request.on('error', (error) => {
-    response.statusCode = 500
-    response.end(error.toString())
-  })
+  getPayload(request)
 
-  request.on('data', (chunk) => {
-    dataChunks.push(chunk)
-  })
-
-  request.on('end', () => {
-    const data = Buffer.concat(dataChunks).toString()
-    let payload
-
-    try {
-      payload = JSON.parse(data)
-    } catch (error) {
-      response.statusCode = 400
-      response.end('Invalid JSON')
-      return
-    }
-
-    verifyAndReceive(state, {
-      id: id,
-      name: eventName,
-      payload,
-      signature
+    .then((payload) => {
+      return verifyAndReceive(state, {
+        id: id,
+        name: eventName,
+        payload,
+        signature
+      })
     })
 
-      .then(() => {
-        response.end('ok\n')
-      })
+    .then(() => {
+      response.end('ok\n')
+    })
 
-      .catch(error => {
-        response.statusCode = error.status || 500
-        response.end(error.toString())
-      })
-  })
-
-  // refiring data and end event if request.body exists since they won't fire on their own
-  if (request.body) {
-    request.emit('data', Buffer.from(JSON.stringify(request.body)))
-    request.emit('end')
-  }
+    .catch(error => {
+      response.statusCode = error.status || 500
+      response.end(error.toString())
+    })
 }
