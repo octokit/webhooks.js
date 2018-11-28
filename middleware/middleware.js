@@ -2,6 +2,7 @@ module.exports = middleware
 
 const isntWebhook = require('./isnt-webhook')
 const getMissingHeaders = require('./get-missing-headers')
+const getPayload = require('./get-payload')
 const verifyAndReceive = require('./verify-and-receive')
 
 const debug = require('debug')('webhooks:receiver')
@@ -39,42 +40,23 @@ function middleware (state, request, response, next) {
 
   debug(`${eventName} event received (id: ${id})`)
 
-  const dataChunks = []
-  request.on('error', (error) => {
-    response.statusCode = 500
-    response.end(error.toString())
-  })
+  return getPayload(request)
 
-  request.on('data', (chunk) => {
-    dataChunks.push(chunk)
-  })
-
-  request.on('end', () => {
-    const data = Buffer.concat(dataChunks).toString()
-    let payload
-
-    try {
-      payload = JSON.parse(data)
-    } catch (error) {
-      response.statusCode = 400
-      response.end('Invalid JSON')
-      return
-    }
-
-    verifyAndReceive(state, {
-      id: id,
-      name: eventName,
-      payload,
-      signature
+    .then((payload) => {
+      return verifyAndReceive(state, {
+        id: id,
+        name: eventName,
+        payload,
+        signature
+      })
     })
 
-      .then(() => {
-        response.end('ok\n')
-      })
+    .then(() => {
+      response.end('ok\n')
+    })
 
-      .catch(error => {
-        response.statusCode = error.status || 500
-        response.end(error.toString())
-      })
-  })
+    .catch(error => {
+      response.statusCode = error.status || 500
+      response.end(error.toString())
+    })
 }

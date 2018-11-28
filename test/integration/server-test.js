@@ -90,6 +90,53 @@ test('POST / with push event payload', (t) => {
     .catch(t.error)
 })
 
+test('POST / with push event payload (request.body already parsed)', (t) => {
+  t.plan(2)
+
+  const api = new Webhooks({ secret: 'mysecret' })
+  const dataChunks = []
+  const server = http.createServer((req, res) => {
+    req.once('data', chunk => dataChunks.push(chunk))
+    req.once('end', () => {
+      req.body = JSON.parse(Buffer.concat(dataChunks).toString())
+      api.middleware(req, res)
+
+      setTimeout(() => {
+        res.statusCode = 500
+        res.end('Middleware timeout')
+      }, 3000)
+    })
+  })
+
+  api.on('push', (event) => {
+    t.is(event.id, '123e4567-e89b-12d3-a456-426655440000')
+  })
+
+  promisify(server.listen.bind(server))(this.port)
+
+    .then(() => {
+      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
+        headers: {
+          'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
+          'X-GitHub-Event': 'push',
+          'X-Hub-Signature': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
+        }
+      })
+    })
+
+    .catch(t.error)
+
+    .then(result => {
+      t.is(result.status, 200)
+    })
+
+    .then(() => {
+      server.close()
+    })
+
+    .catch(t.error)
+})
+
 test('POST / with push event payload (no signature)', (t) => {
   const api = new Webhooks({ secret: 'mysecret' })
   const server = http.createServer(api.middleware)
