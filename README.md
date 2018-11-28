@@ -33,6 +33,31 @@ require('http').createServer(webhooks.middleware).listen(3000)
 // can now receive webhook events at port 3000
 ```
 
+## Local development
+
+You can receive webhooks on your local machine or even browser using [EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) and [smee.io](https://smee.io/).
+
+Go to [smee.io](https://smee.io/) and <kbd>Start a new channel</kbd>. Then copy the "Webhook Proxy URL" and
+
+1. enter it in the GitHub App’s "Webhook URL" input
+2. pass it to the [EventSource](https://github.com/EventSource/eventsource) constructor, see below
+
+```js
+const webhookProxyUrl = 'https://smee.io/IrqK0nopGAOc847' // replace with your own Webhook Proxy URL
+const source = new EventSource(webhookProxyUrl)
+source.onmessage = (event) => {
+  const webhookEvent = JSON.parse(event.data)
+  webhooks.verifyAndReceive({
+    id: webhookEvent['x-request-id'],
+    name: webhookEvent['x-github-event'],
+    signature: webhookEvent['x-hub-signature'],
+    payload: webhookEvent.body
+  }).catch(console.error)
+}
+```
+
+`EventSource` is a native browser API and can be polyfilled for browsers that don’t support it. In node, you can use the [`eventsource`](https://github.com/EventSource/eventsource) package: install with `npm install eventsource`, then `const EventSource = require('eventsource')`
+
 ## API
 
 1. [Constructor](#constructor)
