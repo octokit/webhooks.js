@@ -11,6 +11,7 @@
   "check_suite.rerequested",
   "commit_comment",
   "commit_comment.created",
+  "content_reference",
   "create",
   "delete",
   "deployment",
