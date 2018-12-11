@@ -15,7 +15,7 @@
     "debug": "^4.0.0"
   },
   "devDependencies": {
-    "@octokit/webhooks-definitions": "1.1.0",
+    "@octokit/webhooks-definitions": "1.1.1",
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
     "coveralls": "^3.0.0",
