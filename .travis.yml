@@ -14,6 +14,8 @@ branches:
 
 stages:
   - test
+  - name: greenkeeper-webhooks-update
+    if: branch =~ ^greenkeeper/@octokit/webhooks-definitions
   - name: release
     if: branch = master AND type IN (push)
 
@@ -23,7 +25,18 @@ jobs:
       node_js: 6
     - node_js: 8
     - node_js: 10
-    # run semantic-release and coverage in paralell
+
+    # when updating @octokit/routes, run "generate-routes" script and push
+    # new routes.json file to the pull request
+    - stage: greenkeeper-webhooks-update
+      node_js: lts/*
+      script:
+        - git checkout $TRAVIS_BRANCH
+        - npm run generate-known-webhooks
+        # commit changes and push back to branch on GitHub. If there are no changes then exit without error
+        - 'git commit -a -m "build: known webhooks" --author="Octokit Bot <octokitbot@martynus.net>" && git push "https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG" ${TRAVIS_BRANCH} || true'
+
+    # run semantic-release and coverage in parallel
     - stage: release
       script: npm run semantic-release
     - script:
