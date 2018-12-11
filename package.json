@@ -15,6 +15,7 @@
     "debug": "^4.0.0"
   },
   "devDependencies": {
+    "@octokit/webhooks-definitions": "1.1.0",
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
     "coveralls": "^3.0.0",
@@ -29,6 +30,7 @@
   "scripts": {
     "coverage": "tap --coverage-report=html && open coverage/lcov-report/index.html",
     "coverage:upload": "tap --coverage-report=text-lcov | coveralls",
+    "generate-known-webhooks": "node scripts/update-known-events.js",
     "pretest": "standard",
     "test": "tap --100 --coverage 'test/**/*-test.js'",
     "semantic-release": "semantic-release"
