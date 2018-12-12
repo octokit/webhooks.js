@@ -21,11 +21,6 @@ stages:
 
 jobs:
   include:
-    - stage: test
-      node_js: 6
-    - node_js: 8
-    - node_js: 10
-
     # when updating @octokit/routes, run "generate-routes" script and push
     # new routes.json file to the pull request
     - stage: greenkeeper-webhooks-update
@@ -35,6 +30,11 @@ jobs:
         - npm run generate-known-webhooks
         # commit changes and push back to branch on GitHub. If there are no changes then exit without error
         - 'git commit -a -m "build: known webhooks" --author="Octokit Bot <octokitbot@martynus.net>" && git push "https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG" ${TRAVIS_BRANCH} || true'
+
+    - stage: test
+      node_js: 6
+    - node_js: 8
+    - node_js: 10
 
     # run semantic-release and coverage in parallel
     - stage: release
