@@ -57,6 +57,10 @@ export namespace Webhooks {
     ${signatures.join('\n')}
 
     public sign (data: any): string
+    public verify (eventPayload: WebhookPayloadWithRepository, signature: string): boolean
+    public verifyAndReceive (options: {id: string, name: string, payload: WebhookPayloadWithRepository, signature: string}): Promise<void>
+    public receive (options: {id: string, name: string, payload: WebhookPayloadWithRepository}): Promise<void>
+    public removeListener (event: string, callback: (event: Webhooks.WebhookEvent) => void): void
   }
 }
 `
