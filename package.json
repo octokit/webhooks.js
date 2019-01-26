@@ -15,12 +15,15 @@
     "debug": "^4.0.0"
   },
   "devDependencies": {
+    "@gimenete/type-writer": "^0.1.3",
     "@octokit/webhooks-definitions": "1.1.2",
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
     "coveralls": "^3.0.0",
     "get-port": "^4.0.0",
+    "pascal-case": "^2.0.1",
     "pify": "^4.0.0",
+    "prettier": "^1.16.1",
     "proxyquire": "^2.0.0",
     "semantic-release": "^15.0.0",
     "simple-mock": "^0.8.0",
@@ -34,7 +37,8 @@
     "generate-known-webhooks": "node scripts/update-known-events.js",
     "pretest": "standard",
     "test": "tap --100 --coverage 'test/**/*-test.js'",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "generate-types": "node generate-types.js"
   },
   "repository": {
     "type": "git",
@@ -42,5 +46,6 @@
   },
   "keywords": [],
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
-  "license": "MIT"
+  "license": "MIT",
+  "types": "index.d.ts"
 }
