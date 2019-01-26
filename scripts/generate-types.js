@@ -55,16 +55,16 @@ export namespace Webhooks {
     constructor (options: Options)
 
     public on (event: 'error', callback: (event: Error) => void): void
-    public on (event: '*' | string[], callback: (event: Webhooks.WebhookEvent<any>) => void): void
-    public on (event: '*' | string[], callback: (event: Webhooks.WebhookEvent<any>) => Promise<void>): void
+    public on (event: '*' | string | string[], callback: (event: Webhooks.WebhookEvent<any>) => void): void
+    public on (event: '*' | string | string[], callback: (event: Webhooks.WebhookEvent<any>) => Promise<void>): void
     ${signatures.join('\n')}
 
     public sign (data: any): string
-    public verify (eventPayload: WebhookPayloadWithRepository, signature: string): boolean
+    public verify (eventPayload: any, signature: string): boolean
     public verifyAndReceive (options: { id: string, name: string, payload: any, signature: string }): Promise<void>
     public receive (options: { id: string, name: string, payload: any }): Promise<void>
-    public removeListener (event: string, callback: (event: Webhooks.WebhookEvent<any>) => void): void
-    public removeListener (event: string, callback: (event: Webhooks.WebhookEvent<any>) =>Promise<void>): void
+    public removeListener (event: string | string[], callback: (event: Webhooks.WebhookEvent<any>) => void): void
+    public removeListener (event: string | string[], callback: (event: Webhooks.WebhookEvent<any>) => Promise<void>): void
     public middleware (request: http.ClientRequest, response: http.ServerResponse, next: (err?: any) => void): (request: IncomingMessage, response: ServerResponse) => void
   }
 }
