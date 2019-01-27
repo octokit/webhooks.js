@@ -34,7 +34,7 @@ const definition = `
 
 import http = require('http')
 
-export type Options = {
+type Options = {
   secret: string
   path?: string
   transform?: (event: Webhooks.WebhookEvent<any>) => Webhooks.WebhookEvent<any> & { [key: string]: any }
