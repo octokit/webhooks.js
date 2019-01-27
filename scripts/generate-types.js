@@ -24,7 +24,7 @@ webhooks.forEach(({ name, actions, examples }) => {
     ...actions.map(action => `'${name}.${action}'`)
   ].join(' | ')
   signatures.push(`
-    public on (event: ${events}, callback: (event: Webhooks.WebhookEvent<Webhhooks.${typeName}>) => void): void
+    public on (event: ${events}, callback: (event: Webhooks.WebhookEvent<Webhooks.${typeName}>) => void): void
     public on (event: ${events}, callback: (event: Webhooks.WebhookEvent<Webhooks.${typeName}>) => Promise<void>): void
   `)
 })
