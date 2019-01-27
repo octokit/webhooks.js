@@ -40,7 +40,7 @@ type Options = {
   transform?: (event: Webhooks.WebhookEvent<any>) => Webhooks.WebhookEvent<any> & { [key: string]: any }
 }
 
-namespace Webhooks {
+declare namespace Webhooks {
   ${tw.generate('typescript', { inlined: false })}
 
   interface WebhookEvent<T> {
@@ -53,8 +53,8 @@ namespace Webhooks {
   }
 }
 
-class Webhooks {
-  constructor (options: Options)
+declare class Webhooks {
+  constructor (options?: Options)
 
   public on (event: 'error', callback: (event: Error) => void): void
   public on (event: '*' | string[], callback: (event: Webhooks.WebhookEvent<any>) => Promise<void> | void): void
