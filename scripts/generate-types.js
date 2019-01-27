@@ -24,8 +24,7 @@ webhooks.forEach(({ name, actions, examples }) => {
     ...actions.map(action => `'${name}.${action}'`)
   ].join(' | ')
   signatures.push(`
-    public on (event: ${events}, callback: (event: Webhooks.WebhookEvent<Webhooks.${typeName}>) => void): void
-    public on (event: ${events}, callback: (event: Webhooks.WebhookEvent<Webhooks.${typeName}>) => Promise<void>): void
+    public on (event: ${events}, callback: (event: Webhooks.WebhookEvent<Webhooks.${typeName}>) => (Promise<void> | void)): void
   `)
 })
 
@@ -58,8 +57,7 @@ class Webhooks {
   constructor (options: Options)
 
   public on (event: 'error', callback: (event: Error) => void): void
-  public on (event: '*' | string | string[], callback: (event: Webhooks.WebhookEvent<any>) => void): void
-  public on (event: '*' | string | string[], callback: (event: Webhooks.WebhookEvent<any>) => Promise<void>): void
+  public on (event: '*' | string[], callback: (event: Webhooks.WebhookEvent<any>) => Promise<void> | void): void
   ${signatures.join('\n')}
 
   public sign (data: any): string
