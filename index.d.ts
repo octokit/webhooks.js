@@ -3,3472 +3,3457 @@
 
 import http = require("http");
 
-export type Options = {
+type Options = {
   secret: string;
   path?: string;
   transform?: (
-    event: Webhooks.WebhookEvent<T>
-  ) => Webhooks.WebhookEvent<T> & { [key: string]: any };
+    event: Webhooks.WebhookEvent<any>
+  ) => Webhooks.WebhookEvent<any> & { [key: string]: any };
 };
 
-export type WebhookPayloadWatchSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadWatch = {
-  action: string;
-  repository: PayloadRepository;
-  sender: WebhookPayloadWatchSender;
-};
-export type WebhookPayloadTeamAddSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadTeamAddOrganization = {
-  login: string;
-  id: number;
-  node_id: string;
-  url: string;
-  repos_url: string;
-  events_url: string;
-  hooks_url: string;
-  issues_url: string;
-  members_url: string;
-  public_members_url: string;
-  avatar_url: string;
-  description: string;
-};
-export type WebhookPayloadTeamAddTeam = {
-  name: string;
-  id: number;
-  node_id: string;
-  slug: string;
-  description: string;
-  privacy: string;
-  url: string;
-  members_url: string;
-  repositories_url: string;
-  permission: string;
-};
-export type WebhookPayloadTeamAdd = {
-  team: WebhookPayloadTeamAddTeam;
-  repository: PayloadRepository;
-  organization: WebhookPayloadTeamAddOrganization;
-  sender: WebhookPayloadTeamAddSender;
-};
-export type WebhookPayloadTeamSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadTeamOrganization = {
-  login: string;
-  id: number;
-  node_id: string;
-  url: string;
-  repos_url: string;
-  events_url: string;
-  hooks_url: string;
-  issues_url: string;
-  members_url: string;
-  public_members_url: string;
-  avatar_url: string;
-  description: string;
-};
-export type PayloadRepositoryPermissions = {
-  pull: boolean;
-  push: boolean;
-  admin: boolean;
-};
-export type WebhookPayloadTeamTeam = {
-  name: string;
-  id: number;
-  node_id: string;
-  slug: string;
-  description: string;
-  privacy: string;
-  url: string;
-  members_url: string;
-  repositories_url: string;
-  permission: string;
-};
-export type WebhookPayloadTeam = {
-  action: string;
-  team: WebhookPayloadTeamTeam;
-  repository: PayloadRepository;
-  organization: WebhookPayloadTeamOrganization;
-  sender: WebhookPayloadTeamSender;
-};
-export type WebhookPayloadStatusSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadStatusBranchesItemCommit = {
-  sha: string;
-  url: string;
-};
-export type WebhookPayloadStatusBranchesItem = {
-  name: string;
-  commit: WebhookPayloadStatusBranchesItemCommit;
-};
-export type WebhookPayloadStatusCommitCommitter = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadStatusCommitAuthor = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadStatusCommitCommitVerification = {
-  verified: boolean;
-  reason: string;
-  signature: string;
-  payload: string;
-};
-export type WebhookPayloadStatusCommitCommitTree = { sha: string; url: string };
-export type WebhookPayloadStatusCommitCommitCommitter = {
-  name: string;
-  email: string;
-  date: string;
-};
-export type WebhookPayloadStatusCommitCommitAuthor = {
-  name: string;
-  email: string;
-  date: string;
-};
-export type WebhookPayloadStatusCommitCommit = {
-  author: WebhookPayloadStatusCommitCommitAuthor;
-  committer: WebhookPayloadStatusCommitCommitCommitter;
-  message: string;
-  tree: WebhookPayloadStatusCommitCommitTree;
-  url: string;
-  comment_count: number;
-  verification: WebhookPayloadStatusCommitCommitVerification;
-};
-export type WebhookPayloadStatusCommit = {
-  sha: string;
-  node_id: string;
-  commit: WebhookPayloadStatusCommitCommit;
-  url: string;
-  html_url: string;
-  comments_url: string;
-  author: WebhookPayloadStatusCommitAuthor;
-  committer: WebhookPayloadStatusCommitCommitter;
-  parents: Array<any>;
-};
-export type WebhookPayloadStatus = {
-  id: number;
-  sha: string;
-  name: string;
-  target_url: null;
-  context: string;
-  description: null;
-  state: string;
-  commit: WebhookPayloadStatusCommit;
-  branches: Array<WebhookPayloadStatusBranchesItem>;
-  created_at: string;
-  updated_at: string;
-  repository: PayloadRepository;
-  sender: WebhookPayloadStatusSender;
-};
-export type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemFirstPatchedVersion = {
-  identifier: string;
-};
-export type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemPackage = {
-  ecosystem: string;
-  name: string;
-};
-export type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItem = {
-  package: WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemPackage;
-  severity: string;
-  vulnerable_version_range: string;
-  first_patched_version: WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemFirstPatchedVersion;
-};
-export type WebhookPayloadSecurityAdvisorySecurityAdvisoryReferencesItem = {
-  url: string;
-};
-export type WebhookPayloadSecurityAdvisorySecurityAdvisoryIdentifiersItem = {
-  value: string;
-  type: string;
-};
-export type WebhookPayloadSecurityAdvisorySecurityAdvisory = {
-  ghsa_id: string;
-  summary: string;
-  description: string;
-  severity: string;
-  identifiers: Array<
-    WebhookPayloadSecurityAdvisorySecurityAdvisoryIdentifiersItem
-  >;
-  references: Array<
-    WebhookPayloadSecurityAdvisorySecurityAdvisoryReferencesItem
-  >;
-  published_at: string;
-  updated_at: string;
-  withdrawn_at: null;
-  vulnerabilities: Array<
-    WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItem
-  >;
-};
-export type WebhookPayloadSecurityAdvisory = {
-  action: string;
-  security_advisory: WebhookPayloadSecurityAdvisorySecurityAdvisory;
-};
-export type WebhookPayloadRepositoryVulnerabilityAlertAlertDismisser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadRepositoryVulnerabilityAlertAlert = {
-  id: number;
-  affected_range: string;
-  affected_package_name: string;
-  external_reference: string;
-  external_identifier: string;
-  fixed_in: string;
-  dismisser: WebhookPayloadRepositoryVulnerabilityAlertAlertDismisser;
-  dismiss_reason: string;
-  dismissed_at: string;
-};
-export type WebhookPayloadRepositoryVulnerabilityAlert = {
-  action: string;
-  alert: WebhookPayloadRepositoryVulnerabilityAlertAlert;
-};
-export type WebhookPayloadRepositoryImportSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadRepositoryImportOrganization = {
-  login: string;
-  id: number;
-  node_id: string;
-  url: string;
-  repos_url: string;
-  events_url: string;
-  hooks_url: string;
-  issues_url: string;
-  members_url: string;
-  public_members_url: string;
-  avatar_url: string;
-  description: string;
-};
-export type WebhookPayloadRepositoryImport = {
-  status: string;
-  repository: PayloadRepository;
-  organization: WebhookPayloadRepositoryImportOrganization;
-  sender: WebhookPayloadRepositoryImportSender;
-};
-export type WebhookPayloadRepositorySender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadRepository = {
-  action: string;
-  repository: PayloadRepository;
-  sender: WebhookPayloadRepositorySender;
-};
-export type WebhookPayloadReleaseSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadReleaseReleaseAuthor = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadReleaseRelease = {
-  url: string;
-  assets_url: string;
-  upload_url: string;
-  html_url: string;
-  id: number;
-  node_id: string;
-  tag_name: string;
-  target_commitish: string;
-  name: null;
-  draft: boolean;
-  author: WebhookPayloadReleaseReleaseAuthor;
-  prerelease: boolean;
-  created_at: string;
-  published_at: string;
-  assets: Array<any>;
-  tarball_url: string;
-  zipball_url: string;
-  body: null;
-};
-export type WebhookPayloadRelease = {
-  action: string;
-  release: WebhookPayloadReleaseRelease;
-  repository: PayloadRepository;
-  sender: WebhookPayloadReleaseSender;
-};
-export type WebhookPayloadPushSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPushPusher = { name: string; email: string };
-export type WebhookPayloadPush = {
-  ref: string;
-  before: string;
-  after: string;
-  created: boolean;
-  deleted: boolean;
-  forced: boolean;
-  base_ref: null;
-  compare: string;
-  commits: Array<any>;
-  head_commit: null;
-  repository: PayloadRepository;
-  pusher: WebhookPayloadPushPusher;
-  sender: WebhookPayloadPushSender;
-};
-export type WebhookPayloadPullRequestReviewCommentSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestLinksStatuses = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestLinksCommits = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestLinksReviewComment = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestLinksReviewComments = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestLinksComments = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestLinksIssue = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestLinksHtml = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestLinksSelf = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestLinks = {
-  self: WebhookPayloadPullRequestReviewCommentPullRequestLinksSelf;
-  html: WebhookPayloadPullRequestReviewCommentPullRequestLinksHtml;
-  issue: WebhookPayloadPullRequestReviewCommentPullRequestLinksIssue;
-  comments: WebhookPayloadPullRequestReviewCommentPullRequestLinksComments;
-  review_comments: WebhookPayloadPullRequestReviewCommentPullRequestLinksReviewComments;
-  review_comment: WebhookPayloadPullRequestReviewCommentPullRequestLinksReviewComment;
-  commits: WebhookPayloadPullRequestReviewCommentPullRequestLinksCommits;
-  statuses: WebhookPayloadPullRequestReviewCommentPullRequestLinksStatuses;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestBaseRepoOwner = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestBaseRepo = {
-  id: number;
-  node_id: string;
-  name: string;
-  full_name: string;
-  owner: WebhookPayloadPullRequestReviewCommentPullRequestBaseRepoOwner;
-  private: boolean;
-  html_url: string;
-  description: null;
-  fork: boolean;
-  url: string;
-  forks_url: string;
-  keys_url: string;
-  collaborators_url: string;
-  teams_url: string;
-  hooks_url: string;
-  issue_events_url: string;
-  events_url: string;
-  assignees_url: string;
-  branches_url: string;
-  tags_url: string;
-  blobs_url: string;
-  git_tags_url: string;
-  git_refs_url: string;
-  trees_url: string;
-  statuses_url: string;
-  languages_url: string;
-  stargazers_url: string;
-  contributors_url: string;
-  subscribers_url: string;
-  subscription_url: string;
-  commits_url: string;
-  git_commits_url: string;
-  comments_url: string;
-  issue_comment_url: string;
-  contents_url: string;
-  compare_url: string;
-  merges_url: string;
-  archive_url: string;
-  downloads_url: string;
-  issues_url: string;
-  pulls_url: string;
-  milestones_url: string;
-  notifications_url: string;
-  labels_url: string;
-  releases_url: string;
-  deployments_url: string;
-  created_at: string;
-  updated_at: string;
-  pushed_at: string;
-  git_url: string;
-  ssh_url: string;
-  clone_url: string;
-  svn_url: string;
-  homepage: null;
-  size: number;
-  stargazers_count: number;
-  watchers_count: number;
-  language: null;
-  has_issues: boolean;
-  has_projects: boolean;
-  has_downloads: boolean;
-  has_wiki: boolean;
-  has_pages: boolean;
-  forks_count: number;
-  mirror_url: null;
-  archived: boolean;
-  open_issues_count: number;
-  license: null;
-  forks: number;
-  open_issues: number;
-  watchers: number;
-  default_branch: string;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestBaseUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestBase = {
-  label: string;
-  ref: string;
-  sha: string;
-  user: WebhookPayloadPullRequestReviewCommentPullRequestBaseUser;
-  repo: WebhookPayloadPullRequestReviewCommentPullRequestBaseRepo;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestHeadRepoOwner = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestHeadRepo = {
-  id: number;
-  node_id: string;
-  name: string;
-  full_name: string;
-  owner: WebhookPayloadPullRequestReviewCommentPullRequestHeadRepoOwner;
-  private: boolean;
-  html_url: string;
-  description: null;
-  fork: boolean;
-  url: string;
-  forks_url: string;
-  keys_url: string;
-  collaborators_url: string;
-  teams_url: string;
-  hooks_url: string;
-  issue_events_url: string;
-  events_url: string;
-  assignees_url: string;
-  branches_url: string;
-  tags_url: string;
-  blobs_url: string;
-  git_tags_url: string;
-  git_refs_url: string;
-  trees_url: string;
-  statuses_url: string;
-  languages_url: string;
-  stargazers_url: string;
-  contributors_url: string;
-  subscribers_url: string;
-  subscription_url: string;
-  commits_url: string;
-  git_commits_url: string;
-  comments_url: string;
-  issue_comment_url: string;
-  contents_url: string;
-  compare_url: string;
-  merges_url: string;
-  archive_url: string;
-  downloads_url: string;
-  issues_url: string;
-  pulls_url: string;
-  milestones_url: string;
-  notifications_url: string;
-  labels_url: string;
-  releases_url: string;
-  deployments_url: string;
-  created_at: string;
-  updated_at: string;
-  pushed_at: string;
-  git_url: string;
-  ssh_url: string;
-  clone_url: string;
-  svn_url: string;
-  homepage: null;
-  size: number;
-  stargazers_count: number;
-  watchers_count: number;
-  language: null;
-  has_issues: boolean;
-  has_projects: boolean;
-  has_downloads: boolean;
-  has_wiki: boolean;
-  has_pages: boolean;
-  forks_count: number;
-  mirror_url: null;
-  archived: boolean;
-  open_issues_count: number;
-  license: null;
-  forks: number;
-  open_issues: number;
-  watchers: number;
-  default_branch: string;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestHeadUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestHead = {
-  label: string;
-  ref: string;
-  sha: string;
-  user: WebhookPayloadPullRequestReviewCommentPullRequestHeadUser;
-  repo: WebhookPayloadPullRequestReviewCommentPullRequestHeadRepo;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequestUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewCommentPullRequest = {
-  url: string;
-  id: number;
-  node_id: string;
-  html_url: string;
-  diff_url: string;
-  patch_url: string;
-  issue_url: string;
-  number: number;
-  state: string;
-  locked: boolean;
-  title: string;
-  user: WebhookPayloadPullRequestReviewCommentPullRequestUser;
-  body: string;
-  created_at: string;
-  updated_at: string;
-  closed_at: null;
-  merged_at: null;
-  merge_commit_sha: string;
-  assignee: null;
-  assignees: Array<any>;
-  requested_reviewers: Array<any>;
-  requested_teams: Array<any>;
-  labels: Array<any>;
-  milestone: null;
-  commits_url: string;
-  review_comments_url: string;
-  review_comment_url: string;
-  comments_url: string;
-  statuses_url: string;
-  head: WebhookPayloadPullRequestReviewCommentPullRequestHead;
-  base: WebhookPayloadPullRequestReviewCommentPullRequestBase;
-  _links: WebhookPayloadPullRequestReviewCommentPullRequestLinks;
-  author_association: string;
-};
-export type WebhookPayloadPullRequestReviewCommentCommentLinksPullRequest = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewCommentCommentLinksHtml = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewCommentCommentLinksSelf = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewCommentCommentLinks = {
-  self: WebhookPayloadPullRequestReviewCommentCommentLinksSelf;
-  html: WebhookPayloadPullRequestReviewCommentCommentLinksHtml;
-  pull_request: WebhookPayloadPullRequestReviewCommentCommentLinksPullRequest;
-};
-export type WebhookPayloadPullRequestReviewCommentCommentUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewCommentComment = {
-  url: string;
-  pull_request_review_id: number;
-  id: number;
-  node_id: string;
-  diff_hunk: string;
-  path: string;
-  position: number;
-  original_position: number;
-  commit_id: string;
-  original_commit_id: string;
-  user: WebhookPayloadPullRequestReviewCommentCommentUser;
-  body: string;
-  created_at: string;
-  updated_at: string;
-  html_url: string;
-  pull_request_url: string;
-  author_association: string;
-  _links: WebhookPayloadPullRequestReviewCommentCommentLinks;
-};
-export type WebhookPayloadPullRequestReviewComment = {
-  action: string;
-  comment: WebhookPayloadPullRequestReviewCommentComment;
-  pull_request: WebhookPayloadPullRequestReviewCommentPullRequest;
-  repository: PayloadRepository;
-  sender: WebhookPayloadPullRequestReviewCommentSender;
-};
-export type WebhookPayloadPullRequestReviewSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewPullRequestLinksStatuses = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewPullRequestLinksCommits = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewPullRequestLinksReviewComment = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewPullRequestLinksReviewComments = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewPullRequestLinksComments = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewPullRequestLinksIssue = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewPullRequestLinksHtml = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewPullRequestLinksSelf = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewPullRequestLinks = {
-  self: WebhookPayloadPullRequestReviewPullRequestLinksSelf;
-  html: WebhookPayloadPullRequestReviewPullRequestLinksHtml;
-  issue: WebhookPayloadPullRequestReviewPullRequestLinksIssue;
-  comments: WebhookPayloadPullRequestReviewPullRequestLinksComments;
-  review_comments: WebhookPayloadPullRequestReviewPullRequestLinksReviewComments;
-  review_comment: WebhookPayloadPullRequestReviewPullRequestLinksReviewComment;
-  commits: WebhookPayloadPullRequestReviewPullRequestLinksCommits;
-  statuses: WebhookPayloadPullRequestReviewPullRequestLinksStatuses;
-};
-export type WebhookPayloadPullRequestReviewPullRequestBaseRepoOwner = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewPullRequestBaseRepo = {
-  id: number;
-  node_id: string;
-  name: string;
-  full_name: string;
-  owner: WebhookPayloadPullRequestReviewPullRequestBaseRepoOwner;
-  private: boolean;
-  html_url: string;
-  description: null;
-  fork: boolean;
-  url: string;
-  forks_url: string;
-  keys_url: string;
-  collaborators_url: string;
-  teams_url: string;
-  hooks_url: string;
-  issue_events_url: string;
-  events_url: string;
-  assignees_url: string;
-  branches_url: string;
-  tags_url: string;
-  blobs_url: string;
-  git_tags_url: string;
-  git_refs_url: string;
-  trees_url: string;
-  statuses_url: string;
-  languages_url: string;
-  stargazers_url: string;
-  contributors_url: string;
-  subscribers_url: string;
-  subscription_url: string;
-  commits_url: string;
-  git_commits_url: string;
-  comments_url: string;
-  issue_comment_url: string;
-  contents_url: string;
-  compare_url: string;
-  merges_url: string;
-  archive_url: string;
-  downloads_url: string;
-  issues_url: string;
-  pulls_url: string;
-  milestones_url: string;
-  notifications_url: string;
-  labels_url: string;
-  releases_url: string;
-  deployments_url: string;
-  created_at: string;
-  updated_at: string;
-  pushed_at: string;
-  git_url: string;
-  ssh_url: string;
-  clone_url: string;
-  svn_url: string;
-  homepage: null;
-  size: number;
-  stargazers_count: number;
-  watchers_count: number;
-  language: null;
-  has_issues: boolean;
-  has_projects: boolean;
-  has_downloads: boolean;
-  has_wiki: boolean;
-  has_pages: boolean;
-  forks_count: number;
-  mirror_url: null;
-  archived: boolean;
-  open_issues_count: number;
-  license: null;
-  forks: number;
-  open_issues: number;
-  watchers: number;
-  default_branch: string;
-};
-export type WebhookPayloadPullRequestReviewPullRequestBaseUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewPullRequestBase = {
-  label: string;
-  ref: string;
-  sha: string;
-  user: WebhookPayloadPullRequestReviewPullRequestBaseUser;
-  repo: WebhookPayloadPullRequestReviewPullRequestBaseRepo;
-};
-export type WebhookPayloadPullRequestReviewPullRequestHeadRepoOwner = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewPullRequestHeadRepo = {
-  id: number;
-  node_id: string;
-  name: string;
-  full_name: string;
-  owner: WebhookPayloadPullRequestReviewPullRequestHeadRepoOwner;
-  private: boolean;
-  html_url: string;
-  description: null;
-  fork: boolean;
-  url: string;
-  forks_url: string;
-  keys_url: string;
-  collaborators_url: string;
-  teams_url: string;
-  hooks_url: string;
-  issue_events_url: string;
-  events_url: string;
-  assignees_url: string;
-  branches_url: string;
-  tags_url: string;
-  blobs_url: string;
-  git_tags_url: string;
-  git_refs_url: string;
-  trees_url: string;
-  statuses_url: string;
-  languages_url: string;
-  stargazers_url: string;
-  contributors_url: string;
-  subscribers_url: string;
-  subscription_url: string;
-  commits_url: string;
-  git_commits_url: string;
-  comments_url: string;
-  issue_comment_url: string;
-  contents_url: string;
-  compare_url: string;
-  merges_url: string;
-  archive_url: string;
-  downloads_url: string;
-  issues_url: string;
-  pulls_url: string;
-  milestones_url: string;
-  notifications_url: string;
-  labels_url: string;
-  releases_url: string;
-  deployments_url: string;
-  created_at: string;
-  updated_at: string;
-  pushed_at: string;
-  git_url: string;
-  ssh_url: string;
-  clone_url: string;
-  svn_url: string;
-  homepage: null;
-  size: number;
-  stargazers_count: number;
-  watchers_count: number;
-  language: null;
-  has_issues: boolean;
-  has_projects: boolean;
-  has_downloads: boolean;
-  has_wiki: boolean;
-  has_pages: boolean;
-  forks_count: number;
-  mirror_url: null;
-  archived: boolean;
-  open_issues_count: number;
-  license: null;
-  forks: number;
-  open_issues: number;
-  watchers: number;
-  default_branch: string;
-};
-export type WebhookPayloadPullRequestReviewPullRequestHeadUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewPullRequestHead = {
-  label: string;
-  ref: string;
-  sha: string;
-  user: WebhookPayloadPullRequestReviewPullRequestHeadUser;
-  repo: WebhookPayloadPullRequestReviewPullRequestHeadRepo;
-};
-export type WebhookPayloadPullRequestReviewPullRequestUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewPullRequest = {
-  url: string;
-  id: number;
-  node_id: string;
-  html_url: string;
-  diff_url: string;
-  patch_url: string;
-  issue_url: string;
-  number: number;
-  state: string;
-  locked: boolean;
-  title: string;
-  user: WebhookPayloadPullRequestReviewPullRequestUser;
-  body: string;
-  created_at: string;
-  updated_at: string;
-  closed_at: null;
-  merged_at: null;
-  merge_commit_sha: string;
-  assignee: null;
-  assignees: Array<any>;
-  requested_reviewers: Array<any>;
-  requested_teams: Array<any>;
-  labels: Array<any>;
-  milestone: null;
-  commits_url: string;
-  review_comments_url: string;
-  review_comment_url: string;
-  comments_url: string;
-  statuses_url: string;
-  head: WebhookPayloadPullRequestReviewPullRequestHead;
-  base: WebhookPayloadPullRequestReviewPullRequestBase;
-  _links: WebhookPayloadPullRequestReviewPullRequestLinks;
-  author_association: string;
-};
-export type WebhookPayloadPullRequestReviewReviewLinksPullRequest = {
-  href: string;
-};
-export type WebhookPayloadPullRequestReviewReviewLinksHtml = { href: string };
-export type WebhookPayloadPullRequestReviewReviewLinks = {
-  html: WebhookPayloadPullRequestReviewReviewLinksHtml;
-  pull_request: WebhookPayloadPullRequestReviewReviewLinksPullRequest;
-};
-export type WebhookPayloadPullRequestReviewReviewUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestReviewReview = {
-  id: number;
-  node_id: string;
-  user: WebhookPayloadPullRequestReviewReviewUser;
-  body: null;
-  commit_id: string;
-  submitted_at: string;
-  state: string;
-  html_url: string;
-  pull_request_url: string;
-  author_association: string;
-  _links: WebhookPayloadPullRequestReviewReviewLinks;
-};
-export type WebhookPayloadPullRequestReview = {
-  action: string;
-  review: WebhookPayloadPullRequestReviewReview;
-  pull_request: WebhookPayloadPullRequestReviewPullRequest;
-  repository: PayloadRepository;
-  sender: WebhookPayloadPullRequestReviewSender;
-};
-export type WebhookPayloadPullRequestSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestPullRequestLinksStatuses = {
-  href: string;
-};
-export type WebhookPayloadPullRequestPullRequestLinksCommits = { href: string };
-export type WebhookPayloadPullRequestPullRequestLinksReviewComment = {
-  href: string;
-};
-export type WebhookPayloadPullRequestPullRequestLinksReviewComments = {
-  href: string;
-};
-export type WebhookPayloadPullRequestPullRequestLinksComments = {
-  href: string;
-};
-export type WebhookPayloadPullRequestPullRequestLinksIssue = { href: string };
-export type WebhookPayloadPullRequestPullRequestLinksHtml = { href: string };
-export type WebhookPayloadPullRequestPullRequestLinksSelf = { href: string };
-export type WebhookPayloadPullRequestPullRequestLinks = {
-  self: WebhookPayloadPullRequestPullRequestLinksSelf;
-  html: WebhookPayloadPullRequestPullRequestLinksHtml;
-  issue: WebhookPayloadPullRequestPullRequestLinksIssue;
-  comments: WebhookPayloadPullRequestPullRequestLinksComments;
-  review_comments: WebhookPayloadPullRequestPullRequestLinksReviewComments;
-  review_comment: WebhookPayloadPullRequestPullRequestLinksReviewComment;
-  commits: WebhookPayloadPullRequestPullRequestLinksCommits;
-  statuses: WebhookPayloadPullRequestPullRequestLinksStatuses;
-};
-export type WebhookPayloadPullRequestPullRequestBaseRepoOwner = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestPullRequestBaseRepo = {
-  id: number;
-  node_id: string;
-  name: string;
-  full_name: string;
-  owner: WebhookPayloadPullRequestPullRequestBaseRepoOwner;
-  private: boolean;
-  html_url: string;
-  description: null;
-  fork: boolean;
-  url: string;
-  forks_url: string;
-  keys_url: string;
-  collaborators_url: string;
-  teams_url: string;
-  hooks_url: string;
-  issue_events_url: string;
-  events_url: string;
-  assignees_url: string;
-  branches_url: string;
-  tags_url: string;
-  blobs_url: string;
-  git_tags_url: string;
-  git_refs_url: string;
-  trees_url: string;
-  statuses_url: string;
-  languages_url: string;
-  stargazers_url: string;
-  contributors_url: string;
-  subscribers_url: string;
-  subscription_url: string;
-  commits_url: string;
-  git_commits_url: string;
-  comments_url: string;
-  issue_comment_url: string;
-  contents_url: string;
-  compare_url: string;
-  merges_url: string;
-  archive_url: string;
-  downloads_url: string;
-  issues_url: string;
-  pulls_url: string;
-  milestones_url: string;
-  notifications_url: string;
-  labels_url: string;
-  releases_url: string;
-  deployments_url: string;
-  created_at: string;
-  updated_at: string;
-  pushed_at: string;
-  git_url: string;
-  ssh_url: string;
-  clone_url: string;
-  svn_url: string;
-  homepage: null;
-  size: number;
-  stargazers_count: number;
-  watchers_count: number;
-  language: null;
-  has_issues: boolean;
-  has_projects: boolean;
-  has_downloads: boolean;
-  has_wiki: boolean;
-  has_pages: boolean;
-  forks_count: number;
-  mirror_url: null;
-  archived: boolean;
-  open_issues_count: number;
-  license: null;
-  forks: number;
-  open_issues: number;
-  watchers: number;
-  default_branch: string;
-};
-export type WebhookPayloadPullRequestPullRequestBaseUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestPullRequestBase = {
-  label: string;
-  ref: string;
-  sha: string;
-  user: WebhookPayloadPullRequestPullRequestBaseUser;
-  repo: WebhookPayloadPullRequestPullRequestBaseRepo;
-};
-export type WebhookPayloadPullRequestPullRequestHeadRepoOwner = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestPullRequestHeadRepo = {
-  id: number;
-  node_id: string;
-  name: string;
-  full_name: string;
-  owner: WebhookPayloadPullRequestPullRequestHeadRepoOwner;
-  private: boolean;
-  html_url: string;
-  description: null;
-  fork: boolean;
-  url: string;
-  forks_url: string;
-  keys_url: string;
-  collaborators_url: string;
-  teams_url: string;
-  hooks_url: string;
-  issue_events_url: string;
-  events_url: string;
-  assignees_url: string;
-  branches_url: string;
-  tags_url: string;
-  blobs_url: string;
-  git_tags_url: string;
-  git_refs_url: string;
-  trees_url: string;
-  statuses_url: string;
-  languages_url: string;
-  stargazers_url: string;
-  contributors_url: string;
-  subscribers_url: string;
-  subscription_url: string;
-  commits_url: string;
-  git_commits_url: string;
-  comments_url: string;
-  issue_comment_url: string;
-  contents_url: string;
-  compare_url: string;
-  merges_url: string;
-  archive_url: string;
-  downloads_url: string;
-  issues_url: string;
-  pulls_url: string;
-  milestones_url: string;
-  notifications_url: string;
-  labels_url: string;
-  releases_url: string;
-  deployments_url: string;
-  created_at: string;
-  updated_at: string;
-  pushed_at: string;
-  git_url: string;
-  ssh_url: string;
-  clone_url: string;
-  svn_url: string;
-  homepage: null;
-  size: number;
-  stargazers_count: number;
-  watchers_count: number;
-  language: null;
-  has_issues: boolean;
-  has_projects: boolean;
-  has_downloads: boolean;
-  has_wiki: boolean;
-  has_pages: boolean;
-  forks_count: number;
-  mirror_url: null;
-  archived: boolean;
-  open_issues_count: number;
-  license: null;
-  forks: number;
-  open_issues: number;
-  watchers: number;
-  default_branch: string;
-};
-export type WebhookPayloadPullRequestPullRequestHeadUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestPullRequestHead = {
-  label: string;
-  ref: string;
-  sha: string;
-  user: WebhookPayloadPullRequestPullRequestHeadUser;
-  repo: WebhookPayloadPullRequestPullRequestHeadRepo;
-};
-export type WebhookPayloadPullRequestPullRequestUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPullRequestPullRequest = {
-  url: string;
-  id: number;
-  node_id: string;
-  html_url: string;
-  diff_url: string;
-  patch_url: string;
-  issue_url: string;
-  number: number;
-  state: string;
-  locked: boolean;
-  title: string;
-  user: WebhookPayloadPullRequestPullRequestUser;
-  body: string;
-  created_at: string;
-  updated_at: string;
-  closed_at: string;
-  merged_at: null;
-  merge_commit_sha: string;
-  assignee: null;
-  assignees: Array<any>;
-  requested_reviewers: Array<any>;
-  requested_teams: Array<any>;
-  labels: Array<any>;
-  milestone: null;
-  commits_url: string;
-  review_comments_url: string;
-  review_comment_url: string;
-  comments_url: string;
-  statuses_url: string;
-  head: WebhookPayloadPullRequestPullRequestHead;
-  base: WebhookPayloadPullRequestPullRequestBase;
-  _links: WebhookPayloadPullRequestPullRequestLinks;
-  author_association: string;
-  merged: boolean;
-  mergeable: boolean;
-  rebaseable: boolean;
-  mergeable_state: string;
-  merged_by: null;
-  comments: number;
-  review_comments: number;
-  maintainer_can_modify: boolean;
-  commits: number;
-  additions: number;
-  deletions: number;
-  changed_files: number;
-};
-export type WebhookPayloadPullRequest = {
-  action: string;
-  number: number;
-  pull_request: WebhookPayloadPullRequestPullRequest;
-  repository: PayloadRepository;
-  sender: WebhookPayloadPullRequestSender;
-};
-export type WebhookPayloadPublicSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPublic = {
-  repository: PayloadRepository;
-  sender: WebhookPayloadPublicSender;
-};
-export type WebhookPayloadProjectSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadProjectProjectCreator = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadProjectProject = {
-  owner_url: string;
-  url: string;
-  html_url: string;
-  columns_url: string;
-  id: number;
-  node_id: string;
-  name: string;
-  body: string;
-  number: number;
-  state: string;
-  creator: WebhookPayloadProjectProjectCreator;
-  created_at: string;
-  updated_at: string;
-};
-export type WebhookPayloadProject = {
-  action: string;
-  project: WebhookPayloadProjectProject;
-  repository: PayloadRepository;
-  sender: WebhookPayloadProjectSender;
-};
-export type WebhookPayloadProjectColumnSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadProjectColumnProjectColumn = {
-  url: string;
-  project_url: string;
-  cards_url: string;
-  id: number;
-  node_id: string;
-  name: string;
-  created_at: string;
-  updated_at: string;
-};
-export type WebhookPayloadProjectColumn = {
-  action: string;
-  project_column: WebhookPayloadProjectColumnProjectColumn;
-  repository: PayloadRepository;
-  sender: WebhookPayloadProjectColumnSender;
-};
-export type WebhookPayloadProjectCardSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadProjectCardProjectCardCreator = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadProjectCardProjectCard = {
-  url: string;
-  project_url: string;
-  column_url: string;
-  column_id: number;
-  id: number;
-  node_id: string;
-  note: string;
-  creator: WebhookPayloadProjectCardProjectCardCreator;
-  created_at: string;
-  updated_at: string;
-};
-export type WebhookPayloadProjectCard = {
-  action: string;
-  project_card: WebhookPayloadProjectCardProjectCard;
-  repository: PayloadRepository;
-  sender: WebhookPayloadProjectCardSender;
-};
-export type WebhookPayloadPageBuildSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPageBuildBuildPusher = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadPageBuildBuildError = { message: null };
-export type WebhookPayloadPageBuildBuild = {
-  url: string;
-  status: string;
-  error: WebhookPayloadPageBuildBuildError;
-  pusher: WebhookPayloadPageBuildBuildPusher;
-  commit: string;
-  duration: number;
-  created_at: string;
-  updated_at: string;
-};
-export type WebhookPayloadPageBuild = {
-  id: number;
-  build: WebhookPayloadPageBuildBuild;
-  repository: PayloadRepository;
-  sender: WebhookPayloadPageBuildSender;
-};
-export type WebhookPayloadOrgBlockSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadOrgBlockOrganization = {
-  login: string;
-  id: number;
-  node_id: string;
-  url: string;
-  repos_url: string;
-  events_url: string;
-  hooks_url: string;
-  issues_url: string;
-  members_url: string;
-  public_members_url: string;
-  avatar_url: string;
-  description: string;
-};
-export type WebhookPayloadOrgBlockBlockedUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadOrgBlock = {
-  action: string;
-  blocked_user: WebhookPayloadOrgBlockBlockedUser;
-  organization: WebhookPayloadOrgBlockOrganization;
-  sender: WebhookPayloadOrgBlockSender;
-};
-export type WebhookPayloadOrganizationSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadOrganizationOrganization = {
-  login: string;
-  id: number;
-  node_id: string;
-  url: string;
-  repos_url: string;
-  events_url: string;
-  hooks_url: string;
-  issues_url: string;
-  members_url: string;
-  public_members_url: string;
-  avatar_url: string;
-  description: string;
-};
-export type WebhookPayloadOrganizationMembershipUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadOrganizationMembership = {
-  url: string;
-  state: string;
-  role: string;
-  organization_url: string;
-  user: WebhookPayloadOrganizationMembershipUser;
-};
-export type WebhookPayloadOrganization = {
-  action: string;
-  membership: WebhookPayloadOrganizationMembership;
-  organization: WebhookPayloadOrganizationOrganization;
-  sender: WebhookPayloadOrganizationSender;
-};
-export type WebhookPayloadMilestoneSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadMilestoneMilestoneCreator = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadMilestoneMilestone = {
-  url: string;
-  html_url: string;
-  labels_url: string;
-  id: number;
-  node_id: string;
-  number: number;
-  title: string;
-  description: string;
-  creator: WebhookPayloadMilestoneMilestoneCreator;
-  open_issues: number;
-  closed_issues: number;
-  state: string;
-  created_at: string;
-  updated_at: string;
-  due_on: string;
-  closed_at: null;
-};
-export type WebhookPayloadMilestone = {
-  action: string;
-  milestone: WebhookPayloadMilestoneMilestone;
-  repository: PayloadRepository;
-  sender: WebhookPayloadMilestoneSender;
-};
-export type WebhookPayloadMembershipOrganization = {
-  login: string;
-  id: number;
-  node_id: string;
-  url: string;
-  repos_url: string;
-  events_url: string;
-  hooks_url: string;
-  issues_url: string;
-  members_url: string;
-  public_members_url: string;
-  avatar_url: string;
-  description: string;
-};
-export type WebhookPayloadMembershipTeam = {
-  name: string;
-  id: number;
-  node_id: string;
-  slug: string;
-  description: string;
-  privacy: string;
-  url: string;
-  members_url: string;
-  repositories_url: string;
-  permission: string;
-};
-export type WebhookPayloadMembershipSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadMembershipMember = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadMembership = {
-  action: string;
-  scope: string;
-  member: WebhookPayloadMembershipMember;
-  sender: WebhookPayloadMembershipSender;
-  team: WebhookPayloadMembershipTeam;
-  organization: WebhookPayloadMembershipOrganization;
-};
-export type WebhookPayloadMemberSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadMemberChangesPermission = { from: string };
-export type WebhookPayloadMemberChanges = {
-  permission: WebhookPayloadMemberChangesPermission;
-};
-export type WebhookPayloadMemberMember = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadMember = {
-  action: string;
-  member: WebhookPayloadMemberMember;
-  changes: WebhookPayloadMemberChanges;
-  repository: PayloadRepository;
-  sender: WebhookPayloadMemberSender;
-};
-export type WebhookPayloadMarketplacePurchaseMarketplacePurchasePlan = {
-  id: number;
-  name: string;
-  description: string;
-  monthly_price_in_cents: number;
-  yearly_price_in_cents: number;
-  price_model: string;
-  has_free_trial: boolean;
-  unit_name: string;
-  bullets: Array<string>;
-};
-export type WebhookPayloadMarketplacePurchaseMarketplacePurchaseAccount = {
-  type: string;
-  id: number;
-  login: string;
-  organization_billing_email: string;
-};
-export type WebhookPayloadMarketplacePurchaseMarketplacePurchase = {
-  account: WebhookPayloadMarketplacePurchaseMarketplacePurchaseAccount;
-  billing_cycle: string;
-  unit_count: number;
-  on_free_trial: boolean;
-  free_trial_ends_on: null;
-  next_billing_date: string;
-  plan: WebhookPayloadMarketplacePurchaseMarketplacePurchasePlan;
-};
-export type WebhookPayloadMarketplacePurchaseSender = {
-  login: string;
-  id: number;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-  email: string;
-};
-export type WebhookPayloadMarketplacePurchase = {
-  action: string;
-  effective_date: string;
-  sender: WebhookPayloadMarketplacePurchaseSender;
-  marketplace_purchase: WebhookPayloadMarketplacePurchaseMarketplacePurchase;
-};
-export type WebhookPayloadLabelSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadLabelLabel = {
-  id: number;
-  node_id: string;
-  url: string;
-  name: string;
-  color: string;
-  default: boolean;
-};
-export type WebhookPayloadLabel = {
-  action: string;
-  label: WebhookPayloadLabelLabel;
-  repository: PayloadRepository;
-  sender: WebhookPayloadLabelSender;
-};
-export type WebhookPayloadIssuesSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadIssuesChanges = {};
-export type WebhookPayloadIssuesIssueLabelsItem = {
-  id: number;
-  node_id: string;
-  url: string;
-  name: string;
-  color: string;
-  default: boolean;
-};
-export type WebhookPayloadIssuesIssueUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadIssuesIssue = {
-  url: string;
-  repository_url: string;
-  labels_url: string;
-  comments_url: string;
-  events_url: string;
-  html_url: string;
-  id: number;
-  node_id: string;
-  number: number;
-  title: string;
-  user: WebhookPayloadIssuesIssueUser;
-  labels: Array<WebhookPayloadIssuesIssueLabelsItem>;
-  state: string;
-  locked: boolean;
-  assignee: null;
-  assignees: Array<any>;
-  milestone: null;
-  comments: number;
-  created_at: string;
-  updated_at: string;
-  closed_at: null;
-  author_association: string;
-  body: string;
-};
-export type WebhookPayloadIssues = {
-  action: string;
-  issue: WebhookPayloadIssuesIssue;
-  changes: WebhookPayloadIssuesChanges;
-  repository: PayloadRepository;
-  sender: WebhookPayloadIssuesSender;
-};
-export type WebhookPayloadIssueCommentSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadIssueCommentCommentUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadIssueCommentComment = {
-  url: string;
-  html_url: string;
-  issue_url: string;
-  id: number;
-  node_id: string;
-  user: WebhookPayloadIssueCommentCommentUser;
-  created_at: string;
-  updated_at: string;
-  author_association: string;
-  body: string;
-};
-export type WebhookPayloadIssueCommentIssueLabelsItem = {
-  id: number;
-  node_id: string;
-  url: string;
-  name: string;
-  color: string;
-  default: boolean;
-};
-export type WebhookPayloadIssueCommentIssueUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadIssueCommentIssue = {
-  url: string;
-  repository_url: string;
-  labels_url: string;
-  comments_url: string;
-  events_url: string;
-  html_url: string;
-  id: number;
-  node_id: string;
-  number: number;
-  title: string;
-  user: WebhookPayloadIssueCommentIssueUser;
-  labels: Array<WebhookPayloadIssueCommentIssueLabelsItem>;
-  state: string;
-  locked: boolean;
-  assignee: null;
-  assignees: Array<any>;
-  milestone: null;
-  comments: number;
-  created_at: string;
-  updated_at: string;
-  closed_at: null;
-  author_association: string;
-  body: string;
-};
-export type WebhookPayloadIssueComment = {
-  action: string;
-  issue: WebhookPayloadIssueCommentIssue;
-  comment: WebhookPayloadIssueCommentComment;
-  repository: PayloadRepository;
-  sender: WebhookPayloadIssueCommentSender;
-};
-export type WebhookPayloadInstallationRepositoriesSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem = {
-  id: number;
-  name: string;
-  full_name: string;
-  private: boolean;
-};
-export type WebhookPayloadInstallationRepositoriesInstallationPermissions = {
-  metadata: string;
-  contents: string;
-  issues: string;
-};
-export type WebhookPayloadInstallationRepositoriesInstallationAccount = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadInstallationRepositoriesInstallation = {
-  id: number;
-  account: WebhookPayloadInstallationRepositoriesInstallationAccount;
-  repository_selection: string;
-  access_tokens_url: string;
-  repositories_url: string;
-  html_url: string;
-  app_id: number;
-  target_id: number;
-  target_type: string;
-  permissions: WebhookPayloadInstallationRepositoriesInstallationPermissions;
-  events: Array<string>;
-  created_at: number;
-  updated_at: number;
-  single_file_name: string;
-};
-export type WebhookPayloadInstallationRepositories =
-  | Array<WebhookPayloadInstallationRepositoriesItem>
-  | {
-      action: string;
-      installation: WebhookPayloadInstallationRepositoriesInstallation;
-      repository_selection: string;
-      repositories_added: Array<any>;
-      repositories_removed: Array<
-        WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem
-      >;
-      sender: WebhookPayloadInstallationRepositoriesSender;
-    };
-export type WebhookPayloadInstallationSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadInstallationRepositoriesItem = {
-  id: number;
-  name: string;
-  full_name: string;
-  private: boolean;
-};
-export type WebhookPayloadInstallationInstallationPermissions = {
-  metadata: string;
-  contents: string;
-  issues: string;
-};
-export type WebhookPayloadInstallationInstallationAccount = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadInstallationInstallation = {
-  id: number;
-  account: WebhookPayloadInstallationInstallationAccount;
-  repository_selection: string;
-  access_tokens_url: string;
-  repositories_url: string;
-  html_url: string;
-  app_id: number;
-  target_id: number;
-  target_type: string;
-  permissions: WebhookPayloadInstallationInstallationPermissions;
-  events: Array<string>;
-  created_at: number;
-  updated_at: number;
-  single_file_name: string;
-};
-export type WebhookPayloadInstallation = {
-  action: string;
-  installation: WebhookPayloadInstallationInstallation;
-  repositories: WebhookPayloadInstallationRepositories;
-  sender: WebhookPayloadInstallationSender;
-};
-export type WebhookPayloadGollumSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadGollumPagesItem = {
-  page_name: string;
-  title: string;
-  summary: null;
-  action: string;
-  sha: string;
-  html_url: string;
-};
-export type WebhookPayloadGollum = {
-  pages: Array<WebhookPayloadGollumPagesItem>;
-  repository: PayloadRepository;
-  sender: WebhookPayloadGollumSender;
-};
-export type WebhookPayloadGithubAppAuthorizationSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadGithubAppAuthorization = {
-  action: string;
-  sender: WebhookPayloadGithubAppAuthorizationSender;
-};
-export type WebhookPayloadForkSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadForkForkeeOwner = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadForkForkee = {
-  id: number;
-  node_id: string;
-  name: string;
-  full_name: string;
-  owner: WebhookPayloadForkForkeeOwner;
-  private: boolean;
-  html_url: string;
-  description: null;
-  fork: boolean;
-  url: string;
-  forks_url: string;
-  keys_url: string;
-  collaborators_url: string;
-  teams_url: string;
-  hooks_url: string;
-  issue_events_url: string;
-  events_url: string;
-  assignees_url: string;
-  branches_url: string;
-  tags_url: string;
-  blobs_url: string;
-  git_tags_url: string;
-  git_refs_url: string;
-  trees_url: string;
-  statuses_url: string;
-  languages_url: string;
-  stargazers_url: string;
-  contributors_url: string;
-  subscribers_url: string;
-  subscription_url: string;
-  commits_url: string;
-  git_commits_url: string;
-  comments_url: string;
-  issue_comment_url: string;
-  contents_url: string;
-  compare_url: string;
-  merges_url: string;
-  archive_url: string;
-  downloads_url: string;
-  issues_url: string;
-  pulls_url: string;
-  milestones_url: string;
-  notifications_url: string;
-  labels_url: string;
-  releases_url: string;
-  deployments_url: string;
-  created_at: string;
-  updated_at: string;
-  pushed_at: string;
-  git_url: string;
-  ssh_url: string;
-  clone_url: string;
-  svn_url: string;
-  homepage: null;
-  size: number;
-  stargazers_count: number;
-  watchers_count: number;
-  language: null;
-  has_issues: boolean;
-  has_projects: boolean;
-  has_downloads: boolean;
-  has_wiki: boolean;
-  has_pages: boolean;
-  forks_count: number;
-  mirror_url: null;
-  archived: boolean;
-  open_issues_count: number;
-  license: null;
-  forks: number;
-  open_issues: number;
-  watchers: number;
-  default_branch: string;
-  public: boolean;
-};
-export type WebhookPayloadFork = {
-  forkee: WebhookPayloadForkForkee;
-  repository: PayloadRepository;
-  sender: WebhookPayloadForkSender;
-};
-export type WebhookPayloadDeploymentStatusSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadDeploymentStatusDeploymentCreator = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadDeploymentStatusDeploymentPayload = {};
-export type WebhookPayloadDeploymentStatusDeployment = {
-  url: string;
-  id: number;
-  node_id: string;
-  sha: string;
-  ref: string;
-  task: string;
-  payload: WebhookPayloadDeploymentStatusDeploymentPayload;
-  environment: string;
-  description: null;
-  creator: WebhookPayloadDeploymentStatusDeploymentCreator;
-  created_at: string;
-  updated_at: string;
-  statuses_url: string;
-  repository_url: string;
-};
-export type WebhookPayloadDeploymentStatusDeploymentStatusCreator = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadDeploymentStatusDeploymentStatus = {
-  url: string;
-  id: number;
-  node_id: string;
-  state: string;
-  creator: WebhookPayloadDeploymentStatusDeploymentStatusCreator;
-  description: string;
-  target_url: string;
-  created_at: string;
-  updated_at: string;
-  deployment_url: string;
-  repository_url: string;
-};
-export type WebhookPayloadDeploymentStatus = {
-  deployment_status: WebhookPayloadDeploymentStatusDeploymentStatus;
-  deployment: WebhookPayloadDeploymentStatusDeployment;
-  repository: PayloadRepository;
-  sender: WebhookPayloadDeploymentStatusSender;
-};
-export type WebhookPayloadDeploymentSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadDeploymentDeploymentCreator = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadDeploymentDeploymentPayload = {};
-export type WebhookPayloadDeploymentDeployment = {
-  url: string;
-  id: number;
-  node_id: string;
-  sha: string;
-  ref: string;
-  task: string;
-  payload: WebhookPayloadDeploymentDeploymentPayload;
-  environment: string;
-  description: null;
-  creator: WebhookPayloadDeploymentDeploymentCreator;
-  created_at: string;
-  updated_at: string;
-  statuses_url: string;
-  repository_url: string;
-};
-export type WebhookPayloadDeployment = {
-  deployment: WebhookPayloadDeploymentDeployment;
-  repository: PayloadRepository;
-  sender: WebhookPayloadDeploymentSender;
-};
-export type WebhookPayloadDeleteSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadDelete = {
-  ref: string;
-  ref_type: string;
-  pusher_type: string;
-  repository: PayloadRepository;
-  sender: WebhookPayloadDeleteSender;
-};
-export type WebhookPayloadCreateSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadCreate = {
-  ref: string;
-  ref_type: string;
-  master_branch: string;
-  description: null;
-  pusher_type: string;
-  repository: PayloadRepository;
-  sender: WebhookPayloadCreateSender;
-};
-export type WebhookPayloadCommitCommentSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadCommitCommentCommentUser = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadCommitCommentComment = {
-  url: string;
-  html_url: string;
-  id: number;
-  node_id: string;
-  user: WebhookPayloadCommitCommentCommentUser;
-  position: null;
-  line: null;
-  path: null;
-  commit_id: string;
-  created_at: string;
-  updated_at: string;
-  author_association: string;
-  body: string;
-};
-export type WebhookPayloadCommitComment = {
-  action: string;
-  comment: WebhookPayloadCommitCommentComment;
-  repository: PayloadRepository;
-  sender: WebhookPayloadCommitCommentSender;
-};
-export type WebhookPayloadCheckSuiteInstallation = { id: number };
-export type WebhookPayloadCheckSuiteSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadCheckSuiteOrganization = {
-  login: string;
-  id: number;
-  node_id: string;
-  url: string;
-  repos_url: string;
-  events_url: string;
-  hooks_url: string;
-  issues_url: string;
-  members_url: string;
-  public_members_url: string;
-  avatar_url: string;
-  description: string;
-};
-export type WebhookPayloadCheckSuiteCheckSuiteHeadCommitCommitter = {
-  name: string;
-  email: string;
-};
-export type WebhookPayloadCheckSuiteCheckSuiteHeadCommitAuthor = {
-  name: string;
-  email: string;
-};
-export type WebhookPayloadCheckSuiteCheckSuiteHeadCommit = {
-  id: string;
-  tree_id: string;
-  message: string;
-  timestamp: string;
-  author: WebhookPayloadCheckSuiteCheckSuiteHeadCommitAuthor;
-  committer: WebhookPayloadCheckSuiteCheckSuiteHeadCommitCommitter;
-};
-export type WebhookPayloadCheckSuiteCheckSuiteAppOwner = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadCheckSuiteCheckSuiteApp = {
-  id: number;
-  node_id: string;
-  owner: WebhookPayloadCheckSuiteCheckSuiteAppOwner;
-  name: string;
-  description: null;
-  external_url: string;
-  html_url: string;
-  created_at: string;
-  updated_at: string;
-};
-export type WebhookPayloadCheckSuiteCheckSuite = {
-  id: number;
-  head_branch: string;
-  head_sha: string;
-  status: string;
-  conclusion: string;
-  url: string;
-  before: string;
-  after: string;
-  pull_requests: Array<any>;
-  app: WebhookPayloadCheckSuiteCheckSuiteApp;
-  created_at: string;
-  updated_at: string;
-  latest_check_runs_count: number;
-  check_runs_url: string;
-  head_commit: WebhookPayloadCheckSuiteCheckSuiteHeadCommit;
-};
-export type WebhookPayloadCheckSuite = {
-  action: string;
-  check_suite: WebhookPayloadCheckSuiteCheckSuite;
-  repository: PayloadRepository;
-  organization: WebhookPayloadCheckSuiteOrganization;
-  sender: WebhookPayloadCheckSuiteSender;
-  installation: WebhookPayloadCheckSuiteInstallation;
-};
-export type WebhookPayloadCheckRunInstallation = { id: number };
-export type WebhookPayloadCheckRunSender = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadCheckRunOrganization = {
-  login: string;
-  id: number;
-  node_id: string;
-  url: string;
-  repos_url: string;
-  events_url: string;
-  hooks_url: string;
-  issues_url: string;
-  members_url: string;
-  public_members_url: string;
-  avatar_url: string;
-  description: string;
-};
-export type PayloadRepositoryOwner = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-  name?: string;
-  email?: string;
-};
-export type PayloadRepository = {
-  id: number;
-  node_id: string;
-  name: string;
-  full_name: string;
-  owner: PayloadRepositoryOwner;
-  private: boolean;
-  html_url: string;
-  description: null;
-  fork: boolean;
-  url: string;
-  forks_url: string;
-  keys_url: string;
-  collaborators_url: string;
-  teams_url: string;
-  hooks_url: string;
-  issue_events_url: string;
-  events_url: string;
-  assignees_url: string;
-  branches_url: string;
-  tags_url: string;
-  blobs_url: string;
-  git_tags_url: string;
-  git_refs_url: string;
-  trees_url: string;
-  statuses_url: string;
-  languages_url: string;
-  stargazers_url: string;
-  contributors_url: string;
-  subscribers_url: string;
-  subscription_url: string;
-  commits_url: string;
-  git_commits_url: string;
-  comments_url: string;
-  issue_comment_url: string;
-  contents_url: string;
-  compare_url: string;
-  merges_url: string;
-  archive_url: string;
-  downloads_url: string;
-  issues_url: string;
-  pulls_url: string;
-  milestones_url: string;
-  notifications_url: string;
-  labels_url: string;
-  releases_url: string;
-  deployments_url: string;
-  created_at: string | number;
-  updated_at: string;
-  pushed_at: string | number;
-  git_url: string;
-  ssh_url: string;
-  clone_url: string;
-  svn_url: string;
-  homepage: null;
-  size: number;
-  stargazers_count: number;
-  watchers_count: number;
-  language: null;
-  has_issues: boolean;
-  has_projects: boolean;
-  has_downloads: boolean;
-  has_wiki: boolean;
-  has_pages: boolean;
-  forks_count: number;
-  mirror_url: null;
-  archived: boolean;
-  open_issues_count: number;
-  license: null;
-  forks: number;
-  open_issues: number;
-  watchers: number;
-  default_branch: string;
-  stargazers?: number;
-  master_branch?: string;
-  permissions?: PayloadRepositoryPermissions;
-};
-export type WebhookPayloadCheckRunCheckRunAppOwner = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadCheckRunCheckRunApp = {
-  id: number;
-  node_id: string;
-  owner: WebhookPayloadCheckRunCheckRunAppOwner;
-  name: string;
-  description: null;
-  external_url: string;
-  html_url: string;
-  created_at: string;
-  updated_at: string;
-};
-export type WebhookPayloadCheckRunCheckRunCheckSuiteAppOwner = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-};
-export type WebhookPayloadCheckRunCheckRunCheckSuiteApp = {
-  id: number;
-  node_id: string;
-  owner: WebhookPayloadCheckRunCheckRunCheckSuiteAppOwner;
-  name: string;
-  description: null;
-  external_url: string;
-  html_url: string;
-  created_at: string;
-  updated_at: string;
-};
-export type WebhookPayloadCheckRunCheckRunCheckSuite = {
-  id: number;
-  head_branch: string;
-  head_sha: string;
-  status: string;
-  conclusion: string;
-  url: string;
-  before: string;
-  after: string;
-  pull_requests: Array<any>;
-  app: WebhookPayloadCheckRunCheckRunCheckSuiteApp;
-  created_at: string;
-  updated_at: string;
-};
-export type WebhookPayloadCheckRunCheckRunOutput = {
-  title: string;
-  summary: string;
-  text: string;
-  annotations_count: number;
-  annotations_url: string;
-};
-export type WebhookPayloadCheckRunCheckRun = {
-  id: number;
-  head_sha: string;
-  external_id: string;
-  url: string;
-  html_url: string;
-  status: string;
-  conclusion: string;
-  started_at: string;
-  completed_at: string;
-  output: WebhookPayloadCheckRunCheckRunOutput;
-  name: string;
-  check_suite: WebhookPayloadCheckRunCheckRunCheckSuite;
-  app: WebhookPayloadCheckRunCheckRunApp;
-  pull_requests: Array<any>;
-};
-export type WebhookPayloadCheckRun = {
-  action: string;
-  check_run: WebhookPayloadCheckRunCheckRun;
-  repository: PayloadRepository;
-  organization: WebhookPayloadCheckRunOrganization;
-  sender: WebhookPayloadCheckRunSender;
-  installation: WebhookPayloadCheckRunInstallation;
-};
+declare namespace Webhooks {
+  type WebhookPayloadWatchSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadWatch = {
+    action: string;
+    repository: PayloadRepository;
+    sender: WebhookPayloadWatchSender;
+  };
+  type WebhookPayloadTeamAddSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadTeamAddOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
+  type WebhookPayloadTeamAddTeam = {
+    name: string;
+    id: number;
+    node_id: string;
+    slug: string;
+    description: string;
+    privacy: string;
+    url: string;
+    members_url: string;
+    repositories_url: string;
+    permission: string;
+  };
+  type WebhookPayloadTeamAdd = {
+    team: WebhookPayloadTeamAddTeam;
+    repository: PayloadRepository;
+    organization: WebhookPayloadTeamAddOrganization;
+    sender: WebhookPayloadTeamAddSender;
+  };
+  type WebhookPayloadTeamSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadTeamOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
+  type PayloadRepositoryPermissions = {
+    pull: boolean;
+    push: boolean;
+    admin: boolean;
+  };
+  type WebhookPayloadTeamTeam = {
+    name: string;
+    id: number;
+    node_id: string;
+    slug: string;
+    description: string;
+    privacy: string;
+    url: string;
+    members_url: string;
+    repositories_url: string;
+    permission: string;
+  };
+  type WebhookPayloadTeam = {
+    action: string;
+    team: WebhookPayloadTeamTeam;
+    repository: PayloadRepository;
+    organization: WebhookPayloadTeamOrganization;
+    sender: WebhookPayloadTeamSender;
+  };
+  type WebhookPayloadStatusSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadStatusBranchesItemCommit = { sha: string; url: string };
+  type WebhookPayloadStatusBranchesItem = {
+    name: string;
+    commit: WebhookPayloadStatusBranchesItemCommit;
+  };
+  type WebhookPayloadStatusCommitCommitter = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadStatusCommitAuthor = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadStatusCommitCommitVerification = {
+    verified: boolean;
+    reason: string;
+    signature: string;
+    payload: string;
+  };
+  type WebhookPayloadStatusCommitCommitTree = { sha: string; url: string };
+  type WebhookPayloadStatusCommitCommitCommitter = {
+    name: string;
+    email: string;
+    date: string;
+  };
+  type WebhookPayloadStatusCommitCommitAuthor = {
+    name: string;
+    email: string;
+    date: string;
+  };
+  type WebhookPayloadStatusCommitCommit = {
+    author: WebhookPayloadStatusCommitCommitAuthor;
+    committer: WebhookPayloadStatusCommitCommitCommitter;
+    message: string;
+    tree: WebhookPayloadStatusCommitCommitTree;
+    url: string;
+    comment_count: number;
+    verification: WebhookPayloadStatusCommitCommitVerification;
+  };
+  type WebhookPayloadStatusCommit = {
+    sha: string;
+    node_id: string;
+    commit: WebhookPayloadStatusCommitCommit;
+    url: string;
+    html_url: string;
+    comments_url: string;
+    author: WebhookPayloadStatusCommitAuthor;
+    committer: WebhookPayloadStatusCommitCommitter;
+    parents: Array<any>;
+  };
+  type WebhookPayloadStatus = {
+    id: number;
+    sha: string;
+    name: string;
+    target_url: null;
+    context: string;
+    description: null;
+    state: string;
+    commit: WebhookPayloadStatusCommit;
+    branches: Array<WebhookPayloadStatusBranchesItem>;
+    created_at: string;
+    updated_at: string;
+    repository: PayloadRepository;
+    sender: WebhookPayloadStatusSender;
+  };
+  type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemFirstPatchedVersion = {
+    identifier: string;
+  };
+  type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemPackage = {
+    ecosystem: string;
+    name: string;
+  };
+  type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItem = {
+    package: WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemPackage;
+    severity: string;
+    vulnerable_version_range: string;
+    first_patched_version: WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemFirstPatchedVersion;
+  };
+  type WebhookPayloadSecurityAdvisorySecurityAdvisoryReferencesItem = {
+    url: string;
+  };
+  type WebhookPayloadSecurityAdvisorySecurityAdvisoryIdentifiersItem = {
+    value: string;
+    type: string;
+  };
+  type WebhookPayloadSecurityAdvisorySecurityAdvisory = {
+    ghsa_id: string;
+    summary: string;
+    description: string;
+    severity: string;
+    identifiers: Array<
+      WebhookPayloadSecurityAdvisorySecurityAdvisoryIdentifiersItem
+    >;
+    references: Array<
+      WebhookPayloadSecurityAdvisorySecurityAdvisoryReferencesItem
+    >;
+    published_at: string;
+    updated_at: string;
+    withdrawn_at: null;
+    vulnerabilities: Array<
+      WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItem
+    >;
+  };
+  type WebhookPayloadSecurityAdvisory = {
+    action: string;
+    security_advisory: WebhookPayloadSecurityAdvisorySecurityAdvisory;
+  };
+  type WebhookPayloadRepositoryVulnerabilityAlertAlertDismisser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadRepositoryVulnerabilityAlertAlert = {
+    id: number;
+    affected_range: string;
+    affected_package_name: string;
+    external_reference: string;
+    external_identifier: string;
+    fixed_in: string;
+    dismisser: WebhookPayloadRepositoryVulnerabilityAlertAlertDismisser;
+    dismiss_reason: string;
+    dismissed_at: string;
+  };
+  type WebhookPayloadRepositoryVulnerabilityAlert = {
+    action: string;
+    alert: WebhookPayloadRepositoryVulnerabilityAlertAlert;
+  };
+  type WebhookPayloadRepositoryImportSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadRepositoryImportOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
+  type WebhookPayloadRepositoryImport = {
+    status: string;
+    repository: PayloadRepository;
+    organization: WebhookPayloadRepositoryImportOrganization;
+    sender: WebhookPayloadRepositoryImportSender;
+  };
+  type WebhookPayloadRepositorySender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadRepository = {
+    action: string;
+    repository: PayloadRepository;
+    sender: WebhookPayloadRepositorySender;
+  };
+  type WebhookPayloadReleaseSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadReleaseReleaseAuthor = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadReleaseRelease = {
+    url: string;
+    assets_url: string;
+    upload_url: string;
+    html_url: string;
+    id: number;
+    node_id: string;
+    tag_name: string;
+    target_commitish: string;
+    name: null;
+    draft: boolean;
+    author: WebhookPayloadReleaseReleaseAuthor;
+    prerelease: boolean;
+    created_at: string;
+    published_at: string;
+    assets: Array<any>;
+    tarball_url: string;
+    zipball_url: string;
+    body: null;
+  };
+  type WebhookPayloadRelease = {
+    action: string;
+    release: WebhookPayloadReleaseRelease;
+    repository: PayloadRepository;
+    sender: WebhookPayloadReleaseSender;
+  };
+  type WebhookPayloadPushSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPushPusher = { name: string; email: string };
+  type WebhookPayloadPush = {
+    ref: string;
+    before: string;
+    after: string;
+    created: boolean;
+    deleted: boolean;
+    forced: boolean;
+    base_ref: null;
+    compare: string;
+    commits: Array<any>;
+    head_commit: null;
+    repository: PayloadRepository;
+    pusher: WebhookPayloadPushPusher;
+    sender: WebhookPayloadPushSender;
+  };
+  type WebhookPayloadPullRequestReviewCommentSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestLinksStatuses = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestLinksCommits = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestLinksReviewComment = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestLinksReviewComments = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestLinksComments = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestLinksIssue = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestLinksHtml = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestLinksSelf = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestLinks = {
+    self: WebhookPayloadPullRequestReviewCommentPullRequestLinksSelf;
+    html: WebhookPayloadPullRequestReviewCommentPullRequestLinksHtml;
+    issue: WebhookPayloadPullRequestReviewCommentPullRequestLinksIssue;
+    comments: WebhookPayloadPullRequestReviewCommentPullRequestLinksComments;
+    review_comments: WebhookPayloadPullRequestReviewCommentPullRequestLinksReviewComments;
+    review_comment: WebhookPayloadPullRequestReviewCommentPullRequestLinksReviewComment;
+    commits: WebhookPayloadPullRequestReviewCommentPullRequestLinksCommits;
+    statuses: WebhookPayloadPullRequestReviewCommentPullRequestLinksStatuses;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestBaseRepoOwner = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestBaseRepo = {
+    id: number;
+    node_id: string;
+    name: string;
+    full_name: string;
+    owner: WebhookPayloadPullRequestReviewCommentPullRequestBaseRepoOwner;
+    private: boolean;
+    html_url: string;
+    description: null;
+    fork: boolean;
+    url: string;
+    forks_url: string;
+    keys_url: string;
+    collaborators_url: string;
+    teams_url: string;
+    hooks_url: string;
+    issue_events_url: string;
+    events_url: string;
+    assignees_url: string;
+    branches_url: string;
+    tags_url: string;
+    blobs_url: string;
+    git_tags_url: string;
+    git_refs_url: string;
+    trees_url: string;
+    statuses_url: string;
+    languages_url: string;
+    stargazers_url: string;
+    contributors_url: string;
+    subscribers_url: string;
+    subscription_url: string;
+    commits_url: string;
+    git_commits_url: string;
+    comments_url: string;
+    issue_comment_url: string;
+    contents_url: string;
+    compare_url: string;
+    merges_url: string;
+    archive_url: string;
+    downloads_url: string;
+    issues_url: string;
+    pulls_url: string;
+    milestones_url: string;
+    notifications_url: string;
+    labels_url: string;
+    releases_url: string;
+    deployments_url: string;
+    created_at: string;
+    updated_at: string;
+    pushed_at: string;
+    git_url: string;
+    ssh_url: string;
+    clone_url: string;
+    svn_url: string;
+    homepage: null;
+    size: number;
+    stargazers_count: number;
+    watchers_count: number;
+    language: null;
+    has_issues: boolean;
+    has_projects: boolean;
+    has_downloads: boolean;
+    has_wiki: boolean;
+    has_pages: boolean;
+    forks_count: number;
+    mirror_url: null;
+    archived: boolean;
+    open_issues_count: number;
+    license: null;
+    forks: number;
+    open_issues: number;
+    watchers: number;
+    default_branch: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestBaseUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestBase = {
+    label: string;
+    ref: string;
+    sha: string;
+    user: WebhookPayloadPullRequestReviewCommentPullRequestBaseUser;
+    repo: WebhookPayloadPullRequestReviewCommentPullRequestBaseRepo;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestHeadRepoOwner = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestHeadRepo = {
+    id: number;
+    node_id: string;
+    name: string;
+    full_name: string;
+    owner: WebhookPayloadPullRequestReviewCommentPullRequestHeadRepoOwner;
+    private: boolean;
+    html_url: string;
+    description: null;
+    fork: boolean;
+    url: string;
+    forks_url: string;
+    keys_url: string;
+    collaborators_url: string;
+    teams_url: string;
+    hooks_url: string;
+    issue_events_url: string;
+    events_url: string;
+    assignees_url: string;
+    branches_url: string;
+    tags_url: string;
+    blobs_url: string;
+    git_tags_url: string;
+    git_refs_url: string;
+    trees_url: string;
+    statuses_url: string;
+    languages_url: string;
+    stargazers_url: string;
+    contributors_url: string;
+    subscribers_url: string;
+    subscription_url: string;
+    commits_url: string;
+    git_commits_url: string;
+    comments_url: string;
+    issue_comment_url: string;
+    contents_url: string;
+    compare_url: string;
+    merges_url: string;
+    archive_url: string;
+    downloads_url: string;
+    issues_url: string;
+    pulls_url: string;
+    milestones_url: string;
+    notifications_url: string;
+    labels_url: string;
+    releases_url: string;
+    deployments_url: string;
+    created_at: string;
+    updated_at: string;
+    pushed_at: string;
+    git_url: string;
+    ssh_url: string;
+    clone_url: string;
+    svn_url: string;
+    homepage: null;
+    size: number;
+    stargazers_count: number;
+    watchers_count: number;
+    language: null;
+    has_issues: boolean;
+    has_projects: boolean;
+    has_downloads: boolean;
+    has_wiki: boolean;
+    has_pages: boolean;
+    forks_count: number;
+    mirror_url: null;
+    archived: boolean;
+    open_issues_count: number;
+    license: null;
+    forks: number;
+    open_issues: number;
+    watchers: number;
+    default_branch: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestHeadUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestHead = {
+    label: string;
+    ref: string;
+    sha: string;
+    user: WebhookPayloadPullRequestReviewCommentPullRequestHeadUser;
+    repo: WebhookPayloadPullRequestReviewCommentPullRequestHeadRepo;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequest = {
+    url: string;
+    id: number;
+    node_id: string;
+    html_url: string;
+    diff_url: string;
+    patch_url: string;
+    issue_url: string;
+    number: number;
+    state: string;
+    locked: boolean;
+    title: string;
+    user: WebhookPayloadPullRequestReviewCommentPullRequestUser;
+    body: string;
+    created_at: string;
+    updated_at: string;
+    closed_at: null;
+    merged_at: null;
+    merge_commit_sha: string;
+    assignee: null;
+    assignees: Array<any>;
+    requested_reviewers: Array<any>;
+    requested_teams: Array<any>;
+    labels: Array<any>;
+    milestone: null;
+    commits_url: string;
+    review_comments_url: string;
+    review_comment_url: string;
+    comments_url: string;
+    statuses_url: string;
+    head: WebhookPayloadPullRequestReviewCommentPullRequestHead;
+    base: WebhookPayloadPullRequestReviewCommentPullRequestBase;
+    _links: WebhookPayloadPullRequestReviewCommentPullRequestLinks;
+    author_association: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentCommentLinksPullRequest = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentCommentLinksHtml = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentCommentLinksSelf = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewCommentCommentLinks = {
+    self: WebhookPayloadPullRequestReviewCommentCommentLinksSelf;
+    html: WebhookPayloadPullRequestReviewCommentCommentLinksHtml;
+    pull_request: WebhookPayloadPullRequestReviewCommentCommentLinksPullRequest;
+  };
+  type WebhookPayloadPullRequestReviewCommentCommentUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewCommentComment = {
+    url: string;
+    pull_request_review_id: number;
+    id: number;
+    node_id: string;
+    diff_hunk: string;
+    path: string;
+    position: number;
+    original_position: number;
+    commit_id: string;
+    original_commit_id: string;
+    user: WebhookPayloadPullRequestReviewCommentCommentUser;
+    body: string;
+    created_at: string;
+    updated_at: string;
+    html_url: string;
+    pull_request_url: string;
+    author_association: string;
+    _links: WebhookPayloadPullRequestReviewCommentCommentLinks;
+  };
+  type WebhookPayloadPullRequestReviewComment = {
+    action: string;
+    comment: WebhookPayloadPullRequestReviewCommentComment;
+    pull_request: WebhookPayloadPullRequestReviewCommentPullRequest;
+    repository: PayloadRepository;
+    sender: WebhookPayloadPullRequestReviewCommentSender;
+  };
+  type WebhookPayloadPullRequestReviewSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestLinksStatuses = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestLinksCommits = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestLinksReviewComment = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestLinksReviewComments = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestLinksComments = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestLinksIssue = { href: string };
+  type WebhookPayloadPullRequestReviewPullRequestLinksHtml = { href: string };
+  type WebhookPayloadPullRequestReviewPullRequestLinksSelf = { href: string };
+  type WebhookPayloadPullRequestReviewPullRequestLinks = {
+    self: WebhookPayloadPullRequestReviewPullRequestLinksSelf;
+    html: WebhookPayloadPullRequestReviewPullRequestLinksHtml;
+    issue: WebhookPayloadPullRequestReviewPullRequestLinksIssue;
+    comments: WebhookPayloadPullRequestReviewPullRequestLinksComments;
+    review_comments: WebhookPayloadPullRequestReviewPullRequestLinksReviewComments;
+    review_comment: WebhookPayloadPullRequestReviewPullRequestLinksReviewComment;
+    commits: WebhookPayloadPullRequestReviewPullRequestLinksCommits;
+    statuses: WebhookPayloadPullRequestReviewPullRequestLinksStatuses;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestBaseRepoOwner = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestBaseRepo = {
+    id: number;
+    node_id: string;
+    name: string;
+    full_name: string;
+    owner: WebhookPayloadPullRequestReviewPullRequestBaseRepoOwner;
+    private: boolean;
+    html_url: string;
+    description: null;
+    fork: boolean;
+    url: string;
+    forks_url: string;
+    keys_url: string;
+    collaborators_url: string;
+    teams_url: string;
+    hooks_url: string;
+    issue_events_url: string;
+    events_url: string;
+    assignees_url: string;
+    branches_url: string;
+    tags_url: string;
+    blobs_url: string;
+    git_tags_url: string;
+    git_refs_url: string;
+    trees_url: string;
+    statuses_url: string;
+    languages_url: string;
+    stargazers_url: string;
+    contributors_url: string;
+    subscribers_url: string;
+    subscription_url: string;
+    commits_url: string;
+    git_commits_url: string;
+    comments_url: string;
+    issue_comment_url: string;
+    contents_url: string;
+    compare_url: string;
+    merges_url: string;
+    archive_url: string;
+    downloads_url: string;
+    issues_url: string;
+    pulls_url: string;
+    milestones_url: string;
+    notifications_url: string;
+    labels_url: string;
+    releases_url: string;
+    deployments_url: string;
+    created_at: string;
+    updated_at: string;
+    pushed_at: string;
+    git_url: string;
+    ssh_url: string;
+    clone_url: string;
+    svn_url: string;
+    homepage: null;
+    size: number;
+    stargazers_count: number;
+    watchers_count: number;
+    language: null;
+    has_issues: boolean;
+    has_projects: boolean;
+    has_downloads: boolean;
+    has_wiki: boolean;
+    has_pages: boolean;
+    forks_count: number;
+    mirror_url: null;
+    archived: boolean;
+    open_issues_count: number;
+    license: null;
+    forks: number;
+    open_issues: number;
+    watchers: number;
+    default_branch: string;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestBaseUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestBase = {
+    label: string;
+    ref: string;
+    sha: string;
+    user: WebhookPayloadPullRequestReviewPullRequestBaseUser;
+    repo: WebhookPayloadPullRequestReviewPullRequestBaseRepo;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestHeadRepoOwner = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestHeadRepo = {
+    id: number;
+    node_id: string;
+    name: string;
+    full_name: string;
+    owner: WebhookPayloadPullRequestReviewPullRequestHeadRepoOwner;
+    private: boolean;
+    html_url: string;
+    description: null;
+    fork: boolean;
+    url: string;
+    forks_url: string;
+    keys_url: string;
+    collaborators_url: string;
+    teams_url: string;
+    hooks_url: string;
+    issue_events_url: string;
+    events_url: string;
+    assignees_url: string;
+    branches_url: string;
+    tags_url: string;
+    blobs_url: string;
+    git_tags_url: string;
+    git_refs_url: string;
+    trees_url: string;
+    statuses_url: string;
+    languages_url: string;
+    stargazers_url: string;
+    contributors_url: string;
+    subscribers_url: string;
+    subscription_url: string;
+    commits_url: string;
+    git_commits_url: string;
+    comments_url: string;
+    issue_comment_url: string;
+    contents_url: string;
+    compare_url: string;
+    merges_url: string;
+    archive_url: string;
+    downloads_url: string;
+    issues_url: string;
+    pulls_url: string;
+    milestones_url: string;
+    notifications_url: string;
+    labels_url: string;
+    releases_url: string;
+    deployments_url: string;
+    created_at: string;
+    updated_at: string;
+    pushed_at: string;
+    git_url: string;
+    ssh_url: string;
+    clone_url: string;
+    svn_url: string;
+    homepage: null;
+    size: number;
+    stargazers_count: number;
+    watchers_count: number;
+    language: null;
+    has_issues: boolean;
+    has_projects: boolean;
+    has_downloads: boolean;
+    has_wiki: boolean;
+    has_pages: boolean;
+    forks_count: number;
+    mirror_url: null;
+    archived: boolean;
+    open_issues_count: number;
+    license: null;
+    forks: number;
+    open_issues: number;
+    watchers: number;
+    default_branch: string;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestHeadUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestHead = {
+    label: string;
+    ref: string;
+    sha: string;
+    user: WebhookPayloadPullRequestReviewPullRequestHeadUser;
+    repo: WebhookPayloadPullRequestReviewPullRequestHeadRepo;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewPullRequest = {
+    url: string;
+    id: number;
+    node_id: string;
+    html_url: string;
+    diff_url: string;
+    patch_url: string;
+    issue_url: string;
+    number: number;
+    state: string;
+    locked: boolean;
+    title: string;
+    user: WebhookPayloadPullRequestReviewPullRequestUser;
+    body: string;
+    created_at: string;
+    updated_at: string;
+    closed_at: null;
+    merged_at: null;
+    merge_commit_sha: string;
+    assignee: null;
+    assignees: Array<any>;
+    requested_reviewers: Array<any>;
+    requested_teams: Array<any>;
+    labels: Array<any>;
+    milestone: null;
+    commits_url: string;
+    review_comments_url: string;
+    review_comment_url: string;
+    comments_url: string;
+    statuses_url: string;
+    head: WebhookPayloadPullRequestReviewPullRequestHead;
+    base: WebhookPayloadPullRequestReviewPullRequestBase;
+    _links: WebhookPayloadPullRequestReviewPullRequestLinks;
+    author_association: string;
+  };
+  type WebhookPayloadPullRequestReviewReviewLinksPullRequest = { href: string };
+  type WebhookPayloadPullRequestReviewReviewLinksHtml = { href: string };
+  type WebhookPayloadPullRequestReviewReviewLinks = {
+    html: WebhookPayloadPullRequestReviewReviewLinksHtml;
+    pull_request: WebhookPayloadPullRequestReviewReviewLinksPullRequest;
+  };
+  type WebhookPayloadPullRequestReviewReviewUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewReview = {
+    id: number;
+    node_id: string;
+    user: WebhookPayloadPullRequestReviewReviewUser;
+    body: null;
+    commit_id: string;
+    submitted_at: string;
+    state: string;
+    html_url: string;
+    pull_request_url: string;
+    author_association: string;
+    _links: WebhookPayloadPullRequestReviewReviewLinks;
+  };
+  type WebhookPayloadPullRequestReview = {
+    action: string;
+    review: WebhookPayloadPullRequestReviewReview;
+    pull_request: WebhookPayloadPullRequestReviewPullRequest;
+    repository: PayloadRepository;
+    sender: WebhookPayloadPullRequestReviewSender;
+  };
+  type WebhookPayloadPullRequestSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestPullRequestLinksStatuses = { href: string };
+  type WebhookPayloadPullRequestPullRequestLinksCommits = { href: string };
+  type WebhookPayloadPullRequestPullRequestLinksReviewComment = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestPullRequestLinksReviewComments = {
+    href: string;
+  };
+  type WebhookPayloadPullRequestPullRequestLinksComments = { href: string };
+  type WebhookPayloadPullRequestPullRequestLinksIssue = { href: string };
+  type WebhookPayloadPullRequestPullRequestLinksHtml = { href: string };
+  type WebhookPayloadPullRequestPullRequestLinksSelf = { href: string };
+  type WebhookPayloadPullRequestPullRequestLinks = {
+    self: WebhookPayloadPullRequestPullRequestLinksSelf;
+    html: WebhookPayloadPullRequestPullRequestLinksHtml;
+    issue: WebhookPayloadPullRequestPullRequestLinksIssue;
+    comments: WebhookPayloadPullRequestPullRequestLinksComments;
+    review_comments: WebhookPayloadPullRequestPullRequestLinksReviewComments;
+    review_comment: WebhookPayloadPullRequestPullRequestLinksReviewComment;
+    commits: WebhookPayloadPullRequestPullRequestLinksCommits;
+    statuses: WebhookPayloadPullRequestPullRequestLinksStatuses;
+  };
+  type WebhookPayloadPullRequestPullRequestBaseRepoOwner = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestPullRequestBaseRepo = {
+    id: number;
+    node_id: string;
+    name: string;
+    full_name: string;
+    owner: WebhookPayloadPullRequestPullRequestBaseRepoOwner;
+    private: boolean;
+    html_url: string;
+    description: null;
+    fork: boolean;
+    url: string;
+    forks_url: string;
+    keys_url: string;
+    collaborators_url: string;
+    teams_url: string;
+    hooks_url: string;
+    issue_events_url: string;
+    events_url: string;
+    assignees_url: string;
+    branches_url: string;
+    tags_url: string;
+    blobs_url: string;
+    git_tags_url: string;
+    git_refs_url: string;
+    trees_url: string;
+    statuses_url: string;
+    languages_url: string;
+    stargazers_url: string;
+    contributors_url: string;
+    subscribers_url: string;
+    subscription_url: string;
+    commits_url: string;
+    git_commits_url: string;
+    comments_url: string;
+    issue_comment_url: string;
+    contents_url: string;
+    compare_url: string;
+    merges_url: string;
+    archive_url: string;
+    downloads_url: string;
+    issues_url: string;
+    pulls_url: string;
+    milestones_url: string;
+    notifications_url: string;
+    labels_url: string;
+    releases_url: string;
+    deployments_url: string;
+    created_at: string;
+    updated_at: string;
+    pushed_at: string;
+    git_url: string;
+    ssh_url: string;
+    clone_url: string;
+    svn_url: string;
+    homepage: null;
+    size: number;
+    stargazers_count: number;
+    watchers_count: number;
+    language: null;
+    has_issues: boolean;
+    has_projects: boolean;
+    has_downloads: boolean;
+    has_wiki: boolean;
+    has_pages: boolean;
+    forks_count: number;
+    mirror_url: null;
+    archived: boolean;
+    open_issues_count: number;
+    license: null;
+    forks: number;
+    open_issues: number;
+    watchers: number;
+    default_branch: string;
+  };
+  type WebhookPayloadPullRequestPullRequestBaseUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestPullRequestBase = {
+    label: string;
+    ref: string;
+    sha: string;
+    user: WebhookPayloadPullRequestPullRequestBaseUser;
+    repo: WebhookPayloadPullRequestPullRequestBaseRepo;
+  };
+  type WebhookPayloadPullRequestPullRequestHeadRepoOwner = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestPullRequestHeadRepo = {
+    id: number;
+    node_id: string;
+    name: string;
+    full_name: string;
+    owner: WebhookPayloadPullRequestPullRequestHeadRepoOwner;
+    private: boolean;
+    html_url: string;
+    description: null;
+    fork: boolean;
+    url: string;
+    forks_url: string;
+    keys_url: string;
+    collaborators_url: string;
+    teams_url: string;
+    hooks_url: string;
+    issue_events_url: string;
+    events_url: string;
+    assignees_url: string;
+    branches_url: string;
+    tags_url: string;
+    blobs_url: string;
+    git_tags_url: string;
+    git_refs_url: string;
+    trees_url: string;
+    statuses_url: string;
+    languages_url: string;
+    stargazers_url: string;
+    contributors_url: string;
+    subscribers_url: string;
+    subscription_url: string;
+    commits_url: string;
+    git_commits_url: string;
+    comments_url: string;
+    issue_comment_url: string;
+    contents_url: string;
+    compare_url: string;
+    merges_url: string;
+    archive_url: string;
+    downloads_url: string;
+    issues_url: string;
+    pulls_url: string;
+    milestones_url: string;
+    notifications_url: string;
+    labels_url: string;
+    releases_url: string;
+    deployments_url: string;
+    created_at: string;
+    updated_at: string;
+    pushed_at: string;
+    git_url: string;
+    ssh_url: string;
+    clone_url: string;
+    svn_url: string;
+    homepage: null;
+    size: number;
+    stargazers_count: number;
+    watchers_count: number;
+    language: null;
+    has_issues: boolean;
+    has_projects: boolean;
+    has_downloads: boolean;
+    has_wiki: boolean;
+    has_pages: boolean;
+    forks_count: number;
+    mirror_url: null;
+    archived: boolean;
+    open_issues_count: number;
+    license: null;
+    forks: number;
+    open_issues: number;
+    watchers: number;
+    default_branch: string;
+  };
+  type WebhookPayloadPullRequestPullRequestHeadUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestPullRequestHead = {
+    label: string;
+    ref: string;
+    sha: string;
+    user: WebhookPayloadPullRequestPullRequestHeadUser;
+    repo: WebhookPayloadPullRequestPullRequestHeadRepo;
+  };
+  type WebhookPayloadPullRequestPullRequestUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestPullRequest = {
+    url: string;
+    id: number;
+    node_id: string;
+    html_url: string;
+    diff_url: string;
+    patch_url: string;
+    issue_url: string;
+    number: number;
+    state: string;
+    locked: boolean;
+    title: string;
+    user: WebhookPayloadPullRequestPullRequestUser;
+    body: string;
+    created_at: string;
+    updated_at: string;
+    closed_at: string;
+    merged_at: null;
+    merge_commit_sha: string;
+    assignee: null;
+    assignees: Array<any>;
+    requested_reviewers: Array<any>;
+    requested_teams: Array<any>;
+    labels: Array<any>;
+    milestone: null;
+    commits_url: string;
+    review_comments_url: string;
+    review_comment_url: string;
+    comments_url: string;
+    statuses_url: string;
+    head: WebhookPayloadPullRequestPullRequestHead;
+    base: WebhookPayloadPullRequestPullRequestBase;
+    _links: WebhookPayloadPullRequestPullRequestLinks;
+    author_association: string;
+    merged: boolean;
+    mergeable: boolean;
+    rebaseable: boolean;
+    mergeable_state: string;
+    merged_by: null;
+    comments: number;
+    review_comments: number;
+    maintainer_can_modify: boolean;
+    commits: number;
+    additions: number;
+    deletions: number;
+    changed_files: number;
+  };
+  type WebhookPayloadPullRequest = {
+    action: string;
+    number: number;
+    pull_request: WebhookPayloadPullRequestPullRequest;
+    repository: PayloadRepository;
+    sender: WebhookPayloadPullRequestSender;
+  };
+  type WebhookPayloadPublicSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPublic = {
+    repository: PayloadRepository;
+    sender: WebhookPayloadPublicSender;
+  };
+  type WebhookPayloadProjectSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadProjectProjectCreator = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadProjectProject = {
+    owner_url: string;
+    url: string;
+    html_url: string;
+    columns_url: string;
+    id: number;
+    node_id: string;
+    name: string;
+    body: string;
+    number: number;
+    state: string;
+    creator: WebhookPayloadProjectProjectCreator;
+    created_at: string;
+    updated_at: string;
+  };
+  type WebhookPayloadProject = {
+    action: string;
+    project: WebhookPayloadProjectProject;
+    repository: PayloadRepository;
+    sender: WebhookPayloadProjectSender;
+  };
+  type WebhookPayloadProjectColumnSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadProjectColumnProjectColumn = {
+    url: string;
+    project_url: string;
+    cards_url: string;
+    id: number;
+    node_id: string;
+    name: string;
+    created_at: string;
+    updated_at: string;
+  };
+  type WebhookPayloadProjectColumn = {
+    action: string;
+    project_column: WebhookPayloadProjectColumnProjectColumn;
+    repository: PayloadRepository;
+    sender: WebhookPayloadProjectColumnSender;
+  };
+  type WebhookPayloadProjectCardSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadProjectCardProjectCardCreator = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadProjectCardProjectCard = {
+    url: string;
+    project_url: string;
+    column_url: string;
+    column_id: number;
+    id: number;
+    node_id: string;
+    note: string;
+    creator: WebhookPayloadProjectCardProjectCardCreator;
+    created_at: string;
+    updated_at: string;
+  };
+  type WebhookPayloadProjectCard = {
+    action: string;
+    project_card: WebhookPayloadProjectCardProjectCard;
+    repository: PayloadRepository;
+    sender: WebhookPayloadProjectCardSender;
+  };
+  type WebhookPayloadPageBuildSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPageBuildBuildPusher = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPageBuildBuildError = { message: null };
+  type WebhookPayloadPageBuildBuild = {
+    url: string;
+    status: string;
+    error: WebhookPayloadPageBuildBuildError;
+    pusher: WebhookPayloadPageBuildBuildPusher;
+    commit: string;
+    duration: number;
+    created_at: string;
+    updated_at: string;
+  };
+  type WebhookPayloadPageBuild = {
+    id: number;
+    build: WebhookPayloadPageBuildBuild;
+    repository: PayloadRepository;
+    sender: WebhookPayloadPageBuildSender;
+  };
+  type WebhookPayloadOrgBlockSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadOrgBlockOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
+  type WebhookPayloadOrgBlockBlockedUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadOrgBlock = {
+    action: string;
+    blocked_user: WebhookPayloadOrgBlockBlockedUser;
+    organization: WebhookPayloadOrgBlockOrganization;
+    sender: WebhookPayloadOrgBlockSender;
+  };
+  type WebhookPayloadOrganizationSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadOrganizationOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
+  type WebhookPayloadOrganizationMembershipUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadOrganizationMembership = {
+    url: string;
+    state: string;
+    role: string;
+    organization_url: string;
+    user: WebhookPayloadOrganizationMembershipUser;
+  };
+  type WebhookPayloadOrganization = {
+    action: string;
+    membership: WebhookPayloadOrganizationMembership;
+    organization: WebhookPayloadOrganizationOrganization;
+    sender: WebhookPayloadOrganizationSender;
+  };
+  type WebhookPayloadMilestoneSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadMilestoneMilestoneCreator = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadMilestoneMilestone = {
+    url: string;
+    html_url: string;
+    labels_url: string;
+    id: number;
+    node_id: string;
+    number: number;
+    title: string;
+    description: string;
+    creator: WebhookPayloadMilestoneMilestoneCreator;
+    open_issues: number;
+    closed_issues: number;
+    state: string;
+    created_at: string;
+    updated_at: string;
+    due_on: string;
+    closed_at: null;
+  };
+  type WebhookPayloadMilestone = {
+    action: string;
+    milestone: WebhookPayloadMilestoneMilestone;
+    repository: PayloadRepository;
+    sender: WebhookPayloadMilestoneSender;
+  };
+  type WebhookPayloadMembershipOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
+  type WebhookPayloadMembershipTeam = {
+    name: string;
+    id: number;
+    node_id: string;
+    slug: string;
+    description: string;
+    privacy: string;
+    url: string;
+    members_url: string;
+    repositories_url: string;
+    permission: string;
+  };
+  type WebhookPayloadMembershipSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadMembershipMember = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadMembership = {
+    action: string;
+    scope: string;
+    member: WebhookPayloadMembershipMember;
+    sender: WebhookPayloadMembershipSender;
+    team: WebhookPayloadMembershipTeam;
+    organization: WebhookPayloadMembershipOrganization;
+  };
+  type WebhookPayloadMemberSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadMemberChangesPermission = { from: string };
+  type WebhookPayloadMemberChanges = {
+    permission: WebhookPayloadMemberChangesPermission;
+  };
+  type WebhookPayloadMemberMember = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadMember = {
+    action: string;
+    member: WebhookPayloadMemberMember;
+    changes: WebhookPayloadMemberChanges;
+    repository: PayloadRepository;
+    sender: WebhookPayloadMemberSender;
+  };
+  type WebhookPayloadMarketplacePurchaseMarketplacePurchasePlan = {
+    id: number;
+    name: string;
+    description: string;
+    monthly_price_in_cents: number;
+    yearly_price_in_cents: number;
+    price_model: string;
+    has_free_trial: boolean;
+    unit_name: string;
+    bullets: Array<string>;
+  };
+  type WebhookPayloadMarketplacePurchaseMarketplacePurchaseAccount = {
+    type: string;
+    id: number;
+    login: string;
+    organization_billing_email: string;
+  };
+  type WebhookPayloadMarketplacePurchaseMarketplacePurchase = {
+    account: WebhookPayloadMarketplacePurchaseMarketplacePurchaseAccount;
+    billing_cycle: string;
+    unit_count: number;
+    on_free_trial: boolean;
+    free_trial_ends_on: null;
+    next_billing_date: string;
+    plan: WebhookPayloadMarketplacePurchaseMarketplacePurchasePlan;
+  };
+  type WebhookPayloadMarketplacePurchaseSender = {
+    login: string;
+    id: number;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+    email: string;
+  };
+  type WebhookPayloadMarketplacePurchase = {
+    action: string;
+    effective_date: string;
+    sender: WebhookPayloadMarketplacePurchaseSender;
+    marketplace_purchase: WebhookPayloadMarketplacePurchaseMarketplacePurchase;
+  };
+  type WebhookPayloadLabelSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadLabelLabel = {
+    id: number;
+    node_id: string;
+    url: string;
+    name: string;
+    color: string;
+    default: boolean;
+  };
+  type WebhookPayloadLabel = {
+    action: string;
+    label: WebhookPayloadLabelLabel;
+    repository: PayloadRepository;
+    sender: WebhookPayloadLabelSender;
+  };
+  type WebhookPayloadIssuesSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadIssuesChanges = {};
+  type WebhookPayloadIssuesIssueLabelsItem = {
+    id: number;
+    node_id: string;
+    url: string;
+    name: string;
+    color: string;
+    default: boolean;
+  };
+  type WebhookPayloadIssuesIssueUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadIssuesIssue = {
+    url: string;
+    repository_url: string;
+    labels_url: string;
+    comments_url: string;
+    events_url: string;
+    html_url: string;
+    id: number;
+    node_id: string;
+    number: number;
+    title: string;
+    user: WebhookPayloadIssuesIssueUser;
+    labels: Array<WebhookPayloadIssuesIssueLabelsItem>;
+    state: string;
+    locked: boolean;
+    assignee: null;
+    assignees: Array<any>;
+    milestone: null;
+    comments: number;
+    created_at: string;
+    updated_at: string;
+    closed_at: null;
+    author_association: string;
+    body: string;
+  };
+  type WebhookPayloadIssues = {
+    action: string;
+    issue: WebhookPayloadIssuesIssue;
+    changes: WebhookPayloadIssuesChanges;
+    repository: PayloadRepository;
+    sender: WebhookPayloadIssuesSender;
+  };
+  type WebhookPayloadIssueCommentSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadIssueCommentCommentUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadIssueCommentComment = {
+    url: string;
+    html_url: string;
+    issue_url: string;
+    id: number;
+    node_id: string;
+    user: WebhookPayloadIssueCommentCommentUser;
+    created_at: string;
+    updated_at: string;
+    author_association: string;
+    body: string;
+  };
+  type WebhookPayloadIssueCommentIssueLabelsItem = {
+    id: number;
+    node_id: string;
+    url: string;
+    name: string;
+    color: string;
+    default: boolean;
+  };
+  type WebhookPayloadIssueCommentIssueUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadIssueCommentIssue = {
+    url: string;
+    repository_url: string;
+    labels_url: string;
+    comments_url: string;
+    events_url: string;
+    html_url: string;
+    id: number;
+    node_id: string;
+    number: number;
+    title: string;
+    user: WebhookPayloadIssueCommentIssueUser;
+    labels: Array<WebhookPayloadIssueCommentIssueLabelsItem>;
+    state: string;
+    locked: boolean;
+    assignee: null;
+    assignees: Array<any>;
+    milestone: null;
+    comments: number;
+    created_at: string;
+    updated_at: string;
+    closed_at: null;
+    author_association: string;
+    body: string;
+  };
+  type WebhookPayloadIssueComment = {
+    action: string;
+    issue: WebhookPayloadIssueCommentIssue;
+    comment: WebhookPayloadIssueCommentComment;
+    repository: PayloadRepository;
+    sender: WebhookPayloadIssueCommentSender;
+  };
+  type WebhookPayloadInstallationRepositoriesSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem = {
+    id: number;
+    name: string;
+    full_name: string;
+    private: boolean;
+  };
+  type WebhookPayloadInstallationRepositoriesInstallationPermissions = {
+    metadata: string;
+    contents: string;
+    issues: string;
+  };
+  type WebhookPayloadInstallationRepositoriesInstallationAccount = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadInstallationRepositoriesInstallation = {
+    id: number;
+    account: WebhookPayloadInstallationRepositoriesInstallationAccount;
+    repository_selection: string;
+    access_tokens_url: string;
+    repositories_url: string;
+    html_url: string;
+    app_id: number;
+    target_id: number;
+    target_type: string;
+    permissions: WebhookPayloadInstallationRepositoriesInstallationPermissions;
+    events: Array<string>;
+    created_at: number;
+    updated_at: number;
+    single_file_name: string;
+  };
+  type WebhookPayloadInstallationRepositories =
+    | Array<WebhookPayloadInstallationRepositoriesItem>
+    | {
+        action: string;
+        installation: WebhookPayloadInstallationRepositoriesInstallation;
+        repository_selection: string;
+        repositories_added: Array<any>;
+        repositories_removed: Array<
+          WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem
+        >;
+        sender: WebhookPayloadInstallationRepositoriesSender;
+      };
+  type WebhookPayloadInstallationSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadInstallationRepositoriesItem = {
+    id: number;
+    name: string;
+    full_name: string;
+    private: boolean;
+  };
+  type WebhookPayloadInstallationInstallationPermissions = {
+    metadata: string;
+    contents: string;
+    issues: string;
+  };
+  type WebhookPayloadInstallationInstallationAccount = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadInstallationInstallation = {
+    id: number;
+    account: WebhookPayloadInstallationInstallationAccount;
+    repository_selection: string;
+    access_tokens_url: string;
+    repositories_url: string;
+    html_url: string;
+    app_id: number;
+    target_id: number;
+    target_type: string;
+    permissions: WebhookPayloadInstallationInstallationPermissions;
+    events: Array<string>;
+    created_at: number;
+    updated_at: number;
+    single_file_name: string;
+  };
+  type WebhookPayloadInstallation = {
+    action: string;
+    installation: WebhookPayloadInstallationInstallation;
+    repositories: WebhookPayloadInstallationRepositories;
+    sender: WebhookPayloadInstallationSender;
+  };
+  type WebhookPayloadGollumSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadGollumPagesItem = {
+    page_name: string;
+    title: string;
+    summary: null;
+    action: string;
+    sha: string;
+    html_url: string;
+  };
+  type WebhookPayloadGollum = {
+    pages: Array<WebhookPayloadGollumPagesItem>;
+    repository: PayloadRepository;
+    sender: WebhookPayloadGollumSender;
+  };
+  type WebhookPayloadGithubAppAuthorizationSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadGithubAppAuthorization = {
+    action: string;
+    sender: WebhookPayloadGithubAppAuthorizationSender;
+  };
+  type WebhookPayloadForkSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadForkForkeeOwner = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadForkForkee = {
+    id: number;
+    node_id: string;
+    name: string;
+    full_name: string;
+    owner: WebhookPayloadForkForkeeOwner;
+    private: boolean;
+    html_url: string;
+    description: null;
+    fork: boolean;
+    url: string;
+    forks_url: string;
+    keys_url: string;
+    collaborators_url: string;
+    teams_url: string;
+    hooks_url: string;
+    issue_events_url: string;
+    events_url: string;
+    assignees_url: string;
+    branches_url: string;
+    tags_url: string;
+    blobs_url: string;
+    git_tags_url: string;
+    git_refs_url: string;
+    trees_url: string;
+    statuses_url: string;
+    languages_url: string;
+    stargazers_url: string;
+    contributors_url: string;
+    subscribers_url: string;
+    subscription_url: string;
+    commits_url: string;
+    git_commits_url: string;
+    comments_url: string;
+    issue_comment_url: string;
+    contents_url: string;
+    compare_url: string;
+    merges_url: string;
+    archive_url: string;
+    downloads_url: string;
+    issues_url: string;
+    pulls_url: string;
+    milestones_url: string;
+    notifications_url: string;
+    labels_url: string;
+    releases_url: string;
+    deployments_url: string;
+    created_at: string;
+    updated_at: string;
+    pushed_at: string;
+    git_url: string;
+    ssh_url: string;
+    clone_url: string;
+    svn_url: string;
+    homepage: null;
+    size: number;
+    stargazers_count: number;
+    watchers_count: number;
+    language: null;
+    has_issues: boolean;
+    has_projects: boolean;
+    has_downloads: boolean;
+    has_wiki: boolean;
+    has_pages: boolean;
+    forks_count: number;
+    mirror_url: null;
+    archived: boolean;
+    open_issues_count: number;
+    license: null;
+    forks: number;
+    open_issues: number;
+    watchers: number;
+    default_branch: string;
+    public: boolean;
+  };
+  type WebhookPayloadFork = {
+    forkee: WebhookPayloadForkForkee;
+    repository: PayloadRepository;
+    sender: WebhookPayloadForkSender;
+  };
+  type WebhookPayloadDeploymentStatusSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadDeploymentStatusDeploymentCreator = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadDeploymentStatusDeploymentPayload = {};
+  type WebhookPayloadDeploymentStatusDeployment = {
+    url: string;
+    id: number;
+    node_id: string;
+    sha: string;
+    ref: string;
+    task: string;
+    payload: WebhookPayloadDeploymentStatusDeploymentPayload;
+    environment: string;
+    description: null;
+    creator: WebhookPayloadDeploymentStatusDeploymentCreator;
+    created_at: string;
+    updated_at: string;
+    statuses_url: string;
+    repository_url: string;
+  };
+  type WebhookPayloadDeploymentStatusDeploymentStatusCreator = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadDeploymentStatusDeploymentStatus = {
+    url: string;
+    id: number;
+    node_id: string;
+    state: string;
+    creator: WebhookPayloadDeploymentStatusDeploymentStatusCreator;
+    description: string;
+    target_url: string;
+    created_at: string;
+    updated_at: string;
+    deployment_url: string;
+    repository_url: string;
+  };
+  type WebhookPayloadDeploymentStatus = {
+    deployment_status: WebhookPayloadDeploymentStatusDeploymentStatus;
+    deployment: WebhookPayloadDeploymentStatusDeployment;
+    repository: PayloadRepository;
+    sender: WebhookPayloadDeploymentStatusSender;
+  };
+  type WebhookPayloadDeploymentSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadDeploymentDeploymentCreator = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadDeploymentDeploymentPayload = {};
+  type WebhookPayloadDeploymentDeployment = {
+    url: string;
+    id: number;
+    node_id: string;
+    sha: string;
+    ref: string;
+    task: string;
+    payload: WebhookPayloadDeploymentDeploymentPayload;
+    environment: string;
+    description: null;
+    creator: WebhookPayloadDeploymentDeploymentCreator;
+    created_at: string;
+    updated_at: string;
+    statuses_url: string;
+    repository_url: string;
+  };
+  type WebhookPayloadDeployment = {
+    deployment: WebhookPayloadDeploymentDeployment;
+    repository: PayloadRepository;
+    sender: WebhookPayloadDeploymentSender;
+  };
+  type WebhookPayloadDeleteSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadDelete = {
+    ref: string;
+    ref_type: string;
+    pusher_type: string;
+    repository: PayloadRepository;
+    sender: WebhookPayloadDeleteSender;
+  };
+  type WebhookPayloadCreateSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadCreate = {
+    ref: string;
+    ref_type: string;
+    master_branch: string;
+    description: null;
+    pusher_type: string;
+    repository: PayloadRepository;
+    sender: WebhookPayloadCreateSender;
+  };
+  type WebhookPayloadCommitCommentSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadCommitCommentCommentUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadCommitCommentComment = {
+    url: string;
+    html_url: string;
+    id: number;
+    node_id: string;
+    user: WebhookPayloadCommitCommentCommentUser;
+    position: null;
+    line: null;
+    path: null;
+    commit_id: string;
+    created_at: string;
+    updated_at: string;
+    author_association: string;
+    body: string;
+  };
+  type WebhookPayloadCommitComment = {
+    action: string;
+    comment: WebhookPayloadCommitCommentComment;
+    repository: PayloadRepository;
+    sender: WebhookPayloadCommitCommentSender;
+  };
+  type WebhookPayloadCheckSuiteInstallation = { id: number };
+  type WebhookPayloadCheckSuiteSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadCheckSuiteOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
+  type WebhookPayloadCheckSuiteCheckSuiteHeadCommitCommitter = {
+    name: string;
+    email: string;
+  };
+  type WebhookPayloadCheckSuiteCheckSuiteHeadCommitAuthor = {
+    name: string;
+    email: string;
+  };
+  type WebhookPayloadCheckSuiteCheckSuiteHeadCommit = {
+    id: string;
+    tree_id: string;
+    message: string;
+    timestamp: string;
+    author: WebhookPayloadCheckSuiteCheckSuiteHeadCommitAuthor;
+    committer: WebhookPayloadCheckSuiteCheckSuiteHeadCommitCommitter;
+  };
+  type WebhookPayloadCheckSuiteCheckSuiteAppOwner = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadCheckSuiteCheckSuiteApp = {
+    id: number;
+    node_id: string;
+    owner: WebhookPayloadCheckSuiteCheckSuiteAppOwner;
+    name: string;
+    description: null;
+    external_url: string;
+    html_url: string;
+    created_at: string;
+    updated_at: string;
+  };
+  type WebhookPayloadCheckSuiteCheckSuite = {
+    id: number;
+    head_branch: string;
+    head_sha: string;
+    status: string;
+    conclusion: string;
+    url: string;
+    before: string;
+    after: string;
+    pull_requests: Array<any>;
+    app: WebhookPayloadCheckSuiteCheckSuiteApp;
+    created_at: string;
+    updated_at: string;
+    latest_check_runs_count: number;
+    check_runs_url: string;
+    head_commit: WebhookPayloadCheckSuiteCheckSuiteHeadCommit;
+  };
+  type WebhookPayloadCheckSuite = {
+    action: string;
+    check_suite: WebhookPayloadCheckSuiteCheckSuite;
+    repository: PayloadRepository;
+    organization: WebhookPayloadCheckSuiteOrganization;
+    sender: WebhookPayloadCheckSuiteSender;
+    installation: WebhookPayloadCheckSuiteInstallation;
+  };
+  type WebhookPayloadCheckRunInstallation = { id: number };
+  type WebhookPayloadCheckRunSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadCheckRunOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
+  type PayloadRepositoryOwner = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+    name?: string;
+    email?: string;
+  };
+  type PayloadRepository = {
+    id: number;
+    node_id: string;
+    name: string;
+    full_name: string;
+    owner: PayloadRepositoryOwner;
+    private: boolean;
+    html_url: string;
+    description: null;
+    fork: boolean;
+    url: string;
+    forks_url: string;
+    keys_url: string;
+    collaborators_url: string;
+    teams_url: string;
+    hooks_url: string;
+    issue_events_url: string;
+    events_url: string;
+    assignees_url: string;
+    branches_url: string;
+    tags_url: string;
+    blobs_url: string;
+    git_tags_url: string;
+    git_refs_url: string;
+    trees_url: string;
+    statuses_url: string;
+    languages_url: string;
+    stargazers_url: string;
+    contributors_url: string;
+    subscribers_url: string;
+    subscription_url: string;
+    commits_url: string;
+    git_commits_url: string;
+    comments_url: string;
+    issue_comment_url: string;
+    contents_url: string;
+    compare_url: string;
+    merges_url: string;
+    archive_url: string;
+    downloads_url: string;
+    issues_url: string;
+    pulls_url: string;
+    milestones_url: string;
+    notifications_url: string;
+    labels_url: string;
+    releases_url: string;
+    deployments_url: string;
+    created_at: string | number;
+    updated_at: string;
+    pushed_at: string | number;
+    git_url: string;
+    ssh_url: string;
+    clone_url: string;
+    svn_url: string;
+    homepage: null;
+    size: number;
+    stargazers_count: number;
+    watchers_count: number;
+    language: null;
+    has_issues: boolean;
+    has_projects: boolean;
+    has_downloads: boolean;
+    has_wiki: boolean;
+    has_pages: boolean;
+    forks_count: number;
+    mirror_url: null;
+    archived: boolean;
+    open_issues_count: number;
+    license: null;
+    forks: number;
+    open_issues: number;
+    watchers: number;
+    default_branch: string;
+    stargazers?: number;
+    master_branch?: string;
+    permissions?: PayloadRepositoryPermissions;
+  };
+  type WebhookPayloadCheckRunCheckRunAppOwner = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadCheckRunCheckRunApp = {
+    id: number;
+    node_id: string;
+    owner: WebhookPayloadCheckRunCheckRunAppOwner;
+    name: string;
+    description: null;
+    external_url: string;
+    html_url: string;
+    created_at: string;
+    updated_at: string;
+  };
+  type WebhookPayloadCheckRunCheckRunCheckSuiteAppOwner = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadCheckRunCheckRunCheckSuiteApp = {
+    id: number;
+    node_id: string;
+    owner: WebhookPayloadCheckRunCheckRunCheckSuiteAppOwner;
+    name: string;
+    description: null;
+    external_url: string;
+    html_url: string;
+    created_at: string;
+    updated_at: string;
+  };
+  type WebhookPayloadCheckRunCheckRunCheckSuite = {
+    id: number;
+    head_branch: string;
+    head_sha: string;
+    status: string;
+    conclusion: string;
+    url: string;
+    before: string;
+    after: string;
+    pull_requests: Array<any>;
+    app: WebhookPayloadCheckRunCheckRunCheckSuiteApp;
+    created_at: string;
+    updated_at: string;
+  };
+  type WebhookPayloadCheckRunCheckRunOutput = {
+    title: string;
+    summary: string;
+    text: string;
+    annotations_count: number;
+    annotations_url: string;
+  };
+  type WebhookPayloadCheckRunCheckRun = {
+    id: number;
+    head_sha: string;
+    external_id: string;
+    url: string;
+    html_url: string;
+    status: string;
+    conclusion: string;
+    started_at: string;
+    completed_at: string;
+    output: WebhookPayloadCheckRunCheckRunOutput;
+    name: string;
+    check_suite: WebhookPayloadCheckRunCheckRunCheckSuite;
+    app: WebhookPayloadCheckRunCheckRunApp;
+    pull_requests: Array<any>;
+  };
+  type WebhookPayloadCheckRun = {
+    action: string;
+    check_run: WebhookPayloadCheckRunCheckRun;
+    repository: PayloadRepository;
+    organization: WebhookPayloadCheckRunOrganization;
+    sender: WebhookPayloadCheckRunSender;
+    installation: WebhookPayloadCheckRunInstallation;
+  };
 
-export namespace Webhooks {
-  export interface WebhookEvent<T> {
+  interface WebhookEvent<T> {
     id: string;
     name: string;
     payload: T;
@@ -3478,17 +3463,13 @@ export namespace Webhooks {
   }
 }
 
-export class Webhooks {
-  constructor(options: Options);
+declare class Webhooks {
+  constructor(options?: Options);
 
   public on(event: "error", callback: (event: Error) => void): void;
   public on(
-    event: "*" | string | string[],
-    callback: (event: Webhooks.WebhookEvent<any>) => void
-  ): void;
-  public on(
-    event: "*" | string | string[],
-    callback: (event: Webhooks.WebhookEvent<any>) => Promise<void>
+    event: "*" | string[],
+    callback: (event: Webhooks.WebhookEvent<any>) => Promise<void> | void
   ): void;
 
   public on(
@@ -3498,7 +3479,9 @@ export class Webhooks {
       | "check_run.created"
       | "check_run.requested_action"
       | "check_run.rerequested",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadCheckRun>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCheckRun>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3507,58 +3490,74 @@ export class Webhooks {
       | "check_suite.completed"
       | "check_suite.requested"
       | "check_suite.rerequested",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadCheckSuite>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCheckSuite>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "commit_comment" | "commit_comment.created",
     callback: (
-      event: Webhooks.WebhookEvent<WebhookPayloadCommitComment>
-    ) => void
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCommitComment>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "create",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadCreate>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCreate>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "delete",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadDelete>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDelete>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "deployment",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadDeployment>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeployment>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "deployment_status",
     callback: (
-      event: Webhooks.WebhookEvent<WebhookPayloadDeploymentStatus>
-    ) => void
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeploymentStatus>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "fork",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadFork>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadFork>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "github_app_authorization",
     callback: (
-      event: Webhooks.WebhookEvent<WebhookPayloadGithubAppAuthorization>
-    ) => void
+      event: Webhooks.WebhookEvent<
+        Webhooks.WebhookPayloadGithubAppAuthorization
+      >
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "gollum",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadGollum>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadGollum>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "installation" | "installation.created" | "installation.deleted",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadInstallation>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadInstallation>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3567,8 +3566,10 @@ export class Webhooks {
       | "installation_repositories.added"
       | "installation_repositories.removed",
     callback: (
-      event: Webhooks.WebhookEvent<WebhookPayloadInstallationRepositories>
-    ) => void
+      event: Webhooks.WebhookEvent<
+        Webhooks.WebhookPayloadInstallationRepositories
+      >
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3577,7 +3578,9 @@ export class Webhooks {
       | "issue_comment.created"
       | "issue_comment.deleted"
       | "issue_comment.edited",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadIssueComment>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadIssueComment>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3595,12 +3598,16 @@ export class Webhooks {
       | "issues.transferred"
       | "issues.unassigned"
       | "issues.unlabeled",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadIssues>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadIssues>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "label" | "label.created" | "label.deleted" | "label.edited",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadLabel>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadLabel>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3612,18 +3619,22 @@ export class Webhooks {
       | "marketplace_purchase.pending_change_cancelled"
       | "marketplace_purchase.purchased",
     callback: (
-      event: Webhooks.WebhookEvent<WebhookPayloadMarketplacePurchase>
-    ) => void
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMarketplacePurchase>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "member" | "member.added" | "member.deleted" | "member.edited",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadMember>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMember>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "membership" | "membership.added" | "membership.removed",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadMembership>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMembership>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3634,7 +3645,9 @@ export class Webhooks {
       | "milestone.deleted"
       | "milestone.edited"
       | "milestone.opened",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadMilestone>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMilestone>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3643,17 +3656,23 @@ export class Webhooks {
       | "organization.member_added"
       | "organization.member_invited"
       | "organization.member_removed",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadOrganization>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadOrganization>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "org_block" | "org_block.blocked" | "org_block.unblocked",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadOrgBlock>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadOrgBlock>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "page_build",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadPageBuild>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPageBuild>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3664,7 +3683,9 @@ export class Webhooks {
       | "project_card.deleted"
       | "project_card.edited"
       | "project_card.moved",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadProjectCard>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadProjectCard>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3675,8 +3696,8 @@ export class Webhooks {
       | "project_column.edited"
       | "project_column.moved",
     callback: (
-      event: Webhooks.WebhookEvent<WebhookPayloadProjectColumn>
-    ) => void
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadProjectColumn>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3687,12 +3708,16 @@ export class Webhooks {
       | "project.deleted"
       | "project.edited"
       | "project.reopened",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadProject>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadProject>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "public",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadPublic>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPublic>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3709,7 +3734,9 @@ export class Webhooks {
       | "pull_request.unassigned"
       | "pull_request.unlabeled"
       | "pull_request.synchronize",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadPullRequest>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPullRequest>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3719,8 +3746,8 @@ export class Webhooks {
       | "pull_request_review.edited"
       | "pull_request_review.submitted",
     callback: (
-      event: Webhooks.WebhookEvent<WebhookPayloadPullRequestReview>
-    ) => void
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPullRequestReview>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3730,18 +3757,24 @@ export class Webhooks {
       | "pull_request_review_comment.deleted"
       | "pull_request_review_comment.edited",
     callback: (
-      event: Webhooks.WebhookEvent<WebhookPayloadPullRequestReviewComment>
-    ) => void
+      event: Webhooks.WebhookEvent<
+        Webhooks.WebhookPayloadPullRequestReviewComment
+      >
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "push",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadPush>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPush>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "release" | "release.published",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadRelease>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRelease>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3753,14 +3786,16 @@ export class Webhooks {
       | "repository.privatized"
       | "repository.publicized"
       | "repository.unarchived",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadRepository>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepository>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "repository_import",
     callback: (
-      event: Webhooks.WebhookEvent<WebhookPayloadRepositoryImport>
-    ) => void
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepositoryImport>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3770,8 +3805,10 @@ export class Webhooks {
       | "repository_vulnerability_alert.dismiss"
       | "repository_vulnerability_alert.resolve",
     callback: (
-      event: Webhooks.WebhookEvent<WebhookPayloadRepositoryVulnerabilityAlert>
-    ) => void
+      event: Webhooks.WebhookEvent<
+        Webhooks.WebhookPayloadRepositoryVulnerabilityAlert
+      >
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3781,13 +3818,15 @@ export class Webhooks {
       | "security_advisory.published"
       | "security_advisory.updated",
     callback: (
-      event: Webhooks.WebhookEvent<WebhookPayloadSecurityAdvisory>
-    ) => void
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadSecurityAdvisory>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "status",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadStatus>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadStatus>
+    ) => Promise<void> | void
   ): void;
 
   public on(
@@ -3798,17 +3837,23 @@ export class Webhooks {
       | "team.deleted"
       | "team.edited"
       | "team.removed_from_repository",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadTeam>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadTeam>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "team_add",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadTeamAdd>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadTeamAdd>
+    ) => Promise<void> | void
   ): void;
 
   public on(
     event: "watch" | "watch.started",
-    callback: (event: Webhooks.WebhookEvent<WebhookPayloadWatch>) => void
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadWatch>
+    ) => Promise<void> | void
   ): void;
 
   public sign(data: any): string;

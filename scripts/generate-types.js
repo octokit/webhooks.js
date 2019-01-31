@@ -24,7 +24,7 @@ webhooks.forEach(({ name, actions, examples }) => {
     ...actions.map(action => `'${name}.${action}'`)
   ].join(' | ')
   signatures.push(`
-    public on (event: ${events}, callback: (event: Webhooks.WebhookEvent<${typeName}>) => void): void
+    public on (event: ${events}, callback: (event: Webhooks.WebhookEvent<Webhooks.${typeName}>) => (Promise<void> | void)): void
   `)
 })
 
@@ -34,16 +34,16 @@ const definition = `
 
 import http = require('http')
 
-export type Options = {
+type Options = {
   secret: string
   path?: string
-  transform?: (event: Webhooks.WebhookEvent<T>) => Webhooks.WebhookEvent<T> & { [key: string]: any }
+  transform?: (event: Webhooks.WebhookEvent<any>) => Webhooks.WebhookEvent<any> & { [key: string]: any }
 }
 
-${tw.generate('typescript', { inlined: false }).replace(/type /g, 'export type ')}
+declare namespace Webhooks {
+  ${tw.generate('typescript', { inlined: false })}
 
-export namespace Webhooks {
-  export interface WebhookEvent<T> {
+  interface WebhookEvent<T> {
     id: string
     name: string
     payload: T
@@ -53,12 +53,11 @@ export namespace Webhooks {
   }
 }
 
-export class Webhooks {
-  constructor (options: Options)
+declare class Webhooks {
+  constructor (options?: Options)
 
   public on (event: 'error', callback: (event: Error) => void): void
-  public on (event: '*' | string | string[], callback: (event: Webhooks.WebhookEvent<any>) => void): void
-  public on (event: '*' | string | string[], callback: (event: Webhooks.WebhookEvent<any>) => Promise<void>): void
+  public on (event: '*' | string[], callback: (event: Webhooks.WebhookEvent<any>) => Promise<void> | void): void
   ${signatures.join('\n')}
 
   public sign (data: any): string
