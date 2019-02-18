@@ -16,7 +16,12 @@ webhooks.forEach(({ name, actions, examples }) => {
   const typeName = `WebhookPayload${pascalCase(name)}`
   tw.add(examples, {
     rootTypeName: typeName,
-    namedKeyPaths: { [`${typeName}.repository`]: 'PayloadRepository' }
+    namedKeyPaths: {
+      [`${typeName}.repository`]: 'PayloadRepository',
+      // This prevents a naming colision between the payload of a `installation_repositories` event
+      // and the `repositories` attribute of a `installation` event
+      'WebhookPayloadInstallation.repositories': 'WebhookPayloadInstallation_Repositories'
+    }
   })
 
   const events = [
