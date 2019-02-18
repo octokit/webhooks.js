@@ -2567,18 +2567,16 @@ declare namespace Webhooks {
     updated_at: number;
     single_file_name: string;
   };
-  type WebhookPayloadInstallationRepositories =
-    | Array<WebhookPayloadInstallationRepositoriesItem>
-    | {
-        action: string;
-        installation: WebhookPayloadInstallationRepositoriesInstallation;
-        repository_selection: string;
-        repositories_added: Array<any>;
-        repositories_removed: Array<
-          WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem
-        >;
-        sender: WebhookPayloadInstallationRepositoriesSender;
-      };
+  type WebhookPayloadInstallationRepositories = {
+    action: string;
+    installation: WebhookPayloadInstallationRepositoriesInstallation;
+    repository_selection: string;
+    repositories_added: Array<any>;
+    repositories_removed: Array<
+      WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem
+    >;
+    sender: WebhookPayloadInstallationRepositoriesSender;
+  };
   type WebhookPayloadInstallationSender = {
     login: string;
     id: number;
@@ -2649,7 +2647,7 @@ declare namespace Webhooks {
   type WebhookPayloadInstallation = {
     action: string;
     installation: WebhookPayloadInstallationInstallation;
-    repositories: WebhookPayloadInstallationRepositories;
+    repositories: Array<WebhookPayloadInstallationRepositoriesItem>;
     sender: WebhookPayloadInstallationSender;
   };
   type WebhookPayloadGollumSender = {
