@@ -3876,10 +3876,10 @@ declare class Webhooks {
     callback: (event: Webhooks.WebhookEvent<any>) => Promise<void>
   ): void;
   public middleware(
-    request: http.ClientRequest,
+    request: http.IncomingMessage,
     response: http.ServerResponse,
     next: (err?: any) => void
-  ): (request: http.IncomingMessage, response: http.ServerResponse) => void;
+  ): void | Promise<void>;
 }
 
 export = Webhooks;
