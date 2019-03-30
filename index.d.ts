@@ -3041,6 +3041,42 @@ declare namespace Webhooks {
     repository: PayloadRepository;
     sender: WebhookPayloadCreateSender;
   };
+  type WebhookPayloadContentReferenceInstallation = {
+    id: number;
+    node_id: string;
+  };
+  type WebhookPayloadContentReferenceSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadContentReferenceContentReference = {
+    id: number;
+    node_id: string;
+    reference: string;
+  };
+  type WebhookPayloadContentReference = {
+    action: string;
+    content_reference: WebhookPayloadContentReferenceContentReference;
+    repository: PayloadRepository;
+    sender: WebhookPayloadContentReferenceSender;
+    installation: WebhookPayloadContentReferenceInstallation;
+  };
   type WebhookPayloadCommitCommentSender = {
     login: string;
     id: number;
@@ -3501,6 +3537,13 @@ declare class Webhooks {
   ): void;
 
   public on(
+    event: "content_reference",
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadContentReference>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
     event: "create",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCreate>
@@ -3552,7 +3595,11 @@ declare class Webhooks {
   ): void;
 
   public on(
-    event: "installation" | "installation.created" | "installation.deleted",
+    event:
+      | "installation"
+      | "installation.created"
+      | "installation.deleted"
+      | "installation.new_permissions_accepted",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadInstallation>
     ) => Promise<void> | void
@@ -3592,10 +3639,12 @@ declare class Webhooks {
       | "issues.labeled"
       | "issues.milestoned"
       | "issues.opened"
+      | "issues.pinned"
       | "issues.reopened"
       | "issues.transferred"
       | "issues.unassigned"
-      | "issues.unlabeled",
+      | "issues.unlabeled"
+      | "issues.unpinned",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadIssues>
     ) => Promise<void> | void
@@ -3726,6 +3775,7 @@ declare class Webhooks {
       | "pull_request.edited"
       | "pull_request.labeled"
       | "pull_request.opened"
+      | "pull_request.ready_for_review"
       | "pull_request.reopened"
       | "pull_request.review_request_removed"
       | "pull_request.review_requested"
@@ -3876,10 +3926,10 @@ declare class Webhooks {
     callback: (event: Webhooks.WebhookEvent<any>) => Promise<void>
   ): void;
   public middleware(
-    request: http.IncomingMessage,
+    request: http.ClientRequest,
     response: http.ServerResponse,
-    next?: (err?: any) => void
-  ): void | Promise<void>;
+    next: (err?: any) => void
+  ): (request: http.IncomingMessage, response: http.ServerResponse) => void;
 }
 
 export = Webhooks;
