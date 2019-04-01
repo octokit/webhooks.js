@@ -38,7 +38,8 @@
     "pretest": "standard",
     "test": "tap --100 --coverage 'test/**/*-test.js'",
     "semantic-release": "semantic-release",
-    "generate-types": "node scripts/generate-types.js"
+    "generate-types": "node scripts/generate-types.js",
+    "validate:ts": "tsc --no-emit --no-implicit-any test/typescript-validate.ts"
   },
   "repository": {
     "type": "git",
