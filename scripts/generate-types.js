@@ -71,7 +71,7 @@ declare class Webhooks {
   public receive (options: { id: string, name: string, payload: any }): Promise<void>
   public removeListener (event: string | string[], callback: (event: Webhooks.WebhookEvent<any>) => void): void
   public removeListener (event: string | string[], callback: (event: Webhooks.WebhookEvent<any>) => Promise<void>): void
-  public middleware (request: http.ClientRequest, response: http.ServerResponse, next: (err?: any) => void): (request: http.IncomingMessage, response: http.ServerResponse) => void
+  public middleware (request: http.IncomingMessage, response: http.ServerResponse, next?: (err?: any) => void): void | Promise<void>
 }
 
 export = Webhooks
