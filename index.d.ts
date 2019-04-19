@@ -264,6 +264,32 @@ declare namespace Webhooks {
     repository: PayloadRepository;
     sender: WebhookPayloadStatusSender;
   };
+  type WebhookPayloadStarSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadStar = {
+    action: string;
+    starred_at: string;
+    repository: PayloadRepository;
+    sender: WebhookPayloadStarSender;
+  };
   type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemFirstPatchedVersion = {
     identifier: string;
   };
@@ -2096,6 +2122,48 @@ declare namespace Webhooks {
     repository: PayloadRepository;
     sender: WebhookPayloadMilestoneSender;
   };
+  type WebhookPayloadMetaSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadMetaHookConfig = {
+    content_type: string;
+    insecure_ssl: string;
+    url: string;
+  };
+  type WebhookPayloadMetaHook = {
+    type: string;
+    id: number;
+    name: string;
+    active: boolean;
+    events: Array<string>;
+    config: WebhookPayloadMetaHookConfig;
+    updated_at: string;
+    created_at: string;
+  };
+  type WebhookPayloadMeta = {
+    action: string;
+    hook_id: number;
+    hook: WebhookPayloadMetaHook;
+    repository: PayloadRepository;
+    sender: WebhookPayloadMetaSender;
+  };
   type WebhookPayloadMembershipOrganization = {
     login: string;
     id: number;
@@ -2985,6 +3053,41 @@ declare namespace Webhooks {
     repository: PayloadRepository;
     sender: WebhookPayloadDeploymentSender;
   };
+  type WebhookPayloadDeployKeySender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadDeployKeyKey = {
+    id: number;
+    key: string;
+    url: string;
+    title: string;
+    verified: boolean;
+    created_at: string;
+    read_only: boolean;
+  };
+  type WebhookPayloadDeployKey = {
+    action: string;
+    key: WebhookPayloadDeployKeyKey;
+    repository: PayloadRepository;
+    sender: WebhookPayloadDeployKeySender;
+  };
   type WebhookPayloadDeleteSender = {
     login: string;
     id: number;
@@ -3558,6 +3661,13 @@ declare class Webhooks {
   ): void;
 
   public on(
+    event: "deploy_key" | "deploy_key.created" | "deploy_key.deleted",
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeployKey>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
     event: "deployment",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeployment>
@@ -3637,6 +3747,7 @@ declare class Webhooks {
       | "issues.demilestoned"
       | "issues.edited"
       | "issues.labeled"
+      | "issues.locked"
       | "issues.milestoned"
       | "issues.opened"
       | "issues.pinned"
@@ -3644,6 +3755,7 @@ declare class Webhooks {
       | "issues.transferred"
       | "issues.unassigned"
       | "issues.unlabeled"
+      | "issues.unlocked"
       | "issues.unpinned",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadIssues>
@@ -3685,6 +3797,13 @@ declare class Webhooks {
   ): void;
 
   public on(
+    event: "meta" | "meta.deleted",
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMeta>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
     event:
       | "milestone"
       | "milestone.closed"
@@ -3700,9 +3819,11 @@ declare class Webhooks {
   public on(
     event:
       | "organization"
+      | "organization.deleted"
       | "organization.member_added"
       | "organization.member_invited"
-      | "organization.member_removed",
+      | "organization.member_removed"
+      | "organization.renamed",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadOrganization>
     ) => Promise<void> | void
@@ -3774,6 +3895,7 @@ declare class Webhooks {
       | "pull_request.closed"
       | "pull_request.edited"
       | "pull_request.labeled"
+      | "pull_request.locked"
       | "pull_request.opened"
       | "pull_request.ready_for_review"
       | "pull_request.reopened"
@@ -3781,6 +3903,7 @@ declare class Webhooks {
       | "pull_request.review_requested"
       | "pull_request.unassigned"
       | "pull_request.unlabeled"
+      | "pull_request.unlocked"
       | "pull_request.synchronize",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPullRequest>
@@ -3819,7 +3942,14 @@ declare class Webhooks {
   ): void;
 
   public on(
-    event: "release" | "release.published",
+    event:
+      | "release"
+      | "release.created"
+      | "release.deleted"
+      | "release.edited"
+      | "release.prereleased"
+      | "release.published"
+      | "release.unpublished",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRelease>
     ) => Promise<void> | void
@@ -3831,8 +3961,11 @@ declare class Webhooks {
       | "repository.archived"
       | "repository.created"
       | "repository.deleted"
+      | "repository.edited"
       | "repository.privatized"
       | "repository.publicized"
+      | "repository.renamed"
+      | "repository.transferred"
       | "repository.unarchived",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepository>
@@ -3867,6 +4000,13 @@ declare class Webhooks {
       | "security_advisory.updated",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadSecurityAdvisory>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: "star" | "star.created" | "star.deleted",
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadStar>
     ) => Promise<void> | void
   ): void;
 
