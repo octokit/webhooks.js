@@ -1,8 +1,5 @@
 language: node_js
-cache:
-  directories:
-    - ~/.npm
-
+cache: npm
 node_js: lts/*
 
 # Trigger a push build on master and greenkeeper branches + PRs build on every branches
@@ -38,7 +35,7 @@ jobs:
 
     # run semantic-release and coverage in parallel
     - stage: release
-      script: npm run semantic-release
+      script: npx semantic-release
     - script:
         - npm run test
         - npm run coverage:upload
