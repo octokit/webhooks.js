@@ -1928,6 +1928,7 @@ declare namespace Webhooks {
     _links: WebhookPayloadPullRequestPullRequestLinks;
     author_association: string;
     merged: boolean;
+    draft: boolean;
     mergeable: boolean;
     rebaseable: boolean;
     mergeable_state: string;
