@@ -79,6 +79,7 @@ declare namespace Webhooks {
     description: string;
     privacy: string;
     url: string;
+    html_url: string;
     members_url: string;
     repositories_url: string;
     permission: string;
@@ -136,6 +137,7 @@ declare namespace Webhooks {
     description: string;
     privacy: string;
     url: string;
+    html_url: string;
     members_url: string;
     repositories_url: string;
     permission: string;
@@ -171,6 +173,7 @@ declare namespace Webhooks {
   type WebhookPayloadStatusBranchesItem = {
     name: string;
     commit: WebhookPayloadStatusBranchesItemCommit;
+    protected: boolean;
   };
   type WebhookPayloadStatusCommitCommitter = {
     login: string;
@@ -332,7 +335,7 @@ declare namespace Webhooks {
     action: string;
     security_advisory: WebhookPayloadSecurityAdvisorySecurityAdvisory;
   };
-  type WebhookPayloadRepositoryVulnerabilityAlertAlertDismisser = {
+  type WebhookPayloadRepositoryVulnerabilityAlertSender = {
     login: string;
     id: number;
     node_id: string;
@@ -359,13 +362,12 @@ declare namespace Webhooks {
     external_reference: string;
     external_identifier: string;
     fixed_in: string;
-    dismisser: WebhookPayloadRepositoryVulnerabilityAlertAlertDismisser;
-    dismiss_reason: string;
-    dismissed_at: string;
   };
   type WebhookPayloadRepositoryVulnerabilityAlert = {
     action: string;
     alert: WebhookPayloadRepositoryVulnerabilityAlertAlert;
+    repository: PayloadRepository;
+    sender: WebhookPayloadRepositoryVulnerabilityAlertSender;
   };
   type WebhookPayloadRepositoryImportSender = {
     login: string;
@@ -498,7 +500,7 @@ declare namespace Webhooks {
     repository: PayloadRepository;
     sender: WebhookPayloadReleaseSender;
   };
-  type WebhookPayloadRegistryPackagePayloadSender = {
+  type WebhookPayloadRegistryPackageSender = {
     login: string;
     id: number;
     node_id: string;
@@ -518,109 +520,14 @@ declare namespace Webhooks {
     type: string;
     site_admin: boolean;
   };
-  type WebhookPayloadRegistryPackagePayloadRepositoryOwner = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
-  type WebhookPayloadRegistryPackagePayloadRepository = {
-    id: number;
-    node_id: string;
-    name: string;
-    full_name: string;
-    private: boolean;
-    owner: WebhookPayloadRegistryPackagePayloadRepositoryOwner;
-    html_url: string;
-    description: null;
-    fork: boolean;
-    url: string;
-    forks_url: string;
-    keys_url: string;
-    collaborators_url: string;
-    teams_url: string;
-    hooks_url: string;
-    issue_events_url: string;
-    events_url: string;
-    assignees_url: string;
-    branches_url: string;
-    tags_url: string;
-    blobs_url: string;
-    git_tags_url: string;
-    git_refs_url: string;
-    trees_url: string;
-    statuses_url: string;
-    languages_url: string;
-    stargazers_url: string;
-    contributors_url: string;
-    subscribers_url: string;
-    subscription_url: string;
-    commits_url: string;
-    git_commits_url: string;
-    comments_url: string;
-    issue_comment_url: string;
-    contents_url: string;
-    compare_url: string;
-    merges_url: string;
-    archive_url: string;
-    downloads_url: string;
-    issues_url: string;
-    pulls_url: string;
-    milestones_url: string;
-    notifications_url: string;
-    labels_url: string;
-    releases_url: string;
-    deployments_url: string;
-    created_at: string;
-    updated_at: string;
-    pushed_at: string;
-    git_url: string;
-    ssh_url: string;
-    clone_url: string;
-    svn_url: string;
-    homepage: null;
-    size: number;
-    stargazers_count: number;
-    watchers_count: number;
-    language: string;
-    has_issues: boolean;
-    has_projects: boolean;
-    has_downloads: boolean;
-    has_wiki: boolean;
-    has_pages: boolean;
-    forks_count: number;
-    mirror_url: null;
-    archived: boolean;
-    disabled: boolean;
-    open_issues_count: number;
-    license: null;
-    forks: number;
-    open_issues: number;
-    watchers: number;
-    default_branch: string;
-  };
-  type WebhookPayloadRegistryPackagePayloadRegistryPackageRegistry = {
+  type WebhookPayloadRegistryPackageRegistryPackageRegistry = {
     about_url: string;
     name: string;
     type: string;
     url: string;
     vendor: string;
   };
-  type WebhookPayloadRegistryPackagePayloadRegistryPackagePackageVersionAuthor = {
+  type WebhookPayloadRegistryPackageRegistryPackagePackageVersionAuthor = {
     login: string;
     id: number;
     node_id: string;
@@ -640,7 +547,7 @@ declare namespace Webhooks {
     type: string;
     site_admin: boolean;
   };
-  type WebhookPayloadRegistryPackagePayloadRegistryPackagePackageVersionPackageFilesItem = {
+  type WebhookPayloadRegistryPackageRegistryPackagePackageVersionPackageFilesItem = {
     download_url: string;
     id: number;
     name: string;
@@ -653,7 +560,7 @@ declare namespace Webhooks {
     created_at: string;
     updated_at: string;
   };
-  type WebhookPayloadRegistryPackagePayloadRegistryPackagePackageVersionReleaseAuthor = {
+  type WebhookPayloadRegistryPackageRegistryPackagePackageVersionReleaseAuthor = {
     login: string;
     id: number;
     node_id: string;
@@ -673,7 +580,7 @@ declare namespace Webhooks {
     type: string;
     site_admin: boolean;
   };
-  type WebhookPayloadRegistryPackagePayloadRegistryPackagePackageVersionRelease = {
+  type WebhookPayloadRegistryPackageRegistryPackagePackageVersionRelease = {
     url: string;
     html_url: string;
     id: number;
@@ -681,18 +588,18 @@ declare namespace Webhooks {
     target_commitish: string;
     name: string;
     draft: boolean;
-    author: WebhookPayloadRegistryPackagePayloadRegistryPackagePackageVersionReleaseAuthor;
+    author: WebhookPayloadRegistryPackageRegistryPackagePackageVersionReleaseAuthor;
     prerelease: boolean;
     created_at: string;
     published_at: string;
   };
-  type WebhookPayloadRegistryPackagePayloadRegistryPackagePackageVersion = {
+  type WebhookPayloadRegistryPackageRegistryPackagePackageVersion = {
     id: number;
     version: string;
     summary: string;
     body: string;
     body_html: string;
-    release: WebhookPayloadRegistryPackagePayloadRegistryPackagePackageVersionRelease;
+    release: WebhookPayloadRegistryPackageRegistryPackagePackageVersionRelease;
     manifest: string;
     html_url: string;
     tag_name: string;
@@ -704,12 +611,12 @@ declare namespace Webhooks {
     updated_at: string;
     metadata: Array<any>;
     package_files: Array<
-      WebhookPayloadRegistryPackagePayloadRegistryPackagePackageVersionPackageFilesItem
+      WebhookPayloadRegistryPackageRegistryPackagePackageVersionPackageFilesItem
     >;
-    author: WebhookPayloadRegistryPackagePayloadRegistryPackagePackageVersionAuthor;
+    author: WebhookPayloadRegistryPackageRegistryPackagePackageVersionAuthor;
     installation_command: string;
   };
-  type WebhookPayloadRegistryPackagePayloadRegistryPackageOwner = {
+  type WebhookPayloadRegistryPackageRegistryPackageOwner = {
     login: string;
     id: number;
     node_id: string;
@@ -729,26 +636,22 @@ declare namespace Webhooks {
     type: string;
     site_admin: boolean;
   };
-  type WebhookPayloadRegistryPackagePayloadRegistryPackage = {
+  type WebhookPayloadRegistryPackageRegistryPackage = {
     id: number;
     name: string;
     package_type: string;
     html_url: string;
     created_at: string;
     updated_at: string;
-    owner: WebhookPayloadRegistryPackagePayloadRegistryPackageOwner;
-    package_version: WebhookPayloadRegistryPackagePayloadRegistryPackagePackageVersion;
-    registry: WebhookPayloadRegistryPackagePayloadRegistryPackageRegistry;
-  };
-  type WebhookPayloadRegistryPackagePayload = {
-    action: string;
-    registry_package: WebhookPayloadRegistryPackagePayloadRegistryPackage;
-    repository: WebhookPayloadRegistryPackagePayloadRepository;
-    sender: WebhookPayloadRegistryPackagePayloadSender;
+    owner: WebhookPayloadRegistryPackageRegistryPackageOwner;
+    package_version: WebhookPayloadRegistryPackageRegistryPackagePackageVersion;
+    registry: WebhookPayloadRegistryPackageRegistryPackageRegistry;
   };
   type WebhookPayloadRegistryPackage = {
-    event: string;
-    payload: WebhookPayloadRegistryPackagePayload;
+    action: string;
+    registry_package: WebhookPayloadRegistryPackageRegistryPackage;
+    repository: PayloadRepository;
+    sender: WebhookPayloadRegistryPackageSender;
   };
   type WebhookPayloadPushSender = {
     login: string;
@@ -865,8 +768,8 @@ declare namespace Webhooks {
     node_id: string;
     name: string;
     full_name: string;
-    owner: WebhookPayloadPullRequestReviewCommentPullRequestBaseRepoOwner;
     private: boolean;
+    owner: WebhookPayloadPullRequestReviewCommentPullRequestBaseRepoOwner;
     html_url: string;
     description: null;
     fork: boolean;
@@ -918,7 +821,7 @@ declare namespace Webhooks {
     size: number;
     stargazers_count: number;
     watchers_count: number;
-    language: null;
+    language: string;
     has_issues: boolean;
     has_projects: boolean;
     has_downloads: boolean;
@@ -927,6 +830,7 @@ declare namespace Webhooks {
     forks_count: number;
     mirror_url: null;
     archived: boolean;
+    disabled: boolean;
     open_issues_count: number;
     license: null;
     forks: number;
@@ -986,8 +890,8 @@ declare namespace Webhooks {
     node_id: string;
     name: string;
     full_name: string;
-    owner: WebhookPayloadPullRequestReviewCommentPullRequestHeadRepoOwner;
     private: boolean;
+    owner: WebhookPayloadPullRequestReviewCommentPullRequestHeadRepoOwner;
     html_url: string;
     description: null;
     fork: boolean;
@@ -1039,7 +943,7 @@ declare namespace Webhooks {
     size: number;
     stargazers_count: number;
     watchers_count: number;
-    language: null;
+    language: string;
     has_issues: boolean;
     has_projects: boolean;
     has_downloads: boolean;
@@ -1048,6 +952,7 @@ declare namespace Webhooks {
     forks_count: number;
     mirror_url: null;
     archived: boolean;
+    disabled: boolean;
     open_issues_count: number;
     license: null;
     forks: number;
@@ -1271,8 +1176,8 @@ declare namespace Webhooks {
     node_id: string;
     name: string;
     full_name: string;
-    owner: WebhookPayloadPullRequestReviewPullRequestBaseRepoOwner;
     private: boolean;
+    owner: WebhookPayloadPullRequestReviewPullRequestBaseRepoOwner;
     html_url: string;
     description: null;
     fork: boolean;
@@ -1324,7 +1229,7 @@ declare namespace Webhooks {
     size: number;
     stargazers_count: number;
     watchers_count: number;
-    language: null;
+    language: string;
     has_issues: boolean;
     has_projects: boolean;
     has_downloads: boolean;
@@ -1333,6 +1238,7 @@ declare namespace Webhooks {
     forks_count: number;
     mirror_url: null;
     archived: boolean;
+    disabled: boolean;
     open_issues_count: number;
     license: null;
     forks: number;
@@ -1392,8 +1298,8 @@ declare namespace Webhooks {
     node_id: string;
     name: string;
     full_name: string;
-    owner: WebhookPayloadPullRequestReviewPullRequestHeadRepoOwner;
     private: boolean;
+    owner: WebhookPayloadPullRequestReviewPullRequestHeadRepoOwner;
     html_url: string;
     description: null;
     fork: boolean;
@@ -1445,7 +1351,7 @@ declare namespace Webhooks {
     size: number;
     stargazers_count: number;
     watchers_count: number;
-    language: null;
+    language: string;
     has_issues: boolean;
     has_projects: boolean;
     has_downloads: boolean;
@@ -1454,6 +1360,7 @@ declare namespace Webhooks {
     forks_count: number;
     mirror_url: null;
     archived: boolean;
+    disabled: boolean;
     open_issues_count: number;
     license: null;
     forks: number;
@@ -1656,8 +1563,8 @@ declare namespace Webhooks {
     node_id: string;
     name: string;
     full_name: string;
-    owner: WebhookPayloadPullRequestPullRequestBaseRepoOwner;
     private: boolean;
+    owner: WebhookPayloadPullRequestPullRequestBaseRepoOwner;
     html_url: string;
     description: null;
     fork: boolean;
@@ -1718,6 +1625,7 @@ declare namespace Webhooks {
     forks_count: number;
     mirror_url: null;
     archived: boolean;
+    disabled: boolean;
     open_issues_count: number;
     license: null;
     forks: number;
@@ -1777,8 +1685,8 @@ declare namespace Webhooks {
     node_id: string;
     name: string;
     full_name: string;
-    owner: WebhookPayloadPullRequestPullRequestHeadRepoOwner;
     private: boolean;
+    owner: WebhookPayloadPullRequestPullRequestHeadRepoOwner;
     html_url: string;
     description: null;
     fork: boolean;
@@ -1839,6 +1747,7 @@ declare namespace Webhooks {
     forks_count: number;
     mirror_url: null;
     archived: boolean;
+    disabled: boolean;
     open_issues_count: number;
     license: null;
     forks: number;
@@ -1909,9 +1818,9 @@ declare namespace Webhooks {
     body: string;
     created_at: string;
     updated_at: string;
-    closed_at: string;
+    closed_at: null;
     merged_at: null;
-    merge_commit_sha: string;
+    merge_commit_sha: null;
     assignee: null;
     assignees: Array<any>;
     requested_reviewers: Array<any>;
@@ -1927,10 +1836,10 @@ declare namespace Webhooks {
     base: WebhookPayloadPullRequestPullRequestBase;
     _links: WebhookPayloadPullRequestPullRequestLinks;
     author_association: string;
-    merged: boolean;
     draft: boolean;
-    mergeable: boolean;
-    rebaseable: boolean;
+    merged: boolean;
+    mergeable: null;
+    rebaseable: null;
     mergeable_state: string;
     merged_by: null;
     comments: number;
@@ -2117,6 +2026,7 @@ declare namespace Webhooks {
     id: number;
     node_id: string;
     note: string;
+    archived: boolean;
     creator: WebhookPayloadProjectCardProjectCardCreator;
     created_at: string;
     updated_at: string;
@@ -2439,6 +2349,7 @@ declare namespace Webhooks {
     description: string;
     privacy: string;
     url: string;
+    html_url: string;
     members_url: string;
     repositories_url: string;
     permission: string;
@@ -2511,10 +2422,6 @@ declare namespace Webhooks {
     type: string;
     site_admin: boolean;
   };
-  type WebhookPayloadMemberChangesPermission = { from: string };
-  type WebhookPayloadMemberChanges = {
-    permission: WebhookPayloadMemberChangesPermission;
-  };
   type WebhookPayloadMemberMember = {
     login: string;
     id: number;
@@ -2538,7 +2445,6 @@ declare namespace Webhooks {
   type WebhookPayloadMember = {
     action: string;
     member: WebhookPayloadMemberMember;
-    changes: WebhookPayloadMemberChanges;
     repository: PayloadRepository;
     sender: WebhookPayloadMemberSender;
   };
@@ -2649,6 +2555,84 @@ declare namespace Webhooks {
     site_admin: boolean;
   };
   type WebhookPayloadIssuesChanges = {};
+  type WebhookPayloadIssuesIssueMilestoneCreator = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadIssuesIssueMilestone = {
+    url: string;
+    html_url: string;
+    labels_url: string;
+    id: number;
+    node_id: string;
+    number: number;
+    title: string;
+    description: string;
+    creator: WebhookPayloadIssuesIssueMilestoneCreator;
+    open_issues: number;
+    closed_issues: number;
+    state: string;
+    created_at: string;
+    updated_at: string;
+    due_on: string;
+    closed_at: string;
+  };
+  type WebhookPayloadIssuesIssueAssigneesItem = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadIssuesIssueAssignee = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
   type WebhookPayloadIssuesIssueLabelsItem = {
     id: number;
     node_id: string;
@@ -2692,9 +2676,9 @@ declare namespace Webhooks {
     labels: Array<WebhookPayloadIssuesIssueLabelsItem>;
     state: string;
     locked: boolean;
-    assignee: null;
-    assignees: Array<any>;
-    milestone: null;
+    assignee: WebhookPayloadIssuesIssueAssignee;
+    assignees: Array<WebhookPayloadIssuesIssueAssigneesItem>;
+    milestone: WebhookPayloadIssuesIssueMilestone;
     comments: number;
     created_at: string;
     updated_at: string;
@@ -2761,6 +2745,84 @@ declare namespace Webhooks {
     author_association: string;
     body: string;
   };
+  type WebhookPayloadIssueCommentIssueMilestoneCreator = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadIssueCommentIssueMilestone = {
+    url: string;
+    html_url: string;
+    labels_url: string;
+    id: number;
+    node_id: string;
+    number: number;
+    title: string;
+    description: string;
+    creator: WebhookPayloadIssueCommentIssueMilestoneCreator;
+    open_issues: number;
+    closed_issues: number;
+    state: string;
+    created_at: string;
+    updated_at: string;
+    due_on: string;
+    closed_at: string;
+  };
+  type WebhookPayloadIssueCommentIssueAssigneesItem = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadIssueCommentIssueAssignee = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
   type WebhookPayloadIssueCommentIssueLabelsItem = {
     id: number;
     node_id: string;
@@ -2804,9 +2866,9 @@ declare namespace Webhooks {
     labels: Array<WebhookPayloadIssueCommentIssueLabelsItem>;
     state: string;
     locked: boolean;
-    assignee: null;
-    assignees: Array<any>;
-    milestone: null;
+    assignee: WebhookPayloadIssueCommentIssueAssignee;
+    assignees: Array<WebhookPayloadIssueCommentIssueAssigneesItem>;
+    milestone: WebhookPayloadIssueCommentIssueMilestone;
     comments: number;
     created_at: string;
     updated_at: string;
@@ -2841,16 +2903,26 @@ declare namespace Webhooks {
     type: string;
     site_admin: boolean;
   };
-  type WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem = {
+  type WebhookPayloadInstallationRepositoriesRepositoriesAddedItem = {
     id: number;
+    node_id: string;
     name: string;
     full_name: string;
     private: boolean;
   };
   type WebhookPayloadInstallationRepositoriesInstallationPermissions = {
-    metadata: string;
-    contents: string;
+    administration: string;
+    statuses: string;
+    repository_projects: string;
+    repository_hooks: string;
+    pull_requests: string;
+    pages: string;
     issues: string;
+    deployments: string;
+    contents: string;
+    checks: string;
+    metadata: string;
+    vulnerability_alerts: string;
   };
   type WebhookPayloadInstallationRepositoriesInstallationAccount = {
     login: string;
@@ -2883,19 +2955,19 @@ declare namespace Webhooks {
     target_id: number;
     target_type: string;
     permissions: WebhookPayloadInstallationRepositoriesInstallationPermissions;
-    events: Array<string>;
+    events: Array<any>;
     created_at: number;
     updated_at: number;
-    single_file_name: string;
+    single_file_name: null;
   };
   type WebhookPayloadInstallationRepositories = {
     action: string;
     installation: WebhookPayloadInstallationRepositoriesInstallation;
     repository_selection: string;
-    repositories_added: Array<any>;
-    repositories_removed: Array<
-      WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem
+    repositories_added: Array<
+      WebhookPayloadInstallationRepositoriesRepositoriesAddedItem
     >;
+    repositories_removed: Array<any>;
     sender: WebhookPayloadInstallationRepositoriesSender;
   };
   type WebhookPayloadInstallationSender = {
@@ -3073,8 +3145,8 @@ declare namespace Webhooks {
     node_id: string;
     name: string;
     full_name: string;
-    owner: WebhookPayloadForkForkeeOwner;
     private: boolean;
+    owner: WebhookPayloadForkForkeeOwner;
     html_url: string;
     description: null;
     fork: boolean;
@@ -3135,6 +3207,7 @@ declare namespace Webhooks {
     forks_count: number;
     mirror_url: null;
     archived: boolean;
+    disabled: boolean;
     open_issues_count: number;
     license: null;
     forks: number;
@@ -3197,6 +3270,7 @@ declare namespace Webhooks {
     ref: string;
     task: string;
     payload: WebhookPayloadDeploymentStatusDeploymentPayload;
+    original_environment: string;
     environment: string;
     description: null;
     creator: WebhookPayloadDeploymentStatusDeploymentCreator;
@@ -3232,6 +3306,7 @@ declare namespace Webhooks {
     state: string;
     creator: WebhookPayloadDeploymentStatusDeploymentStatusCreator;
     description: string;
+    environment: string;
     target_url: string;
     created_at: string;
     updated_at: string;
@@ -3293,6 +3368,7 @@ declare namespace Webhooks {
     ref: string;
     task: string;
     payload: WebhookPayloadDeploymentDeploymentPayload;
+    original_environment: string;
     environment: string;
     description: null;
     creator: WebhookPayloadDeploymentDeploymentCreator;
@@ -3494,7 +3570,6 @@ declare namespace Webhooks {
     repository: PayloadRepository;
     sender: WebhookPayloadCommitCommentSender;
   };
-  type WebhookPayloadCheckSuiteInstallation = { id: number };
   type WebhookPayloadCheckSuiteSender = {
     login: string;
     id: number;
@@ -3515,20 +3590,6 @@ declare namespace Webhooks {
     type: string;
     site_admin: boolean;
   };
-  type WebhookPayloadCheckSuiteOrganization = {
-    login: string;
-    id: number;
-    node_id: string;
-    url: string;
-    repos_url: string;
-    events_url: string;
-    hooks_url: string;
-    issues_url: string;
-    members_url: string;
-    public_members_url: string;
-    avatar_url: string;
-    description: string;
-  };
   type WebhookPayloadCheckSuiteCheckSuiteHeadCommitCommitter = {
     name: string;
     email: string;
@@ -3544,6 +3605,27 @@ declare namespace Webhooks {
     timestamp: string;
     author: WebhookPayloadCheckSuiteCheckSuiteHeadCommitAuthor;
     committer: WebhookPayloadCheckSuiteCheckSuiteHeadCommitCommitter;
+  };
+  type WebhookPayloadCheckSuiteCheckSuiteAppPermissions = {
+    administration: string;
+    checks: string;
+    contents: string;
+    deployments: string;
+    issues: string;
+    members: string;
+    metadata: string;
+    organization_administration: string;
+    organization_hooks: string;
+    organization_plan: string;
+    organization_projects: string;
+    organization_user_blocking: string;
+    pages: string;
+    pull_requests: string;
+    repository_hooks: string;
+    repository_projects: string;
+    statuses: string;
+    team_discussions: string;
+    vulnerability_alerts: string;
   };
   type WebhookPayloadCheckSuiteCheckSuiteAppOwner = {
     login: string;
@@ -3570,14 +3652,44 @@ declare namespace Webhooks {
     node_id: string;
     owner: WebhookPayloadCheckSuiteCheckSuiteAppOwner;
     name: string;
-    description: null;
+    description: string;
     external_url: string;
     html_url: string;
     created_at: string;
     updated_at: string;
+    permissions: WebhookPayloadCheckSuiteCheckSuiteAppPermissions;
+    events: Array<any>;
+  };
+  type WebhookPayloadCheckSuiteCheckSuitePullRequestsItemBaseRepo = {
+    id: number;
+    url: string;
+    name: string;
+  };
+  type WebhookPayloadCheckSuiteCheckSuitePullRequestsItemBase = {
+    ref: string;
+    sha: string;
+    repo: WebhookPayloadCheckSuiteCheckSuitePullRequestsItemBaseRepo;
+  };
+  type WebhookPayloadCheckSuiteCheckSuitePullRequestsItemHeadRepo = {
+    id: number;
+    url: string;
+    name: string;
+  };
+  type WebhookPayloadCheckSuiteCheckSuitePullRequestsItemHead = {
+    ref: string;
+    sha: string;
+    repo: WebhookPayloadCheckSuiteCheckSuitePullRequestsItemHeadRepo;
+  };
+  type WebhookPayloadCheckSuiteCheckSuitePullRequestsItem = {
+    url: string;
+    id: number;
+    number: number;
+    head: WebhookPayloadCheckSuiteCheckSuitePullRequestsItemHead;
+    base: WebhookPayloadCheckSuiteCheckSuitePullRequestsItemBase;
   };
   type WebhookPayloadCheckSuiteCheckSuite = {
     id: number;
+    node_id: string;
     head_branch: string;
     head_sha: string;
     status: string;
@@ -3585,7 +3697,7 @@ declare namespace Webhooks {
     url: string;
     before: string;
     after: string;
-    pull_requests: Array<any>;
+    pull_requests: Array<WebhookPayloadCheckSuiteCheckSuitePullRequestsItem>;
     app: WebhookPayloadCheckSuiteCheckSuiteApp;
     created_at: string;
     updated_at: string;
@@ -3597,11 +3709,8 @@ declare namespace Webhooks {
     action: string;
     check_suite: WebhookPayloadCheckSuiteCheckSuite;
     repository: PayloadRepository;
-    organization: WebhookPayloadCheckSuiteOrganization;
     sender: WebhookPayloadCheckSuiteSender;
-    installation: WebhookPayloadCheckSuiteInstallation;
   };
-  type WebhookPayloadCheckRunInstallation = { id: number };
   type WebhookPayloadCheckRunSender = {
     login: string;
     id: number;
@@ -3621,20 +3730,6 @@ declare namespace Webhooks {
     received_events_url: string;
     type: string;
     site_admin: boolean;
-  };
-  type WebhookPayloadCheckRunOrganization = {
-    login: string;
-    id: number;
-    node_id: string;
-    url: string;
-    repos_url: string;
-    events_url: string;
-    hooks_url: string;
-    issues_url: string;
-    members_url: string;
-    public_members_url: string;
-    avatar_url: string;
-    description: string;
   };
   type PayloadRepositoryOwner = {
     login: string;
@@ -3663,8 +3758,8 @@ declare namespace Webhooks {
     node_id: string;
     name: string;
     full_name: string;
-    owner: PayloadRepositoryOwner;
     private: boolean;
+    owner: PayloadRepositoryOwner;
     html_url: string;
     description: null;
     fork: boolean;
@@ -3716,7 +3811,7 @@ declare namespace Webhooks {
     size: number;
     stargazers_count: number;
     watchers_count: number;
-    language: null;
+    language: string | null;
     has_issues: boolean;
     has_projects: boolean;
     has_downloads: boolean;
@@ -3725,6 +3820,7 @@ declare namespace Webhooks {
     forks_count: number;
     mirror_url: null;
     archived: boolean;
+    disabled?: boolean;
     open_issues_count: number;
     license: null;
     forks: number;
@@ -3734,6 +3830,54 @@ declare namespace Webhooks {
     stargazers?: number;
     master_branch?: string;
     permissions?: PayloadRepositoryPermissions;
+  };
+  type WebhookPayloadCheckRunCheckRunPullRequestsItemBaseRepo = {
+    id: number;
+    url: string;
+    name: string;
+  };
+  type WebhookPayloadCheckRunCheckRunPullRequestsItemBase = {
+    ref: string;
+    sha: string;
+    repo: WebhookPayloadCheckRunCheckRunPullRequestsItemBaseRepo;
+  };
+  type WebhookPayloadCheckRunCheckRunPullRequestsItemHeadRepo = {
+    id: number;
+    url: string;
+    name: string;
+  };
+  type WebhookPayloadCheckRunCheckRunPullRequestsItemHead = {
+    ref: string;
+    sha: string;
+    repo: WebhookPayloadCheckRunCheckRunPullRequestsItemHeadRepo;
+  };
+  type WebhookPayloadCheckRunCheckRunPullRequestsItem = {
+    url: string;
+    id: number;
+    number: number;
+    head: WebhookPayloadCheckRunCheckRunPullRequestsItemHead;
+    base: WebhookPayloadCheckRunCheckRunPullRequestsItemBase;
+  };
+  type WebhookPayloadCheckRunCheckRunAppPermissions = {
+    administration: string;
+    checks: string;
+    contents: string;
+    deployments: string;
+    issues: string;
+    members: string;
+    metadata: string;
+    organization_administration: string;
+    organization_hooks: string;
+    organization_plan: string;
+    organization_projects: string;
+    organization_user_blocking: string;
+    pages: string;
+    pull_requests: string;
+    repository_hooks: string;
+    repository_projects: string;
+    statuses: string;
+    team_discussions: string;
+    vulnerability_alerts: string;
   };
   type WebhookPayloadCheckRunCheckRunAppOwner = {
     login: string;
@@ -3760,11 +3904,34 @@ declare namespace Webhooks {
     node_id: string;
     owner: WebhookPayloadCheckRunCheckRunAppOwner;
     name: string;
-    description: null;
+    description: string;
     external_url: string;
     html_url: string;
     created_at: string;
     updated_at: string;
+    permissions: WebhookPayloadCheckRunCheckRunAppPermissions;
+    events: Array<any>;
+  };
+  type WebhookPayloadCheckRunCheckRunCheckSuiteAppPermissions = {
+    administration: string;
+    checks: string;
+    contents: string;
+    deployments: string;
+    issues: string;
+    members: string;
+    metadata: string;
+    organization_administration: string;
+    organization_hooks: string;
+    organization_plan: string;
+    organization_projects: string;
+    organization_user_blocking: string;
+    pages: string;
+    pull_requests: string;
+    repository_hooks: string;
+    repository_projects: string;
+    statuses: string;
+    team_discussions: string;
+    vulnerability_alerts: string;
   };
   type WebhookPayloadCheckRunCheckRunCheckSuiteAppOwner = {
     login: string;
@@ -3791,56 +3958,88 @@ declare namespace Webhooks {
     node_id: string;
     owner: WebhookPayloadCheckRunCheckRunCheckSuiteAppOwner;
     name: string;
-    description: null;
+    description: string;
     external_url: string;
     html_url: string;
     created_at: string;
     updated_at: string;
+    permissions: WebhookPayloadCheckRunCheckRunCheckSuiteAppPermissions;
+    events: Array<any>;
+  };
+  type WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemBaseRepo = {
+    id: number;
+    url: string;
+    name: string;
+  };
+  type WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemBase = {
+    ref: string;
+    sha: string;
+    repo: WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemBaseRepo;
+  };
+  type WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemHeadRepo = {
+    id: number;
+    url: string;
+    name: string;
+  };
+  type WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemHead = {
+    ref: string;
+    sha: string;
+    repo: WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemHeadRepo;
+  };
+  type WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItem = {
+    url: string;
+    id: number;
+    number: number;
+    head: WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemHead;
+    base: WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemBase;
   };
   type WebhookPayloadCheckRunCheckRunCheckSuite = {
     id: number;
+    node_id: string;
     head_branch: string;
     head_sha: string;
     status: string;
-    conclusion: string;
+    conclusion: null;
     url: string;
     before: string;
     after: string;
-    pull_requests: Array<any>;
+    pull_requests: Array<
+      WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItem
+    >;
     app: WebhookPayloadCheckRunCheckRunCheckSuiteApp;
     created_at: string;
     updated_at: string;
   };
   type WebhookPayloadCheckRunCheckRunOutput = {
-    title: string;
-    summary: string;
-    text: string;
+    title: null;
+    summary: null;
+    text: null;
     annotations_count: number;
     annotations_url: string;
   };
   type WebhookPayloadCheckRunCheckRun = {
     id: number;
+    node_id: string;
     head_sha: string;
     external_id: string;
     url: string;
     html_url: string;
+    details_url: string;
     status: string;
-    conclusion: string;
+    conclusion: null;
     started_at: string;
-    completed_at: string;
+    completed_at: null;
     output: WebhookPayloadCheckRunCheckRunOutput;
     name: string;
     check_suite: WebhookPayloadCheckRunCheckRunCheckSuite;
     app: WebhookPayloadCheckRunCheckRunApp;
-    pull_requests: Array<any>;
+    pull_requests: Array<WebhookPayloadCheckRunCheckRunPullRequestsItem>;
   };
   type WebhookPayloadCheckRun = {
     action: string;
     check_run: WebhookPayloadCheckRunCheckRun;
     repository: PayloadRepository;
-    organization: WebhookPayloadCheckRunOrganization;
     sender: WebhookPayloadCheckRunSender;
-    installation: WebhookPayloadCheckRunInstallation;
   };
 
   interface WebhookEvent<T> {
