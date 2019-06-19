@@ -351,7 +351,7 @@ webhooks.on(eventNames, handler)
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. One of <a href="#listofalleventnames">GitHub’s supported event names</a>.
+      Name of the event. One of <a href="https://developer.github.com/webhooks/#events">GitHub's supported event names</a>.
     </td>
   </tr>
   <tr>
@@ -407,7 +407,7 @@ webhooks.removeListener(eventNames, handler)
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. One of <a href="#listofalleventnames">GitHub’s supported event names</a>.
+      Name of the event. One of <a href="https://developer.github.com/webhooks/#events">GitHub’s supported event names</a>.
     </td>
   </tr>
   <tr>
