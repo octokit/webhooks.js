@@ -23,7 +23,7 @@ function receiverHandle (state, event) {
   }
 
   // flatten arrays of event listeners and remove undefined values
-  let hooks = [].concat(
+  const hooks = [].concat(
     state.hooks[`${event.name}.${event.payload.action}`],
     state.hooks[event.name],
     state.hooks['*']
