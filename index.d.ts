@@ -1856,6 +1856,7 @@ declare namespace Webhooks {
     pull_request: WebhookPayloadPullRequestPullRequest;
     repository: PayloadRepository;
     sender: WebhookPayloadPullRequestSender;
+    changes?: WebhookPayloadIssuesChanges;
   };
   type WebhookPayloadPublicSender = {
     login: string;
@@ -2554,7 +2555,10 @@ declare namespace Webhooks {
     type: string;
     site_admin: boolean;
   };
-  type WebhookPayloadIssuesChanges = {};
+  type WebhookPayloadIssuesChanges = {
+    title?: string;
+    body?: string;
+  };
   type WebhookPayloadIssuesIssueMilestoneCreator = {
     login: string;
     id: number;
@@ -2689,7 +2693,7 @@ declare namespace Webhooks {
   type WebhookPayloadIssues = {
     action: string;
     issue: WebhookPayloadIssuesIssue;
-    changes: WebhookPayloadIssuesChanges;
+    changes?: WebhookPayloadIssuesChanges;
     repository: PayloadRepository;
     sender: WebhookPayloadIssuesSender;
   };
