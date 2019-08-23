@@ -11,13 +11,13 @@ function wrapErrorHandler (handler, error) {
   try {
     returnValue = handler(error)
   } catch (error) {
-    console.log(`FATAL: Error occured in "error" event handler`)
+    console.log('FATAL: Error occured in "error" event handler')
     console.log(error)
   }
 
   if (returnValue && returnValue.catch) {
     returnValue.catch(error => {
-      console.log(`FATAL: Error occured in "error" event handler`)
+      console.log('FATAL: Error occured in "error" event handler')
       console.log(error)
     })
   }
