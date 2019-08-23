@@ -149,6 +149,7 @@
   "repository.renamed",
   "repository.transferred",
   "repository.unarchived",
+  "repository_dispatch",
   "repository_import",
   "repository_vulnerability_alert",
   "repository_vulnerability_alert.create",
