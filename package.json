@@ -24,7 +24,7 @@
     "pify": "^4.0.0",
     "prettier": "^1.16.1",
     "proxyquire": "^2.0.0",
-    "semantic-release": "^15.13.8",
+    "semantic-release": "^15.13.24",
     "simple-mock": "^0.8.0",
     "standard": "^14.0.2",
     "table-builder": "^2.1.1",
