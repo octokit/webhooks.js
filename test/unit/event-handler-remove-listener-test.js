@@ -1,6 +1,6 @@
 const test = require('tap').test
 
-const receiverListener = require('../../event-handler/remove-listener')
+const removeListener = require('../../event-handler/remove-listener')
 
 test('remove-listener: single listener', t => {
   const push = () => {}
@@ -12,7 +12,7 @@ test('remove-listener: single listener', t => {
   }
 
   t.doesNotThrow(() => {
-    receiverListener(state, 'push', push)
+    removeListener(state, 'push', push)
   })
   t.deepEqual(state, { hooks: { push: [] } })
   t.end()
@@ -33,9 +33,9 @@ test('remove-listener: multiple listeners', t => {
   }
 
   t.doesNotThrow(() => {
-    receiverListener(state, 'push', push1)
-    receiverListener(state, 'push', push2)
-    receiverListener(state, 'push', push3)
+    removeListener(state, 'push', push1)
+    removeListener(state, 'push', push2)
+    removeListener(state, 'push', push3)
   })
   t.deepEqual(state, { hooks: { push: [], ping: [ping] } })
   t.end()
