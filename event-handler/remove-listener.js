@@ -14,7 +14,7 @@ function receiverListener (state, webhookNameOrNames, handler) {
 
   // remove last hook that has been added, that way
   // it behaves the same as removeListener
-  for (let i = state.hooks[webhookNameOrNames].length; i > 0; i--) {
+  for (let i = state.hooks[webhookNameOrNames].length - 1; i >= 0; i--) {
     if (state.hooks[webhookNameOrNames][i] === handler) {
       state.hooks[webhookNameOrNames].splice(i, 1)
       return
