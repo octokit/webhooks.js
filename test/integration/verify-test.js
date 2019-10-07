@@ -59,6 +59,10 @@ test('verify(secret, eventPayload, signature) returns true if eventPayload conta
     foo: 'Foo\n\u001B[34mbar: ♥♥♥♥♥♥♥♥\nthis-is-lost\u001B[0m\u001B[2K'
   }, 'sha1=7316ec5e7866e42e4aba4af550d21a5f036f949d')
   t.is(signatureMatchesUpperCaseSequence, true)
+  const signatureMatchesEscapedSequence = verify('development', {
+    foo: '\\u001b'
+  }, 'sha1=2c440a176f4cb84c8c921dfee882d594c2465097')
+  t.is(signatureMatchesEscapedSequence, true)
 
   t.end()
 })

@@ -12,7 +12,7 @@ function sign (secret, payload) {
 }
 
 function toNormalizedJsonString (payload) {
-  return JSON.stringify(payload).replace(/\\u[\da-f]{4}/g, s => {
-    return s.substr(0, 2) + s.substr(2).toUpperCase()
+  return JSON.stringify(payload).replace(/[^\\]\\u[\da-f]{4}/g, s => {
+    return s.substr(0, 3) + s.substr(3).toUpperCase()
   })
 }
