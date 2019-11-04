@@ -1,6 +1,6 @@
 {
   "name": "@octokit/webhooks",
-  "version": "0.0.0-development",
+  "version": "1.0.0-MLB",
   "publishConfig": {
     "access": "public"
   },
