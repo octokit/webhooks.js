@@ -52,14 +52,8 @@ function middleware (state, request, response, next) {
     })
 
     .then((responseBody) => {
-      if (typeof responseBody === 'object') {
-        response.setHeader('Content-Type', 'application/json')
-        response.end(JSON.stringify(responseBody))
-      } else if (typeof responseBody === 'string') {
-        response.end(responseBody)
-      } else {
-        response.end('ok\n')
-      }
+      response.setHeader('Content-Type', 'application/json')
+      response.end(JSON.stringify(responseBody))
     })
 
     .catch(error => {

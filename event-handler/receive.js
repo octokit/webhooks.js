@@ -48,9 +48,15 @@ function receiverHandle (state, event) {
       .catch(error => errors.push(Object.assign(error, { event })))
   })
 
-  return Promise.all(promises).then(() => {
+  return Promise.all(promises).then((results) => {
+    const mergedResults = results.reduce((merged, curr) => {
+      if (typeof curr === 'object') {
+        return Object.assign({}, merged, curr)
+      } else { return merged }
+    }, {})
+
     if (errors.length === 0) {
-      return
+      return mergedResults
     }
 
     errorHandlers.forEach(handler => errors.forEach(wrapErrorHandler.bind(null, handler)))

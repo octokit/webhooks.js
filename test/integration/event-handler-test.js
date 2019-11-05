@@ -129,3 +129,30 @@ test('async options.transform', t => {
     payload: pushEventPayload
   })
 })
+
+test('returned responses', t => {
+  t.plan(1)
+
+  const eventHandler = new EventHandler()
+
+  function hook1 () {
+    return Promise.resolve()
+      .then(() => ({ a: 1 }))
+  }
+  function hook2 () {
+    return { b: false }
+  }
+
+  eventHandler.on('push', hook1)
+  eventHandler.on('push', hook2)
+
+  eventHandler.receive({
+    id: '123',
+    name: 'push',
+    payload: pushEventPayload
+  })
+    .then((responseBody) => {
+      t.ok(responseBody, { a: 1, b: false })
+    })
+    .catch(t.error)
+})

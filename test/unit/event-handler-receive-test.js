@@ -27,3 +27,14 @@ test('options: name, payload', t => {
   })
   t.end()
 })
+
+test('receive: use returned body for response', t => {
+  const responseState = {
+    secret: 'mysecret',
+    hooks: {
+      'a.b': () => ({ a: 'b' })
+    }
+  }
+  t.resolveMatch(receive(responseState, { name: 'a.b', payload: {} }), { a: 'b' })
+  t.end()
+})

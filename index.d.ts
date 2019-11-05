@@ -4105,7 +4105,7 @@ declare class Webhooks {
   public on(event: "error", callback: (event: Error) => void): void;
   public on(
     event: "*" | string[],
-    callback: (event: Webhooks.WebhookEvent<any>) => Promise<string | object | void> | string | object | void
+    callback: (event: Webhooks.WebhookEvent<any>) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4117,7 +4117,7 @@ declare class Webhooks {
       | "check_run.rerequested",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCheckRun>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4128,63 +4128,63 @@ declare class Webhooks {
       | "check_suite.rerequested",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCheckSuite>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "commit_comment" | "commit_comment.created",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCommitComment>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "content_reference",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadContentReference>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "create",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCreate>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "delete",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDelete>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "deploy_key" | "deploy_key.created" | "deploy_key.deleted",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeployKey>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "deployment",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeployment>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "deployment_status",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeploymentStatus>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "fork",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadFork>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4193,14 +4193,14 @@ declare class Webhooks {
       event: Webhooks.WebhookEvent<
         Webhooks.WebhookPayloadGithubAppAuthorization
       >
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "gollum",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadGollum>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4211,7 +4211,7 @@ declare class Webhooks {
       | "installation.new_permissions_accepted",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadInstallation>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4223,7 +4223,7 @@ declare class Webhooks {
       event: Webhooks.WebhookEvent<
         Webhooks.WebhookPayloadInstallationRepositories
       >
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4234,7 +4234,7 @@ declare class Webhooks {
       | "issue_comment.edited",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadIssueComment>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4258,14 +4258,14 @@ declare class Webhooks {
       | "issues.unpinned",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadIssues>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "label" | "label.created" | "label.deleted" | "label.edited",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadLabel>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4278,28 +4278,28 @@ declare class Webhooks {
       | "marketplace_purchase.purchased",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMarketplacePurchase>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "member" | "member.added" | "member.deleted" | "member.edited",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMember>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "membership" | "membership.added" | "membership.removed",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMembership>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "meta" | "meta.deleted",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMeta>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4312,7 +4312,7 @@ declare class Webhooks {
       | "milestone.opened",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMilestone>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4325,21 +4325,21 @@ declare class Webhooks {
       | "organization.renamed",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadOrganization>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "org_block" | "org_block.blocked" | "org_block.unblocked",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadOrgBlock>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "page_build",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPageBuild>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4352,7 +4352,7 @@ declare class Webhooks {
       | "project_card.moved",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadProjectCard>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4364,7 +4364,7 @@ declare class Webhooks {
       | "project_column.moved",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadProjectColumn>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4377,14 +4377,14 @@ declare class Webhooks {
       | "project.reopened",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadProject>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "public",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPublic>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4406,7 +4406,7 @@ declare class Webhooks {
       | "pull_request.synchronize",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPullRequest>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4417,7 +4417,7 @@ declare class Webhooks {
       | "pull_request_review.submitted",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPullRequestReview>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4430,14 +4430,14 @@ declare class Webhooks {
       event: Webhooks.WebhookEvent<
         Webhooks.WebhookPayloadPullRequestReviewComment
       >
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "push",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPush>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4447,7 +4447,7 @@ declare class Webhooks {
       | "registry_package.updated",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRegistryPackage>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4461,14 +4461,14 @@ declare class Webhooks {
       | "release.unpublished",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRelease>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "repository_dispatch",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepositoryDispatch>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4485,14 +4485,14 @@ declare class Webhooks {
       | "repository.unarchived",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepository>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "repository_import",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepositoryImport>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4505,7 +4505,7 @@ declare class Webhooks {
       event: Webhooks.WebhookEvent<
         Webhooks.WebhookPayloadRepositoryVulnerabilityAlert
       >
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4516,21 +4516,21 @@ declare class Webhooks {
       | "security_advisory.updated",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadSecurityAdvisory>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "star" | "star.created" | "star.deleted",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadStar>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "status",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadStatus>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
@@ -4543,21 +4543,21 @@ declare class Webhooks {
       | "team.removed_from_repository",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadTeam>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "team_add",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadTeamAdd>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public on(
     event: "watch" | "watch.started",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadWatch>
-    ) => Promise<string | object | void> | string | object | void
+    ) => Promise<object | void> | object | void
   ): void;
 
   public sign(data: any): string;
