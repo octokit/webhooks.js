@@ -142,9 +142,13 @@ test('returned responses', t => {
   function hook2 () {
     return { b: false }
   }
+  function hook3 () {
+    return undefined
+  }
 
   eventHandler.on('push', hook1)
   eventHandler.on('push', hook2)
+  eventHandler.on('push', hook3)
 
   eventHandler.receive({
     id: '123',
