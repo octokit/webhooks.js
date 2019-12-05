@@ -20,16 +20,18 @@ Note that while setting a secret is optional on GitHub, it is required to be set
 
 ```js
 // install with: npm install @octokit/webhooks
-const WebhooksApi = require('@octokit/webhooks')
+const WebhooksApi = require("@octokit/webhooks");
 const webhooks = new WebhooksApi({
-  secret: 'mysecret'
-})
+  secret: "mysecret"
+});
 
-webhooks.on('*', ({id, name, payload}) => {
-  console.log(name, 'event received')
-})
+webhooks.on("*", ({ id, name, payload }) => {
+  console.log(name, "event received");
+});
 
-require('http').createServer(webhooks.middleware).listen(3000)
+require("http")
+  .createServer(webhooks.middleware)
+  .listen(3000);
 // can now receive webhook events at port 3000
 ```
 
@@ -43,17 +45,19 @@ Go to [smee.io](https://smee.io/) and <kbd>Start a new channel</kbd>. Then copy 
 2. pass it to the [EventSource](https://github.com/EventSource/eventsource) constructor, see below
 
 ```js
-const webhookProxyUrl = 'https://smee.io/IrqK0nopGAOc847' // replace with your own Webhook Proxy URL
-const source = new EventSource(webhookProxyUrl)
-source.onmessage = (event) => {
-  const webhookEvent = JSON.parse(event.data)
-  webhooks.verifyAndReceive({
-    id: webhookEvent['x-request-id'],
-    name: webhookEvent['x-github-event'],
-    signature: webhookEvent['x-hub-signature'],
-    payload: webhookEvent.body
-  }).catch(console.error)
-}
+const webhookProxyUrl = "https://smee.io/IrqK0nopGAOc847"; // replace with your own Webhook Proxy URL
+const source = new EventSource(webhookProxyUrl);
+source.onmessage = event => {
+  const webhookEvent = JSON.parse(event.data);
+  webhooks
+    .verifyAndReceive({
+      id: webhookEvent["x-request-id"],
+      name: webhookEvent["x-github-event"],
+      signature: webhookEvent["x-hub-signature"],
+      payload: webhookEvent.body
+    })
+    .catch(console.error);
+};
 ```
 
 `EventSource` is a native browser API and can be polyfilled for browsers that don’t support it. In node, you can use the [`eventsource`](https://github.com/EventSource/eventsource) package: install with `npm install eventsource`, then `const EventSource = require('eventsource')`
@@ -64,14 +68,14 @@ source.onmessage = (event) => {
 2. [webhooks.sign()](#webhookssign)
 3. [webhooks.verify()](#webhooksverify)
 4. [webhooks.verifyAndReceive()](#webhooksverifyandreceive)
-4. [webhooks.receive()](#webhooksreceive)
-5. [webhooks.on()](#webhookson)
-6. [webhooks.removeListener()](#webhooksremoveListener)
-7. [webhooks.middleware()](#webhooksmiddleware)
-8. [Webhook events](#webhook-events)
-9. [Special events](#special-events)
-   1. [`*` wildcard event](#-wildcard-event)
-   1. [`error` event](#error-event)
+5. [webhooks.receive()](#webhooksreceive)
+6. [webhooks.on()](#webhookson)
+7. [webhooks.removeListener()](#webhooksremoveListener)
+8. [webhooks.middleware()](#webhooksmiddleware)
+9. [Webhook events](#webhook-events)
+10. [Special events](#special-events)
+    1. [`*` wildcard event](#-wildcard-event)
+    1. [`error` event](#error-event)
 
 ### Constructor
 
@@ -123,7 +127,7 @@ Returns the `webhooks` API.
 ### webhooks.sign()
 
 ```js
-webhooks.sign(eventPayload)
+webhooks.sign(eventPayload);
 ```
 
 <table width="100%">
@@ -150,7 +154,7 @@ Can also be used [standalone](sign/).
 ### webhooks.verify()
 
 ```js
-webhooks.verify(eventPayload, signature)
+webhooks.verify(eventPayload, signature);
 ```
 
 <table width="100%">
@@ -191,7 +195,7 @@ Can also be used [standalone](verify/).
 ### webhooks.verifyAndReceive()
 
 ```js
-webhooks.verifyAndReceive({id, name, payload, signature})
+webhooks.verifyAndReceive({ id, name, payload, signature });
 ```
 
 <table width="100%">
@@ -262,25 +266,27 @@ Additionally, if verification fails, rejects return promise and emits an `error`
 Example
 
 ```js
-const WebhooksApi = require('@octokit/webhooks')
+const WebhooksApi = require("@octokit/webhooks");
 const webhooks = new WebhooksApi({
-  secret: 'mysecret'
-})
-eventHandler.on('error', handleSignatureVerificationError)
+  secret: "mysecret"
+});
+eventHandler.on("error", handleSignatureVerificationError);
 
 // put this inside your webhooks route handler
-eventHandler.verifyAndReceive({
-  id: request.headers['x-github-delivery'],
-  name: request.headers['x-github-event'],
-  payload: request.body,
-  signature: request.headers['x-hub-signature']
-}).catch(handleErrorsFromHooks)
+eventHandler
+  .verifyAndReceive({
+    id: request.headers["x-github-delivery"],
+    name: request.headers["x-github-event"],
+    payload: request.body,
+    signature: request.headers["x-hub-signature"]
+  })
+  .catch(handleErrorsFromHooks);
 ```
 
 ### webhooks.receive()
 
 ```js
-webhooks.receive({id, name, payload})
+webhooks.receive({ id, name, payload });
 ```
 
 <table width="100%">
@@ -335,8 +341,8 @@ The `.receive()` method belongs to the [receiver](receiver/) module which can be
 ### webhooks.on()
 
 ```js
-webhooks.on(eventName, handler)
-webhooks.on(eventNames, handler)
+webhooks.on(eventName, handler);
+webhooks.on(eventNames, handler);
 ```
 
 <table width="100%">
@@ -391,8 +397,8 @@ The `.on()` method belongs to the [receiver](receiver/) module which can be used
 ### webhooks.removeListener()
 
 ```js
-webhooks.removeListener(eventName, handler)
-webhooks.removeListener(eventNames, handler)
+webhooks.removeListener(eventName, handler);
+webhooks.removeListener(eventNames, handler);
 ```
 
 <table width="100%">
@@ -558,9 +564,9 @@ Besides the webhook events, there are [special events](#specialevents) emitted b
 The `*` event is emitted for all webhook events [listed above](#listofwebhookevents).
 
 ```js
-webhooks.on('*', (event) => {
-  console.log(`"${event.name}" event received"`)
-})
+webhooks.on("*", event => {
+  console.log(`"${event.name}" event received"`);
+});
 ```
 
 #### `error` event
@@ -572,9 +578,9 @@ If a webhook event handler throws an error or returns a promise that rejects, an
 - `payload`: The event request payload
 
 ```js
-webhooks.on('error', (error) => {
-  console.log(`Error occured in "${error.event.name} handler: ${error.stack}"`)
-})
+webhooks.on("error", error => {
+  console.log(`Error occured in "${error.event.name} handler: ${error.stack}"`);
+});
 ```
 
 Asynchronous `error` event handler are not blocking the `.receive()` method from completing.

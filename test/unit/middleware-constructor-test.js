@@ -1,8 +1,8 @@
-const test = require('tap').test
+const test = require("tap").test;
 
-const Middleware = require('../../middleware')
+const Middleware = require("../../middleware");
 
-test('options: none', t => {
-  t.throws(Middleware)
-  t.end()
-})
+test("options: none", t => {
+  t.throws(Middleware);
+  t.end();
+});

@@ -1,48 +1,48 @@
-const test = require('tap').test
+const test = require("tap").test;
 
-test('@octokit/webhooks', (t) => {
-  const Webhooks = require('../..')
-  const api = new Webhooks({ secret: 'mysecret' })
+test("@octokit/webhooks", t => {
+  const Webhooks = require("../..");
+  const api = new Webhooks({ secret: "mysecret" });
 
-  t.type(api.sign, 'function')
-  t.type(api.verify, 'function')
-  t.type(api.on, 'function')
-  t.type(api.removeListener, 'function')
-  t.type(api.receive, 'function')
-  t.type(api.middleware, 'function')
-  t.type(api.verifyAndReceive, 'function')
+  t.type(api.sign, "function");
+  t.type(api.verify, "function");
+  t.type(api.on, "function");
+  t.type(api.removeListener, "function");
+  t.type(api.receive, "function");
+  t.type(api.middleware, "function");
+  t.type(api.verifyAndReceive, "function");
 
-  t.end()
-})
+  t.end();
+});
 
-test('require("@octokit/webhooks/sign")', (t) => {
+test('require("@octokit/webhooks/sign")', t => {
   t.doesNotThrow(() => {
-    require('../../sign')
-  })
+    require("../../sign");
+  });
 
-  t.end()
-})
+  t.end();
+});
 
-test('require("@octokit/webhooks/verify")', (t) => {
+test('require("@octokit/webhooks/verify")', t => {
   t.doesNotThrow(() => {
-    require('../../verify')
-  })
+    require("../../verify");
+  });
 
-  t.end()
-})
+  t.end();
+});
 
-test('require("@octokit/webhooks/event-handler")', (t) => {
+test('require("@octokit/webhooks/event-handler")', t => {
   t.doesNotThrow(() => {
-    require('../../event-handler')
-  })
+    require("../../event-handler");
+  });
 
-  t.end()
-})
+  t.end();
+});
 
-test('require("@octokit/webhooks/middleware")', (t) => {
+test('require("@octokit/webhooks/middleware")', t => {
   t.doesNotThrow(() => {
-    require('../../middleware')
-  })
+    require("../../middleware");
+  });
 
-  t.end()
-})
+  t.end();
+});
