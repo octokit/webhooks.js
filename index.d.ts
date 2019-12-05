@@ -472,10 +472,14 @@ declare namespace Webhooks {
     avatar_url: string;
     description: string;
   };
+  type WebhookPayloadRepositoryDispatchClientPayload = {
+    unit: boolean;
+    integration: boolean;
+  };
   type WebhookPayloadRepositoryDispatch = {
     action: string;
     branch: string;
-    ref: string;
+    client_payload: WebhookPayloadRepositoryDispatchClientPayload;
     repository: PayloadRepository;
     organization: WebhookPayloadRepositoryDispatchOrganization;
     sender: WebhookPayloadRepositoryDispatchSender;
@@ -546,159 +550,6 @@ declare namespace Webhooks {
     release: WebhookPayloadReleaseRelease;
     repository: PayloadRepository;
     sender: WebhookPayloadReleaseSender;
-  };
-  type WebhookPayloadRegistryPackageSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
-  type WebhookPayloadRegistryPackageRegistryPackageRegistry = {
-    about_url: string;
-    name: string;
-    type: string;
-    url: string;
-    vendor: string;
-  };
-  type WebhookPayloadRegistryPackageRegistryPackagePackageVersionAuthor = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
-  type WebhookPayloadRegistryPackageRegistryPackagePackageVersionPackageFilesItem = {
-    download_url: string;
-    id: number;
-    name: string;
-    sha256: string;
-    sha1: string;
-    md5: string;
-    content_type: string;
-    state: string;
-    size: number;
-    created_at: string;
-    updated_at: string;
-  };
-  type WebhookPayloadRegistryPackageRegistryPackagePackageVersionReleaseAuthor = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
-  type WebhookPayloadRegistryPackageRegistryPackagePackageVersionRelease = {
-    url: string;
-    html_url: string;
-    id: number;
-    tag_name: string;
-    target_commitish: string;
-    name: string;
-    draft: boolean;
-    author: WebhookPayloadRegistryPackageRegistryPackagePackageVersionReleaseAuthor;
-    prerelease: boolean;
-    created_at: string;
-    published_at: string;
-  };
-  type WebhookPayloadRegistryPackageRegistryPackagePackageVersion = {
-    id: number;
-    version: string;
-    summary: string;
-    body: string;
-    body_html: string;
-    release: WebhookPayloadRegistryPackageRegistryPackagePackageVersionRelease;
-    manifest: string;
-    html_url: string;
-    tag_name: string;
-    target_commitish: string;
-    target_oid: string;
-    draft: boolean;
-    prerelease: boolean;
-    created_at: string;
-    updated_at: string;
-    metadata: Array<any>;
-    package_files: Array<
-      WebhookPayloadRegistryPackageRegistryPackagePackageVersionPackageFilesItem
-    >;
-    author: WebhookPayloadRegistryPackageRegistryPackagePackageVersionAuthor;
-    installation_command: string;
-  };
-  type WebhookPayloadRegistryPackageRegistryPackageOwner = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
-  type WebhookPayloadRegistryPackageRegistryPackage = {
-    id: number;
-    name: string;
-    package_type: string;
-    html_url: string;
-    created_at: string;
-    updated_at: string;
-    owner: WebhookPayloadRegistryPackageRegistryPackageOwner;
-    package_version: WebhookPayloadRegistryPackageRegistryPackagePackageVersion;
-    registry: WebhookPayloadRegistryPackageRegistryPackageRegistry;
-  };
-  type WebhookPayloadRegistryPackage = {
-    action: string;
-    registry_package: WebhookPayloadRegistryPackageRegistryPackage;
-    repository: PayloadRepository;
-    sender: WebhookPayloadRegistryPackageSender;
   };
   type WebhookPayloadPushSender = {
     login: string;
@@ -2140,6 +1991,159 @@ declare namespace Webhooks {
     build: WebhookPayloadPageBuildBuild;
     repository: PayloadRepository;
     sender: WebhookPayloadPageBuildSender;
+  };
+  type WebhookPayloadPackageSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPackagePackageRegistry = {
+    about_url: string;
+    name: string;
+    type: string;
+    url: string;
+    vendor: string;
+  };
+  type WebhookPayloadPackagePackagePackageVersionAuthor = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPackagePackagePackageVersionPackageFilesItem = {
+    download_url: string;
+    id: number;
+    name: string;
+    sha256: string;
+    sha1: string;
+    md5: string;
+    content_type: string;
+    state: string;
+    size: number;
+    created_at: string;
+    updated_at: string;
+  };
+  type WebhookPayloadPackagePackagePackageVersionReleaseAuthor = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPackagePackagePackageVersionRelease = {
+    url: string;
+    html_url: string;
+    id: number;
+    tag_name: string;
+    target_commitish: string;
+    name: string;
+    draft: boolean;
+    author: WebhookPayloadPackagePackagePackageVersionReleaseAuthor;
+    prerelease: boolean;
+    created_at: string;
+    published_at: string;
+  };
+  type WebhookPayloadPackagePackagePackageVersion = {
+    id: number;
+    version: string;
+    summary: string;
+    body: string;
+    body_html: string;
+    release: WebhookPayloadPackagePackagePackageVersionRelease;
+    manifest: string;
+    html_url: string;
+    tag_name: string;
+    target_commitish: string;
+    target_oid: string;
+    draft: boolean;
+    prerelease: boolean;
+    created_at: string;
+    updated_at: string;
+    metadata: Array<any>;
+    package_files: Array<
+      WebhookPayloadPackagePackagePackageVersionPackageFilesItem
+    >;
+    author: WebhookPayloadPackagePackagePackageVersionAuthor;
+    installation_command: string;
+  };
+  type WebhookPayloadPackagePackageOwner = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPackagePackage = {
+    id: number;
+    name: string;
+    package_type: string;
+    html_url: string;
+    created_at: string;
+    updated_at: string;
+    owner: WebhookPayloadPackagePackageOwner;
+    package_version: WebhookPayloadPackagePackagePackageVersion;
+    registry: WebhookPayloadPackagePackageRegistry;
+  };
+  type WebhookPayloadPackage = {
+    action: string;
+    package: WebhookPayloadPackagePackage;
+    repository: PayloadRepository;
+    sender: WebhookPayloadPackageSender;
   };
   type WebhookPayloadOrgBlockSender = {
     login: string;
@@ -4336,6 +4340,13 @@ declare class Webhooks {
   ): void;
 
   public on(
+    event: "package" | "package.published" | "package.updated",
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPackage>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
     event: "page_build",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPageBuild>
@@ -4437,16 +4448,6 @@ declare class Webhooks {
     event: "push",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPush>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | "registry_package"
-      | "registry_package.published"
-      | "registry_package.updated",
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRegistryPackage>
     ) => Promise<void> | void
   ): void;
 
