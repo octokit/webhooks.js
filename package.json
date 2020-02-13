@@ -26,7 +26,8 @@
     "semantic-release": "^17.0.0",
     "simple-mock": "^0.8.0",
     "table-builder": "^2.1.1",
-    "tap": "^14.0.0"
+    "tap": "^14.0.0",
+    "typescript": "^3.7.5"
   },
   "scripts": {
     "coverage": "tap --coverage-report=html && open coverage/lcov-report/index.html",
@@ -36,7 +37,7 @@
     "pretest": "npm run -s lint",
     "test": "tap --100 --coverage 'test/**/*-test.js'",
     "generate-types": "node scripts/generate-types.js",
-    "validate:ts": "tsc --no-emit --no-implicit-any test/typescript-validate.ts"
+    "validate:ts": "tsc --noEmit --noImplicitAny test/typescript-validate.ts"
   },
   "repository": {
     "type": "git",
