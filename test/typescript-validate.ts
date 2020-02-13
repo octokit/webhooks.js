@@ -1,5 +1,5 @@
 import * as Webhooks from "..";
-import http from "http";
+import { createServer } from "http";
 
 // ************************************************************
 // THIS CODE IS NOT EXECUTED. IT IS JUST FOR TYPECHECKING
@@ -27,5 +27,5 @@ export default async function() {
     webhooks.verify(payload, sig);
   });
 
-  http.createServer(webhooks.middleware).listen(3000);
+  createServer(webhooks.middleware).listen(3000);
 }
