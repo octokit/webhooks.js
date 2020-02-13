@@ -18,7 +18,6 @@
     "@octokit/webhooks-definitions": "2.0.0",
     "axios": "^0.19.0",
     "cheerio": "^1.0.0-rc.2",
-    "coveralls": "^3.0.3",
     "get-port": "^5.0.0",
     "pascal-case": "^3.0.0",
     "pify": "^4.0.0",
@@ -31,7 +30,6 @@
   },
   "scripts": {
     "coverage": "tap --coverage-report=html && open coverage/lcov-report/index.html",
-    "coverage:upload": "tap --coverage-report=text-lcov | coveralls",
     "generate-known-webhooks": "node scripts/update-known-events.js",
     "lint": "prettier --check '{event-handler,lib.middleware,scripts,sign,test,verify}/**/*.{js,json}' index.js index.d.ts README.md package.json",
     "lint:fix": "prettier --write '{event-handler,lib.middleware,scripts,sign,test,verify}/**/*.{js,json}' index.js index.d.ts README.md package.json",
