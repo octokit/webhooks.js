@@ -2,8 +2,7 @@
 
 > GitHub webhook events toolset for Node.js
 
-[![Build Status](https://travis-ci.org/octokit/webhooks.js.svg?branch=master)](https://travis-ci.org/octokit/webhooks.js)
-[![Coverage Status](https://coveralls.io/repos/octokit/webhooks.js/badge.svg?branch=master)](https://coveralls.io/github/octokit/webhooks.js?branch=master)
+[![Test](https://github.com/octokit/webhooks.js/workflows/Test/badge.svg)](https://github.com/octokit/webhooks.js/actions?query=workflow)
 [![Greenkeeper badge](https://badges.greenkeeper.io/octokit/webhooks.js.svg)](https://greenkeeper.io/)
 
 [GitHub webhooks](https://developer.github.com/webhooks/) can be registered in multiple ways
