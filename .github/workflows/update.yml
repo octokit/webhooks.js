@@ -1,0 +1,29 @@
+name: Update
+on:
+  push:
+    branches:
+      - "greenkeeper/@octokit/webhooks-definitions-*"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: npm run generate-known-webhooks
+      - run: npm run generate-types
+      - name: create pull request
+        uses: gr2m/create-or-update-pull-request-action@v1.x
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          title: "🚧 🤖📯 Webhooks changed"
+          body: |
+            I found new changes in GitHub's GraphQL Schema 👋🤖
+
+            I can't tell if the changes are fixes, features or breaking, you'll have to figure that out on yourself and adapt the commit messages accordingly to trigger the right release, see [our commit message conventions](https://github.com/octokit/routes/blob/master/CONTRIBUTING.md#merging-the-pull-request--releasing-a-new-version).
+          branch: ${{ github.ref }}
+          author: "Octokit Bot <octokitbot@martynus.net>"
+          commit-message: "WIP: Webhooks changed - please review"
