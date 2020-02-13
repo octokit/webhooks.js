@@ -35,7 +35,6 @@
     "lint:fix": "prettier --write '{event-handler,lib.middleware,scripts,sign,test,verify}/**/*.{js,json}' index.js index.d.ts README.md package.json",
     "pretest": "npm run -s lint",
     "test": "tap --100 --coverage 'test/**/*-test.js'",
-    "semantic-release": "semantic-release",
     "generate-types": "node scripts/generate-types.js",
     "validate:ts": "tsc --no-emit --no-implicit-any test/typescript-validate.ts"
   },
