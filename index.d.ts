@@ -293,6 +293,103 @@ declare namespace Webhooks {
     repository: PayloadRepository;
     sender: WebhookPayloadStarSender;
   };
+  type WebhookPayloadSponsorshipChangesTierFrom = {
+    node_id: string;
+    created_at: string;
+    description: string;
+    monthly_price_in_cents: number;
+    monthly_price_in_dollars: number;
+    name: string;
+  };
+  type WebhookPayloadSponsorshipChangesTier = {
+    from: WebhookPayloadSponsorshipChangesTierFrom;
+  };
+  type WebhookPayloadSponsorshipChanges = {
+    tier: WebhookPayloadSponsorshipChangesTier;
+  };
+  type WebhookPayloadSponsorshipSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadSponsorshipSponsorshipTier = {
+    node_id: string;
+    created_at: string;
+    description: string;
+    monthly_price_in_cents: number;
+    monthly_price_in_dollars: number;
+    name: string;
+  };
+  type WebhookPayloadSponsorshipSponsorshipSponsor = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadSponsorshipSponsorshipMaintainer = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadSponsorshipSponsorship = {
+    node_id: string;
+    created_at: string;
+    maintainer: WebhookPayloadSponsorshipSponsorshipMaintainer;
+    sponsor: WebhookPayloadSponsorshipSponsorshipSponsor;
+    privacy_level: string;
+    tier: WebhookPayloadSponsorshipSponsorshipTier;
+  };
+  type WebhookPayloadSponsorship = {
+    action: string;
+    sponsorship: WebhookPayloadSponsorshipSponsorship;
+    sender: WebhookPayloadSponsorshipSender;
+    changes?: WebhookPayloadSponsorshipChanges;
+    effective_date?: string;
+  };
   type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemFirstPatchedVersion = {
     identifier: string;
   };
@@ -3043,6 +3140,7 @@ declare namespace Webhooks {
   };
   type WebhookPayloadInstallationRepositoriesItem = {
     id: number;
+    node_id: string;
     name: string;
     full_name: string;
     private: boolean;
@@ -3365,6 +3463,7 @@ declare namespace Webhooks {
     repository_url: string;
   };
   type WebhookPayloadDeploymentStatus = {
+    action: string;
     deployment_status: WebhookPayloadDeploymentStatusDeploymentStatus;
     deployment: WebhookPayloadDeploymentStatusDeployment;
     repository: PayloadRepository;
@@ -3429,6 +3528,7 @@ declare namespace Webhooks {
     repository_url: string;
   };
   type WebhookPayloadDeployment = {
+    action: string;
     deployment: WebhookPayloadDeploymentDeployment;
     repository: PayloadRepository;
     sender: WebhookPayloadDeploymentSender;
@@ -4171,14 +4271,14 @@ declare class Webhooks {
   ): void;
 
   public on(
-    event: "deployment",
+    event: "deployment" | "deployment.created",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeployment>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "deployment_status",
+    event: "deployment_status" | "deployment_status.created",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeploymentStatus>
     ) => Promise<void> | void
@@ -4517,6 +4617,13 @@ declare class Webhooks {
       | "security_advisory.updated",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadSecurityAdvisory>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: "sponsorship",
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadSponsorship>
     ) => Promise<void> | void
   ): void;
 
