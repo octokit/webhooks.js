@@ -21,7 +21,7 @@
     "get-port": "^5.0.0",
     "pascal-case": "^3.0.0",
     "pify": "^4.0.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.1",
     "proxyquire": "^2.0.0",
     "semantic-release": "^17.0.0",
     "simple-mock": "^0.8.0",
