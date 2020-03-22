@@ -2,7 +2,7 @@ const http = require("http");
 
 const axios = require("axios");
 const getPort = require("get-port");
-const promisify = require("pify");
+const { promisify } = require("util");
 const simple = require("simple-mock");
 const Tap = require("tap");
 
