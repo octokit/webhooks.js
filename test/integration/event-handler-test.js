@@ -4,7 +4,7 @@ const EventHandler = require("../../event-handler");
 const pushEventPayload = require("../fixtures/push-payload");
 const installationCreatedPayload = require("../fixtures/installation-created-payload");
 
-test("events", t => {
+test("events", (t) => {
   t.plan(6);
 
   const eventHandler = new EventHandler();
@@ -50,14 +50,14 @@ test("events", t => {
     .receive({
       id: "123",
       name: "push",
-      payload: pushEventPayload
+      payload: pushEventPayload,
     })
 
     .then(() => {
       return eventHandler.receive({
         id: "456",
         name: "installation",
-        payload: installationCreatedPayload
+        payload: installationCreatedPayload,
       });
     })
 
@@ -68,10 +68,10 @@ test("events", t => {
         "hook1",
         "installation.created",
         "installation",
-        "* (installation)"
+        "* (installation)",
       ]);
 
-      eventHandler.on("error", error => {
+      eventHandler.on("error", (error) => {
         t.ok(error.event.payload);
         t.pass("error event triggered");
         t.is(error.message, "oops");
@@ -84,11 +84,11 @@ test("events", t => {
       return eventHandler.receive({
         id: "123",
         name: "push",
-        payload: pushEventPayload
+        payload: pushEventPayload,
       });
     })
 
-    .catch(error => {
+    .catch((error) => {
       t.is(error.errors.length, 1);
       t.is(error.errors[0].message, "oops");
     })
@@ -96,35 +96,35 @@ test("events", t => {
     .catch(t.error);
 });
 
-test("options.transform", t => {
+test("options.transform", (t) => {
   t.plan(2);
 
   const eventHandler = EventHandler({
-    transform: event => {
+    transform: (event) => {
       t.is(event.id, "123");
       return "funky";
-    }
+    },
   });
 
-  eventHandler.on("push", event => {
+  eventHandler.on("push", (event) => {
     t.is(event, "funky");
   });
 
   eventHandler.receive({
     id: "123",
     name: "push",
-    payload: pushEventPayload
+    payload: pushEventPayload,
   });
 });
 
-test("async options.transform", t => {
+test("async options.transform", (t) => {
   const eventHandler = EventHandler({
-    transform: event => {
+    transform: (event) => {
       return Promise.resolve("funky");
-    }
+    },
   });
 
-  eventHandler.on("push", event => {
+  eventHandler.on("push", (event) => {
     t.is(event, "funky");
     t.end();
   });
@@ -132,6 +132,6 @@ test("async options.transform", t => {
   eventHandler.receive({
     id: "123",
     name: "push",
-    payload: pushEventPayload
+    payload: pushEventPayload,
   });
 });

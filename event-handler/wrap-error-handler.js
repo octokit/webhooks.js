@@ -16,7 +16,7 @@ function wrapErrorHandler(handler, error) {
   }
 
   if (returnValue && returnValue.catch) {
-    returnValue.catch(error => {
+    returnValue.catch((error) => {
       console.log('FATAL: Error occured in "error" event handler');
       console.log(error);
     });

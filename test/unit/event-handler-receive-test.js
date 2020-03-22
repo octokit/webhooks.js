@@ -4,24 +4,24 @@ const receive = require("../../event-handler/receive");
 
 const state = {
   secret: "mysecret",
-  hooks: []
+  hooks: [],
 };
 
-test("options: none", t => {
+test("options: none", (t) => {
   t.throws(() => {
     receive(state);
   });
   t.end();
 });
 
-test("options: name", t => {
+test("options: name", (t) => {
   t.throws(() => {
     receive(state, { name: "foo" });
   });
   t.end();
 });
 
-test("options: name, payload", t => {
+test("options: name, payload", (t) => {
   t.doesNotThrow(() => {
     receive(state, { name: "foo", payload: {} });
   });

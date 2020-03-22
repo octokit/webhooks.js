@@ -10,16 +10,12 @@ function sign(secret, payload) {
   payload =
     typeof payload === "string" ? payload : toNormalizedJsonString(payload);
   return (
-    "sha1=" +
-    crypto
-      .createHmac("sha1", secret)
-      .update(payload)
-      .digest("hex")
+    "sha1=" + crypto.createHmac("sha1", secret).update(payload).digest("hex")
   );
 }
 
 function toNormalizedJsonString(payload) {
-  return JSON.stringify(payload).replace(/[^\\]\\u[\da-f]{4}/g, s => {
+  return JSON.stringify(payload).replace(/[^\\]\\u[\da-f]{4}/g, (s) => {
     return s.substr(0, 3) + s.substr(3).toUpperCase();
   });
 }

@@ -9,17 +9,17 @@ const createMiddleware = require("../../middleware");
 const headers = {
   "x-github-delivery": "123e4567-e89b-12d3-a456-426655440000",
   "x-github-event": "push",
-  "x-hub-signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f"
+  "x-hub-signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
 };
 
-test("Invalid payload", t => {
+test("Invalid payload", (t) => {
   const requestMock = new EventEmitter();
   requestMock.method = "POST";
   requestMock.headers = headers;
   requestMock.url = "/";
 
   const responseMock = {
-    end: simple.spy()
+    end: simple.spy(),
   };
 
   const middleware = createMiddleware({ secret: "mysecret" });
@@ -33,14 +33,14 @@ test("Invalid payload", t => {
   requestMock.emit("end");
 });
 
-test("request error", t => {
+test("request error", (t) => {
   const requestMock = new EventEmitter();
   requestMock.method = "POST";
   requestMock.headers = headers;
   requestMock.url = "/";
 
   const responseMock = {
-    end: simple.spy()
+    end: simple.spy(),
   };
 
   const middleware = createMiddleware({ secret: "mysecret" });

@@ -21,13 +21,13 @@ webhooks.forEach(({ name, actions, examples }) => {
       // This prevents a naming colision between the payload of a `installation_repositories` event
       // and the `repositories` attribute of a `installation` event
       "WebhookPayloadInstallation.repositories":
-        "WebhookPayloadInstallation_Repositories"
-    }
+        "WebhookPayloadInstallation_Repositories",
+    },
   });
 
   const events = [
     `'${name}'`,
-    ...actions.map(action => `'${name}.${action}'`)
+    ...actions.map((action) => `'${name}.${action}'`),
   ].join(" | ");
   signatures.push(`
     public on (event: ${events}, callback: (event: Webhooks.WebhookEvent<Webhooks.${typeName}>) => (Promise<void> | void)): void

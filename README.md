@@ -21,16 +21,14 @@ Note that while setting a secret is optional on GitHub, it is required to be set
 // install with: npm install @octokit/webhooks
 const WebhooksApi = require("@octokit/webhooks");
 const webhooks = new WebhooksApi({
-  secret: "mysecret"
+  secret: "mysecret",
 });
 
 webhooks.on("*", ({ id, name, payload }) => {
   console.log(name, "event received");
 });
 
-require("http")
-  .createServer(webhooks.middleware)
-  .listen(3000);
+require("http").createServer(webhooks.middleware).listen(3000);
 // can now receive webhook events at port 3000
 ```
 
@@ -46,14 +44,14 @@ Go to [smee.io](https://smee.io/) and <kbd>Start a new channel</kbd>. Then copy 
 ```js
 const webhookProxyUrl = "https://smee.io/IrqK0nopGAOc847"; // replace with your own Webhook Proxy URL
 const source = new EventSource(webhookProxyUrl);
-source.onmessage = event => {
+source.onmessage = (event) => {
   const webhookEvent = JSON.parse(event.data);
   webhooks
     .verifyAndReceive({
       id: webhookEvent["x-request-id"],
       name: webhookEvent["x-github-event"],
       signature: webhookEvent["x-hub-signature"],
-      payload: webhookEvent.body
+      payload: webhookEvent.body,
     })
     .catch(console.error);
 };
@@ -267,7 +265,7 @@ Example
 ```js
 const WebhooksApi = require("@octokit/webhooks");
 const webhooks = new WebhooksApi({
-  secret: "mysecret"
+  secret: "mysecret",
 });
 eventHandler.on("error", handleSignatureVerificationError);
 
@@ -277,7 +275,7 @@ eventHandler
     id: request.headers["x-github-delivery"],
     name: request.headers["x-github-event"],
     payload: request.body,
-    signature: request.headers["x-hub-signature"]
+    signature: request.headers["x-hub-signature"],
   })
   .catch(handleErrorsFromHooks);
 ```
@@ -564,7 +562,7 @@ Besides the webhook events, there are [special events](#specialevents) emitted b
 The `*` event is emitted for all webhook events [listed above](#listofwebhookevents).
 
 ```js
-webhooks.on("*", event => {
+webhooks.on("*", (event) => {
   console.log(`"${event.name}" event received"`);
 });
 ```
@@ -578,7 +576,7 @@ If a webhook event handler throws an error or returns a promise that rejects, an
 - `payload`: The event request payload
 
 ```js
-webhooks.on("error", error => {
+webhooks.on("error", (error) => {
   console.log(`Error occured in "${error.event.name} handler: ${error.stack}"`);
 });
 ```

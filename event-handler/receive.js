@@ -9,7 +9,7 @@ function receiverHandle(state, event) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {
-    errorHandlers.forEach(handler => wrapErrorHandler(handler, event));
+    errorHandlers.forEach((handler) => wrapErrorHandler(handler, event));
 
     return Promise.reject(event);
   }
@@ -36,7 +36,7 @@ function receiverHandle(state, event) {
   }
 
   const errors = [];
-  const promises = hooks.map(handler => {
+  const promises = hooks.map((handler) => {
     let promise = Promise.resolve(event);
 
     if (state.transform) {
@@ -44,11 +44,11 @@ function receiverHandle(state, event) {
     }
 
     return promise
-      .then(event => {
+      .then((event) => {
         return handler(event);
       })
 
-      .catch(error => errors.push(Object.assign(error, { event })));
+      .catch((error) => errors.push(Object.assign(error, { event })));
   });
 
   return Promise.all(promises).then(() => {
@@ -56,7 +56,7 @@ function receiverHandle(state, event) {
       return;
     }
 
-    errorHandlers.forEach(handler =>
+    errorHandlers.forEach((handler) =>
       errors.forEach(wrapErrorHandler.bind(null, handler))
     );
 

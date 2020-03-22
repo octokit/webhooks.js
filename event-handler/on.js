@@ -4,7 +4,7 @@ const webhookNames = require("../lib/webhook-names.json");
 
 function receiverOn(state, webhookNameOrNames, handler) {
   if (Array.isArray(webhookNameOrNames)) {
-    webhookNameOrNames.forEach(webhookName =>
+    webhookNameOrNames.forEach((webhookName) =>
       receiverOn(state, webhookName, handler)
     );
     return;

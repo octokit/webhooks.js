@@ -6,7 +6,7 @@ const removeListener = require("./remove-listener");
 
 function createEventHandler(options) {
   const state = {
-    hooks: {}
+    hooks: {},
   };
 
   if (options && options.transform) {
@@ -16,6 +16,6 @@ function createEventHandler(options) {
   return {
     on: on.bind(null, state),
     removeListener: removeListener.bind(null, state),
-    receive: receive.bind(null, state)
+    receive: receive.bind(null, state),
   };
 }

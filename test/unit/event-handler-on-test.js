@@ -6,11 +6,11 @@ const receiverOn = require("../../event-handler/on");
 function noop() {}
 
 const state = {
-  hooks: []
+  hooks: [],
 };
 
-test("receiver.on with invalid event name", t => {
-  simple.mock(console, "warn").callFn(function() {});
+test("receiver.on with invalid event name", (t) => {
+  simple.mock(console, "warn").callFn(function () {});
   receiverOn(state, "foo", noop);
   t.equals(console.warn.callCount, 1);
   t.equals(

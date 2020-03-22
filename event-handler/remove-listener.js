@@ -4,7 +4,7 @@ module.exports = receiverListener;
 
 function receiverListener(state, webhookNameOrNames, handler) {
   if (Array.isArray(webhookNameOrNames)) {
-    webhookNameOrNames.forEach(webhookName =>
+    webhookNameOrNames.forEach((webhookName) =>
       receiverListener(state, webhookName, handler)
     );
     return;

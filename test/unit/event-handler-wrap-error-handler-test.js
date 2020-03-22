@@ -3,7 +3,7 @@ const test = require("tap").test;
 
 const wrapErrorHandler = require("../../event-handler/wrap-error-handler");
 
-test("error thrown in error handler", t => {
+test("error thrown in error handler", (t) => {
   t.plan(2);
 
   const messages = [];
@@ -14,11 +14,11 @@ test("error thrown in error handler", t => {
     }, new Error("oops"));
   });
 
-  t.ok(messages.find(message => /FATAL/.test(message)));
+  t.ok(messages.find((message) => /FATAL/.test(message)));
   simple.restore();
 });
 
-test("error handler returns rejected Error", t => {
+test("error handler returns rejected Error", (t) => {
   t.plan(2);
 
   const messages = [];
@@ -29,7 +29,7 @@ test("error handler returns rejected Error", t => {
   });
 
   promise.catch(() => {
-    t.ok(messages.find(message => /FATAL/.test(message)));
+    t.ok(messages.find((message) => /FATAL/.test(message)));
     simple.restore();
   });
 });

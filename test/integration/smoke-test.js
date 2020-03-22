@@ -1,6 +1,6 @@
 const test = require("tap").test;
 
-test("@octokit/webhooks", t => {
+test("@octokit/webhooks", (t) => {
   const Webhooks = require("../..");
   const api = new Webhooks({ secret: "mysecret" });
 
@@ -15,7 +15,7 @@ test("@octokit/webhooks", t => {
   t.end();
 });
 
-test('require("@octokit/webhooks/sign")', t => {
+test('require("@octokit/webhooks/sign")', (t) => {
   t.doesNotThrow(() => {
     require("../../sign");
   });
@@ -23,7 +23,7 @@ test('require("@octokit/webhooks/sign")', t => {
   t.end();
 });
 
-test('require("@octokit/webhooks/verify")', t => {
+test('require("@octokit/webhooks/verify")', (t) => {
   t.doesNotThrow(() => {
     require("../../verify");
   });
@@ -31,7 +31,7 @@ test('require("@octokit/webhooks/verify")', t => {
   t.end();
 });
 
-test('require("@octokit/webhooks/event-handler")', t => {
+test('require("@octokit/webhooks/event-handler")', (t) => {
   t.doesNotThrow(() => {
     require("../../event-handler");
   });
@@ -39,7 +39,7 @@ test('require("@octokit/webhooks/event-handler")', t => {
   t.end();
 });
 
-test('require("@octokit/webhooks/middleware")', t => {
+test('require("@octokit/webhooks/middleware")', (t) => {
   t.doesNotThrow(() => {
     require("../../middleware");
   });

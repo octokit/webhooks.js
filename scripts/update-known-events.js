@@ -9,7 +9,7 @@ const newWebhookNames = WEBOOOKS.reduce(
   (list, event) => {
     list.push(
       event.name,
-      ...event.actions.map(action => `${event.name}.${action}`)
+      ...event.actions.map((action) => `${event.name}.${action}`)
     );
     return list;
   },
@@ -21,21 +21,18 @@ writeFileSync(
 );
 
 // update README.md
-const data = WEBOOOKS.map(w => {
+const data = WEBOOOKS.map((w) => {
   const link = `https://developer.github.com/v3/activity/events/types/#${w.name.replace(
     /[^a-z]/g,
     ""
   )}event`;
   return {
     name: `<a href="${link}"><code>${w.name}</code></a>`,
-    actions: w.actions.map(action => `<code>${action}</code>`).join("<br>")
+    actions: w.actions.map((action) => `<code>${action}</code>`).join("<br>"),
   };
 });
 const headers = { name: "Event", actions: "Actions" };
-const tableHtml = new Table()
-  .setHeaders(headers)
-  .setData(data)
-  .render();
+const tableHtml = new Table().setHeaders(headers).setData(data).render();
 
 const readme = readFileSync("README.md").toString();
 const parts = readme.split(

@@ -2,13 +2,13 @@ const test = require("tap").test;
 
 const removeListener = require("../../event-handler/remove-listener");
 
-test("remove-listener: single listener", t => {
+test("remove-listener: single listener", (t) => {
   const push = () => {};
 
   const state = {
     hooks: {
-      push: [push]
-    }
+      push: [push],
+    },
   };
 
   t.doesNotThrow(() => {
@@ -18,7 +18,7 @@ test("remove-listener: single listener", t => {
   t.end();
 });
 
-test("remove-listener: multiple listeners", t => {
+test("remove-listener: multiple listeners", (t) => {
   const push1 = () => {};
   const push2 = () => {};
   const push3 = () => {};
@@ -28,8 +28,8 @@ test("remove-listener: multiple listeners", t => {
   const state = {
     hooks: {
       push: [push1, push2, push3],
-      ping: [ping]
-    }
+      ping: [ping],
+    },
   };
 
   t.doesNotThrow(() => {

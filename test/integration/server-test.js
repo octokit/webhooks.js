@@ -13,12 +13,12 @@ const test = Tap.test;
 const beforeEach = Tap.beforeEach;
 
 beforeEach(() => {
-  return getPort().then(port => {
+  return getPort().then((port) => {
     this.port = port;
   });
 });
 
-test("initialised without options", t => {
+test("initialised without options", (t) => {
   try {
     Webhooks();
     t.fail("should throw error");
@@ -28,7 +28,7 @@ test("initialised without options", t => {
   t.end();
 });
 
-test("GET /", t => {
+test("GET /", (t) => {
   const api = new Webhooks({ secret: "mysecret" });
   const server = http.createServer(api.middleware);
 
@@ -42,7 +42,7 @@ test("GET /", t => {
       t.fail("should return a 404");
     })
 
-    .catch(error => {
+    .catch((error) => {
       t.is(error.response.status, 404);
     })
 
@@ -53,13 +53,13 @@ test("GET /", t => {
     .catch(t.error);
 });
 
-test("POST / with push event payload", t => {
+test("POST / with push event payload", (t) => {
   t.plan(2);
 
   const api = new Webhooks({ secret: "mysecret" });
   const server = http.createServer(api.middleware);
 
-  api.on("push", event => {
+  api.on("push", (event) => {
     t.is(event.id, "123e4567-e89b-12d3-a456-426655440000");
   });
 
@@ -70,14 +70,14 @@ test("POST / with push event payload", t => {
         headers: {
           "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
           "X-GitHub-Event": "push",
-          "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f"
-        }
+          "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+        },
       });
     })
 
     .catch(t.error)
 
-    .then(result => {
+    .then((result) => {
       t.is(result.status, 200);
     })
 
@@ -88,13 +88,13 @@ test("POST / with push event payload", t => {
     .catch(t.error);
 });
 
-test("POST / with push event payload (request.body already parsed)", t => {
+test("POST / with push event payload (request.body already parsed)", (t) => {
   t.plan(2);
 
   const api = new Webhooks({ secret: "mysecret" });
   const dataChunks = [];
   const server = http.createServer((req, res) => {
-    req.once("data", chunk => dataChunks.push(chunk));
+    req.once("data", (chunk) => dataChunks.push(chunk));
     req.once("end", () => {
       req.body = JSON.parse(Buffer.concat(dataChunks).toString());
       api.middleware(req, res);
@@ -106,7 +106,7 @@ test("POST / with push event payload (request.body already parsed)", t => {
     });
   });
 
-  api.on("push", event => {
+  api.on("push", (event) => {
     t.is(event.id, "123e4567-e89b-12d3-a456-426655440000");
   });
 
@@ -117,14 +117,14 @@ test("POST / with push event payload (request.body already parsed)", t => {
         headers: {
           "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
           "X-GitHub-Event": "push",
-          "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f"
-        }
+          "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+        },
       });
     })
 
     .catch(t.error)
 
-    .then(result => {
+    .then((result) => {
       t.is(result.status, 200);
     })
 
@@ -135,40 +135,7 @@ test("POST / with push event payload (request.body already parsed)", t => {
     .catch(t.error);
 });
 
-test("POST / with push event payload (no signature)", t => {
-  const api = new Webhooks({ secret: "mysecret" });
-  const server = http.createServer(api.middleware);
-  const errorHandler = simple.spy();
-  api.on("error", errorHandler);
-
-  promisify(server.listen.bind(server))(this.port)
-
-    .then(() => {
-      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
-        headers: {
-          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-          "X-GitHub-Event": "push"
-        }
-      });
-    })
-
-    .then(() => {
-      t.fail("should return a 400");
-    })
-
-    .catch(error => {
-      t.is(error.response.status, 400);
-    })
-
-    .then(() => {
-      t.is(errorHandler.callCount, 1, 'calls "error" event handler');
-      server.close(t.end);
-    })
-
-    .catch(t.error);
-});
-
-test("POST / with push event payload (invalid signature)", t => {
+test("POST / with push event payload (no signature)", (t) => {
   const api = new Webhooks({ secret: "mysecret" });
   const server = http.createServer(api.middleware);
   const errorHandler = simple.spy();
@@ -181,8 +148,7 @@ test("POST / with push event payload (invalid signature)", t => {
         headers: {
           "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
           "X-GitHub-Event": "push",
-          "X-Hub-Signature": "sha1=foo"
-        }
+        },
       });
     })
 
@@ -190,7 +156,7 @@ test("POST / with push event payload (invalid signature)", t => {
       t.fail("should return a 400");
     })
 
-    .catch(error => {
+    .catch((error) => {
       t.is(error.response.status, 400);
     })
 
@@ -202,7 +168,41 @@ test("POST / with push event payload (invalid signature)", t => {
     .catch(t.error);
 });
 
-test("POST / with hook error", t => {
+test("POST / with push event payload (invalid signature)", (t) => {
+  const api = new Webhooks({ secret: "mysecret" });
+  const server = http.createServer(api.middleware);
+  const errorHandler = simple.spy();
+  api.on("error", errorHandler);
+
+  promisify(server.listen.bind(server))(this.port)
+
+    .then(() => {
+      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
+        headers: {
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature": "sha1=foo",
+        },
+      });
+    })
+
+    .then(() => {
+      t.fail("should return a 400");
+    })
+
+    .catch((error) => {
+      t.is(error.response.status, 400);
+    })
+
+    .then(() => {
+      t.is(errorHandler.callCount, 1, 'calls "error" event handler');
+      server.close(t.end);
+    })
+
+    .catch(t.error);
+});
+
+test("POST / with hook error", (t) => {
   const api = new Webhooks({ secret: "mysecret" });
   const server = http.createServer(api.middleware);
 
@@ -217,8 +217,8 @@ test("POST / with hook error", t => {
         headers: {
           "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
           "X-GitHub-Event": "push",
-          "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f"
-        }
+          "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+        },
       });
     })
 
@@ -226,7 +226,7 @@ test("POST / with hook error", t => {
       t.fail("should return a 500");
     })
 
-    .catch(error => {
+    .catch((error) => {
       t.is(error.response.status, 500);
     })
 

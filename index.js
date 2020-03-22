@@ -14,7 +14,7 @@ function createWebhooksApi(options) {
   const state = {
     eventHandler: createEventHandler(options),
     path: options.path || "/",
-    secret: options.secret
+    secret: options.secret,
   };
 
   return {
@@ -24,6 +24,6 @@ function createWebhooksApi(options) {
     removeListener: state.eventHandler.removeListener,
     receive: state.eventHandler.receive,
     middleware: middleware.bind(null, state),
-    verifyAndReceive: verifyAndReceive.bind(null, state)
+    verifyAndReceive: verifyAndReceive.bind(null, state),
   };
 }
