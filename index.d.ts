@@ -355,7 +355,7 @@ declare namespace Webhooks {
     type: string;
     site_admin: boolean;
   };
-  type WebhookPayloadSponsorshipSponsorshipMaintainer = {
+  type WebhookPayloadSponsorshipSponsorshipSponsorable = {
     login: string;
     id: number;
     node_id: string;
@@ -378,7 +378,7 @@ declare namespace Webhooks {
   type WebhookPayloadSponsorshipSponsorship = {
     node_id: string;
     created_at: string;
-    maintainer: WebhookPayloadSponsorshipSponsorshipMaintainer;
+    sponsorable: WebhookPayloadSponsorshipSponsorshipSponsorable;
     sponsor: WebhookPayloadSponsorshipSponsorshipSponsor;
     privacy_level: string;
     tier: WebhookPayloadSponsorshipSponsorshipTier;
