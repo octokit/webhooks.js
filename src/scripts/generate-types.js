@@ -3,7 +3,7 @@ const fs = require("fs");
 const { pascalCase } = require("pascal-case");
 const prettier = require("prettier");
 const TypeWriter = require("@gimenete/type-writer");
-const webhooks = require("@octokit/webhooks-definitions");
+const webhooks = require("@octokit/webhooks-definitions/index.json");
 
 const signatures = [];
 const eventEnums = [];
@@ -16,15 +16,15 @@ const doNotEditThisFileDisclaimer = `
 const eventPayloadsVariable = "EventPayloads";
 const eventNamesVariable = "EventNames";
 
-const generatePayloadType = typeName => ({
+const generatePayloadType = (typeName) => ({
   rootTypeName: typeName,
   namedKeyPaths: {
     [`${typeName}.repository`]: "PayloadRepository",
     // This prevents a naming colision between the payload of a `installation_repositories` event
     // and the `repositories` attribute of a `installation` event
     "WebhookPayloadInstallation.repositories":
-      "WebhookPayloadInstallation_Repositories"
-  }
+      "WebhookPayloadInstallation_Repositories",
+  },
 });
 
 const generateEventType = (event, typeName) => `
@@ -37,7 +37,7 @@ const generateEventEnum = (event, name, actions) => `
     const enum ${event} {
       Default = "${name}",
       ${actions
-        .map(action => {
+        .map((action) => {
           return `${pascalCase(action)} = "${name}.${action}"`;
         })
         .join(",")}
