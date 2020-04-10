@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"importHelpers": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"removeComments": true,
+		"resolveJsonModule": true,
+		"strict": true,
+		"target": "es2018"
+	},
+	"include": [
+		"event-handler/**/*",
+		"middleware/**/*",
+		"scripts/**/*",
+		"sign/**/*",
+		"verify/**/*"
+	]
+}

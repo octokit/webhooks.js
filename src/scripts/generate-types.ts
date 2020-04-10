@@ -1,12 +1,12 @@
-const fs = require("fs");
+import fs from "fs";
+import { pascalCase } from "pascal-case";
+import prettier from "prettier";
+import TypeWriter from "@gimenete/type-writer";
+import webhooks from "@octokit/webhooks-definitions/index.json";
+import { WebhookDefinition } from "@octokit/webhooks-definitions";
 
-const { pascalCase } = require("pascal-case");
-const prettier = require("prettier");
-const TypeWriter = require("@gimenete/type-writer");
-const webhooks = require("@octokit/webhooks-definitions/index.json");
-
-const signatures = [];
-const eventEnums = [];
+const signatures: string[] = [];
+const eventEnums: string[] = [];
 const tw = new TypeWriter();
 
 const doNotEditThisFileDisclaimer = `
@@ -16,7 +16,7 @@ const doNotEditThisFileDisclaimer = `
 const eventPayloadsVariable = "EventPayloads";
 const eventNamesVariable = "EventNames";
 
-const generatePayloadType = (typeName) => ({
+const generatePayloadType = (typeName: string) => ({
   rootTypeName: typeName,
   namedKeyPaths: {
     [`${typeName}.repository`]: "PayloadRepository",
@@ -27,13 +27,13 @@ const generatePayloadType = (typeName) => ({
   },
 });
 
-const generateEventType = (event, typeName) => `
+const generateEventType = (event: string, typeName: string): string => `
   public on (
     event: ${eventNamesVariable}.${event},
     callback: (event: ${eventPayloadsVariable}.WebhookEvent<${eventPayloadsVariable}.${typeName}>) => (Promise<void> | void)): void
 `;
 
-const generateEventEnum = (event, name, actions) => `
+const generateEventEnum = (event: string, name: string, actions: string[]) => `
     const enum ${event} {
       Default = "${name}",
       ${actions
@@ -44,7 +44,7 @@ const generateEventEnum = (event, name, actions) => `
     }
 `;
 
-webhooks.forEach(({ name, actions, examples }) => {
+webhooks.forEach(({ name, actions, examples }: WebhookDefinition) => {
   if (!examples) {
     return;
   }
@@ -58,37 +58,31 @@ webhooks.forEach(({ name, actions, examples }) => {
   eventEnums.push(generateEventEnum(event, name, actions));
 });
 
-const generateFile = (filepath, content) => {
+const generateFile = (filepath: string, content: string) => {
   const output = prettier.format(content, { filepath });
   fs.writeFileSync(filepath, output);
 };
 
 const definitionIndex = `
 ${doNotEditThisFileDisclaimer}
-
 export { Webhooks } from './lib/generated/api'`;
 
 generateFile("index.d.ts", definitionIndex);
 
 const apiContent = `
-
 import http = require('http');
 import { ${eventNamesVariable} } from "./event-names";
 import { ${eventPayloadsVariable} } from "./event-payloads";
-
 type Options = {
   secret: string
   path?: string
   transform?: (event: ${eventPayloadsVariable}.WebhookEvent<any>) => ${eventPayloadsVariable}.WebhookEvent<any> & { [key: string]: any }
 }
-
 export declare class Webhooks {
   constructor (options?: Options)
-
   public on (event: ${eventNamesVariable}.ErrorEvent, callback: (event: Error) => void): void
-  public on (event: '*' | string[], callback: (event: ${eventPayloadsVariable}.WebhookEvent<any>) => Promise<void> | void): void
+  public on (event: ${eventNamesVariable}.WildcardEvent | string[], callback: (event: ${eventPayloadsVariable}.WebhookEvent<any>) => Promise<void> | void): void
   ${signatures.join("\n")}
-
   public sign (data: any): string
   public verify (eventPayload: any, signature: string): boolean
   public verifyAndReceive (options: { id: string, name: string, payload: any, signature: string }): Promise<void>
@@ -103,8 +97,10 @@ generateFile("lib/generated/api.d.ts", apiContent);
 
 const eventNamesContet = `
 ${doNotEditThisFileDisclaimer}
-
 export namespace ${eventNamesVariable} {
+  const enum WildcardEvent {
+    Default = "*"
+  }
   const enum ErrorEvent {
     Default = "error"
   }
@@ -116,10 +112,8 @@ generateFile("lib/generated/event-names.d.ts", eventNamesContet);
 
 const eventPayloadsContet = `
 ${doNotEditThisFileDisclaimer}
-
 export namespace ${eventPayloadsVariable} {
   ${tw.generate("typescript", { inlined: false })}
-
   interface WebhookEvent<T> {
     id: string;
     name: string;
