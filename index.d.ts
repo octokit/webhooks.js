@@ -12,6 +12,31 @@ type Options = {
 };
 
 declare namespace Webhooks {
+  type WebhookPayloadPingPayloadHookConfig = {
+    content_type: string;
+    insecure_ssl: string;
+    url: string;
+  };
+  type WebhookPayloadPingPayloadHook = {
+    type: string;
+    id: number;
+    name: string;
+    active: boolean;
+    events: Array<string>;
+    config: WebhookPayloadPingPayloadHookConfig;
+    updated_at: string;
+    created_at: string;
+    app_id: number;
+  };
+  type WebhookPayloadPingPayload = {
+    zen: string;
+    hook_id: number;
+    hook: WebhookPayloadPingPayloadHook;
+  };
+  type WebhookPayloadPing = {
+    event: string;
+    payload: WebhookPayloadPingPayload;
+  };
   type WebhookPayloadWatchSender = {
     login: string;
     id: number;
@@ -4665,6 +4690,13 @@ declare class Webhooks {
     event: "watch" | "watch.started",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadWatch>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: "ping",
+    callback: (
+      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPing>
     ) => Promise<void> | void
   ): void;
 
