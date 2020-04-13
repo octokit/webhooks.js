@@ -30,13 +30,13 @@
   },
   "scripts": {
     "coverage": "tap --coverage-report=html && open coverage/lcov-report/index.html",
-    "generate-known-webhooks": "node scripts/update-known-events.js",
-    "lint": "prettier --check '{event-handler,lib.middleware,scripts,sign,test,verify}/**/*.{js,json}' index.js index.d.ts README.md package.json",
-    "lint:fix": "prettier --write '{event-handler,lib.middleware,scripts,sign,test,verify}/**/*.{js,json}' index.js index.d.ts README.md package.json",
+    "generate-known-webhooks": "node src/scripts/update-known-events.js",
+    "lint": "prettier --check 'src/**/*.{js,json}' index.d.ts README.md package.json",
+    "lint:fix": "prettier --write 'src/**/*.{js,json}' index.d.ts README.md package.json",
     "pretest": "npm run -s lint",
-    "test": "tap --100 --coverage 'test/**/*-test.js'",
-    "generate-types": "node scripts/generate-types.js",
-    "validate:ts": "tsc --noEmit --noImplicitAny test/typescript-validate.ts"
+    "test": "tap --100 --coverage 'src/test/**/*-test.js'",
+    "generate-types": "node src/scripts/generate-types.js",
+    "validate:ts": "tsc --noEmit --noImplicitAny src/test/typescript-validate.ts"
   },
   "repository": {
     "type": "git",
