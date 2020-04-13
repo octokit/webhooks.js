@@ -1,7 +1,7 @@
 const simple = require("simple-mock");
 const test = require("tap").test;
 
-const receiverOn = require("../../event-handler/on");
+const receiverOn = require("../../src/event-handler/on");
 
 function noop() {}
 

@@ -17,7 +17,7 @@ test("@octokit/webhooks", (t) => {
 
 test('require("@octokit/webhooks/sign")', (t) => {
   t.doesNotThrow(() => {
-    require("../../sign");
+    require("../../src/sign");
   });
 
   t.end();
@@ -25,7 +25,7 @@ test('require("@octokit/webhooks/sign")', (t) => {
 
 test('require("@octokit/webhooks/verify")', (t) => {
   t.doesNotThrow(() => {
-    require("../../verify");
+    require("../../src/verify");
   });
 
   t.end();
@@ -33,7 +33,7 @@ test('require("@octokit/webhooks/verify")', (t) => {
 
 test('require("@octokit/webhooks/event-handler")', (t) => {
   t.doesNotThrow(() => {
-    require("../../event-handler");
+    require("../../src/event-handler");
   });
 
   t.end();
@@ -41,7 +41,7 @@ test('require("@octokit/webhooks/event-handler")', (t) => {
 
 test('require("@octokit/webhooks/middleware")', (t) => {
   t.doesNotThrow(() => {
-    require("../../middleware");
+    require("../../src/middleware");
   });
 
   t.end();

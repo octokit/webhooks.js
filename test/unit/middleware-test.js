@@ -1,7 +1,7 @@
 const simple = require("simple-mock");
 const test = require("tap").test;
 
-const middleware = require("../../middleware/middleware");
+const middleware = require("../../src/middleware/middleware");
 const state = {};
 
 test("next() callback", (t) => {

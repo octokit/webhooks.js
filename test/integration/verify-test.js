@@ -1,6 +1,6 @@
 const test = require("tap").test;
 
-const verify = require("../../verify");
+const verify = require("../../src/verify");
 
 const eventPayload = {
   foo: "bar",

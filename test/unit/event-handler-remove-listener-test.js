@@ -1,6 +1,6 @@
 const test = require("tap").test;
 
-const removeListener = require("../../event-handler/remove-listener");
+const removeListener = require("../../src/event-handler/remove-listener");
 
 test("remove-listener: single listener", (t) => {
   const push = () => {};

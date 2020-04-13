@@ -5,7 +5,7 @@
     "access": "public"
   },
   "description": "GitHub webhook events toolset for Node.js",
-  "main": "index.js",
+  "main": "src/index.js",
   "directories": {
     "lib": "lib",
     "test": "test"
@@ -16,6 +16,9 @@
   "devDependencies": {
     "@gimenete/type-writer": "^0.1.5",
     "@octokit/webhooks-definitions": "3.5.0",
+    "@pika/pack": "^0.5.0",
+    "@pika/plugin-build-node": "^0.9.2",
+    "@pika/plugin-standard-pkg": "^0.9.2",
     "axios": "^0.19.0",
     "cheerio": "^1.0.0-rc.2",
     "get-port": "^5.0.0",
@@ -29,18 +32,29 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
+    "build": "pika build",
     "coverage": "tap --coverage-report=html && open coverage/lcov-report/index.html",
-    "generate-known-webhooks": "node scripts/update-known-events.js",
-    "lint": "prettier --check '{event-handler,lib.middleware,scripts,sign,test,verify}/**/*.{js,json}' index.js index.d.ts README.md package.json",
-    "lint:fix": "prettier --write '{event-handler,lib.middleware,scripts,sign,test,verify}/**/*.{js,json}' index.js index.d.ts README.md package.json",
+    "generate-known-webhooks": "node pkg/scripts/update-known-events.js",
+    "lint": "prettier --check 'src/**/*.{js,json}' 'test/**/*' index.d.ts README.md package.json",
+    "lint:fix": "prettier --write 'src/**/*.{js,json}' 'test/**/*' index.d.ts README.md package.json",
     "pretest": "npm run -s lint",
     "test": "tap --100 --coverage 'test/**/*-test.js'",
-    "generate-types": "node scripts/generate-types.js",
+    "generate-types": "node pkg/scripts/generate-types.js",
     "validate:ts": "tsc --noEmit --noImplicitAny test/typescript-validate.ts"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/octokit/webhooks.js.git"
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-standard-pkg"
+      ],
+      [
+        "@pika/plugin-build-node"
+      ]
+    ]
   },
   "keywords": [],
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
