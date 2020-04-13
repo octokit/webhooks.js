@@ -5,7 +5,7 @@
     "access": "public"
   },
   "description": "GitHub webhook events toolset for Node.js",
-  "main": "index.js",
+  "main": "src/index.js",
   "directories": {
     "lib": "lib",
     "test": "test"
@@ -35,12 +35,12 @@
     "build": "pika build",
     "coverage": "tap --coverage-report=html && open coverage/lcov-report/index.html",
     "generate-known-webhooks": "node pkg/scripts/update-known-events.js",
-    "lint": "prettier --check 'src/**/*.{js,json}' index.d.ts README.md package.json",
-    "lint:fix": "prettier --write 'src/**/*.{js,json}' index.d.ts README.md package.json",
+    "lint": "prettier --check 'src/**/*.{js,json}' 'test/**/*' index.d.ts README.md package.json",
+    "lint:fix": "prettier --write 'src/**/*.{js,json}' 'test/**/*' index.d.ts README.md package.json",
     "pretest": "npm run -s lint",
-    "test": "tap --100 --coverage 'src/test/**/*-test.js'",
+    "test": "tap --100 --coverage 'test/**/*-test.js'",
     "generate-types": "node pkg/scripts/generate-types.js",
-    "validate:ts": "tsc --noEmit --noImplicitAny src/test/typescript-validate.ts"
+    "validate:ts": "tsc --noEmit --noImplicitAny test/typescript-validate.ts"
   },
   "repository": {
     "type": "git",
@@ -49,13 +49,7 @@
   "@pika/pack": {
     "pipeline": [
       [
-        "@pika/plugin-standard-pkg",
-        {
-          "exclude": [
-            "**/*.json",
-            "**/*.ts"
-          ]
-        }
+        "@pika/plugin-standard-pkg"
       ],
       [
         "@pika/plugin-build-node"

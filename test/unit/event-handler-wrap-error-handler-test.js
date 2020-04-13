@@ -1,7 +1,7 @@
 const simple = require("simple-mock");
 const test = require("tap").test;
 
-const wrapErrorHandler = require("../../event-handler/wrap-error-handler");
+const wrapErrorHandler = require("../../src/event-handler/wrap-error-handler");
 
 test("error thrown in error handler", (t) => {
   t.plan(2);
