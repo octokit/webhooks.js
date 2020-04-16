@@ -2,6 +2,31 @@
 // make edits in scripts/generate-types.js
 
 export namespace EventPayloads {
+  type WebhookPayloadPingPayloadHookConfig = {
+    content_type: string;
+    insecure_ssl: string;
+    url: string;
+  };
+  type WebhookPayloadPingPayloadHook = {
+    type: string;
+    id: number;
+    name: string;
+    active: boolean;
+    events: Array<string>;
+    config: WebhookPayloadPingPayloadHookConfig;
+    updated_at: string;
+    created_at: string;
+    app_id: number;
+  };
+  type WebhookPayloadPingPayload = {
+    zen: string;
+    hook_id: number;
+    hook: WebhookPayloadPingPayloadHook;
+  };
+  type WebhookPayloadPing = {
+    event: string;
+    payload: WebhookPayloadPingPayload;
+  };
   type WebhookPayloadWatchSender = {
     login: string;
     id: number;
@@ -345,7 +370,7 @@ export namespace EventPayloads {
     type: string;
     site_admin: boolean;
   };
-  type WebhookPayloadSponsorshipSponsorshipMaintainer = {
+  type WebhookPayloadSponsorshipSponsorshipSponsorable = {
     login: string;
     id: number;
     node_id: string;
@@ -368,7 +393,7 @@ export namespace EventPayloads {
   type WebhookPayloadSponsorshipSponsorship = {
     node_id: string;
     created_at: string;
-    maintainer: WebhookPayloadSponsorshipSponsorshipMaintainer;
+    sponsorable: WebhookPayloadSponsorshipSponsorshipSponsorable;
     sponsor: WebhookPayloadSponsorshipSponsorshipSponsor;
     privacy_level: string;
     tier: WebhookPayloadSponsorshipSponsorshipTier;

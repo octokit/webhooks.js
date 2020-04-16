@@ -1,7 +1,6 @@
 import http = require("http");
 import { EventNames } from "./event-names";
 import { EventPayloads } from "./event-payloads";
-
 type Options = {
   secret: string;
   path?: string;
@@ -9,16 +8,14 @@ type Options = {
     event: EventPayloads.WebhookEvent<any>
   ) => EventPayloads.WebhookEvent<any> & { [key: string]: any };
 };
-
 export declare class Webhooks {
   constructor(options?: Options);
-
   public on(
     event: EventNames.ErrorEvent,
     callback: (event: Error) => void
   ): void;
   public on(
-    event: "*" | string[],
+    event: EventNames.WildcardEvent | string[],
     callback: (event: EventPayloads.WebhookEvent<any>) => Promise<void> | void
   ): void;
 
@@ -373,6 +370,13 @@ export declare class Webhooks {
     event: EventNames.WatchEvent,
     callback: (
       event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadWatch>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: EventNames.PingEvent,
+    callback: (
+      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPing>
     ) => Promise<void> | void
   ): void;
 

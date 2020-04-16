@@ -2,8 +2,11 @@
 // make edits in scripts/generate-types.js
 
 export namespace EventNames {
+  const enum WildcardEvent {
+    Default = "*",
+  }
   const enum ErrorEvent {
-    Default = "error"
+    Default = "error",
   }
 
   const enum CheckRunEvent {
@@ -11,79 +14,79 @@ export namespace EventNames {
     Completed = "check_run.completed",
     Created = "check_run.created",
     RequestedAction = "check_run.requested_action",
-    Rerequested = "check_run.rerequested"
+    Rerequested = "check_run.rerequested",
   }
 
   const enum CheckSuiteEvent {
     Default = "check_suite",
     Completed = "check_suite.completed",
     Requested = "check_suite.requested",
-    Rerequested = "check_suite.rerequested"
+    Rerequested = "check_suite.rerequested",
   }
 
   const enum CommitCommentEvent {
     Default = "commit_comment",
-    Created = "commit_comment.created"
+    Created = "commit_comment.created",
   }
 
   const enum ContentReferenceEvent {
-    Default = "content_reference"
+    Default = "content_reference",
   }
 
   const enum CreateEvent {
-    Default = "create"
+    Default = "create",
   }
 
   const enum DeleteEvent {
-    Default = "delete"
+    Default = "delete",
   }
 
   const enum DeployKeyEvent {
     Default = "deploy_key",
     Created = "deploy_key.created",
-    Deleted = "deploy_key.deleted"
+    Deleted = "deploy_key.deleted",
   }
 
   const enum DeploymentEvent {
     Default = "deployment",
-    Created = "deployment.created"
+    Created = "deployment.created",
   }
 
   const enum DeploymentStatusEvent {
     Default = "deployment_status",
-    Created = "deployment_status.created"
+    Created = "deployment_status.created",
   }
 
   const enum ForkEvent {
-    Default = "fork"
+    Default = "fork",
   }
 
   const enum GithubAppAuthorizationEvent {
-    Default = "github_app_authorization"
+    Default = "github_app_authorization",
   }
 
   const enum GollumEvent {
-    Default = "gollum"
+    Default = "gollum",
   }
 
   const enum InstallationEvent {
     Default = "installation",
     Created = "installation.created",
     Deleted = "installation.deleted",
-    NewPermissionsAccepted = "installation.new_permissions_accepted"
+    NewPermissionsAccepted = "installation.new_permissions_accepted",
   }
 
   const enum InstallationRepositoriesEvent {
     Default = "installation_repositories",
     Added = "installation_repositories.added",
-    Removed = "installation_repositories.removed"
+    Removed = "installation_repositories.removed",
   }
 
   const enum IssueCommentEvent {
     Default = "issue_comment",
     Created = "issue_comment.created",
     Deleted = "issue_comment.deleted",
-    Edited = "issue_comment.edited"
+    Edited = "issue_comment.edited",
   }
 
   const enum IssuesEvent {
@@ -103,14 +106,14 @@ export namespace EventNames {
     Unassigned = "issues.unassigned",
     Unlabeled = "issues.unlabeled",
     Unlocked = "issues.unlocked",
-    Unpinned = "issues.unpinned"
+    Unpinned = "issues.unpinned",
   }
 
   const enum LabelEvent {
     Default = "label",
     Created = "label.created",
     Deleted = "label.deleted",
-    Edited = "label.edited"
+    Edited = "label.edited",
   }
 
   const enum MarketplacePurchaseEvent {
@@ -119,25 +122,25 @@ export namespace EventNames {
     Changed = "marketplace_purchase.changed",
     PendingChange = "marketplace_purchase.pending_change",
     PendingChangeCancelled = "marketplace_purchase.pending_change_cancelled",
-    Purchased = "marketplace_purchase.purchased"
+    Purchased = "marketplace_purchase.purchased",
   }
 
   const enum MemberEvent {
     Default = "member",
     Added = "member.added",
     Deleted = "member.deleted",
-    Edited = "member.edited"
+    Edited = "member.edited",
   }
 
   const enum MembershipEvent {
     Default = "membership",
     Added = "membership.added",
-    Removed = "membership.removed"
+    Removed = "membership.removed",
   }
 
   const enum MetaEvent {
     Default = "meta",
-    Deleted = "meta.deleted"
+    Deleted = "meta.deleted",
   }
 
   const enum MilestoneEvent {
@@ -146,7 +149,7 @@ export namespace EventNames {
     Created = "milestone.created",
     Deleted = "milestone.deleted",
     Edited = "milestone.edited",
-    Opened = "milestone.opened"
+    Opened = "milestone.opened",
   }
 
   const enum OrganizationEvent {
@@ -155,23 +158,23 @@ export namespace EventNames {
     MemberAdded = "organization.member_added",
     MemberInvited = "organization.member_invited",
     MemberRemoved = "organization.member_removed",
-    Renamed = "organization.renamed"
+    Renamed = "organization.renamed",
   }
 
   const enum OrgBlockEvent {
     Default = "org_block",
     Blocked = "org_block.blocked",
-    Unblocked = "org_block.unblocked"
+    Unblocked = "org_block.unblocked",
   }
 
   const enum PackageEvent {
     Default = "package",
     Published = "package.published",
-    Updated = "package.updated"
+    Updated = "package.updated",
   }
 
   const enum PageBuildEvent {
-    Default = "page_build"
+    Default = "page_build",
   }
 
   const enum ProjectCardEvent {
@@ -180,7 +183,7 @@ export namespace EventNames {
     Created = "project_card.created",
     Deleted = "project_card.deleted",
     Edited = "project_card.edited",
-    Moved = "project_card.moved"
+    Moved = "project_card.moved",
   }
 
   const enum ProjectColumnEvent {
@@ -188,7 +191,7 @@ export namespace EventNames {
     Created = "project_column.created",
     Deleted = "project_column.deleted",
     Edited = "project_column.edited",
-    Moved = "project_column.moved"
+    Moved = "project_column.moved",
   }
 
   const enum ProjectEvent {
@@ -197,11 +200,11 @@ export namespace EventNames {
     Created = "project.created",
     Deleted = "project.deleted",
     Edited = "project.edited",
-    Reopened = "project.reopened"
+    Reopened = "project.reopened",
   }
 
   const enum PublicEvent {
-    Default = "public"
+    Default = "public",
   }
 
   const enum PullRequestEvent {
@@ -219,25 +222,25 @@ export namespace EventNames {
     Unassigned = "pull_request.unassigned",
     Unlabeled = "pull_request.unlabeled",
     Unlocked = "pull_request.unlocked",
-    Synchronize = "pull_request.synchronize"
+    Synchronize = "pull_request.synchronize",
   }
 
   const enum PullRequestReviewEvent {
     Default = "pull_request_review",
     Dismissed = "pull_request_review.dismissed",
     Edited = "pull_request_review.edited",
-    Submitted = "pull_request_review.submitted"
+    Submitted = "pull_request_review.submitted",
   }
 
   const enum PullRequestReviewCommentEvent {
     Default = "pull_request_review_comment",
     Created = "pull_request_review_comment.created",
     Deleted = "pull_request_review_comment.deleted",
-    Edited = "pull_request_review_comment.edited"
+    Edited = "pull_request_review_comment.edited",
   }
 
   const enum PushEvent {
-    Default = "push"
+    Default = "push",
   }
 
   const enum ReleaseEvent {
@@ -247,11 +250,11 @@ export namespace EventNames {
     Edited = "release.edited",
     Prereleased = "release.prereleased",
     Published = "release.published",
-    Unpublished = "release.unpublished"
+    Unpublished = "release.unpublished",
   }
 
   const enum RepositoryDispatchEvent {
-    Default = "repository_dispatch"
+    Default = "repository_dispatch",
   }
 
   const enum RepositoryEvent {
@@ -264,39 +267,39 @@ export namespace EventNames {
     Publicized = "repository.publicized",
     Renamed = "repository.renamed",
     Transferred = "repository.transferred",
-    Unarchived = "repository.unarchived"
+    Unarchived = "repository.unarchived",
   }
 
   const enum RepositoryImportEvent {
-    Default = "repository_import"
+    Default = "repository_import",
   }
 
   const enum RepositoryVulnerabilityAlertEvent {
     Default = "repository_vulnerability_alert",
     Create = "repository_vulnerability_alert.create",
     Dismiss = "repository_vulnerability_alert.dismiss",
-    Resolve = "repository_vulnerability_alert.resolve"
+    Resolve = "repository_vulnerability_alert.resolve",
   }
 
   const enum SecurityAdvisoryEvent {
     Default = "security_advisory",
     Performed = "security_advisory.performed",
     Published = "security_advisory.published",
-    Updated = "security_advisory.updated"
+    Updated = "security_advisory.updated",
   }
 
   const enum SponsorshipEvent {
-    Default = "sponsorship"
+    Default = "sponsorship",
   }
 
   const enum StarEvent {
     Default = "star",
     Created = "star.created",
-    Deleted = "star.deleted"
+    Deleted = "star.deleted",
   }
 
   const enum StatusEvent {
-    Default = "status"
+    Default = "status",
   }
 
   const enum TeamEvent {
@@ -305,15 +308,19 @@ export namespace EventNames {
     Created = "team.created",
     Deleted = "team.deleted",
     Edited = "team.edited",
-    RemovedFromRepository = "team.removed_from_repository"
+    RemovedFromRepository = "team.removed_from_repository",
   }
 
   const enum TeamAddEvent {
-    Default = "team_add"
+    Default = "team_add",
   }
 
   const enum WatchEvent {
     Default = "watch",
-    Started = "watch.started"
+    Started = "watch.started",
+  }
+
+  const enum PingEvent {
+    Default = "ping",
   }
 }
