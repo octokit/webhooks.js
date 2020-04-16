@@ -1,5 +1,4 @@
-import { Webhooks } from "..";
-import { EventNames } from "../lib/generated/event-names";
+import { Webhooks, EventNames } from "..";
 import { createServer } from "http";
 
 // ************************************************************
