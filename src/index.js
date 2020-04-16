@@ -1,5 +1,3 @@
-module.exports = createWebhooksApi;
-
 const createEventHandler = require("./event-handler");
 const middleware = require("./middleware/middleware");
 const sign = require("./sign");
@@ -27,3 +25,11 @@ function createWebhooksApi(options) {
     verifyAndReceive: verifyAndReceive.bind(null, state),
   };
 }
+
+module.exports = {
+  createWebhooksApi,
+  middleware,
+  sign,
+  verify,
+  verifyAndReceive,
+};
