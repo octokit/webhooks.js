@@ -1,4 +1,5 @@
 import { Webhooks } from "..";
+import { EventNames } from "../lib/generated/event-names";
 import { createServer } from "http";
 
 // ************************************************************
@@ -21,7 +22,7 @@ export default async function () {
     transform: (event) => event,
   });
 
-  webhooks.on("*", ({ id, name, payload }) => {
+  webhooks.on("*" as EventNames.WildcardEvent, ({ name, payload }) => {
     console.log(name, "event received");
     const sig = webhooks.sign(payload);
     webhooks.verify(payload, sig);
