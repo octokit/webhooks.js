@@ -65,7 +65,16 @@ const generateFile = (filepath: string, content: string) => {
 
 const definitionIndex = `
 ${doNotEditThisFileDisclaimer}
-export { Webhooks } from './lib/generated/api'`;
+import { EventNames } from './lib/generated/event-names'
+import { EventPayloads } from './lib/generated/event-payloads'
+import { Webhooks } from './lib/generated/api'
+
+export {
+  EventNames,
+  EventPayloads,
+  Webhooks
+}
+`;
 
 generateFile("index.d.ts", definitionIndex);
 
