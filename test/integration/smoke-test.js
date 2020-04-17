@@ -1,7 +1,7 @@
 const test = require("tap").test;
 
 test("@octokit/webhooks", (t) => {
-  const Webhooks = require("../..");
+  const Webhooks = require("../../pkg/dist-src");
   const api = new Webhooks({ secret: "mysecret" });
 
   t.type(api.sign, "function");

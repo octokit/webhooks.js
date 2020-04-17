@@ -1,6 +1,6 @@
 const test = require("tap").test;
 
-const Middleware = require("../../src/middleware");
+const Middleware = require("../../pkg/dist-src/middleware");
 
 test("options: none", (t) => {
   t.throws(Middleware);
