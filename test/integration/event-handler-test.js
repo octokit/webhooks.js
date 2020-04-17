@@ -1,15 +1,13 @@
 const test = require("tap").test;
 
-const createEventHandler = require("../../pkg/dist-src/");
+const createEventHandler = require("../../pkg/dist-src/event-handler");
 const pushEventPayload = require("../fixtures/push-payload");
 const installationCreatedPayload = require("../fixtures/installation-created-payload");
 
 test("events", (t) => {
   t.plan(6);
 
-  const eventHandler = createEventHandler({
-    secret: 'randomSecret'
-  });
+  const eventHandler = createEventHandler();
 
   const hooksCalled = [];
   function hook1() {
@@ -102,7 +100,6 @@ test("options.transform", (t) => {
   t.plan(2);
 
   const eventHandler = createEventHandler({
-    secret: 'randomSecret',
     transform: (event) => {
       t.is(event.id, "123");
       return "funky";
@@ -122,7 +119,6 @@ test("options.transform", (t) => {
 
 test("async options.transform", (t) => {
   const eventHandler = createEventHandler({
-    secret: 'randomSecret',
     transform: (event) => {
       return Promise.resolve("funky");
     },

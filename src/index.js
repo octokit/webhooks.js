@@ -27,4 +27,3 @@ function createWebhooksApi(options) {
     verifyAndReceive: verifyAndReceive.bind(null, state),
   };
 }
-
