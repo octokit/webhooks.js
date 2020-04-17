@@ -20,6 +20,12 @@ writeFileSync(
   JSON.stringify([...newWebhookNames], null, 2) + "\n"
 );
 
+writeFileSync(
+  "src/webhook-names.js",
+  `module.exports = ${JSON.stringify([...newWebhookNames], null, 2)}
+  `
+);
+
 // update README.md
 const data = WEBOOOKS.map((w) => {
   const link = `https://developer.github.com/v3/activity/events/types/#${w.name.replace(
