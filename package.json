@@ -37,10 +37,10 @@
     "build": "pika build",
     "coverage": "tap --coverage-report=html && open coverage/lcov-report/index.html",
     "generate-known-webhooks": "node pkg/dist-src/scripts/update-known-events.js",
-    "lint": "prettier --check 'src/**/*.{js,json}' 'test/**/*' index.d.ts README.md package.json",
-    "lint:fix": "prettier --write 'src/**/*.{js,json}' 'test/**/*' index.d.ts README.md package.json",
+    "lint": "prettier --check 'src/**/*.{js,json}' 'test/**/*' 'coverage-map.js' index.d.ts README.md package.json",
+    "lint:fix": "prettier --write 'src/**/*.{js,json}' 'test/**/*' 'coverage-map.js' index.d.ts README.md package.json",
     "pretest": "npm run -s lint; npm run build -s",
-    "test": "tap --100 --coverage 'test/**/*-test.js'",
+    "test": "tap --100 --coverage --coverage-map=coverage-map.js 'test/**/*-test.js'",
     "generate-types": "node pkg/dist-src/scripts/generate-types.js",
     "validate:ts": "tsc --noEmit --noImplicitAny test/typescript-validate.ts"
   },
