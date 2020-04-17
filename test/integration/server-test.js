@@ -6,7 +6,7 @@ const { promisify } = require("util");
 const simple = require("simple-mock");
 const Tap = require("tap");
 
-const Webhooks = require("../../");
+const Webhooks = require("../../pkg/dist-src/");
 const pushEventPayload = require("../fixtures/push-payload");
 
 const test = Tap.test;
