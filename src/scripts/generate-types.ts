@@ -2,7 +2,7 @@ import { pascalCase } from "pascal-case";
 import TypeWriter from "@gimenete/type-writer";
 import webhooks from "@octokit/webhooks-definitions/index.json";
 import { WebhookDefinition } from "@octokit/webhooks-definitions";
-import { generateFile } from './generate-file';
+import { generateFile } from "./generate-file";
 
 const signatures: string[] = [];
 const eventEnums: string[] = [];

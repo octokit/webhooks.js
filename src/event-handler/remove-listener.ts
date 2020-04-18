@@ -1,6 +1,10 @@
-import { EventState } from '..'
+import { EventState } from "../index.d";
 
-export function removeListener(state: EventState, webhookNameOrNames: string | string[], handler: Function) {
+export function removeListener(
+  state: EventState,
+  webhookNameOrNames: string | string[],
+  handler: Function
+) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>
       removeListener(state, webhookName, handler)

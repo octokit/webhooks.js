@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { Request } from "express";
 
 export function getPayload(request: Request) {
   // If request.body already exists we can stop here
@@ -8,10 +8,10 @@ export function getPayload(request: Request) {
   }
 
   return new Promise((resolve, reject) => {
-    let data = '';
+    let data = "";
 
     request.on("error", reject);
-    request.on("data", (chunk) => data += chunk);
+    request.on("data", (chunk) => (data += chunk));
     request.on("end", () => {
       try {
         resolve(JSON.parse(data));

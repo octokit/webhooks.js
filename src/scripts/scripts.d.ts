@@ -1,2 +1,2 @@
-declare module '@gimenete/type-writer';
-declare module 'table-builder';
+declare module "@gimenete/type-writer";
+declare module "table-builder";

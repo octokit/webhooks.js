@@ -1,12 +1,14 @@
 import { wrapErrorHandler } from "./wrap-error-handler";
-import { WebhookEvent, EventState } from '..'
+import { WebhookEvent, EventState } from "../index.d";
 
 // main handler function
 export function receiverHandle(state: EventState, event: WebhookEvent) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {
-    errorHandlers.forEach((handler: Function) => wrapErrorHandler(handler, event));
+    errorHandlers.forEach((handler: Function) =>
+      wrapErrorHandler(handler, event)
+    );
 
     return Promise.reject(event);
   }
@@ -21,10 +23,10 @@ export function receiverHandle(state: EventState, event: WebhookEvent) {
 
   // flatten arrays of event listeners and remove undefined values
   const hooks = [
-      state.hooks[`${event.name}.${event.payload.action}`],
-      state.hooks[event.name],
-      state.hooks["*"]
-    ]
+    state.hooks[`${event.name}.${event.payload.action}`],
+    state.hooks[event.name],
+    state.hooks["*"],
+  ]
     .filter(Boolean)
     .flat();
 

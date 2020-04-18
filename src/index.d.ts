@@ -1,25 +1,25 @@
 export interface WebhookEvent {
-	id: string | string[] | undefined,
-	name: string | string[] | undefined,
-	payload: Payload,
-	signature: string | string[] | undefined
+  id: string | string[] | undefined;
+  name: string | string[] | undefined;
+  payload: Payload;
+  signature: string | string[] | undefined;
 }
 
 type Payload = {
-	action: string
-}
+  action: string;
+};
 
 export interface EventHandlerOptions {
-	path?: string,
-	secret?: string,
-	transform?: (value: WebhookEvent) => WebhookEvent | PromiseLike<WebhookEvent>
+  path?: string;
+  secret?: string;
+  transform?: (value: WebhookEvent) => WebhookEvent | PromiseLike<WebhookEvent>;
 }
 
 type Hooks = {
-	[key: string]: Function[]
-}
+  [key: string]: Function[];
+};
 
 export interface EventState extends EventHandlerOptions {
-	eventHandler?: any,
-	hooks: Hooks
+  eventHandler?: any;
+  hooks: Hooks;
 }

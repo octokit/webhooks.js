@@ -3,13 +3,17 @@ import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
-import { Request, Response } from 'express';
-import { EventState } from "..";
+import { Request, Response } from "express";
+import { EventState } from "../index.d";
 
-const debugWebhooks = debug("webhooks:receiver")
+const debugWebhooks = debug("webhooks:receiver");
 
-export function middleware(state: EventState, request: Request, response: Response, next?: Function): Promise<void> | undefined {
-
+export function middleware(
+  state: EventState,
+  request: Request,
+  response: Response,
+  next?: Function
+): Promise<void> | undefined {
   if (isntWebhook(request, { path: state.path })) {
     // the next callback is set when used as an express middleware. That allows
     // it to define custom routes like /my/custom/page while the webhooks are

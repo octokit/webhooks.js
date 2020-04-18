@@ -1,7 +1,11 @@
 import { webhookNames } from "../webhook-names.js";
-import { EventState } from '..'
+import { EventState } from "../index.d";
 
-export function receiverOn(state: EventState, webhookNameOrNames: string | string[] , handler: Function) {
+export function receiverOn(
+  state: EventState,
+  webhookNameOrNames: string | string[],
+  handler: Function
+) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>
       receiverOn(state, webhookName, handler)

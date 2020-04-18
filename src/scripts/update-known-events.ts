@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "fs";
 import Table from "table-builder";
 import WEBOOOKS from "@octokit/webhooks-definitions/index.json";
 import { WebhookDefinition } from "@octokit/webhooks-definitions";
-import { generateFile } from './generate-file';
+import { generateFile } from "./generate-file";
 
 const newWebhookNames = WEBOOOKS.reduce(
   (list: string[], event: WebhookDefinition) => {

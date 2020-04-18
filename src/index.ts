@@ -3,16 +3,18 @@ import { middleware } from "./middleware/middleware";
 import { sign } from "./sign";
 import { verify } from "./verify";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
+import { EventHandlerOptions, EventState } from "./index.d";
 
-export function createWebhooksApi(options) {
+export function createWebhooksApi(options: EventHandlerOptions) {
   if (!options || !options.secret) {
     throw new Error("options.secret required");
   }
 
-  const state = {
+  const state: EventState = {
     eventHandler: createEventHandler(options),
     path: options.path || "/",
     secret: options.secret,
+    hooks: {},
   };
 
   return {

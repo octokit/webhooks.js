@@ -7,9 +7,7 @@ export function sign(secret: string, payload: string | object) {
 
   payload =
     typeof payload === "string" ? payload : toNormalizedJsonString(payload);
-  return (
-    "sha1=" + createHmac("sha1", secret).update(payload).digest("hex")
-  );
+  return "sha1=" + createHmac("sha1", secret).update(payload).digest("hex");
 }
 
 function toNormalizedJsonString(payload: object) {

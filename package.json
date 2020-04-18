@@ -5,7 +5,7 @@
     "access": "public"
   },
   "description": "GitHub webhook events toolset for Node.js",
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "directories": {
     "lib": "lib",
     "test": "test"
@@ -19,6 +19,7 @@
     "@pika/pack": "^0.5.0",
     "@pika/plugin-build-node": "^0.9.2",
     "@pika/plugin-standard-pkg": "^0.9.2",
+    "@pika/plugin-ts-standard-pkg": "^0.9.2",
     "@types/debug": "^4.1.5",
     "@types/express": "^4.17.6",
     "@types/prettier": "^2.0.0",
@@ -39,8 +40,8 @@
     "build": "pika build",
     "coverage": "tap --coverage-report=html && open coverage/lcov-report/index.html",
     "generate-known-webhooks": "node pkg/dist-src/scripts/update-known-events.js",
-    "lint": "prettier --check 'src/**/*.{js,json}' 'test/**/*' index.d.ts README.md package.json",
-    "lint:fix": "prettier --write 'src/**/*.{js,json}' 'test/**/*' index.d.ts README.md package.json",
+    "lint": "prettier --check 'src/**/*.{ts,json}' 'test/**/*' index.d.ts README.md package.json",
+    "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'test/**/*' index.d.ts README.md package.json",
     "pretest": "npm run -s lint; npm run build -s",
     "test": "tap --100 --coverage 'test/**/*-test.js'",
     "generate-types": "node pkg/dist-src/scripts/generate-types.js",
@@ -53,10 +54,7 @@
   "@pika/pack": {
     "pipeline": [
       [
-        "@pika/plugin-standard-pkg"
-      ],
-      [
-        "@pika/plugin-build-node"
+        "@pika/plugin-ts-standard-pkg"
       ]
     ]
   },

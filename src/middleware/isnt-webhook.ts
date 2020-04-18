@@ -1,6 +1,6 @@
 // Example webhook event request:
 // https://developer.github.com/webhooks/#example-delivery
-import { Request } from 'express';
+import { Request } from "express";
 
 export function isntWebhook(request: Request, options: { path?: string }) {
   // GitHub sends all events as POST requests
