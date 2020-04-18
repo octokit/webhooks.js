@@ -6,9 +6,7 @@ const { promisify } = require("util");
 const simple = require("simple-mock");
 const Tap = require("tap");
 
-const {
-  createWebhooksApi
-} = require("../../pkg/dist-src/");
+const { createWebhooksApi } = require("../../pkg/dist-src/");
 const pushEventPayload = require("../fixtures/push-payload");
 
 const test = Tap.test;
@@ -32,7 +30,7 @@ test("initialised without options", (t) => {
 
 test("GET /", (t) => {
   const api = createWebhooksApi({
-    secret: "mysecret"
+    secret: "mysecret",
   });
   const server = http.createServer(api.middleware);
 
@@ -61,7 +59,7 @@ test("POST / with push event payload", (t) => {
   t.plan(2);
 
   const api = createWebhooksApi({
-    secret: "mysecret"
+    secret: "mysecret",
   });
   const server = http.createServer(api.middleware);
 
@@ -98,7 +96,7 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
   t.plan(2);
 
   const api = createWebhooksApi({
-    secret: "mysecret"
+    secret: "mysecret",
   });
   const dataChunks = [];
   const server = http.createServer((req, res) => {
@@ -145,7 +143,7 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
 
 test("POST / with push event payload (no signature)", (t) => {
   const api = createWebhooksApi({
-    secret: "mysecret"
+    secret: "mysecret",
   });
   const server = http.createServer(api.middleware);
   const errorHandler = simple.spy();
@@ -180,7 +178,7 @@ test("POST / with push event payload (no signature)", (t) => {
 
 test("POST / with push event payload (invalid signature)", (t) => {
   const api = createWebhooksApi({
-    secret: "mysecret"
+    secret: "mysecret",
   });
   const server = http.createServer(api.middleware);
   const errorHandler = simple.spy();
@@ -216,7 +214,7 @@ test("POST / with push event payload (invalid signature)", (t) => {
 
 test("POST / with hook error", (t) => {
   const api = createWebhooksApi({
-    secret: "mysecret"
+    secret: "mysecret",
   });
   const server = http.createServer(api.middleware);
 
