@@ -1,11 +1,8 @@
-module.exports = verify;
+import crypto from "crypto";
+import { Buffer } from "buffer";
+import sign from "../sign";
 
-const crypto = require("crypto");
-const Buffer = require("buffer").Buffer;
-
-const sign = require("../sign");
-
-function verify(secret, eventPayload, signature) {
+export function verify(secret, eventPayload, signature) {
   if (!secret || !eventPayload || !signature) {
     throw new TypeError("secret, eventPayload & signature required");
   }
