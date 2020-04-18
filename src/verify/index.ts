@@ -2,7 +2,7 @@ import { timingSafeEqual } from "crypto";
 import { Buffer } from "buffer";
 import { sign } from "../sign";
 
-export function verify(secret, eventPayload, signature) {
+export function verify(secret: string, eventPayload: object, signature: string) {
   if (!secret || !eventPayload || !signature) {
     throw new TypeError("secret, eventPayload & signature required");
   }
