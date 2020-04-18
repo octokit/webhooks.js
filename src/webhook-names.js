@@ -1,4 +1,4 @@
-[
+module.exports = [
   "*",
   "check_run",
   "check_run.completed",
@@ -174,5 +174,5 @@
   "team.removed_from_repository",
   "team_add",
   "watch",
-  "watch.started"
-]
+  "watch.started",
+];

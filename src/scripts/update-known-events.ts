@@ -14,9 +14,11 @@ const newWebhookNames = WEBOOOKS.reduce(
   },
   ["*", "error"]
 ).sort();
+
 writeFileSync(
-  "lib/webhook-names.json",
-  JSON.stringify([...newWebhookNames], null, 2) + "\n"
+  "src/webhook-names.js",
+  `module.exports = ${JSON.stringify([...newWebhookNames], null, 2)}
+  `
 );
 
 // update README.md

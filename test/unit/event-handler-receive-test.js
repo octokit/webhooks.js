@@ -1,6 +1,6 @@
 const test = require("tap").test;
 
-const receive = require("../../src/event-handler/receive");
+const receive = require("../../pkg/dist-src/event-handler/receive");
 
 const state = {
   secret: "mysecret",
