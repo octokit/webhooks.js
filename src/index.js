@@ -1,12 +1,10 @@
-module.exports = createWebhooksApi;
+import createEventHandler from "./event-handler";
+import middleware from "./middleware/middleware";
+import sign from "./sign";
+import verify from "./verify";
+import verifyAndReceive from "./middleware/verify-and-receive";
 
-const createEventHandler = require("./event-handler");
-const middleware = require("./middleware/middleware");
-const sign = require("./sign");
-const verify = require("./verify");
-const verifyAndReceive = require("./middleware/verify-and-receive");
-
-function createWebhooksApi(options) {
+export function createWebhooksApi(options) {
   if (!options || !options.secret) {
     throw new Error("options.secret required");
   }
