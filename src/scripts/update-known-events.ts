@@ -2,8 +2,8 @@ import { readFileSync, writeFileSync } from "fs";
 import Table from "table-builder";
 import WEBOOOKS from "@octokit/webhooks-definitions/index.json";
 import { WebhookDefinition } from "@octokit/webhooks-definitions";
+import { generateFile } from './generate-file';
 
-// update lib/webhook-names.json
 const newWebhookNames = WEBOOOKS.reduce(
   (list: string[], event: WebhookDefinition) => {
     list.push(
@@ -15,10 +15,9 @@ const newWebhookNames = WEBOOOKS.reduce(
   ["*", "error"]
 ).sort();
 
-writeFileSync(
+generateFile(
   "src/webhook-names.js",
-  `module.exports = ${JSON.stringify([...newWebhookNames], null, 2)}
-  `
+  `export const webhookNames = ${JSON.stringify([...newWebhookNames], null, 2)}`
 );
 
 // update README.md

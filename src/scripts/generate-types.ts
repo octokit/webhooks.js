@@ -4,6 +4,7 @@ import prettier from "prettier";
 import TypeWriter from "@gimenete/type-writer";
 import webhooks from "@octokit/webhooks-definitions/index.json";
 import { WebhookDefinition } from "@octokit/webhooks-definitions";
+import { generateFile } from './generate-file';
 
 const signatures: string[] = [];
 const eventEnums: string[] = [];
@@ -57,11 +58,6 @@ webhooks.forEach(({ name, actions, examples }: WebhookDefinition) => {
 
   eventEnums.push(generateEventEnum(event, name, actions));
 });
-
-const generateFile = (filepath: string, content: string) => {
-  const output = prettier.format(content, { filepath });
-  fs.writeFileSync(filepath, output);
-};
 
 const definitionIndex = `
 ${doNotEditThisFileDisclaimer}
