@@ -1,6 +1,4 @@
-module.exports = getPayload;
-
-function getPayload(request) {
+export function getPayload(request) {
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
   if (request.body) {

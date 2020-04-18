@@ -1,8 +1,8 @@
 import createEventHandler from "./event-handler";
-import middleware from "./middleware/middleware";
+import { middleware } from "./middleware/middleware";
 import { sign } from "./sign";
 import { verify } from "./verify";
-import verifyAndReceive from "./middleware/verify-and-receive";
+import { verifyAndReceive } from "./middleware/verify-and-receive";
 
 export function createWebhooksApi(options) {
   if (!options || !options.secret) {

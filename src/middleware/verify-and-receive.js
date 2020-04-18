@@ -1,8 +1,6 @@
-module.exports = verifyAndReceive;
+import { verify } from "../verify";
 
-const { verify } = require("../verify");
-
-function verifyAndReceive(state, event) {
+export function verifyAndReceive(state, event) {
   const matchesSignature = verify(state.secret, event.payload, event.signature);
 
   if (!matchesSignature) {

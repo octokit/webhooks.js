@@ -1,11 +1,7 @@
-"use strict";
+import createEventHandler from "../event-handler";
+import { middleware } from "./middleware";
 
-module.exports = createMiddleware;
-
-const createEventHandler = require("../event-handler");
-const middleware = require("./middleware");
-
-function createMiddleware(options) {
+export function createMiddleware(options) {
   if (!options || !options.secret) {
     throw new Error("options.secret required");
   }

@@ -1,5 +1,3 @@
-module.exports = getMissingHeaders;
-
 const WEBHOOK_HEADERS = [
   "x-github-event",
   "x-hub-signature",
@@ -7,6 +5,6 @@ const WEBHOOK_HEADERS = [
 ];
 
 // https://developer.github.com/webhooks/#delivery-headers
-function getMissingHeaders(request) {
+export function getMissingHeaders(request) {
   return WEBHOOK_HEADERS.filter((header) => !(header in request.headers));
 }

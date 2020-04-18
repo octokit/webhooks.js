@@ -1,12 +1,12 @@
-module.exports = middleware;
+import { isntWebhook } from "./isnt-webhook";
+import { getMissingHeaders } from "./get-missing-headers";
+import { getPayload } from "./get-payload";
+import { verifyAndReceive } from "./verify-and-receive";
+import debug from "debug";
 
-const isntWebhook = require("./isnt-webhook");
-const getMissingHeaders = require("./get-missing-headers");
-const getPayload = require("./get-payload");
-const verifyAndReceive = require("./verify-and-receive");
+const debugWebhooks = debug("webhooks:receiver")
 
-const debug = require("debug")("webhooks:receiver");
-function middleware(state, request, response, next) {
+export function middleware(state, request, response, next) {
   if (isntWebhook(request, { path: state.path })) {
     // the next callback is set when used as an express middleware. That allows
     // it to define custom routes like /my/custom/page while the webhooks are
@@ -17,7 +17,7 @@ function middleware(state, request, response, next) {
       return;
     }
 
-    debug(`ignored: ${request.method} ${request.url}`);
+    debugWebhooks(`ignored: ${request.method} ${request.url}`);
     response.statusCode = 404;
     response.end("Not found");
     return;
@@ -37,7 +37,7 @@ function middleware(state, request, response, next) {
   const signature = request.headers["x-hub-signature"];
   const id = request.headers["x-github-delivery"];
 
-  debug(`${eventName} event received (id: ${id})`);
+  debugWebhooks(`${eventName} event received (id: ${id})`);
 
   return getPayload(request)
     .then((payload) => {

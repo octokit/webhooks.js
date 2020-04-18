@@ -1,8 +1,6 @@
-module.exports = isntWebhook;
-
 // Example webhook event request:
 // https://developer.github.com/webhooks/#example-delivery
-function isntWebhook(request, options) {
+export function isntWebhook(request, options) {
   // GitHub sends all events as POST requests
   if (request.method !== "POST") {
     return true;
