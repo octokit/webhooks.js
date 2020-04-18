@@ -1,6 +1,4 @@
-import fs from "fs";
 import { pascalCase } from "pascal-case";
-import prettier from "prettier";
 import TypeWriter from "@gimenete/type-writer";
 import webhooks from "@octokit/webhooks-definitions/index.json";
 import { WebhookDefinition } from "@octokit/webhooks-definitions";
