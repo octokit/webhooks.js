@@ -4,11 +4,11 @@ import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { Request, Response } from 'express';
-import { MiddlewareState } from "..";
+import { EventState } from "..";
 
 const debugWebhooks = debug("webhooks:receiver")
 
-export function middleware(state: MiddlewareState, request: Request, response: Response, next?: Function): Promise<void> | undefined {
+export function middleware(state: EventState, request: Request, response: Response, next?: Function): Promise<void> | undefined {
 
   if (isntWebhook(request, { path: state.path })) {
     // the next callback is set when used as an express middleware. That allows

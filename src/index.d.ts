@@ -1,4 +1,4 @@
-export interface MiddlewareEvent {
+export interface WebhookEvent {
 	id: string | string[] | undefined,
 	name: string | string[] | undefined,
 	payload: Payload,
@@ -9,17 +9,17 @@ type Payload = {
 	action: string
 }
 
-export interface MiddlewareOptions {
+export interface EventHandlerOptions {
 	path?: string,
 	secret?: string,
-	transform?: (value: MiddlewareEvent) => MiddlewareEvent | PromiseLike<MiddlewareEvent>
+	transform?: (value: WebhookEvent) => WebhookEvent | PromiseLike<WebhookEvent>
 }
 
 type Hooks = {
 	[key: string]: Function[]
 }
 
-export interface MiddlewareState extends MiddlewareOptions {
+export interface EventState extends EventHandlerOptions {
 	eventHandler?: any,
 	hooks: Hooks
 }

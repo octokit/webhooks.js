@@ -1,7 +1,7 @@
 import { verify } from "../verify";
-import { MiddlewareState, MiddlewareEvent } from "..";
+import { EventState, WebhookEvent } from "..";
 
-export function verifyAndReceive(state: MiddlewareState, event: MiddlewareEvent): any {
+export function verifyAndReceive(state: EventState, event: WebhookEvent): any {
   const matchesSignature = verify(state.secret, event.payload, event.signature);
 
   if (!matchesSignature) {

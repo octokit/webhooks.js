@@ -1,8 +1,8 @@
 import { wrapErrorHandler } from "./wrap-error-handler";
-import { MiddlewareEvent, MiddlewareState } from '..'
+import { WebhookEvent, EventState } from '..'
 
 // main handler function
-export function receiverHandle(state: MiddlewareState, event: MiddlewareEvent) {
+export function receiverHandle(state: EventState, event: WebhookEvent) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {

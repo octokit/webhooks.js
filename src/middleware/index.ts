@@ -1,13 +1,13 @@
 import { createEventHandler } from "../event-handler";
 import { middleware } from "./middleware";
-import { MiddlewareOptions, MiddlewareState } from "..";
+import { EventHandlerOptions, EventState } from "..";
 
-export function createMiddleware(options: MiddlewareOptions) {
+export function createMiddleware(options: EventHandlerOptions) {
   if (!options || !options.secret) {
     throw new Error("options.secret required");
   }
 
-  const state: MiddlewareState = {
+  const state: EventState = {
     eventHandler: createEventHandler(options),
     path: options.path || "/",
     secret: options.secret,

@@ -1,10 +1,10 @@
 import { receiverOn as on } from "./on";
 import { receiverHandle as receive } from "./receive";
 import { removeListener } from "./remove-listener";
-import { MiddlewareOptions, MiddlewareState } from '..';
+import { EventHandlerOptions, EventState } from '..';
 
-export function createEventHandler(options: MiddlewareOptions) {
-  const state: MiddlewareState = {
+export function createEventHandler(options: EventHandlerOptions) {
+  const state: EventState = {
     hooks: {},
   };
 
