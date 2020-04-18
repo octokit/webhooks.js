@@ -1,4 +1,6 @@
-export function getPayload(request) {
+import { Request } from 'express';
+
+export function getPayload(request: Request) {
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
   if (request.body) {
@@ -6,12 +8,11 @@ export function getPayload(request) {
   }
 
   return new Promise((resolve, reject) => {
-    const dataChunks = [];
+    let data = '';
 
     request.on("error", reject);
-    request.on("data", (chunk) => dataChunks.push(chunk));
+    request.on("data", (chunk) => data += chunk);
     request.on("end", () => {
-      const data = Buffer.concat(dataChunks).toString();
       try {
         resolve(JSON.parse(data));
       } catch (error) {

@@ -1,6 +1,7 @@
 import { verify } from "../verify";
+import { MiddlewareState, MiddlewareEvent } from "./index.d";
 
-export function verifyAndReceive(state, event) {
+export function verifyAndReceive(state: MiddlewareState, event: MiddlewareEvent): any {
   const matchesSignature = verify(state.secret, event.payload, event.signature);
 
   if (!matchesSignature) {
@@ -8,10 +9,7 @@ export function verifyAndReceive(state, event) {
       "signature does not match event payload and secret"
     );
 
-    error.event = event;
-    error.status = 400;
-
-    return state.eventHandler.receive(error);
+    return state.eventHandler.receive(Object.assign(error, { event, status: 400 }));
   }
 
   return state.eventHandler.receive({

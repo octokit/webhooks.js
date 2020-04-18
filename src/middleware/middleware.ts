@@ -3,17 +3,19 @@ import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
+import { Request, Response } from 'express';
+import { MiddlewareState } from "./index.d";
 
 const debugWebhooks = debug("webhooks:receiver")
 
-export function middleware(state, request, response, next) {
+export function middleware(state: MiddlewareState, request: Request, response: Response, next?: Function): Promise<void> | undefined {
 
   if (isntWebhook(request, { path: state.path })) {
     // the next callback is set when used as an express middleware. That allows
     // it to define custom routes like /my/custom/page while the webhooks are
     // expected to be sent to the / root path. Otherwise the root path would
     // match all requests and would make it impossible to define custom rooutes
-    if (typeof next === "function") {
+    if (next) {
       next();
       return;
     }

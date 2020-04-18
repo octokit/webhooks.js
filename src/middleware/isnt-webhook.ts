@@ -1,6 +1,8 @@
 // Example webhook event request:
 // https://developer.github.com/webhooks/#example-delivery
-export function isntWebhook(request, options) {
+import { Request } from 'express';
+
+export function isntWebhook(request: Request, options: { path?: string }) {
   // GitHub sends all events as POST requests
   if (request.method !== "POST") {
     return true;
@@ -9,7 +11,7 @@ export function isntWebhook(request, options) {
   // We must match the configured path to allow custom POST routes which include
   // the webhook route. For example if the webhook route is / then it would be
   // impossible to define a `POST /my/custom/app` route as the `POST /`.
-  if (request.url.split("?")[0] !== options.path) {
+  if (request.url?.split("?")[0] !== options.path) {
     return true;
   }
 
