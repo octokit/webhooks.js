@@ -3,7 +3,7 @@ import { receiverHandle as receive } from "../../pkg/dist-src/event-handler/rece
 
 const state = {
   secret: "mysecret",
-  hooks: [],
+  hooks: {},
 };
 
 test("options: none", (t) => {

@@ -1,6 +1,7 @@
-const { webhookNames } = require("../webhook-names.js");
+import { webhookNames } from "../webhook-names.js";
+import { MiddlewareState } from '..'
 
-export function receiverOn(state, webhookNameOrNames, handler) {
+export function receiverOn(state: MiddlewareState, webhookNameOrNames: string | string[] , handler: Function) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>
       receiverOn(state, webhookName, handler)

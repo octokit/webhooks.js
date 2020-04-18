@@ -1,4 +1,6 @@
-export function removeListener(state, webhookNameOrNames, handler) {
+import { MiddlewareState } from '..'
+
+export function removeListener(state: MiddlewareState, webhookNameOrNames: string | string[], handler: Function) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>
       removeListener(state, webhookName, handler)

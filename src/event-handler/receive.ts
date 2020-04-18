@@ -1,16 +1,17 @@
 import { wrapErrorHandler } from "./wrap-error-handler";
+import { MiddlewareEvent, MiddlewareState } from '..'
 
 // main handler function
-export function receiverHandle(state, event) {
+export function receiverHandle(state: MiddlewareState, event: MiddlewareEvent) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {
-    errorHandlers.forEach((handler) => wrapErrorHandler(handler, event));
+    errorHandlers.forEach((handler: Function) => wrapErrorHandler(handler, event));
 
     return Promise.reject(event);
   }
 
-  if (!event || !event.name) {
+  if (!event || !event.name || Array.isArray(event.name)) {
     throw new Error("Event name not passed");
   }
 
@@ -19,20 +20,20 @@ export function receiverHandle(state, event) {
   }
 
   // flatten arrays of event listeners and remove undefined values
-  const hooks = []
-    .concat(
+  const hooks = [
       state.hooks[`${event.name}.${event.payload.action}`],
       state.hooks[event.name],
       state.hooks["*"]
-    )
-    .filter(Boolean);
+    ]
+    .filter(Boolean)
+    .flat();
 
   if (hooks.length === 0) {
     return Promise.resolve();
   }
 
-  const errors = [];
-  const promises = hooks.map((handler) => {
+  const errors: Error[] = [];
+  const promises = hooks.map((handler: Function) => {
     let promise = Promise.resolve(event);
 
     if (state.transform) {
@@ -56,8 +57,7 @@ export function receiverHandle(state, event) {
       errors.forEach(wrapErrorHandler.bind(null, handler))
     );
 
-    const error = new Error("Webhook handler error");
-    error.errors = errors;
+    const error = Object.assign(new Error("Webhook handler error"), { errors });
 
     throw error;
   });

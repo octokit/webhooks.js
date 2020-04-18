@@ -1,5 +1,5 @@
 import { verify } from "../verify";
-import { MiddlewareState, MiddlewareEvent } from "./index.d";
+import { MiddlewareState, MiddlewareEvent } from "..";
 
 export function verifyAndReceive(state: MiddlewareState, event: MiddlewareEvent): any {
   const matchesSignature = verify(state.secret, event.payload, event.signature);

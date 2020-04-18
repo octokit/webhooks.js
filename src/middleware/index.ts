@@ -1,7 +1,6 @@
 import { createEventHandler } from "../event-handler";
 import { middleware } from "./middleware";
-import { MiddlewareOptions, MiddlewareState } from "./index.d";
-import { Request } from 'express';
+import { MiddlewareOptions, MiddlewareState } from "..";
 
 export function createMiddleware(options: MiddlewareOptions) {
   if (!options || !options.secret) {
@@ -12,6 +11,7 @@ export function createMiddleware(options: MiddlewareOptions) {
     eventHandler: createEventHandler(options),
     path: options.path || "/",
     secret: options.secret,
+    hooks: {}
   };
 
   const api: any = middleware.bind(null, state);

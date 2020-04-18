@@ -4,7 +4,7 @@ import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { Request, Response } from 'express';
-import { MiddlewareState } from "./index.d";
+import { MiddlewareState } from "..";
 
 const debugWebhooks = debug("webhooks:receiver")
 
