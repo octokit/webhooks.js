@@ -1,4 +1,4 @@
-module.exports = [
+export const webhookNames = [
   "*",
   "check_run",
   "check_run.completed",
