@@ -1,6 +1,6 @@
 import { createHmac } from "crypto";
 
-export function sign(secret, payload) {
+export function sign(secret: string, payload: string | object) {
   if (!secret || !payload) {
     throw new TypeError("secret & payload required");
   }
@@ -12,7 +12,7 @@ export function sign(secret, payload) {
   );
 }
 
-function toNormalizedJsonString(payload) {
+function toNormalizedJsonString(payload: object) {
   return JSON.stringify(payload).replace(/[^\\]\\u[\da-f]{4}/g, (s) => {
     return s.substr(0, 3) + s.substr(3).toUpperCase();
   });
