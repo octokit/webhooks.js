@@ -1,6 +1,6 @@
 import { timingSafeEqual } from "crypto";
 import { Buffer } from "buffer";
-import { sign } from "../sign";
+import { sign } from "../sign/index";
 
 export function verify(
   secret?: string,

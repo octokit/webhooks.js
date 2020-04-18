@@ -1,4 +1,4 @@
-import { verify } from "../verify";
+import { verify } from "../verify/index";
 import { EventState, WebhookEvent } from "../index.d";
 
 export function verifyAndReceive(state: EventState, event: WebhookEvent): any {
