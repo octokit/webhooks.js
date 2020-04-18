@@ -1,6 +1,6 @@
 import createEventHandler from "./event-handler";
 import middleware from "./middleware/middleware";
-import sign from "./sign";
+import { sign } from "./sign";
 import { verify } from "./verify";
 import verifyAndReceive from "./middleware/verify-and-receive";
 

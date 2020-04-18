@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { Buffer } from "buffer";
-import sign from "../sign";
+import { sign } from "../sign";
 
 export function verify(secret, eventPayload, signature) {
   if (!secret || !eventPayload || !signature) {

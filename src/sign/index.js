@@ -1,8 +1,6 @@
-module.exports = sign;
+import crypto from "crypto";
 
-const crypto = require("crypto");
-
-function sign(secret, payload) {
+export function sign(secret, payload) {
   if (!secret || !payload) {
     throw new TypeError("secret & payload required");
   }
