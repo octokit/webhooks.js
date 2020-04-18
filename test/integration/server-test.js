@@ -1,13 +1,11 @@
-const http = require("http");
-
-const axios = require("axios");
-const getPort = require("get-port");
-const { promisify } = require("util");
-const simple = require("simple-mock");
-const Tap = require("tap");
-
-const { createWebhooksApi } = require("../../pkg/dist-src/");
-const pushEventPayload = require("../fixtures/push-payload");
+import http from "http";
+import axios from "axios";
+import getPort from "get-port";
+import { promisify } from "util";
+import simple from "simple-mock";
+import Tap from "tap";
+import { createWebhooksApi } from "../../pkg/dist-src/";
+import pushEventPayload from "../fixtures/push-payload.json";
 
 const test = Tap.test;
 const beforeEach = Tap.beforeEach;

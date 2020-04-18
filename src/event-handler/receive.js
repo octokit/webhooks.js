@@ -1,11 +1,7 @@
-"use strict";
-
-module.exports = receiverHandle;
-
-const wrapErrorHandler = require("./wrap-error-handler");
+import { wrapErrorHandler } from "./wrap-error-handler";
 
 // main handler function
-function receiverHandle(state, event) {
+export function receiverHandle(state, event) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {

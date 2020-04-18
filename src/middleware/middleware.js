@@ -2,11 +2,12 @@ import { isntWebhook } from "./isnt-webhook";
 import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
-import debug from "debug";
+import { debug } from "debug";
 
 const debugWebhooks = debug("webhooks:receiver")
 
 export function middleware(state, request, response, next) {
+
   if (isntWebhook(request, { path: state.path })) {
     // the next callback is set when used as an express middleware. That allows
     // it to define custom routes like /my/custom/page while the webhooks are

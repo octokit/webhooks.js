@@ -1,4 +1,4 @@
-import createEventHandler from "./event-handler";
+import { createEventHandler } from "./event-handler";
 import { middleware } from "./middleware/middleware";
 import { sign } from "./sign";
 import { verify } from "./verify";

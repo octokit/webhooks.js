@@ -1,4 +1,4 @@
-const test = require("tap").test;
+import { test } from "tap";
 
 test("@octokit/webhooks", (t) => {
   const { createWebhooksApi } = require("../../pkg/dist-src");
@@ -20,7 +20,7 @@ test("@octokit/webhooks", (t) => {
 
 test('require("@octokit/webhooks/sign")', (t) => {
   t.doesNotThrow(() => {
-    require("../../src/sign");
+    require("../../pkg/dist-src/sign");
   });
 
   t.end();
@@ -28,7 +28,7 @@ test('require("@octokit/webhooks/sign")', (t) => {
 
 test('require("@octokit/webhooks/verify")', (t) => {
   t.doesNotThrow(() => {
-    require("../../src/verify");
+    require("../../pkg/dist-src/verify");
   });
 
   t.end();
@@ -36,7 +36,7 @@ test('require("@octokit/webhooks/verify")', (t) => {
 
 test('require("@octokit/webhooks/event-handler")', (t) => {
   t.doesNotThrow(() => {
-    require("../../src/event-handler");
+    require("../../pkg/dist-src/event-handler");
   });
 
   t.end();
@@ -44,7 +44,7 @@ test('require("@octokit/webhooks/event-handler")', (t) => {
 
 test('require("@octokit/webhooks/middleware")', (t) => {
   t.doesNotThrow(() => {
-    require("../../src/middleware");
+    require("../../pkg/dist-src/middleware");
   });
 
   t.end();

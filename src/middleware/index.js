@@ -1,4 +1,4 @@
-import createEventHandler from "../event-handler";
+import { createEventHandler } from "../event-handler";
 import { middleware } from "./middleware";
 
 export function createMiddleware(options) {

@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import { timingSafeEqual } from "crypto";
 import { Buffer } from "buffer";
 import { sign } from "../sign";
 
@@ -15,9 +15,4 @@ export function verify(secret, eventPayload, signature) {
   }
 
   return timingSafeEqual(signatureBuffer, verificationBuffer);
-}
-
-/* istanbul ignore next */
-function timingSafeEqual(signatureBuffer, verificationBuffer) {
-  return crypto.timingSafeEqual(signatureBuffer, verificationBuffer);
 }

@@ -1,6 +1,5 @@
-const test = require("tap").test;
-
-const receive = require("../../pkg/dist-src/event-handler/receive");
+import { test } from "tap";
+import { receiverHandle as receive } from "../../pkg/dist-src/event-handler/receive";
 
 const state = {
   secret: "mysecret",

@@ -1,10 +1,8 @@
-module.exports = createEventHandler;
+import { receiverOn as on } from "./on";
+import { receiverHandle as receive } from "./receive";
+import { removeListener } from "./remove-listener";
 
-const on = require("./on");
-const receive = require("./receive");
-const removeListener = require("./remove-listener");
-
-function createEventHandler(options) {
+export function createEventHandler(options) {
   const state = {
     hooks: {},
   };

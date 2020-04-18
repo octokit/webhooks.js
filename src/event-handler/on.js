@@ -1,8 +1,6 @@
-module.exports = receiverOn;
-
 const { webhookNames } = require("../webhook-names.js");
 
-function receiverOn(state, webhookNameOrNames, handler) {
+export function receiverOn(state, webhookNameOrNames, handler) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>
       receiverOn(state, webhookName, handler)

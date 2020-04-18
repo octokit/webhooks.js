@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import { createHmac } from "crypto";
 
 export function sign(secret, payload) {
   if (!secret || !payload) {
@@ -8,7 +8,7 @@ export function sign(secret, payload) {
   payload =
     typeof payload === "string" ? payload : toNormalizedJsonString(payload);
   return (
-    "sha1=" + crypto.createHmac("sha1", secret).update(payload).digest("hex")
+    "sha1=" + createHmac("sha1", secret).update(payload).digest("hex")
   );
 }
 
