@@ -8,13 +8,9 @@
 		"removeComments": true,
 		"resolveJsonModule": true,
 		"strict": true,
-		"target": "es2018"
+		"target": "es2020",
 	},
 	"include": [
-		"event-handler/**/*",
-		"middleware/**/*",
-		"scripts/**/*",
-		"sign/**/*",
-		"verify/**/*"
+		"src/**/*"
 	]
 }
