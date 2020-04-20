@@ -37,7 +37,7 @@
   "scripts": {
     "build": "pika build",
     "coverage": "tap --coverage-report=html && open coverage/lcov-report/index.html",
-    "generate-known-webhooks": "node --experimental-modules pkg/dist-src/scripts/update-known-events.js",
+    "generate-known-webhooks": "node pkg/dist-src/scripts/update-known-events.js",
     "lint": "prettier --check 'src/**/*.{ts,json}' 'test/**/*' index.d.ts README.md package.json",
     "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'test/**/*' index.d.ts README.md package.json",
     "pretest": "npm run -s lint; npm run build -s",
