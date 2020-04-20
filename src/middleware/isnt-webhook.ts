@@ -4,7 +4,7 @@ import { Request } from "express";
 
 export function isntWebhook(request: Request, options: { path?: string }) {
   // GitHub sends all events as POST requests
-  if (request.method !== "POST" || !request.url) {
+  if (request.method !== "POST") {
     return true;
   }
 
