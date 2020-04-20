@@ -3,7 +3,7 @@
 If you only need the middleware with access to the `.sign()`, `.verify()` or the receiver’s `.receive()` method, you can use the webhooks middleware directly
 
 ```js
-import { createMiddleware } from '@octokit/webhooks/middleware'
+import { createMiddleware } from '@octokit/webhooks'
 const middleware = createMiddleware({
   secret: 'mysecret',
   path: '/github-webhooks'

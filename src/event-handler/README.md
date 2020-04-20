@@ -5,7 +5,7 @@ If you implement the route to receive webhook events from GitHub yourself then y
 ## Example
 
 ```js
-const EventHandler = require('@octokit/webhooks/event-handler')
+const EventHandler = require('@octokit/webhooks')
 const eventHandler = new EventHandler({
   async transform (event) {
     // optionally transform passed event before handlers are called
