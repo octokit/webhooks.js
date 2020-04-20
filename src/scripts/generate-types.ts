@@ -59,15 +59,9 @@ webhooks.forEach(({ name, actions, examples }: WebhookDefinition) => {
 
 const definitionIndex = `
 ${doNotEditThisFileDisclaimer}
-import { EventNames } from './lib/generated/event-names'
-import { EventPayloads } from './lib/generated/event-payloads'
-import { Webhooks } from './lib/generated/api'
-
-export {
-  EventNames,
-  EventPayloads,
-  Webhooks
-}
+export { EventNames } from './lib/generated/event-names'
+export { EventPayloads } from './lib/generated/event-payloads'
+export { Webhooks } from './lib/generated/api'
 `;
 
 generateFile("index.d.ts", definitionIndex);
