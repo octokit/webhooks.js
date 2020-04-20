@@ -1,11 +1,12 @@
-import { createEventHandler } from "./event-handler/index";
+import { createEventHandler } from "./event-handler";
+import { createMiddleware } from "./middleware";
 import { middleware } from "./middleware/middleware";
-import { sign } from "./sign/index";
-import { verify } from "./verify/index";
+import { sign } from "./sign";
+import { verify } from "./verify";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
 import { EventHandlerOptions, EventState } from "./types";
 
-export function createWebhooksApi(options: EventHandlerOptions) {
+function createWebhooksApi(options: EventHandlerOptions) {
   if (!options || !options.secret) {
     throw new Error("options.secret required");
   }
@@ -26,4 +27,12 @@ export function createWebhooksApi(options: EventHandlerOptions) {
     middleware: middleware.bind(null, state),
     verifyAndReceive: verifyAndReceive.bind(null, state),
   };
+}
+
+export {
+  createEventHandler,
+  createMiddleware,
+  createWebhooksApi,
+  sign,
+  verify
 }
