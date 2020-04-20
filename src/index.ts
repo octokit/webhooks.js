@@ -3,7 +3,7 @@ import { middleware } from "./middleware/middleware";
 import { sign } from "./sign/index";
 import { verify } from "./verify/index";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
-import { EventHandlerOptions, EventState } from "./index.d";
+import { EventHandlerOptions, EventState } from "./types";
 
 export function createWebhooksApi(options: EventHandlerOptions) {
   if (!options || !options.secret) {

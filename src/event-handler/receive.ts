@@ -1,5 +1,5 @@
 import { wrapErrorHandler } from "./wrap-error-handler";
-import { WebhookEvent, EventState } from "../index.d";
+import { WebhookEvent, EventState } from "../types";
 
 // main handler function
 export function receiverHandle(state: EventState, event: WebhookEvent) {

@@ -1,4 +1,4 @@
-import { EventState } from "../index.d";
+import { EventState } from "../types";
 
 export function removeListener(
   state: EventState,

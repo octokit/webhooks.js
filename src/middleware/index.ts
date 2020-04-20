@@ -1,6 +1,6 @@
 import { createEventHandler } from "../event-handler";
 import { middleware } from "./middleware";
-import { EventHandlerOptions, EventState } from "../index.d";
+import { EventHandlerOptions, EventState } from "../types";
 
 export function createMiddleware(options: EventHandlerOptions) {
   if (!options || !options.secret) {

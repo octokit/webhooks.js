@@ -1,7 +1,7 @@
 import { receiverOn as on } from "./on";
 import { receiverHandle as receive } from "./receive";
 import { removeListener } from "./remove-listener";
-import { EventHandlerOptions, EventState } from "../index.d";
+import { EventHandlerOptions, EventState } from "../types";
 
 export function createEventHandler(options: EventHandlerOptions) {
   const state: EventState = {
