@@ -18,33 +18,33 @@ test("@octokit/webhooks", (t) => {
   t.end();
 });
 
-test('require("@octokit/webhooks/sign")', (t) => {
+test('require("@octokit/webhooks").sign', (t) => {
   t.doesNotThrow(() => {
-    require("../../pkg/dist-src/sign");
+    require("../../pkg/dist-src").sign;
   });
 
   t.end();
 });
 
-test('require("@octokit/webhooks/verify")', (t) => {
+test('require("@octokit/webhooks").verify', (t) => {
   t.doesNotThrow(() => {
-    require("../../pkg/dist-src/verify");
+    require("../../pkg/dist-src/").verify;
   });
 
   t.end();
 });
 
-test('require("@octokit/webhooks/event-handler")', (t) => {
+test('require("@octokit/webhooks").createEventHandler', (t) => {
   t.doesNotThrow(() => {
-    require("../../pkg/dist-src/event-handler");
+    require("../../pkg/dist-src").createEventHandler;
   });
 
   t.end();
 });
 
-test('require("@octokit/webhooks/middleware")', (t) => {
+test('require("@octokit/webhooks").createMiddleware', (t) => {
   t.doesNotThrow(() => {
-    require("../../pkg/dist-src/middleware");
+    require("../../pkg/dist-src").createMiddleware;
   });
 
   t.end();
