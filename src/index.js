@@ -1,12 +1,17 @@
-module.exports = createWebhooksApi;
+const { deprecate } = require("util");
 
-const createEventHandler = require("./event-handler");
+module.exports = deprecate(
+  createWebhooksApi,
+  "src/index.js is deprecated. Use lib/index.js instead."
+);
+
+const { createEventHandler } = require("./event-handler");
 const middleware = require("./middleware/middleware");
-const sign = require("./sign");
+const { sign } = require("./sign");
 const verify = require("./verify");
 const verifyAndReceive = require("./middleware/verify-and-receive");
 
-function createWebhooksApi(options) {
+export function createWebhooksApi(options) {
   if (!options || !options.secret) {
     throw new Error("options.secret required");
   }

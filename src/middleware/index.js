@@ -1,11 +1,16 @@
 "use strict";
 
-module.exports = createMiddleware;
+const { deprecate } = require("util");
 
-const createEventHandler = require("../event-handler");
+module.exports = deprecate(
+  createMiddleware,
+  "src/event-handler/index.js is deprecated. Use lib/index.js instead."
+);
+
+const { createEventHandler } = require("../event-handler");
 const middleware = require("./middleware");
 
-function createMiddleware(options) {
+export function createMiddleware(options) {
   if (!options || !options.secret) {
     throw new Error("options.secret required");
   }

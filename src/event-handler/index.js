@@ -1,10 +1,15 @@
-module.exports = createEventHandler;
+const { deprecate } = require("util");
+
+module.exports = deprecate(
+  createEventHandler,
+  "src/event-handler/index.js is deprecated. Use lib/index.js instead."
+);
 
 const on = require("./on");
 const receive = require("./receive");
 const removeListener = require("./remove-listener");
 
-function createEventHandler(options) {
+export function createEventHandler(options) {
   const state = {
     hooks: {},
   };

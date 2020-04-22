@@ -1,11 +1,16 @@
-module.exports = verify;
+const { deprecate } = require("util");
+
+module.exports = deprecate(
+  verify,
+  "src/verify/index.js is deprecated. Use lib/index.js instead."
+);
 
 const crypto = require("crypto");
 const Buffer = require("buffer").Buffer;
 
-const sign = require("../sign");
+const { sign } = require("../sign");
 
-function verify(secret, eventPayload, signature) {
+export function verify(secret, eventPayload, signature) {
   if (!secret || !eventPayload || !signature) {
     throw new TypeError("secret, eventPayload & signature required");
   }

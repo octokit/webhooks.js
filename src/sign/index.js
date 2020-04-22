@@ -1,8 +1,13 @@
-module.exports = sign;
+const { deprecate } = require("util");
+
+module.exports = deprecate(
+  sign,
+  "src/sign/index.js is deprecated. Use lib/index.js instead."
+);
 
 const crypto = require("crypto");
 
-function sign(secret, payload) {
+export function sign(secret, payload) {
   if (!secret || !payload) {
     throw new TypeError("secret & payload required");
   }
