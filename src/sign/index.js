@@ -2,7 +2,7 @@ const { deprecate } = require("util");
 
 module.exports = deprecate(
   sign,
-  "src/sign/index.js is deprecated. Use lib/index.js instead."
+  "const sign = require('@octokit/webhooks/sign') is deprecated. Use const { sign } = require('@octokit/webhooks')"
 );
 
 const crypto = require("crypto");

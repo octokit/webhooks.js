@@ -2,7 +2,7 @@ const { deprecate } = require("util");
 
 module.exports = deprecate(
   createWebhooksApi,
-  "src/index.js is deprecated. Use lib/index.js instead."
+  "const createWebhooksApi = require('@octokit/webhooks') is deprecated. Use const { createWebhooksApi } = require('@octokit/webhooks')"
 );
 
 const { createEventHandler } = require("./event-handler");

@@ -4,7 +4,7 @@ const { deprecate } = require("util");
 
 module.exports = deprecate(
   createMiddleware,
-  "src/middleware/index.js is deprecated. Use lib/index.js instead."
+  "const createMiddleware = require('@octokit/webhooks/middleware') is deprecated. Use const { createMiddleware } = require('@octokit/webhooks')"
 );
 
 const { createEventHandler } = require("../event-handler");

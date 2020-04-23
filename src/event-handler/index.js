@@ -3,7 +3,7 @@
 const { deprecate } = require("util");
 module.exports = deprecate(
   createEventHandler,
-  "src/event-handler/index.js is deprecated. Use lib/index.js instead."
+  "const createEventHandler = require('@octokit/webhooks/event-handler') is deprecated. Use const { createEventHandler } = require('@octokit/webhooks')"
 );
 
 const on = require("./on");

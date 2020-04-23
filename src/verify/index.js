@@ -2,7 +2,7 @@ const { deprecate } = require("util");
 
 module.exports = deprecate(
   verify,
-  "src/verify/index.js is deprecated. Use lib/index.js instead."
+  "const verify = require('@octokit/webhooks/verify') is deprecated. Use const { verify } = require('@octokit/webhooks')"
 );
 
 const crypto = require("crypto");
