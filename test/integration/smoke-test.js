@@ -1,8 +1,8 @@
 const test = require("tap").test;
 
 test("@octokit/webhooks", (t) => {
-  const Webhooks = require("../..");
-  const api = new Webhooks({ secret: "mysecret" });
+  const { createWebhooksApi } = require("../../lib");
+  const api = createWebhooksApi({ secret: "mysecret" });
 
   t.type(api.sign, "function");
   t.type(api.verify, "function");
@@ -15,33 +15,37 @@ test("@octokit/webhooks", (t) => {
   t.end();
 });
 
-test('require("@octokit/webhooks/sign")', (t) => {
+test('require("@octokit/webhooks").sign', (t) => {
   t.doesNotThrow(() => {
-    require("../../src/sign");
+    const { sign } = require("../../lib");
+    sign('1234', {});
   });
 
   t.end();
 });
 
-test('require("@octokit/webhooks/verify")', (t) => {
+test('require("@octokit/webhooks").verify', (t) => {
   t.doesNotThrow(() => {
-    require("../../src/verify");
+    const { verify } = require("../../lib");
+    verify('1234', {}, 'randomSignature')
   });
 
   t.end();
 });
 
-test('require("@octokit/webhooks/event-handler")', (t) => {
+test('require("@octokit/webhooks").createEventHandler', (t) => {
   t.doesNotThrow(() => {
-    require("../../src/event-handler");
+    const { createEventHandler } = require("../../lib");
+    createEventHandler();
   });
 
   t.end();
 });
 
-test('require("@octokit/webhooks/middleware")', (t) => {
+test('require("@octokit/webhooks).createMiddleware")', (t) => {
   t.doesNotThrow(() => {
-    require("../../src/middleware");
+    const { createMiddleware } = require("../../lib");
+    createMiddleware({ secret: '1234' })
   });
 
   t.end();
