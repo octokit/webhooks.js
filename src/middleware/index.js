@@ -4,13 +4,13 @@ const { deprecate } = require("util");
 
 module.exports = deprecate(
   createMiddleware,
-  "src/event-handler/index.js is deprecated. Use lib/index.js instead."
+  "src/middleware/index.js is deprecated. Use lib/index.js instead."
 );
 
 const { createEventHandler } = require("../event-handler");
 const middleware = require("./middleware");
 
-export function createMiddleware(options) {
+function createMiddleware(options) {
   if (!options || !options.secret) {
     throw new Error("options.secret required");
   }
@@ -28,3 +28,5 @@ export function createMiddleware(options) {
 
   return api;
 }
+
+module.exports.createMiddleware = createMiddleware;

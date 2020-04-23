@@ -10,7 +10,7 @@ const Buffer = require("buffer").Buffer;
 
 const { sign } = require("../sign");
 
-export function verify(secret, eventPayload, signature) {
+function verify(secret, eventPayload, signature) {
   if (!secret || !eventPayload || !signature) {
     throw new TypeError("secret, eventPayload & signature required");
   }
@@ -29,3 +29,5 @@ export function verify(secret, eventPayload, signature) {
 function timingSafeEqual(signatureBuffer, verificationBuffer) {
   return crypto.timingSafeEqual(signatureBuffer, verificationBuffer);
 }
+
+module.exports.verify = verify;

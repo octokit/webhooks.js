@@ -7,7 +7,7 @@ module.exports = deprecate(
 
 const crypto = require("crypto");
 
-export function sign(secret, payload) {
+function sign(secret, payload) {
   if (!secret || !payload) {
     throw new TypeError("secret & payload required");
   }
@@ -24,3 +24,5 @@ function toNormalizedJsonString(payload) {
     return s.substr(0, 3) + s.substr(3).toUpperCase();
   });
 }
+
+module.exports.sign = sign;

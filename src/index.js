@@ -8,10 +8,10 @@ module.exports = deprecate(
 const { createEventHandler } = require("./event-handler");
 const middleware = require("./middleware/middleware");
 const { sign } = require("./sign");
-const verify = require("./verify");
+const { verify } = require("./verify");
 const verifyAndReceive = require("./middleware/verify-and-receive");
 
-export function createWebhooksApi(options) {
+function createWebhooksApi(options) {
   if (!options || !options.secret) {
     throw new Error("options.secret required");
   }
@@ -32,3 +32,5 @@ export function createWebhooksApi(options) {
     verifyAndReceive: verifyAndReceive.bind(null, state),
   };
 }
+
+module.exports.createWebhooksApi = createWebhooksApi;
