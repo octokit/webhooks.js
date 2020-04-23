@@ -18,7 +18,7 @@ test("@octokit/webhooks", (t) => {
 test('require("@octokit/webhooks").sign', (t) => {
   t.doesNotThrow(() => {
     const { sign } = require("../../lib");
-    sign('1234', {});
+    sign("1234", {});
   });
 
   t.end();
@@ -27,7 +27,7 @@ test('require("@octokit/webhooks").sign', (t) => {
 test('require("@octokit/webhooks").verify', (t) => {
   t.doesNotThrow(() => {
     const { verify } = require("../../lib");
-    verify('1234', {}, 'randomSignature')
+    verify("1234", {}, "randomSignature");
   });
 
   t.end();
@@ -45,7 +45,7 @@ test('require("@octokit/webhooks").createEventHandler', (t) => {
 test('require("@octokit/webhooks).createMiddleware")', (t) => {
   t.doesNotThrow(() => {
     const { createMiddleware } = require("../../lib");
-    createMiddleware({ secret: '1234' })
+    createMiddleware({ secret: "1234" });
   });
 
   t.end();

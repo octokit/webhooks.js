@@ -17,8 +17,8 @@ test("@octokit/webhooks", (t) => {
 
 test('require("@octokit/webhooks/sign")', (t) => {
   t.doesNotThrow(() => {
-	const sign = require("../../src/sign");
-	sign('1234', {})
+    const sign = require("../../src/sign");
+    sign("1234", {});
   });
 
   t.end();
@@ -26,8 +26,8 @@ test('require("@octokit/webhooks/sign")', (t) => {
 
 test('require("@octokit/webhooks/verify")', (t) => {
   t.doesNotThrow(() => {
-	const verify = require("../../src/verify");
-	verify('1234', {}, 'randomSignature')
+    const verify = require("../../src/verify");
+    verify("1234", {}, "randomSignature");
   });
 
   t.end();
@@ -35,8 +35,8 @@ test('require("@octokit/webhooks/verify")', (t) => {
 
 test('require("@octokit/webhooks/event-handler")', (t) => {
   t.doesNotThrow(() => {
-	const createEventHandler = require("../../src/event-handler");
-	createEventHandler()
+    const createEventHandler = require("../../src/event-handler");
+    createEventHandler();
   });
 
   t.end();
@@ -44,8 +44,8 @@ test('require("@octokit/webhooks/event-handler")', (t) => {
 
 test('require("@octokit/webhooks/middleware")', (t) => {
   t.doesNotThrow(() => {
-	const createMiddleware = require("../../src/middleware");
-	createMiddleware({ secret: '1234' })
+    const createMiddleware = require("../../src/middleware");
+    createMiddleware({ secret: "1234" });
   });
 
   t.end();
