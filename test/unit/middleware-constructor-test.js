@@ -1,8 +1,8 @@
 const test = require("tap").test;
 
-const Middleware = require("../../src/middleware");
+const { createMiddleware } = require("../../lib");
 
 test("options: none", (t) => {
-  t.throws(Middleware);
+  t.throws(createMiddleware);
   t.end();
 });

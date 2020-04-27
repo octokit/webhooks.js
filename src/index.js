@@ -1,9 +1,14 @@
-module.exports = createWebhooksApi;
+const { deprecate } = require("util");
 
-const createEventHandler = require("./event-handler");
+module.exports = deprecate(
+  createWebhooksApi,
+  "const createWebhooksApi = require('@octokit/webhooks') is deprecated. Use const { createWebhooksApi } = require('@octokit/webhooks')"
+);
+
+const { createEventHandler } = require("./event-handler");
 const middleware = require("./middleware/middleware");
-const sign = require("./sign");
-const verify = require("./verify");
+const { sign } = require("./sign");
+const { verify } = require("./verify");
 const verifyAndReceive = require("./middleware/verify-and-receive");
 
 function createWebhooksApi(options) {
@@ -27,3 +32,5 @@ function createWebhooksApi(options) {
     verifyAndReceive: verifyAndReceive.bind(null, state),
   };
 }
+
+module.exports.createWebhooksApi = createWebhooksApi;

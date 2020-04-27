@@ -1,4 +1,10 @@
-module.exports = createEventHandler;
+// "use strict";
+
+const { deprecate } = require("util");
+module.exports = deprecate(
+  createEventHandler,
+  "const createEventHandler = require('@octokit/webhooks/event-handler') is deprecated. Use const { createEventHandler } = require('@octokit/webhooks')"
+);
 
 const on = require("./on");
 const receive = require("./receive");
@@ -19,3 +25,5 @@ function createEventHandler(options) {
     receive: receive.bind(null, state),
   };
 }
+
+module.exports.createEventHandler = createEventHandler;

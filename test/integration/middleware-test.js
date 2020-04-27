@@ -4,7 +4,7 @@ const Buffer = require("buffer").Buffer;
 const test = require("tap").test;
 const simple = require("simple-mock");
 
-const createMiddleware = require("../../src/middleware");
+const { createMiddleware } = require("../../lib");
 
 const headers = {
   "x-github-delivery": "123e4567-e89b-12d3-a456-426655440000",

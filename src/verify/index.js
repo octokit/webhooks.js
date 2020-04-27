@@ -1,9 +1,14 @@
-module.exports = verify;
+const { deprecate } = require("util");
+
+module.exports = deprecate(
+  verify,
+  "const verify = require('@octokit/webhooks/verify') is deprecated. Use const { verify } = require('@octokit/webhooks')"
+);
 
 const crypto = require("crypto");
 const Buffer = require("buffer").Buffer;
 
-const sign = require("../sign");
+const { sign } = require("../sign");
 
 function verify(secret, eventPayload, signature) {
   if (!secret || !eventPayload || !signature) {
@@ -24,3 +29,5 @@ function verify(secret, eventPayload, signature) {
 function timingSafeEqual(signatureBuffer, verificationBuffer) {
   return crypto.timingSafeEqual(signatureBuffer, verificationBuffer);
 }
+
+module.exports.verify = verify;

@@ -1,4 +1,9 @@
-module.exports = sign;
+const { deprecate } = require("util");
+
+module.exports = deprecate(
+  sign,
+  "const sign = require('@octokit/webhooks/sign') is deprecated. Use const { sign } = require('@octokit/webhooks')"
+);
 
 const crypto = require("crypto");
 
@@ -19,3 +24,5 @@ function toNormalizedJsonString(payload) {
     return s.substr(0, 3) + s.substr(3).toUpperCase();
   });
 }
+
+module.exports.sign = sign;

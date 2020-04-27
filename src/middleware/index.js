@@ -1,8 +1,13 @@
 "use strict";
 
-module.exports = createMiddleware;
+const { deprecate } = require("util");
 
-const createEventHandler = require("../event-handler");
+module.exports = deprecate(
+  createMiddleware,
+  "const createMiddleware = require('@octokit/webhooks/middleware') is deprecated. Use const { createMiddleware } = require('@octokit/webhooks')"
+);
+
+const { createEventHandler } = require("../event-handler");
 const middleware = require("./middleware");
 
 function createMiddleware(options) {
@@ -23,3 +28,5 @@ function createMiddleware(options) {
 
   return api;
 }
+
+module.exports.createMiddleware = createMiddleware;
