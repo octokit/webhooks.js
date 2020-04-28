@@ -7,6 +7,7 @@ module.exports = deprecate(
 
 const { createEventHandler } = require("./event-handler");
 const middleware = require("./middleware/middleware");
+const { createMiddleware } = require("./middleware");
 const { sign } = require("./sign");
 const { verify } = require("./verify");
 const verifyAndReceive = require("./middleware/verify-and-receive");
@@ -33,4 +34,8 @@ function createWebhooksApi(options) {
   };
 }
 
+module.exports.createEventHandler = createEventHandler;
+module.exports.createMiddleware = createMiddleware;
 module.exports.createWebhooksApi = createWebhooksApi;
+module.exports.sign = sign;
+module.exports.verify = verify;

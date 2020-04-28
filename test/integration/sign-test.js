@@ -1,6 +1,6 @@
 const test = require("tap").test;
 
-const { sign } = require("../../lib");
+const { sign } = require("../../src");
 
 const eventPayload = {
   foo: "bar",

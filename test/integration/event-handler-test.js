@@ -1,6 +1,6 @@
 const test = require("tap").test;
 
-const { createEventHandler } = require("../../lib");
+const { createEventHandler } = require("../../src");
 const pushEventPayload = require("../fixtures/push-payload");
 const installationCreatedPayload = require("../fixtures/installation-created-payload");
 
