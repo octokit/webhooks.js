@@ -3,7 +3,7 @@
 The `sign` method can be used as a standalone method.
 
 ```js
-const sign = require('@octokit/webhooks/sign')
+const { sign } = require('@octokit/webhooks')
 const signature = sign(secret, eventPayload)
 // string like "sha1=d03207e4b030cf234e3447bac4d93add4c6643d8"
 ```

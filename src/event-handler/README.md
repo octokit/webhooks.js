@@ -5,8 +5,8 @@ If you implement the route to receive webhook events from GitHub yourself then y
 ## Example
 
 ```js
-const EventHandler = require('@octokit/webhooks/event-handler')
-const eventHandler = new EventHandler({
+const { createEventHandler } = require('@octokit/webhooks')
+const eventHandler = createEventHandler({
   async transform (event) {
     // optionally transform passed event before handlers are called
     return event
@@ -27,7 +27,7 @@ eventHandler.receive({
 If you receive events through a publicly accessible URL, make sure to verify that the event request is coming from GitHub:
 
 ```js
-const verify = require('@octokit/webhooks/verify')
+const { verify } = require('@octokit/webhooks')
 const secret = 'mysecret'
 
 if (!verify(secret, request.payload, request.headers['x-hub-signature'])) {

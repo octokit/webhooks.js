@@ -3,7 +3,7 @@
 The `verify` method can be used as a standalone method.
 
 ```js
-const verify = require('@octokit/webhooks/verify')
+const { verify } = require('@octokit/webhooks')
 const matchesSignature = verify(secret, eventData, signature)
 // true or false
 ```
