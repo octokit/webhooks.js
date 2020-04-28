@@ -37,12 +37,16 @@
   "scripts": {
     "build": "pika build",
     "coverage": "tap --coverage-report=html && open coverage/lcov-report/index.html",
-    "generate-known-webhooks": "node pkg/dist-src/scripts/update-known-events.js",
+    "generate-known-webhooks:build": "tsc --resolveJsonModule --esModuleInterop scripts/update-known-events.ts",
+    "generate-known-webhooks:run": "node scripts/update-known-events.js",
+    "generate-known-webhooks": "npm run generate-known-webhooks:build; npm run generate-known-webhooks:run",
     "lint": "prettier --check 'src/**/*.{ts,json}' 'test/**/*' index.d.ts README.md package.json",
     "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'test/**/*' index.d.ts README.md package.json",
     "pretest": "npm run -s lint; npm run build -s",
     "test": "tap --100 --coverage 'test/**/*-test.js'",
-    "generate-types": "node pkg/dist-src/scripts/generate-types.js",
+    "generate-types:build": "tsc --resolveJsonModule --esModuleInterop scripts/generate-types.ts",
+    "generate-types:run": "node scripts/generate-types.js",
+    "generate-types": "npm run generate-types:build; npm run generate-types:run",
     "validate:ts": "tsc --noEmit --noImplicitAny test/typescript-validate.ts"
   },
   "repository": {
