@@ -31,6 +31,7 @@ export namespace EventNames {
 
   const enum ContentReferenceEvent {
     Default = "content_reference",
+    Created = "content_reference.created",
   }
 
   const enum CreateEvent {
@@ -63,6 +64,7 @@ export namespace EventNames {
 
   const enum GithubAppAuthorizationEvent {
     Default = "github_app_authorization",
+    Revoked = "github_app_authorization.revoked",
   }
 
   const enum GollumEvent {
@@ -128,8 +130,8 @@ export namespace EventNames {
   const enum MemberEvent {
     Default = "member",
     Added = "member.added",
-    Deleted = "member.deleted",
     Edited = "member.edited",
+    Removed = "member.removed",
   }
 
   const enum MembershipEvent {
@@ -219,10 +221,10 @@ export namespace EventNames {
     Reopened = "pull_request.reopened",
     ReviewRequestRemoved = "pull_request.review_request_removed",
     ReviewRequested = "pull_request.review_requested",
+    Synchronize = "pull_request.synchronize",
     Unassigned = "pull_request.unassigned",
     Unlabeled = "pull_request.unlabeled",
     Unlocked = "pull_request.unlocked",
-    Synchronize = "pull_request.synchronize",
   }
 
   const enum PullRequestReviewEvent {
@@ -255,6 +257,7 @@ export namespace EventNames {
 
   const enum RepositoryDispatchEvent {
     Default = "repository_dispatch",
+    OnDemandTest = "repository_dispatch.on-demand-test",
   }
 
   const enum RepositoryEvent {
@@ -290,6 +293,8 @@ export namespace EventNames {
 
   const enum SponsorshipEvent {
     Default = "sponsorship",
+    Created = "sponsorship.created",
+    PendingTierChange = "sponsorship.pending_tier_change",
   }
 
   const enum StarEvent {
