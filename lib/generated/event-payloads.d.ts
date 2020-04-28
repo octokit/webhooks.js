@@ -105,6 +105,7 @@ export namespace EventPayloads {
     organization: WebhookPayloadTeamAddOrganization;
     sender: WebhookPayloadTeamAddSender;
   };
+  type WebhookPayloadTeamChanges = {};
   type WebhookPayloadTeamSender = {
     login: string;
     id: number;
@@ -149,7 +150,7 @@ export namespace EventPayloads {
     id: number;
     node_id: string;
     slug: string;
-    description: string;
+    description: string | null;
     privacy: string;
     url: string;
     html_url: string;
@@ -160,9 +161,10 @@ export namespace EventPayloads {
   type WebhookPayloadTeam = {
     action: string;
     team: WebhookPayloadTeamTeam;
-    repository: PayloadRepository;
+    repository?: PayloadRepository;
     organization: WebhookPayloadTeamOrganization;
     sender: WebhookPayloadTeamSender;
+    changes?: WebhookPayloadTeamChanges;
   };
   type WebhookPayloadStatusSender = {
     login: string;
@@ -304,7 +306,7 @@ export namespace EventPayloads {
   };
   type WebhookPayloadStar = {
     action: string;
-    starred_at: string;
+    starred_at: string | null;
     repository: PayloadRepository;
     sender: WebhookPayloadStarSender;
   };
@@ -447,6 +449,26 @@ export namespace EventPayloads {
     action: string;
     security_advisory: WebhookPayloadSecurityAdvisorySecurityAdvisory;
   };
+  type WebhookPayloadRepositoryVulnerabilityAlertAlertDismisser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
   type WebhookPayloadRepositoryVulnerabilityAlertSender = {
     login: string;
     id: number;
@@ -474,12 +496,15 @@ export namespace EventPayloads {
     external_reference: string;
     external_identifier: string;
     fixed_in: string;
+    dismisser?: WebhookPayloadRepositoryVulnerabilityAlertAlertDismisser;
+    dismiss_reason?: string;
+    dismissed_at?: string;
   };
   type WebhookPayloadRepositoryVulnerabilityAlert = {
     action: string;
     alert: WebhookPayloadRepositoryVulnerabilityAlertAlert;
-    repository: PayloadRepository;
-    sender: WebhookPayloadRepositoryVulnerabilityAlertSender;
+    repository?: PayloadRepository;
+    sender?: WebhookPayloadRepositoryVulnerabilityAlertSender;
   };
   type WebhookPayloadRepositoryImportSender = {
     login: string;
@@ -521,6 +546,20 @@ export namespace EventPayloads {
     organization: WebhookPayloadRepositoryImportOrganization;
     sender: WebhookPayloadRepositoryImportSender;
   };
+  type WebhookPayloadRepositoryOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
   type WebhookPayloadRepositorySender = {
     login: string;
     id: number;
@@ -545,6 +584,7 @@ export namespace EventPayloads {
     action: string;
     repository: PayloadRepository;
     sender: WebhookPayloadRepositorySender;
+    organization?: WebhookPayloadRepositoryOrganization;
   };
   type WebhookPayloadRepositoryDispatchInstallation = {
     id: number;
@@ -1506,6 +1546,120 @@ export namespace EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadPullRequestReviewSender;
   };
+  type WebhookPayloadPullRequestLabel = {
+    id: number;
+    node_id: string;
+    url: string;
+    name: string;
+    color: string;
+    default: boolean;
+  };
+  type WebhookPayloadPullRequestPullRequestMilestoneCreator = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestPullRequestMilestone = null | {
+    url: string;
+    html_url: string;
+    labels_url: string;
+    id: number;
+    node_id: string;
+    number: number;
+    title: string;
+    description: string;
+    creator: WebhookPayloadPullRequestPullRequestMilestoneCreator;
+    open_issues: number;
+    closed_issues: number;
+    state: string;
+    created_at: string;
+    updated_at: string;
+    due_on: string;
+    closed_at: string;
+  };
+  type WebhookPayloadPullRequestPullRequestLabelsItem = {
+    id: number;
+    node_id: string;
+    url: string;
+    name: string;
+    color: string;
+    default: boolean;
+  };
+  type WebhookPayloadPullRequestPullRequestAssignee = null | {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestAssignee = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestPullRequestAssigneesItem = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
   type WebhookPayloadPullRequestSender = {
     login: string;
     id: number;
@@ -1626,7 +1780,7 @@ export namespace EventPayloads {
     size: number;
     stargazers_count: number;
     watchers_count: number;
-    language: null;
+    language: null | string;
     has_issues: boolean;
     has_projects: boolean;
     has_downloads: boolean;
@@ -1748,7 +1902,7 @@ export namespace EventPayloads {
     size: number;
     stargazers_count: number;
     watchers_count: number;
-    language: null;
+    language: null | string;
     has_issues: boolean;
     has_projects: boolean;
     has_downloads: boolean;
@@ -1828,15 +1982,15 @@ export namespace EventPayloads {
     body: string;
     created_at: string;
     updated_at: string;
-    closed_at: null;
+    closed_at: null | string;
     merged_at: null;
-    merge_commit_sha: null;
-    assignee: null;
-    assignees: Array<any>;
+    merge_commit_sha: null | string;
+    assignee: WebhookPayloadPullRequestPullRequestAssignee;
+    assignees: Array<WebhookPayloadPullRequestPullRequestAssigneesItem>;
     requested_reviewers: Array<any>;
     requested_teams: Array<any>;
-    labels: Array<any>;
-    milestone: null;
+    labels: Array<WebhookPayloadPullRequestPullRequestLabelsItem>;
+    milestone: WebhookPayloadPullRequestPullRequestMilestone;
     commits_url: string;
     review_comments_url: string;
     review_comment_url: string;
@@ -1848,8 +2002,8 @@ export namespace EventPayloads {
     author_association: string;
     draft: boolean;
     merged: boolean;
-    mergeable: null;
-    rebaseable: null;
+    mergeable: null | boolean;
+    rebaseable: null | boolean;
     mergeable_state: string;
     merged_by: null;
     comments: number;
@@ -1866,6 +2020,8 @@ export namespace EventPayloads {
     pull_request: WebhookPayloadPullRequestPullRequest;
     repository: PayloadRepository;
     sender: WebhookPayloadPullRequestSender;
+    assignee?: WebhookPayloadPullRequestAssignee;
+    label?: WebhookPayloadPullRequestLabel;
   };
   type WebhookPayloadPublicSender = {
     login: string;
@@ -2440,7 +2596,7 @@ export namespace EventPayloads {
     created_at: string;
     updated_at: string;
     due_on: string;
-    closed_at: null;
+    closed_at: null | string;
   };
   type WebhookPayloadMilestone = {
     action: string;
@@ -2565,6 +2721,10 @@ export namespace EventPayloads {
     team: WebhookPayloadMembershipTeam;
     organization: WebhookPayloadMembershipOrganization;
   };
+  type WebhookPayloadMemberChangesPermission = { from: string };
+  type WebhookPayloadMemberChanges = {
+    permission: WebhookPayloadMemberChangesPermission;
+  };
   type WebhookPayloadMemberSender = {
     login: string;
     id: number;
@@ -2610,6 +2770,32 @@ export namespace EventPayloads {
     member: WebhookPayloadMemberMember;
     repository: PayloadRepository;
     sender: WebhookPayloadMemberSender;
+    changes?: WebhookPayloadMemberChanges;
+  };
+  type WebhookPayloadMarketplacePurchasePreviousMarketplacePurchasePlan = {
+    id: number;
+    name: string;
+    description: string;
+    monthly_price_in_cents: number;
+    yearly_price_in_cents: number;
+    price_model: string;
+    has_free_trial: boolean;
+    unit_name: string;
+    bullets: Array<string>;
+  };
+  type WebhookPayloadMarketplacePurchasePreviousMarketplacePurchaseAccount = {
+    type: string;
+    id: number;
+    login: string;
+    organization_billing_email: string;
+  };
+  type WebhookPayloadMarketplacePurchasePreviousMarketplacePurchase = {
+    account: WebhookPayloadMarketplacePurchasePreviousMarketplacePurchaseAccount;
+    billing_cycle: string;
+    on_free_trial: boolean;
+    free_trial_ends_on: null;
+    unit_count: number;
+    plan: WebhookPayloadMarketplacePurchasePreviousMarketplacePurchasePlan;
   };
   type WebhookPayloadMarketplacePurchaseMarketplacePurchasePlan = {
     id: number;
@@ -2619,7 +2805,7 @@ export namespace EventPayloads {
     yearly_price_in_cents: number;
     price_model: string;
     has_free_trial: boolean;
-    unit_name: string;
+    unit_name: string | null;
     bullets: Array<string>;
   };
   type WebhookPayloadMarketplacePurchaseMarketplacePurchaseAccount = {
@@ -2662,7 +2848,10 @@ export namespace EventPayloads {
     effective_date: string;
     sender: WebhookPayloadMarketplacePurchaseSender;
     marketplace_purchase: WebhookPayloadMarketplacePurchaseMarketplacePurchase;
+    previous_marketplace_purchase?: WebhookPayloadMarketplacePurchasePreviousMarketplacePurchase;
   };
+  type WebhookPayloadLabelChangesColor = { from: string };
+  type WebhookPayloadLabelChanges = { color: WebhookPayloadLabelChangesColor };
   type WebhookPayloadLabelSender = {
     login: string;
     id: number;
@@ -2696,6 +2885,41 @@ export namespace EventPayloads {
     label: WebhookPayloadLabelLabel;
     repository: PayloadRepository;
     sender: WebhookPayloadLabelSender;
+    changes?: WebhookPayloadLabelChanges;
+  };
+  type WebhookPayloadIssuesLabel = {
+    id: number;
+    node_id: string;
+    url: string;
+    name: string;
+    color: string;
+    default: boolean;
+  };
+  type WebhookPayloadIssuesIssuePullRequest = {
+    url: string;
+    html_url: string;
+    diff_url: string;
+    patch_url: string;
+  };
+  type WebhookPayloadIssuesAssignee = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
   };
   type WebhookPayloadIssuesSender = {
     login: string;
@@ -2755,7 +2979,7 @@ export namespace EventPayloads {
     updated_at: string;
     due_on: string;
     closed_at: string;
-  };
+  } | null;
   type WebhookPayloadIssuesIssueAssigneesItem = {
     login: string;
     id: number;
@@ -2795,7 +3019,7 @@ export namespace EventPayloads {
     received_events_url: string;
     type: string;
     site_admin: boolean;
-  };
+  } | null;
   type WebhookPayloadIssuesIssueLabelsItem = {
     id: number;
     node_id: string;
@@ -2848,13 +3072,20 @@ export namespace EventPayloads {
     closed_at: null;
     author_association: string;
     body: string;
+    pull_request?: WebhookPayloadIssuesIssuePullRequest;
   };
   type WebhookPayloadIssues = {
     action: string;
     issue: WebhookPayloadIssuesIssue;
-    changes: WebhookPayloadIssuesChanges;
+    changes?: WebhookPayloadIssuesChanges;
     repository: PayloadRepository;
     sender: WebhookPayloadIssuesSender;
+    assignee?: WebhookPayloadIssuesAssignee;
+    label?: WebhookPayloadIssuesLabel;
+  };
+  type WebhookPayloadIssueCommentChangesBody = { from: string };
+  type WebhookPayloadIssueCommentChanges = {
+    body: WebhookPayloadIssueCommentChangesBody;
   };
   type WebhookPayloadIssueCommentSender = {
     login: string;
@@ -3045,6 +3276,13 @@ export namespace EventPayloads {
     comment: WebhookPayloadIssueCommentComment;
     repository: PayloadRepository;
     sender: WebhookPayloadIssueCommentSender;
+    changes?: WebhookPayloadIssueCommentChanges;
+  };
+  type WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem = {
+    id: number;
+    name: string;
+    full_name: string;
+    private: boolean;
   };
   type WebhookPayloadInstallationRepositoriesSender = {
     login: string;
@@ -3074,18 +3312,18 @@ export namespace EventPayloads {
     private: boolean;
   };
   type WebhookPayloadInstallationRepositoriesInstallationPermissions = {
-    administration: string;
-    statuses: string;
-    repository_projects: string;
-    repository_hooks: string;
-    pull_requests: string;
-    pages: string;
+    administration?: string;
+    statuses?: string;
+    repository_projects?: string;
+    repository_hooks?: string;
+    pull_requests?: string;
+    pages?: string;
     issues: string;
-    deployments: string;
+    deployments?: string;
     contents: string;
-    checks: string;
+    checks?: string;
     metadata: string;
-    vulnerability_alerts: string;
+    vulnerability_alerts?: string;
   };
   type WebhookPayloadInstallationRepositoriesInstallationAccount = {
     login: string;
@@ -3118,10 +3356,10 @@ export namespace EventPayloads {
     target_id: number;
     target_type: string;
     permissions: WebhookPayloadInstallationRepositoriesInstallationPermissions;
-    events: Array<any>;
+    events: Array<string>;
     created_at: number;
     updated_at: number;
-    single_file_name: null;
+    single_file_name: null | string;
   };
   type WebhookPayloadInstallationRepositories = {
     action: string;
@@ -3130,7 +3368,9 @@ export namespace EventPayloads {
     repositories_added: Array<
       WebhookPayloadInstallationRepositoriesRepositoriesAddedItem
     >;
-    repositories_removed: Array<any>;
+    repositories_removed: Array<
+      WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem
+    >;
     sender: WebhookPayloadInstallationRepositoriesSender;
   };
   type WebhookPayloadInstallationSender = {
@@ -3164,6 +3404,15 @@ export namespace EventPayloads {
     metadata: string;
     contents: string;
     issues: string;
+    administration?: string;
+    checks?: string;
+    deployments?: string;
+    pages?: string;
+    pull_requests?: string;
+    repository_hooks?: string;
+    repository_projects?: string;
+    statuses?: string;
+    vulnerability_alerts?: string;
   };
   type WebhookPayloadInstallationInstallationAccount = {
     login: string;
@@ -3199,7 +3448,7 @@ export namespace EventPayloads {
     events: Array<string>;
     created_at: number;
     updated_at: number;
-    single_file_name: string;
+    single_file_name: string | null;
   };
   type WebhookPayloadInstallation = {
     action: string;
@@ -3736,6 +3985,7 @@ export namespace EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadCommitCommentSender;
   };
+  type WebhookPayloadCheckSuiteInstallation = { id: number; node_id: string };
   type WebhookPayloadCheckSuiteSender = {
     login: string;
     id: number;
@@ -3859,7 +4109,7 @@ export namespace EventPayloads {
     head_branch: string;
     head_sha: string;
     status: string;
-    conclusion: string;
+    conclusion: string | null;
     url: string;
     before: string;
     after: string;
@@ -3876,6 +4126,22 @@ export namespace EventPayloads {
     check_suite: WebhookPayloadCheckSuiteCheckSuite;
     repository: PayloadRepository;
     sender: WebhookPayloadCheckSuiteSender;
+    installation?: WebhookPayloadCheckSuiteInstallation;
+  };
+  type WebhookPayloadCheckRunInstallation = { id: number };
+  type WebhookPayloadCheckRunOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
   };
   type WebhookPayloadCheckRunSender = {
     login: string;
@@ -4070,13 +4336,13 @@ export namespace EventPayloads {
     node_id: string;
     owner: WebhookPayloadCheckRunCheckRunAppOwner;
     name: string;
-    description: string;
+    description: string | null;
     external_url: string;
     html_url: string;
     created_at: string;
     updated_at: string;
-    permissions: WebhookPayloadCheckRunCheckRunAppPermissions;
-    events: Array<any>;
+    permissions?: WebhookPayloadCheckRunCheckRunAppPermissions;
+    events?: Array<any>;
   };
   type WebhookPayloadCheckRunCheckRunCheckSuiteAppPermissions = {
     administration: string;
@@ -4124,13 +4390,13 @@ export namespace EventPayloads {
     node_id: string;
     owner: WebhookPayloadCheckRunCheckRunCheckSuiteAppOwner;
     name: string;
-    description: string;
+    description: string | null;
     external_url: string;
     html_url: string;
     created_at: string;
     updated_at: string;
-    permissions: WebhookPayloadCheckRunCheckRunCheckSuiteAppPermissions;
-    events: Array<any>;
+    permissions?: WebhookPayloadCheckRunCheckRunCheckSuiteAppPermissions;
+    events?: Array<any>;
   };
   type WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemBaseRepo = {
     id: number;
@@ -4161,11 +4427,11 @@ export namespace EventPayloads {
   };
   type WebhookPayloadCheckRunCheckRunCheckSuite = {
     id: number;
-    node_id: string;
+    node_id?: string;
     head_branch: string;
     head_sha: string;
     status: string;
-    conclusion: null;
+    conclusion: null | string;
     url: string;
     before: string;
     after: string;
@@ -4177,24 +4443,24 @@ export namespace EventPayloads {
     updated_at: string;
   };
   type WebhookPayloadCheckRunCheckRunOutput = {
-    title: null;
-    summary: null;
-    text: null;
+    title: null | string;
+    summary: null | string;
+    text: null | string;
     annotations_count: number;
     annotations_url: string;
   };
   type WebhookPayloadCheckRunCheckRun = {
     id: number;
-    node_id: string;
+    node_id?: string;
     head_sha: string;
     external_id: string;
     url: string;
     html_url: string;
-    details_url: string;
+    details_url?: string;
     status: string;
-    conclusion: null;
+    conclusion: null | string;
     started_at: string;
-    completed_at: null;
+    completed_at: null | string;
     output: WebhookPayloadCheckRunCheckRunOutput;
     name: string;
     check_suite: WebhookPayloadCheckRunCheckRunCheckSuite;
@@ -4206,6 +4472,8 @@ export namespace EventPayloads {
     check_run: WebhookPayloadCheckRunCheckRun;
     repository: PayloadRepository;
     sender: WebhookPayloadCheckRunSender;
+    organization?: WebhookPayloadCheckRunOrganization;
+    installation?: WebhookPayloadCheckRunInstallation;
   };
 
   interface WebhookEvent<T> {

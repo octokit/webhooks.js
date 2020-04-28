@@ -1,11 +1,10 @@
 import { test } from "tap";
+import { mock } from "simple-mock";
 
 test("@octokit/webhooks", (t) => {
+  const emitWarningMock = mock(process, "emitWarning");
   const { createWebhooksApi } = require("../../pkg/dist-src");
-
-  const api = createWebhooksApi({
-    secret: "mysecret",
-  });
+  const api = createWebhooksApi({ secret: "mysecret" });
 
   t.type(api.sign, "function");
   t.type(api.verify, "function");
@@ -14,38 +13,59 @@ test("@octokit/webhooks", (t) => {
   t.type(api.receive, "function");
   t.type(api.middleware, "function");
   t.type(api.verifyAndReceive, "function");
+  t.false(emitWarningMock.called);
 
   t.end();
 });
 
 test('require("@octokit/webhooks").sign', (t) => {
+  const emitWarningMock = mock(process, "emitWarning");
+
   t.doesNotThrow(() => {
-    require("../../pkg/dist-src").sign;
+    const { sign } = require("../../pkg/dist-src");
+    sign("1234", {});
   });
+
+  t.false(emitWarningMock.called);
 
   t.end();
 });
 
 test('require("@octokit/webhooks").verify', (t) => {
+  const emitWarningMock = mock(process, "emitWarning");
+
   t.doesNotThrow(() => {
-    require("../../pkg/dist-src/").verify;
+    const { verify } = require("../../pkg/dist-src/");
+    verify("1234", {}, "randomSignature");
   });
+
+  t.false(emitWarningMock.called);
 
   t.end();
 });
 
 test('require("@octokit/webhooks").createEventHandler', (t) => {
+  const emitWarningMock = mock(process, "emitWarning");
+
   t.doesNotThrow(() => {
-    require("../../pkg/dist-src").createEventHandler;
+    const { createEventHandler } = require("../../pkg/dist-src");
+    createEventHandler();
   });
+
+  t.false(emitWarningMock.called);
 
   t.end();
 });
 
 test('require("@octokit/webhooks").createMiddleware', (t) => {
+  const emitWarningMock = mock(process, "emitWarning");
+
   t.doesNotThrow(() => {
-    require("../../pkg/dist-src").createMiddleware;
+    const { createMiddleware } = require("../../pkg/dist-src");
+    createMiddleware({ secret: "1234" });
   });
+
+  t.false(emitWarningMock.called);
 
   t.end();
 });

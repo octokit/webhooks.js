@@ -34,5 +34,5 @@ export {
   createMiddleware,
   createWebhooksApi,
   sign,
-  verify
-}
+  verify,
+};
