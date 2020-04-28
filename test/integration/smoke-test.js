@@ -25,6 +25,7 @@ test('require("@octokit/webhooks").sign', (t) => {
     const { sign } = require("../../pkg/dist-src");
     sign("1234", {});
   });
+  t.false(emitWarningMock.called);
 
   t.false(emitWarningMock.called);
 
@@ -38,6 +39,7 @@ test('require("@octokit/webhooks").verify', (t) => {
     const { verify } = require("../../pkg/dist-src/");
     verify("1234", {}, "randomSignature");
   });
+  t.false(emitWarningMock.called);
 
   t.false(emitWarningMock.called);
 
@@ -51,6 +53,7 @@ test('require("@octokit/webhooks").createEventHandler', (t) => {
     const { createEventHandler } = require("../../pkg/dist-src");
     createEventHandler();
   });
+  t.false(emitWarningMock.called);
 
   t.false(emitWarningMock.called);
 
@@ -64,6 +67,7 @@ test('require("@octokit/webhooks").createMiddleware', (t) => {
     const { createMiddleware } = require("../../pkg/dist-src");
     createMiddleware({ secret: "1234" });
   });
+  t.false(emitWarningMock.called);
 
   t.false(emitWarningMock.called);
 
