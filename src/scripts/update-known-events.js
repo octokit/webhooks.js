@@ -4,7 +4,7 @@ const Table = require("table-builder");
 
 const WEBOOOKS = require("@octokit/webhooks-definitions");
 
-// update lib/webhook-names.json
+// update src/webhook-names.json
 const newWebhookNames = WEBOOOKS.reduce(
   (list, event) => {
     list.push(
@@ -16,7 +16,7 @@ const newWebhookNames = WEBOOOKS.reduce(
   ["*", "error"]
 ).sort();
 writeFileSync(
-  "lib/webhook-names.json",
+  "src/webhook-names.json",
   JSON.stringify([...newWebhookNames], null, 2) + "\n"
 );
 
