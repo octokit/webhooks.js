@@ -58,9 +58,9 @@ webhooks.forEach(({ name, actions, examples }) => {
 
 const definitionIndex = `
 ${doNotEditThisFileDisclaimer}
-export { EventNames } from './lib/generated/event-names'
-export { EventPayloads } from './lib/generated/event-payloads'
-export { Webhooks } from './lib/generated/api'
+export { EventNames } from './src/generated/event-names'
+export { EventPayloads } from './src/generated/event-payloads'
+export { Webhooks } from './src/generated/api'
 `;
 
 generateFile("index.d.ts", definitionIndex);
@@ -89,7 +89,7 @@ export declare class Webhooks {
 }
 `;
 
-generateFile("lib/generated/api.d.ts", apiContent);
+generateFile("src/generated/api.d.ts", apiContent);
 
 const eventNamesContet = `
 ${doNotEditThisFileDisclaimer}
@@ -104,7 +104,7 @@ export namespace ${eventNamesVariable} {
 }
 `;
 
-generateFile("lib/generated/event-names.d.ts", eventNamesContet);
+generateFile("src/generated/event-names.d.ts", eventNamesContet);
 
 const eventPayloadsContet = `
 ${doNotEditThisFileDisclaimer}
@@ -121,4 +121,4 @@ export namespace ${eventPayloadsVariable} {
 }
 `;
 
-generateFile("lib/generated/event-payloads.d.ts", eventPayloadsContet);
+generateFile("src/generated/event-payloads.d.ts", eventPayloadsContet);

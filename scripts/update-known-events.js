@@ -15,7 +15,7 @@ const newWebhookNames = WEBOOOKS.reduce(
 ).sort();
 
 generateFile(
-  "src/webhook-names.ts",
+  "src/generated/webhook-names.ts",
   `export const webhookNames = ${JSON.stringify([...newWebhookNames], null, 2)}`
 );
 
