@@ -1,18 +1,10 @@
 {
 	"compilerOptions": {
-		"allowJs": true,
 		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"importHelpers": true,
 		"module": "esnext",
 		"moduleResolution": "node",
-		"noImplicitReturns": true,
-		"removeComments": true,
-		"resolveJsonModule": true,
 		"strict": true,
-		"target": "es2020"
+		"target": "es2018"
 	},
-	"include": [
-		"src/**/*"
-	]
+	"include": ["src/**/*"]
 }
