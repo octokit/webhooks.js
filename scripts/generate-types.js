@@ -1,11 +1,10 @@
-import { pascalCase } from "pascal-case";
-import TypeWriter from "@gimenete/type-writer";
-import webhooks from "@octokit/webhooks-definitions/index.json";
-import { WebhookDefinition } from "@octokit/webhooks-definitions";
-import { generateFile } from "./generate-file";
+const { pascalCase } = require("pascal-case");
+const TypeWriter = require("@gimenete/type-writer");
+const webhooks = require("@octokit/webhooks-definitions/index.json");
+const { generateFile } = require("./generate-file");
 
-const signatures: string[] = [];
-const eventEnums: string[] = [];
+const signatures = [];
+const eventEnums = [];
 const tw = new TypeWriter();
 
 const doNotEditThisFileDisclaimer = `
@@ -15,7 +14,7 @@ const doNotEditThisFileDisclaimer = `
 const eventPayloadsVariable = "EventPayloads";
 const eventNamesVariable = "EventNames";
 
-const generatePayloadType = (typeName: string) => ({
+const generatePayloadType = (typeName) => ({
   rootTypeName: typeName,
   namedKeyPaths: {
     [`${typeName}.repository`]: "PayloadRepository",
@@ -26,13 +25,13 @@ const generatePayloadType = (typeName: string) => ({
   },
 });
 
-const generateEventType = (event: string, typeName: string): string => `
+const generateEventType = (event, typeName) => `
   public on (
     event: ${eventNamesVariable}.${event},
     callback: (event: ${eventPayloadsVariable}.WebhookEvent<${eventPayloadsVariable}.${typeName}>) => (Promise<void> | void)): void
 `;
 
-const generateEventEnum = (event: string, name: string, actions: string[]) => `
+const generateEventEnum = (event, name, actions) => `
     const enum ${event} {
       Default = "${name}",
       ${actions
@@ -43,7 +42,7 @@ const generateEventEnum = (event: string, name: string, actions: string[]) => `
     }
 `;
 
-webhooks.forEach(({ name, actions, examples }: WebhookDefinition) => {
+webhooks.forEach(({ name, actions, examples }) => {
   if (!examples) {
     return;
   }

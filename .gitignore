@@ -4,6 +4,3 @@ node_modules
 
 # Pika builds
 pkg/
-
-# TypeScript generated compiled scripts
-scripts/*.js

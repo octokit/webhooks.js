@@ -1,11 +1,10 @@
-import { readFileSync, writeFileSync } from "fs";
-import Table from "table-builder";
-import WEBOOOKS from "@octokit/webhooks-definitions/index.json";
-import { WebhookDefinition } from "@octokit/webhooks-definitions";
-import { generateFile } from "./generate-file";
+const { readFileSync, writeFileSync } = require("fs");
+const Table = require("table-builder");
+const WEBOOOKS = require("@octokit/webhooks-definitions/index.json");
+const { generateFile } = require("./generate-file");
 
 const newWebhookNames = WEBOOOKS.reduce(
-  (list: string[], event: WebhookDefinition) => {
+  (list, event) => {
     list.push(
       event.name,
       ...event.actions.map((action) => `${event.name}.${action}`)
@@ -21,7 +20,7 @@ generateFile(
 );
 
 // update README.md
-const data = WEBOOOKS.map((w: WebhookDefinition) => {
+const data = WEBOOOKS.map((w) => {
   const link = `https://developer.github.com/v3/activity/events/types/#${w.name.replace(
     /[^a-z]/g,
     ""

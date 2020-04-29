@@ -13,7 +13,6 @@
 		"target": "es2020"
 	},
 	"include": [
-		"src/**/*",
-		"scripts/**/*"
+		"src/**/*"
 	]
 }
