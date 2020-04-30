@@ -1,6 +1,24 @@
 import { wrapErrorHandler } from "./wrap-error-handler";
 import { WebhookEvent, EventState } from "../types";
 
+function getHooks(
+  state: EventState,
+  eventPayloadAction: string,
+  eventName: string | string[]
+): Function[] {
+  const hooks = [state.hooks[`${eventName}.${eventPayloadAction}`]];
+
+  if (Array.isArray(eventName)) {
+    eventName.forEach((name) => hooks.push(state.hooks[name]));
+  } else {
+    hooks.push(state.hooks[eventName]);
+  }
+
+  hooks.push(state.hooks["*"]);
+
+  return hooks.filter(Boolean).flat();
+}
+
 // main handler function
 export function receiverHandle(state: EventState, event: WebhookEvent) {
   const errorHandlers = state.hooks.error || [];
@@ -13,7 +31,7 @@ export function receiverHandle(state: EventState, event: WebhookEvent) {
     return Promise.reject(event);
   }
 
-  if (!event || !event.name || Array.isArray(event.name)) {
+  if (!event || !event.name) {
     throw new Error("Event name not passed");
   }
 
@@ -22,13 +40,7 @@ export function receiverHandle(state: EventState, event: WebhookEvent) {
   }
 
   // flatten arrays of event listeners and remove undefined values
-  const hooks = [
-    state.hooks[`${event.name}.${event.payload.action}`],
-    state.hooks[event.name],
-    state.hooks["*"],
-  ]
-    .filter(Boolean)
-    .flat();
+  const hooks = getHooks(state, event.payload.action, event.name).flat();
 
   if (hooks.length === 0) {
     return Promise.resolve();

@@ -26,3 +26,22 @@ test("options: name, payload", (t) => {
   });
   t.end();
 });
+
+test("options: [name1, name2]", (t) => {
+  t.throws(() => {
+    receive(state, {
+      name: ["foo", "bar"],
+    });
+  });
+  t.end();
+});
+
+test("options: [name1, name2], payload", (t) => {
+  t.doesNotThrow(() => {
+    receive(state, {
+      name: ["foo", "bar"],
+      payload: {},
+    });
+  });
+  t.end();
+});
