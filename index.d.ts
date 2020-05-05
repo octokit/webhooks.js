@@ -4605,7 +4605,9 @@ declare class Webhooks {
       | "installation"
       | "installation.created"
       | "installation.deleted"
-      | "installation.new_permissions_accepted",
+      | "installation.new_permissions_accepted"
+      | "installation.suspend"
+      | "installation.unsuspend",
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadInstallation>
     ) => Promise<void> | void
