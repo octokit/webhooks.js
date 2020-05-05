@@ -31,6 +31,8 @@ export const webhookNames = [
   "installation.created",
   "installation.deleted",
   "installation.new_permissions_accepted",
+  "installation.suspend",
+  "installation.unsuspend",
   "installation_repositories",
   "installation_repositories.added",
   "installation_repositories.removed",
