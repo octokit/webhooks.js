@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@gimenete/type-writer": "^0.1.5",
-    "@octokit/webhooks-definitions": "3.6.0",
+    "@octokit/webhooks-definitions": "3.7.0",
     "@pika/pack": "^0.5.0",
     "@pika/plugin-build-node": "^0.9.2",
     "@pika/plugin-standard-pkg": "^0.9.2",
@@ -34,12 +34,12 @@
   "scripts": {
     "build": "pika build",
     "coverage": "tap --coverage-report=html && open coverage/lcov-report/index.html",
-    "generate-known-webhooks": "node src/scripts/update-known-events.js",
+    "generate-known-webhooks": "node scripts/update-known-events.js",
     "lint": "prettier --check 'src/**/*.{js,json}' 'test/**/*' index.d.ts README.md package.json",
     "lint:fix": "prettier --write 'src/**/*.{js,json}' 'test/**/*' index.d.ts README.md package.json",
     "pretest": "npm run -s lint",
     "test": "tap --100 --coverage 'test/**/*-test.js'",
-    "generate-types": "node src/scripts/generate-types.js",
+    "generate-types": "node scripts/generate-types.js",
     "validate:ts": "tsc --noEmit --noImplicitAny test/typescript-validate.ts"
   },
   "repository": {
