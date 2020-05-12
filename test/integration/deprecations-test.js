@@ -3,8 +3,10 @@ const { mock } = require("simple-mock");
 
 test("@octokit/webhooks", (t) => {
   const emitWarningMock = mock(process, "emitWarning");
-  const createWebhooksApi = require("../../src");
-  const api = createWebhooksApi({ secret: "mysecret" });
+  const Webhooks = require("../../");
+  const api = new Webhooks({
+    secret: "mysecret",
+  });
 
   t.true(emitWarningMock.called);
   t.equals(emitWarningMock.callCount, 1);
@@ -62,7 +64,9 @@ test('require("@octokit/webhooks/middleware")', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
   t.doesNotThrow(() => {
     const createMiddleware = require("../../src/middleware");
-    createMiddleware({ secret: "1234" });
+    createMiddleware({
+      secret: "1234",
+    });
   });
 
   t.true(emitWarningMock.called);
