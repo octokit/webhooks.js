@@ -64,7 +64,7 @@ declare namespace Webhooks {
   }
 }
 
-export declare class Webhooks {
+declare class Webhooks {
   constructor (options?: Options)
 
   public on (event: 'error', callback: (event: Error) => void): void
@@ -80,7 +80,8 @@ export declare class Webhooks {
   public middleware (request: http.IncomingMessage, response: http.ServerResponse, next?: (err?: any) => void): void | Promise<void>
 }
 
-export = Webhooks
+export default Webhooks
+export { Webhooks }
 `;
 
 const filepath = "index.d.ts";
