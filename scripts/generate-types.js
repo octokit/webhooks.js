@@ -1,6 +1,8 @@
 const fs = require("fs");
 
-const { pascalCase } = require("pascal-case");
+const {
+  pascalCase
+} = require("pascal-case");
 const prettier = require("prettier");
 const TypeWriter = require("@gimenete/type-writer");
 const webhooks = require("@octokit/webhooks-definitions");
@@ -8,7 +10,11 @@ const webhooks = require("@octokit/webhooks-definitions");
 const signatures = [];
 const tw = new TypeWriter();
 
-webhooks.forEach(({ name, actions, examples }) => {
+webhooks.forEach(({
+  name,
+  actions,
+  examples
+}) => {
   if (!examples) {
     return;
   }
@@ -20,8 +26,7 @@ webhooks.forEach(({ name, actions, examples }) => {
       [`${typeName}.repository`]: "PayloadRepository",
       // This prevents a naming colision between the payload of a `installation_repositories` event
       // and the `repositories` attribute of a `installation` event
-      "WebhookPayloadInstallation.repositories":
-        "WebhookPayloadInstallation_Repositories",
+      "WebhookPayloadInstallation.repositories": "WebhookPayloadInstallation_Repositories",
     },
   });
 
@@ -59,7 +64,7 @@ declare namespace Webhooks {
   }
 }
 
-declare class Webhooks {
+export declare class Webhooks {
   constructor (options?: Options)
 
   public on (event: 'error', callback: (event: Error) => void): void
@@ -79,5 +84,7 @@ export = Webhooks
 `;
 
 const filepath = "index.d.ts";
-const output = prettier.format(definition, { filepath });
+const output = prettier.format(definition, {
+  filepath
+});
 fs.writeFileSync(filepath, output);

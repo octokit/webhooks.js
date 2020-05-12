@@ -4496,7 +4496,7 @@ declare namespace Webhooks {
   }
 }
 
-declare class Webhooks {
+export declare class Webhooks {
   constructor(options?: Options);
 
   public on(event: "error", callback: (event: Error) => void): void;

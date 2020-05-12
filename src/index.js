@@ -36,6 +36,6 @@ function createWebhooksApi(options) {
 
 module.exports.createEventHandler = createEventHandler;
 module.exports.createMiddleware = createMiddleware;
-module.exports.createWebhooksApi = createWebhooksApi;
+module.exports.Webhooks = createWebhooksApi;
 module.exports.sign = sign;
 module.exports.verify = verify;
