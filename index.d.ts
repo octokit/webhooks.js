@@ -5001,4 +5001,7 @@ declare class Webhooks {
   ): void | Promise<void>;
 }
 
-export = Webhooks;
+export function createWebhooksApi(options?: Options);
+
+export default Webhooks;
+export { Webhooks };

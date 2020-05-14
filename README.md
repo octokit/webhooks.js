@@ -19,8 +19,8 @@ Note that while setting a secret is optional on GitHub, it is required to be set
 
 ```js
 // install with: npm install @octokit/webhooks
-const WebhooksApi = require("@octokit/webhooks");
-const webhooks = new WebhooksApi({
+const { Webhooks } = require("@octokit/webhooks");
+const webhooks = new Webhooks({
   secret: "mysecret",
 });
 
@@ -263,8 +263,8 @@ Additionally, if verification fails, rejects return promise and emits an `error`
 Example
 
 ```js
-const WebhooksApi = require("@octokit/webhooks");
-const webhooks = new WebhooksApi({
+const { Webhooks } = require("@octokit/webhooks");
+const webhooks = new Webhooks({
   secret: "mysecret",
 });
 eventHandler.on("error", handleSignatureVerificationError);
