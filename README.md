@@ -19,8 +19,8 @@ Note that while setting a secret is optional on GitHub, it is required to be set
 
 ```js
 // install with: npm install @octokit/webhooks
-const WebhooksApi = require("@octokit/webhooks");
-const webhooks = new WebhooksApi({
+const { Webhooks } = require("@octokit/webhooks");
+const webhooks = new Webhooks({
   secret: "mysecret",
 });
 
@@ -61,18 +61,23 @@ source.onmessage = (event) => {
 
 ## API
 
-1. [Constructor](#constructor)
-2. [webhooks.sign()](#webhookssign)
-3. [webhooks.verify()](#webhooksverify)
-4. [webhooks.verifyAndReceive()](#webhooksverifyandreceive)
-5. [webhooks.receive()](#webhooksreceive)
-6. [webhooks.on()](#webhookson)
-7. [webhooks.removeListener()](#webhooksremoveListener)
-8. [webhooks.middleware()](#webhooksmiddleware)
-9. [Webhook events](#webhook-events)
-10. [Special events](#special-events)
-    1. [`*` wildcard event](#-wildcard-event)
-    1. [`error` event](#error-event)
+- [@octokit/webhooks](#octokitwebhooks)
+  - [Example](#example)
+  - [Local development](#local-development)
+  - [API](#api)
+    - [Constructor](#constructor)
+    - [webhooks.sign()](#webhookssign)
+    - [webhooks.verify()](#webhooksverify)
+    - [webhooks.verifyAndReceive()](#webhooksverifyandreceive)
+    - [webhooks.receive()](#webhooksreceive)
+    - [webhooks.on()](#webhookson)
+    - [webhooks.removeListener()](#webhooksremovelistener)
+    - [webhooks.middleware()](#webhooksmiddleware)
+    - [Webhook events](#webhook-events)
+    - [Special events](#special-events)
+      - [`*` wildcard event](#wildcard-event)
+      - [`error` event](#error-event)
+  - [License](#license)
 
 ### Constructor
 
@@ -263,8 +268,8 @@ Additionally, if verification fails, rejects return promise and emits an `error`
 Example
 
 ```js
-const WebhooksApi = require("@octokit/webhooks");
-const webhooks = new WebhooksApi({
+const { Webhooks } = require("@octokit/webhooks");
+const webhooks = new Webhooks({
   secret: "mysecret",
 });
 eventHandler.on("error", handleSignatureVerificationError);
