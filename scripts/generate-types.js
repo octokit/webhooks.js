@@ -75,8 +75,10 @@ declare class Webhooks {
   public middleware (request: http.IncomingMessage, response: http.ServerResponse, next?: (err?: any) => void): void | Promise<void>
 }
 
-export default Webhooks
-export { Webhooks }
+export function createWebhooksApi(options?: Options);
+
+export default Webhooks;
+export { Webhooks };
 `;
 
 const filepath = "index.d.ts";
