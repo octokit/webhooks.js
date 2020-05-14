@@ -1,10 +1,30 @@
 const test = require("tap").test;
 const { mock } = require("simple-mock");
 
-test("@octokit/webhooks", (t) => {
+test("@octokit/webhooks (new Webhooks())", (t) => {
   const emitWarningMock = mock(process, "emitWarning");
   const Webhooks = require("../../");
   const api = new Webhooks({
+    secret: "mysecret",
+  });
+
+  t.true(emitWarningMock.called);
+  t.equals(emitWarningMock.callCount, 1);
+  t.type(api.sign, "function");
+  t.type(api.verify, "function");
+  t.type(api.on, "function");
+  t.type(api.removeListener, "function");
+  t.type(api.receive, "function");
+  t.type(api.middleware, "function");
+  t.type(api.verifyAndReceive, "function");
+
+  t.end();
+});
+
+test("@octokit/webhooks (createWebhooksApi())", (t) => {
+  const emitWarningMock = mock(process, "emitWarning");
+  const { createWebhooksApi } = require("../../");
+  const api = createWebhooksApi({
     secret: "mysecret",
   });
 
