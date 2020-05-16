@@ -4707,6 +4707,153 @@ type WebhookPayloadTeamAddEventTypeKeys = "team_add";
 type WebhookPayloadWatchEventTypeKeys = "watch" | "watch.started";
 type WebhookPayloadPingEventTypeKeys = "ping";
 
+type AllEventTypes =
+  | WebhookPayloadCheckRunEventTypeKeys
+  | WebhookPayloadCheckSuiteEventTypeKeys
+  | WebhookPayloadCommitCommentEventTypeKeys
+  | WebhookPayloadContentReferenceEventTypeKeys
+  | WebhookPayloadCreateEventTypeKeys
+  | WebhookPayloadDeleteEventTypeKeys
+  | WebhookPayloadDeployKeyEventTypeKeys
+  | WebhookPayloadDeploymentEventTypeKeys
+  | WebhookPayloadDeploymentStatusEventTypeKeys
+  | WebhookPayloadForkEventTypeKeys
+  | WebhookPayloadGithubAppAuthorizationEventTypeKeys
+  | WebhookPayloadGollumEventTypeKeys
+  | WebhookPayloadInstallationEventTypeKeys
+  | WebhookPayloadInstallationRepositoriesEventTypeKeys
+  | WebhookPayloadIssueCommentEventTypeKeys
+  | WebhookPayloadIssuesEventTypeKeys
+  | WebhookPayloadLabelEventTypeKeys
+  | WebhookPayloadMarketplacePurchaseEventTypeKeys
+  | WebhookPayloadMemberEventTypeKeys
+  | WebhookPayloadMembershipEventTypeKeys
+  | WebhookPayloadMetaEventTypeKeys
+  | WebhookPayloadMilestoneEventTypeKeys
+  | WebhookPayloadOrganizationEventTypeKeys
+  | WebhookPayloadOrgBlockEventTypeKeys
+  | WebhookPayloadPackageEventTypeKeys
+  | WebhookPayloadPageBuildEventTypeKeys
+  | WebhookPayloadProjectCardEventTypeKeys
+  | WebhookPayloadProjectColumnEventTypeKeys
+  | WebhookPayloadProjectEventTypeKeys
+  | WebhookPayloadPublicEventTypeKeys
+  | WebhookPayloadPullRequestEventTypeKeys
+  | WebhookPayloadPullRequestReviewEventTypeKeys
+  | WebhookPayloadPullRequestReviewCommentEventTypeKeys
+  | WebhookPayloadPushEventTypeKeys
+  | WebhookPayloadReleaseEventTypeKeys
+  | WebhookPayloadRepositoryDispatchEventTypeKeys
+  | WebhookPayloadRepositoryEventTypeKeys
+  | WebhookPayloadRepositoryImportEventTypeKeys
+  | WebhookPayloadRepositoryVulnerabilityAlertEventTypeKeys
+  | WebhookPayloadSecurityAdvisoryEventTypeKeys
+  | WebhookPayloadSponsorshipEventTypeKeys
+  | WebhookPayloadStarEventTypeKeys
+  | WebhookPayloadStatusEventTypeKeys
+  | WebhookPayloadTeamEventTypeKeys
+  | WebhookPayloadTeamAddEventTypeKeys
+  | WebhookPayloadWatchEventTypeKeys
+  | WebhookPayloadPingEventTypeKeys;
+
+type GetWebhookPayloadTypeFromEvent<
+  T
+> = T extends WebhookPayloadCheckRunEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadCheckRun>
+  : T extends WebhookPayloadCheckSuiteEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadCheckSuite>
+  : T extends WebhookPayloadCommitCommentEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadCommitComment>
+  : T extends WebhookPayloadContentReferenceEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadContentReference>
+  : T extends WebhookPayloadCreateEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadCreate>
+  : T extends WebhookPayloadDeleteEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadDelete>
+  : T extends WebhookPayloadDeployKeyEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeployKey>
+  : T extends WebhookPayloadDeploymentEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeployment>
+  : T extends WebhookPayloadDeploymentStatusEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeploymentStatus>
+  : T extends WebhookPayloadForkEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadFork>
+  : T extends WebhookPayloadGithubAppAuthorizationEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadGithubAppAuthorization>
+  : T extends WebhookPayloadGollumEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadGollum>
+  : T extends WebhookPayloadInstallationEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadInstallation>
+  : T extends WebhookPayloadInstallationRepositoriesEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadInstallationRepositories>
+  : T extends WebhookPayloadIssueCommentEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadIssueComment>
+  : T extends WebhookPayloadIssuesEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadIssues>
+  : T extends WebhookPayloadLabelEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadLabel>
+  : T extends WebhookPayloadMarketplacePurchaseEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadMarketplacePurchase>
+  : T extends WebhookPayloadMemberEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadMember>
+  : T extends WebhookPayloadMembershipEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadMembership>
+  : T extends WebhookPayloadMetaEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadMeta>
+  : T extends WebhookPayloadMilestoneEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadMilestone>
+  : T extends WebhookPayloadOrganizationEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadOrganization>
+  : T extends WebhookPayloadOrgBlockEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadOrgBlock>
+  : T extends WebhookPayloadPackageEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadPackage>
+  : T extends WebhookPayloadPageBuildEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadPageBuild>
+  : T extends WebhookPayloadProjectCardEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadProjectCard>
+  : T extends WebhookPayloadProjectColumnEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadProjectColumn>
+  : T extends WebhookPayloadProjectEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadProject>
+  : T extends WebhookPayloadPublicEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadPublic>
+  : T extends WebhookPayloadPullRequestEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadPullRequest>
+  : T extends WebhookPayloadPullRequestReviewEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadPullRequestReview>
+  : T extends WebhookPayloadPullRequestReviewCommentEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadPullRequestReviewComment>
+  : T extends WebhookPayloadPushEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadPush>
+  : T extends WebhookPayloadReleaseEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadRelease>
+  : T extends WebhookPayloadRepositoryDispatchEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepositoryDispatch>
+  : T extends WebhookPayloadRepositoryEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepository>
+  : T extends WebhookPayloadRepositoryImportEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepositoryImport>
+  : T extends WebhookPayloadRepositoryVulnerabilityAlertEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepositoryVulnerabilityAlert>
+  : T extends WebhookPayloadSecurityAdvisoryEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadSecurityAdvisory>
+  : T extends WebhookPayloadSponsorshipEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadSponsorship>
+  : T extends WebhookPayloadStarEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadStar>
+  : T extends WebhookPayloadStatusEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadStatus>
+  : T extends WebhookPayloadTeamEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadTeam>
+  : T extends WebhookPayloadTeamAddEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadTeamAdd>
+  : T extends WebhookPayloadWatchEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadWatch>
+  : T extends WebhookPayloadPingEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadPing>
+  : never;
+
 declare class Webhooks {
   constructor(options?: Options);
 
@@ -4717,424 +4864,392 @@ declare class Webhooks {
   ): void;
 
   public on(
-    event:
-      | WebhookPayloadCheckRunEventTypeKeys
-      | WebhookPayloadCheckRunEventTypeKeys[],
+    event: WebhookPayloadCheckRunEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCheckRun>
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadCheckRunEventTypeKeys>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event:
-      | WebhookPayloadCheckSuiteEventTypeKeys
-      | WebhookPayloadCheckSuiteEventTypeKeys[],
+    event: WebhookPayloadCheckSuiteEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCheckSuite>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadCommitCommentEventTypeKeys
-      | WebhookPayloadCommitCommentEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCommitComment>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadContentReferenceEventTypeKeys
-      | WebhookPayloadContentReferenceEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadContentReference>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadCreateEventTypeKeys
-      | WebhookPayloadCreateEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCreate>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadDeleteEventTypeKeys
-      | WebhookPayloadDeleteEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDelete>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadDeployKeyEventTypeKeys
-      | WebhookPayloadDeployKeyEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeployKey>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadDeploymentEventTypeKeys
-      | WebhookPayloadDeploymentEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeployment>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadDeploymentStatusEventTypeKeys
-      | WebhookPayloadDeploymentStatusEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeploymentStatus>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: WebhookPayloadForkEventTypeKeys | WebhookPayloadForkEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadFork>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadGithubAppAuthorizationEventTypeKeys
-      | WebhookPayloadGithubAppAuthorizationEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<
-        Webhooks.WebhookPayloadGithubAppAuthorization
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadCheckSuiteEventTypeKeys
       >
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event:
-      | WebhookPayloadGollumEventTypeKeys
-      | WebhookPayloadGollumEventTypeKeys[],
+    event: WebhookPayloadCommitCommentEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadGollum>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadInstallationEventTypeKeys
-      | WebhookPayloadInstallationEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadInstallation>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadInstallationRepositoriesEventTypeKeys
-      | WebhookPayloadInstallationRepositoriesEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<
-        Webhooks.WebhookPayloadInstallationRepositories
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadCommitCommentEventTypeKeys
       >
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event:
-      | WebhookPayloadIssueCommentEventTypeKeys
-      | WebhookPayloadIssueCommentEventTypeKeys[],
+    event: WebhookPayloadContentReferenceEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadIssueComment>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadIssuesEventTypeKeys
-      | WebhookPayloadIssuesEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadIssues>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadLabelEventTypeKeys
-      | WebhookPayloadLabelEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadLabel>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadMarketplacePurchaseEventTypeKeys
-      | WebhookPayloadMarketplacePurchaseEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMarketplacePurchase>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadMemberEventTypeKeys
-      | WebhookPayloadMemberEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMember>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadMembershipEventTypeKeys
-      | WebhookPayloadMembershipEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMembership>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: WebhookPayloadMetaEventTypeKeys | WebhookPayloadMetaEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMeta>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadMilestoneEventTypeKeys
-      | WebhookPayloadMilestoneEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMilestone>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadOrganizationEventTypeKeys
-      | WebhookPayloadOrganizationEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadOrganization>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadOrgBlockEventTypeKeys
-      | WebhookPayloadOrgBlockEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadOrgBlock>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadPackageEventTypeKeys
-      | WebhookPayloadPackageEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPackage>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadPageBuildEventTypeKeys
-      | WebhookPayloadPageBuildEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPageBuild>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadProjectCardEventTypeKeys
-      | WebhookPayloadProjectCardEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadProjectCard>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadProjectColumnEventTypeKeys
-      | WebhookPayloadProjectColumnEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadProjectColumn>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadProjectEventTypeKeys
-      | WebhookPayloadProjectEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadProject>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadPublicEventTypeKeys
-      | WebhookPayloadPublicEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPublic>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadPullRequestEventTypeKeys
-      | WebhookPayloadPullRequestEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPullRequest>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadPullRequestReviewEventTypeKeys
-      | WebhookPayloadPullRequestReviewEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPullRequestReview>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadPullRequestReviewCommentEventTypeKeys
-      | WebhookPayloadPullRequestReviewCommentEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<
-        Webhooks.WebhookPayloadPullRequestReviewComment
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadContentReferenceEventTypeKeys
       >
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: WebhookPayloadPushEventTypeKeys | WebhookPayloadPushEventTypeKeys[],
+    event: WebhookPayloadCreateEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPush>
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadCreateEventTypeKeys>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event:
-      | WebhookPayloadReleaseEventTypeKeys
-      | WebhookPayloadReleaseEventTypeKeys[],
+    event: WebhookPayloadDeleteEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRelease>
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadDeleteEventTypeKeys>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event:
-      | WebhookPayloadRepositoryDispatchEventTypeKeys
-      | WebhookPayloadRepositoryDispatchEventTypeKeys[],
+    event: WebhookPayloadDeployKeyEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepositoryDispatch>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadRepositoryEventTypeKeys
-      | WebhookPayloadRepositoryEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepository>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadRepositoryImportEventTypeKeys
-      | WebhookPayloadRepositoryImportEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepositoryImport>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event:
-      | WebhookPayloadRepositoryVulnerabilityAlertEventTypeKeys
-      | WebhookPayloadRepositoryVulnerabilityAlertEventTypeKeys[],
-    callback: (
-      event: Webhooks.WebhookEvent<
-        Webhooks.WebhookPayloadRepositoryVulnerabilityAlert
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadDeployKeyEventTypeKeys
       >
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event:
-      | WebhookPayloadSecurityAdvisoryEventTypeKeys
-      | WebhookPayloadSecurityAdvisoryEventTypeKeys[],
+    event: WebhookPayloadDeploymentEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadSecurityAdvisory>
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadDeploymentEventTypeKeys
+      >
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event:
-      | WebhookPayloadSponsorshipEventTypeKeys
-      | WebhookPayloadSponsorshipEventTypeKeys[],
+    event: WebhookPayloadDeploymentStatusEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadSponsorship>
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadDeploymentStatusEventTypeKeys
+      >
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: WebhookPayloadStarEventTypeKeys | WebhookPayloadStarEventTypeKeys[],
+    event: WebhookPayloadForkEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadStar>
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadForkEventTypeKeys>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event:
-      | WebhookPayloadStatusEventTypeKeys
-      | WebhookPayloadStatusEventTypeKeys[],
+    event: WebhookPayloadGithubAppAuthorizationEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadStatus>
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadGithubAppAuthorizationEventTypeKeys
+      >
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: WebhookPayloadTeamEventTypeKeys | WebhookPayloadTeamEventTypeKeys[],
+    event: WebhookPayloadGollumEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadTeam>
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadGollumEventTypeKeys>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event:
-      | WebhookPayloadTeamAddEventTypeKeys
-      | WebhookPayloadTeamAddEventTypeKeys[],
+    event: WebhookPayloadInstallationEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadTeamAdd>
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadInstallationEventTypeKeys
+      >
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event:
-      | WebhookPayloadWatchEventTypeKeys
-      | WebhookPayloadWatchEventTypeKeys[],
+    event: WebhookPayloadInstallationRepositoriesEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadWatch>
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadInstallationRepositoriesEventTypeKeys
+      >
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: WebhookPayloadPingEventTypeKeys | WebhookPayloadPingEventTypeKeys[],
+    event: WebhookPayloadIssueCommentEventTypeKeys,
     callback: (
-      event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPing>
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadIssueCommentEventTypeKeys
+      >
     ) => Promise<void> | void
   ): void;
 
+  public on(
+    event: WebhookPayloadIssuesEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadIssuesEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadLabelEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadLabelEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadMarketplacePurchaseEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadMarketplacePurchaseEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadMemberEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadMemberEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadMembershipEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadMembershipEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadMetaEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadMetaEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadMilestoneEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadMilestoneEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadOrganizationEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadOrganizationEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadOrgBlockEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadOrgBlockEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadPackageEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadPackageEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadPageBuildEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadPageBuildEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadProjectCardEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadProjectCardEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadProjectColumnEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadProjectColumnEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadProjectEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadProjectEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadPublicEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadPublicEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadPullRequestEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadPullRequestEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadPullRequestReviewEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadPullRequestReviewEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadPullRequestReviewCommentEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadPullRequestReviewCommentEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadPushEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadPushEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadReleaseEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadReleaseEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadRepositoryDispatchEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadRepositoryDispatchEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadRepositoryEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadRepositoryEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadRepositoryImportEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadRepositoryImportEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadRepositoryVulnerabilityAlertEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadRepositoryVulnerabilityAlertEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadSecurityAdvisoryEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadSecurityAdvisoryEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadSponsorshipEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<
+        WebhookPayloadSponsorshipEventTypeKeys
+      >
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadStarEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadStarEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadStatusEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadStatusEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadTeamEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadTeamEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadTeamAddEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadTeamAddEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadWatchEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadWatchEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: WebhookPayloadPingEventTypeKeys,
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<WebhookPayloadPingEventTypeKeys>
+    ) => Promise<void> | void
+  ): void;
+
+  public on(
+    event: AllEventTypes[],
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<AllEventTypes>
+    ) => Promise<void> | void
+  ): void;
   public sign(data: any): string;
   public verify(eventPayload: any, signature: string): boolean;
   public verifyAndReceive(options: {
