@@ -11,217 +11,6 @@ type Options = {
   ) => Webhooks.WebhookEvent<any> & { [key: string]: any };
 };
 
-type WebhookPayloadCheckRunEventTypeKeys =
-  | "check_run"
-  | "check_run.completed"
-  | "check_run.created"
-  | "check_run.requested_action"
-  | "check_run.rerequested";
-type WebhookPayloadCheckSuiteEventTypeKeys =
-  | "check_suite"
-  | "check_suite.completed"
-  | "check_suite.requested"
-  | "check_suite.rerequested";
-type WebhookPayloadCommitCommentEventTypeKeys =
-  | "commit_comment"
-  | "commit_comment.created";
-type WebhookPayloadContentReferenceEventTypeKeys =
-  | "content_reference"
-  | "content_reference.created";
-type WebhookPayloadCreateEventTypeKeys = "create";
-type WebhookPayloadDeleteEventTypeKeys = "delete";
-type WebhookPayloadDeployKeyEventTypeKeys =
-  | "deploy_key"
-  | "deploy_key.created"
-  | "deploy_key.deleted";
-type WebhookPayloadDeploymentEventTypeKeys =
-  | "deployment"
-  | "deployment.created";
-type WebhookPayloadDeploymentStatusEventTypeKeys =
-  | "deployment_status"
-  | "deployment_status.created";
-type WebhookPayloadForkEventTypeKeys = "fork";
-type WebhookPayloadGithubAppAuthorizationEventTypeKeys =
-  | "github_app_authorization"
-  | "github_app_authorization.revoked";
-type WebhookPayloadGollumEventTypeKeys = "gollum";
-type WebhookPayloadInstallationEventTypeKeys =
-  | "installation"
-  | "installation.created"
-  | "installation.deleted"
-  | "installation.new_permissions_accepted"
-  | "installation.suspend"
-  | "installation.unsuspend";
-type WebhookPayloadInstallationRepositoriesEventTypeKeys =
-  | "installation_repositories"
-  | "installation_repositories.added"
-  | "installation_repositories.removed";
-type WebhookPayloadIssueCommentEventTypeKeys =
-  | "issue_comment"
-  | "issue_comment.created"
-  | "issue_comment.deleted"
-  | "issue_comment.edited";
-type WebhookPayloadIssuesEventTypeKeys =
-  | "issues"
-  | "issues.assigned"
-  | "issues.closed"
-  | "issues.deleted"
-  | "issues.demilestoned"
-  | "issues.edited"
-  | "issues.labeled"
-  | "issues.locked"
-  | "issues.milestoned"
-  | "issues.opened"
-  | "issues.pinned"
-  | "issues.reopened"
-  | "issues.transferred"
-  | "issues.unassigned"
-  | "issues.unlabeled"
-  | "issues.unlocked"
-  | "issues.unpinned";
-type WebhookPayloadLabelEventTypeKeys =
-  | "label"
-  | "label.created"
-  | "label.deleted"
-  | "label.edited";
-type WebhookPayloadMarketplacePurchaseEventTypeKeys =
-  | "marketplace_purchase"
-  | "marketplace_purchase.cancelled"
-  | "marketplace_purchase.changed"
-  | "marketplace_purchase.pending_change"
-  | "marketplace_purchase.pending_change_cancelled"
-  | "marketplace_purchase.purchased";
-type WebhookPayloadMemberEventTypeKeys =
-  | "member"
-  | "member.added"
-  | "member.edited"
-  | "member.removed";
-type WebhookPayloadMembershipEventTypeKeys =
-  | "membership"
-  | "membership.added"
-  | "membership.removed";
-type WebhookPayloadMetaEventTypeKeys = "meta" | "meta.deleted";
-type WebhookPayloadMilestoneEventTypeKeys =
-  | "milestone"
-  | "milestone.closed"
-  | "milestone.created"
-  | "milestone.deleted"
-  | "milestone.edited"
-  | "milestone.opened";
-type WebhookPayloadOrganizationEventTypeKeys =
-  | "organization"
-  | "organization.deleted"
-  | "organization.member_added"
-  | "organization.member_invited"
-  | "organization.member_removed"
-  | "organization.renamed";
-type WebhookPayloadOrgBlockEventTypeKeys =
-  | "org_block"
-  | "org_block.blocked"
-  | "org_block.unblocked";
-type WebhookPayloadPackageEventTypeKeys =
-  | "package"
-  | "package.published"
-  | "package.updated";
-type WebhookPayloadPageBuildEventTypeKeys = "page_build";
-type WebhookPayloadProjectCardEventTypeKeys =
-  | "project_card"
-  | "project_card.converted"
-  | "project_card.created"
-  | "project_card.deleted"
-  | "project_card.edited"
-  | "project_card.moved";
-type WebhookPayloadProjectColumnEventTypeKeys =
-  | "project_column"
-  | "project_column.created"
-  | "project_column.deleted"
-  | "project_column.edited"
-  | "project_column.moved";
-type WebhookPayloadProjectEventTypeKeys =
-  | "project"
-  | "project.closed"
-  | "project.created"
-  | "project.deleted"
-  | "project.edited"
-  | "project.reopened";
-type WebhookPayloadPublicEventTypeKeys = "public";
-type WebhookPayloadPullRequestEventTypeKeys =
-  | "pull_request"
-  | "pull_request.assigned"
-  | "pull_request.closed"
-  | "pull_request.edited"
-  | "pull_request.labeled"
-  | "pull_request.locked"
-  | "pull_request.opened"
-  | "pull_request.ready_for_review"
-  | "pull_request.reopened"
-  | "pull_request.review_request_removed"
-  | "pull_request.review_requested"
-  | "pull_request.synchronize"
-  | "pull_request.unassigned"
-  | "pull_request.unlabeled"
-  | "pull_request.unlocked";
-type WebhookPayloadPullRequestReviewEventTypeKeys =
-  | "pull_request_review"
-  | "pull_request_review.dismissed"
-  | "pull_request_review.edited"
-  | "pull_request_review.submitted";
-type WebhookPayloadPullRequestReviewCommentEventTypeKeys =
-  | "pull_request_review_comment"
-  | "pull_request_review_comment.created"
-  | "pull_request_review_comment.deleted"
-  | "pull_request_review_comment.edited";
-type WebhookPayloadPushEventTypeKeys = "push";
-type WebhookPayloadReleaseEventTypeKeys =
-  | "release"
-  | "release.created"
-  | "release.deleted"
-  | "release.edited"
-  | "release.prereleased"
-  | "release.published"
-  | "release.unpublished";
-type WebhookPayloadRepositoryDispatchEventTypeKeys =
-  | "repository_dispatch"
-  | "repository_dispatch.on-demand-test";
-type WebhookPayloadRepositoryEventTypeKeys =
-  | "repository"
-  | "repository.archived"
-  | "repository.created"
-  | "repository.deleted"
-  | "repository.edited"
-  | "repository.privatized"
-  | "repository.publicized"
-  | "repository.renamed"
-  | "repository.transferred"
-  | "repository.unarchived";
-type WebhookPayloadRepositoryImportEventTypeKeys = "repository_import";
-type WebhookPayloadRepositoryVulnerabilityAlertEventTypeKeys =
-  | "repository_vulnerability_alert"
-  | "repository_vulnerability_alert.create"
-  | "repository_vulnerability_alert.dismiss"
-  | "repository_vulnerability_alert.resolve";
-type WebhookPayloadSecurityAdvisoryEventTypeKeys =
-  | "security_advisory"
-  | "security_advisory.performed"
-  | "security_advisory.published"
-  | "security_advisory.updated";
-type WebhookPayloadSponsorshipEventTypeKeys =
-  | "sponsorship"
-  | "sponsorship.created"
-  | "sponsorship.pending_tier_change";
-type WebhookPayloadStarEventTypeKeys = "star" | "star.created" | "star.deleted";
-type WebhookPayloadStatusEventTypeKeys = "status";
-type WebhookPayloadTeamEventTypeKeys =
-  | "team"
-  | "team.added_to_repository"
-  | "team.created"
-  | "team.deleted"
-  | "team.edited"
-  | "team.removed_from_repository";
-type WebhookPayloadTeamAddEventTypeKeys = "team_add";
-type WebhookPayloadWatchEventTypeKeys = "watch" | "watch.started";
-type WebhookPayloadPingEventTypeKeys = "ping";
-
 declare namespace Webhooks {
   type WebhookPayloadPingPayloadHookConfig = {
     content_type: string;
@@ -4706,6 +4495,217 @@ declare namespace Webhooks {
     url?: string;
   }
 }
+
+type WebhookPayloadCheckRunEventTypeKeys =
+  | "check_run"
+  | "check_run.completed"
+  | "check_run.created"
+  | "check_run.requested_action"
+  | "check_run.rerequested";
+type WebhookPayloadCheckSuiteEventTypeKeys =
+  | "check_suite"
+  | "check_suite.completed"
+  | "check_suite.requested"
+  | "check_suite.rerequested";
+type WebhookPayloadCommitCommentEventTypeKeys =
+  | "commit_comment"
+  | "commit_comment.created";
+type WebhookPayloadContentReferenceEventTypeKeys =
+  | "content_reference"
+  | "content_reference.created";
+type WebhookPayloadCreateEventTypeKeys = "create";
+type WebhookPayloadDeleteEventTypeKeys = "delete";
+type WebhookPayloadDeployKeyEventTypeKeys =
+  | "deploy_key"
+  | "deploy_key.created"
+  | "deploy_key.deleted";
+type WebhookPayloadDeploymentEventTypeKeys =
+  | "deployment"
+  | "deployment.created";
+type WebhookPayloadDeploymentStatusEventTypeKeys =
+  | "deployment_status"
+  | "deployment_status.created";
+type WebhookPayloadForkEventTypeKeys = "fork";
+type WebhookPayloadGithubAppAuthorizationEventTypeKeys =
+  | "github_app_authorization"
+  | "github_app_authorization.revoked";
+type WebhookPayloadGollumEventTypeKeys = "gollum";
+type WebhookPayloadInstallationEventTypeKeys =
+  | "installation"
+  | "installation.created"
+  | "installation.deleted"
+  | "installation.new_permissions_accepted"
+  | "installation.suspend"
+  | "installation.unsuspend";
+type WebhookPayloadInstallationRepositoriesEventTypeKeys =
+  | "installation_repositories"
+  | "installation_repositories.added"
+  | "installation_repositories.removed";
+type WebhookPayloadIssueCommentEventTypeKeys =
+  | "issue_comment"
+  | "issue_comment.created"
+  | "issue_comment.deleted"
+  | "issue_comment.edited";
+type WebhookPayloadIssuesEventTypeKeys =
+  | "issues"
+  | "issues.assigned"
+  | "issues.closed"
+  | "issues.deleted"
+  | "issues.demilestoned"
+  | "issues.edited"
+  | "issues.labeled"
+  | "issues.locked"
+  | "issues.milestoned"
+  | "issues.opened"
+  | "issues.pinned"
+  | "issues.reopened"
+  | "issues.transferred"
+  | "issues.unassigned"
+  | "issues.unlabeled"
+  | "issues.unlocked"
+  | "issues.unpinned";
+type WebhookPayloadLabelEventTypeKeys =
+  | "label"
+  | "label.created"
+  | "label.deleted"
+  | "label.edited";
+type WebhookPayloadMarketplacePurchaseEventTypeKeys =
+  | "marketplace_purchase"
+  | "marketplace_purchase.cancelled"
+  | "marketplace_purchase.changed"
+  | "marketplace_purchase.pending_change"
+  | "marketplace_purchase.pending_change_cancelled"
+  | "marketplace_purchase.purchased";
+type WebhookPayloadMemberEventTypeKeys =
+  | "member"
+  | "member.added"
+  | "member.edited"
+  | "member.removed";
+type WebhookPayloadMembershipEventTypeKeys =
+  | "membership"
+  | "membership.added"
+  | "membership.removed";
+type WebhookPayloadMetaEventTypeKeys = "meta" | "meta.deleted";
+type WebhookPayloadMilestoneEventTypeKeys =
+  | "milestone"
+  | "milestone.closed"
+  | "milestone.created"
+  | "milestone.deleted"
+  | "milestone.edited"
+  | "milestone.opened";
+type WebhookPayloadOrganizationEventTypeKeys =
+  | "organization"
+  | "organization.deleted"
+  | "organization.member_added"
+  | "organization.member_invited"
+  | "organization.member_removed"
+  | "organization.renamed";
+type WebhookPayloadOrgBlockEventTypeKeys =
+  | "org_block"
+  | "org_block.blocked"
+  | "org_block.unblocked";
+type WebhookPayloadPackageEventTypeKeys =
+  | "package"
+  | "package.published"
+  | "package.updated";
+type WebhookPayloadPageBuildEventTypeKeys = "page_build";
+type WebhookPayloadProjectCardEventTypeKeys =
+  | "project_card"
+  | "project_card.converted"
+  | "project_card.created"
+  | "project_card.deleted"
+  | "project_card.edited"
+  | "project_card.moved";
+type WebhookPayloadProjectColumnEventTypeKeys =
+  | "project_column"
+  | "project_column.created"
+  | "project_column.deleted"
+  | "project_column.edited"
+  | "project_column.moved";
+type WebhookPayloadProjectEventTypeKeys =
+  | "project"
+  | "project.closed"
+  | "project.created"
+  | "project.deleted"
+  | "project.edited"
+  | "project.reopened";
+type WebhookPayloadPublicEventTypeKeys = "public";
+type WebhookPayloadPullRequestEventTypeKeys =
+  | "pull_request"
+  | "pull_request.assigned"
+  | "pull_request.closed"
+  | "pull_request.edited"
+  | "pull_request.labeled"
+  | "pull_request.locked"
+  | "pull_request.opened"
+  | "pull_request.ready_for_review"
+  | "pull_request.reopened"
+  | "pull_request.review_request_removed"
+  | "pull_request.review_requested"
+  | "pull_request.synchronize"
+  | "pull_request.unassigned"
+  | "pull_request.unlabeled"
+  | "pull_request.unlocked";
+type WebhookPayloadPullRequestReviewEventTypeKeys =
+  | "pull_request_review"
+  | "pull_request_review.dismissed"
+  | "pull_request_review.edited"
+  | "pull_request_review.submitted";
+type WebhookPayloadPullRequestReviewCommentEventTypeKeys =
+  | "pull_request_review_comment"
+  | "pull_request_review_comment.created"
+  | "pull_request_review_comment.deleted"
+  | "pull_request_review_comment.edited";
+type WebhookPayloadPushEventTypeKeys = "push";
+type WebhookPayloadReleaseEventTypeKeys =
+  | "release"
+  | "release.created"
+  | "release.deleted"
+  | "release.edited"
+  | "release.prereleased"
+  | "release.published"
+  | "release.unpublished";
+type WebhookPayloadRepositoryDispatchEventTypeKeys =
+  | "repository_dispatch"
+  | "repository_dispatch.on-demand-test";
+type WebhookPayloadRepositoryEventTypeKeys =
+  | "repository"
+  | "repository.archived"
+  | "repository.created"
+  | "repository.deleted"
+  | "repository.edited"
+  | "repository.privatized"
+  | "repository.publicized"
+  | "repository.renamed"
+  | "repository.transferred"
+  | "repository.unarchived";
+type WebhookPayloadRepositoryImportEventTypeKeys = "repository_import";
+type WebhookPayloadRepositoryVulnerabilityAlertEventTypeKeys =
+  | "repository_vulnerability_alert"
+  | "repository_vulnerability_alert.create"
+  | "repository_vulnerability_alert.dismiss"
+  | "repository_vulnerability_alert.resolve";
+type WebhookPayloadSecurityAdvisoryEventTypeKeys =
+  | "security_advisory"
+  | "security_advisory.performed"
+  | "security_advisory.published"
+  | "security_advisory.updated";
+type WebhookPayloadSponsorshipEventTypeKeys =
+  | "sponsorship"
+  | "sponsorship.created"
+  | "sponsorship.pending_tier_change";
+type WebhookPayloadStarEventTypeKeys = "star" | "star.created" | "star.deleted";
+type WebhookPayloadStatusEventTypeKeys = "status";
+type WebhookPayloadTeamEventTypeKeys =
+  | "team"
+  | "team.added_to_repository"
+  | "team.created"
+  | "team.deleted"
+  | "team.edited"
+  | "team.removed_from_repository";
+type WebhookPayloadTeamAddEventTypeKeys = "team_add";
+type WebhookPayloadWatchEventTypeKeys = "watch" | "watch.started";
+type WebhookPayloadPingEventTypeKeys = "ping";
 
 declare class Webhooks {
   constructor(options?: Options);

@@ -50,8 +50,6 @@ type Options = {
   transform?: (event: Webhooks.WebhookEvent<any>) => Webhooks.WebhookEvent<any> & { [key: string]: any }
 }
 
-${eventTypes.join("\n")}
-
 declare namespace Webhooks {
   ${tw.generate("typescript", { inlined: false })}
 
@@ -64,6 +62,8 @@ declare namespace Webhooks {
     url?: string
   }
 }
+
+${eventTypes.join("\n")}
 
 declare class Webhooks {
   constructor (options?: Options)
