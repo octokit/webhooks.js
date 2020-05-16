@@ -11,6 +11,217 @@ type Options = {
   ) => Webhooks.WebhookEvent<any> & { [key: string]: any };
 };
 
+type WebhookPayloadCheckRunEventTypeKeys =
+  | "check_run"
+  | "check_run.completed"
+  | "check_run.created"
+  | "check_run.requested_action"
+  | "check_run.rerequested";
+type WebhookPayloadCheckSuiteEventTypeKeys =
+  | "check_suite"
+  | "check_suite.completed"
+  | "check_suite.requested"
+  | "check_suite.rerequested";
+type WebhookPayloadCommitCommentEventTypeKeys =
+  | "commit_comment"
+  | "commit_comment.created";
+type WebhookPayloadContentReferenceEventTypeKeys =
+  | "content_reference"
+  | "content_reference.created";
+type WebhookPayloadCreateEventTypeKeys = "create";
+type WebhookPayloadDeleteEventTypeKeys = "delete";
+type WebhookPayloadDeployKeyEventTypeKeys =
+  | "deploy_key"
+  | "deploy_key.created"
+  | "deploy_key.deleted";
+type WebhookPayloadDeploymentEventTypeKeys =
+  | "deployment"
+  | "deployment.created";
+type WebhookPayloadDeploymentStatusEventTypeKeys =
+  | "deployment_status"
+  | "deployment_status.created";
+type WebhookPayloadForkEventTypeKeys = "fork";
+type WebhookPayloadGithubAppAuthorizationEventTypeKeys =
+  | "github_app_authorization"
+  | "github_app_authorization.revoked";
+type WebhookPayloadGollumEventTypeKeys = "gollum";
+type WebhookPayloadInstallationEventTypeKeys =
+  | "installation"
+  | "installation.created"
+  | "installation.deleted"
+  | "installation.new_permissions_accepted"
+  | "installation.suspend"
+  | "installation.unsuspend";
+type WebhookPayloadInstallationRepositoriesEventTypeKeys =
+  | "installation_repositories"
+  | "installation_repositories.added"
+  | "installation_repositories.removed";
+type WebhookPayloadIssueCommentEventTypeKeys =
+  | "issue_comment"
+  | "issue_comment.created"
+  | "issue_comment.deleted"
+  | "issue_comment.edited";
+type WebhookPayloadIssuesEventTypeKeys =
+  | "issues"
+  | "issues.assigned"
+  | "issues.closed"
+  | "issues.deleted"
+  | "issues.demilestoned"
+  | "issues.edited"
+  | "issues.labeled"
+  | "issues.locked"
+  | "issues.milestoned"
+  | "issues.opened"
+  | "issues.pinned"
+  | "issues.reopened"
+  | "issues.transferred"
+  | "issues.unassigned"
+  | "issues.unlabeled"
+  | "issues.unlocked"
+  | "issues.unpinned";
+type WebhookPayloadLabelEventTypeKeys =
+  | "label"
+  | "label.created"
+  | "label.deleted"
+  | "label.edited";
+type WebhookPayloadMarketplacePurchaseEventTypeKeys =
+  | "marketplace_purchase"
+  | "marketplace_purchase.cancelled"
+  | "marketplace_purchase.changed"
+  | "marketplace_purchase.pending_change"
+  | "marketplace_purchase.pending_change_cancelled"
+  | "marketplace_purchase.purchased";
+type WebhookPayloadMemberEventTypeKeys =
+  | "member"
+  | "member.added"
+  | "member.edited"
+  | "member.removed";
+type WebhookPayloadMembershipEventTypeKeys =
+  | "membership"
+  | "membership.added"
+  | "membership.removed";
+type WebhookPayloadMetaEventTypeKeys = "meta" | "meta.deleted";
+type WebhookPayloadMilestoneEventTypeKeys =
+  | "milestone"
+  | "milestone.closed"
+  | "milestone.created"
+  | "milestone.deleted"
+  | "milestone.edited"
+  | "milestone.opened";
+type WebhookPayloadOrganizationEventTypeKeys =
+  | "organization"
+  | "organization.deleted"
+  | "organization.member_added"
+  | "organization.member_invited"
+  | "organization.member_removed"
+  | "organization.renamed";
+type WebhookPayloadOrgBlockEventTypeKeys =
+  | "org_block"
+  | "org_block.blocked"
+  | "org_block.unblocked";
+type WebhookPayloadPackageEventTypeKeys =
+  | "package"
+  | "package.published"
+  | "package.updated";
+type WebhookPayloadPageBuildEventTypeKeys = "page_build";
+type WebhookPayloadProjectCardEventTypeKeys =
+  | "project_card"
+  | "project_card.converted"
+  | "project_card.created"
+  | "project_card.deleted"
+  | "project_card.edited"
+  | "project_card.moved";
+type WebhookPayloadProjectColumnEventTypeKeys =
+  | "project_column"
+  | "project_column.created"
+  | "project_column.deleted"
+  | "project_column.edited"
+  | "project_column.moved";
+type WebhookPayloadProjectEventTypeKeys =
+  | "project"
+  | "project.closed"
+  | "project.created"
+  | "project.deleted"
+  | "project.edited"
+  | "project.reopened";
+type WebhookPayloadPublicEventTypeKeys = "public";
+type WebhookPayloadPullRequestEventTypeKeys =
+  | "pull_request"
+  | "pull_request.assigned"
+  | "pull_request.closed"
+  | "pull_request.edited"
+  | "pull_request.labeled"
+  | "pull_request.locked"
+  | "pull_request.opened"
+  | "pull_request.ready_for_review"
+  | "pull_request.reopened"
+  | "pull_request.review_request_removed"
+  | "pull_request.review_requested"
+  | "pull_request.synchronize"
+  | "pull_request.unassigned"
+  | "pull_request.unlabeled"
+  | "pull_request.unlocked";
+type WebhookPayloadPullRequestReviewEventTypeKeys =
+  | "pull_request_review"
+  | "pull_request_review.dismissed"
+  | "pull_request_review.edited"
+  | "pull_request_review.submitted";
+type WebhookPayloadPullRequestReviewCommentEventTypeKeys =
+  | "pull_request_review_comment"
+  | "pull_request_review_comment.created"
+  | "pull_request_review_comment.deleted"
+  | "pull_request_review_comment.edited";
+type WebhookPayloadPushEventTypeKeys = "push";
+type WebhookPayloadReleaseEventTypeKeys =
+  | "release"
+  | "release.created"
+  | "release.deleted"
+  | "release.edited"
+  | "release.prereleased"
+  | "release.published"
+  | "release.unpublished";
+type WebhookPayloadRepositoryDispatchEventTypeKeys =
+  | "repository_dispatch"
+  | "repository_dispatch.on-demand-test";
+type WebhookPayloadRepositoryEventTypeKeys =
+  | "repository"
+  | "repository.archived"
+  | "repository.created"
+  | "repository.deleted"
+  | "repository.edited"
+  | "repository.privatized"
+  | "repository.publicized"
+  | "repository.renamed"
+  | "repository.transferred"
+  | "repository.unarchived";
+type WebhookPayloadRepositoryImportEventTypeKeys = "repository_import";
+type WebhookPayloadRepositoryVulnerabilityAlertEventTypeKeys =
+  | "repository_vulnerability_alert"
+  | "repository_vulnerability_alert.create"
+  | "repository_vulnerability_alert.dismiss"
+  | "repository_vulnerability_alert.resolve";
+type WebhookPayloadSecurityAdvisoryEventTypeKeys =
+  | "security_advisory"
+  | "security_advisory.performed"
+  | "security_advisory.published"
+  | "security_advisory.updated";
+type WebhookPayloadSponsorshipEventTypeKeys =
+  | "sponsorship"
+  | "sponsorship.created"
+  | "sponsorship.pending_tier_change";
+type WebhookPayloadStarEventTypeKeys = "star" | "star.created" | "star.deleted";
+type WebhookPayloadStatusEventTypeKeys = "status";
+type WebhookPayloadTeamEventTypeKeys =
+  | "team"
+  | "team.added_to_repository"
+  | "team.created"
+  | "team.deleted"
+  | "team.edited"
+  | "team.removed_from_repository";
+type WebhookPayloadTeamAddEventTypeKeys = "team_add";
+type WebhookPayloadWatchEventTypeKeys = "watch" | "watch.started";
+type WebhookPayloadPingEventTypeKeys = "ping";
+
 declare namespace Webhooks {
   type WebhookPayloadPingPayloadHookConfig = {
     content_type: string;
@@ -4501,17 +4712,14 @@ declare class Webhooks {
 
   public on(event: "error", callback: (event: Error) => void): void;
   public on(
-    event: "*" | string[],
+    event: "*",
     callback: (event: Webhooks.WebhookEvent<any>) => Promise<void> | void
   ): void;
 
   public on(
     event:
-      | "check_run"
-      | "check_run.completed"
-      | "check_run.created"
-      | "check_run.requested_action"
-      | "check_run.rerequested",
+      | WebhookPayloadCheckRunEventTypeKeys
+      | WebhookPayloadCheckRunEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCheckRun>
     ) => Promise<void> | void
@@ -4519,73 +4727,87 @@ declare class Webhooks {
 
   public on(
     event:
-      | "check_suite"
-      | "check_suite.completed"
-      | "check_suite.requested"
-      | "check_suite.rerequested",
+      | WebhookPayloadCheckSuiteEventTypeKeys
+      | WebhookPayloadCheckSuiteEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCheckSuite>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "commit_comment" | "commit_comment.created",
+    event:
+      | WebhookPayloadCommitCommentEventTypeKeys
+      | WebhookPayloadCommitCommentEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCommitComment>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "content_reference" | "content_reference.created",
+    event:
+      | WebhookPayloadContentReferenceEventTypeKeys
+      | WebhookPayloadContentReferenceEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadContentReference>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "create",
+    event:
+      | WebhookPayloadCreateEventTypeKeys
+      | WebhookPayloadCreateEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadCreate>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "delete",
+    event:
+      | WebhookPayloadDeleteEventTypeKeys
+      | WebhookPayloadDeleteEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDelete>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "deploy_key" | "deploy_key.created" | "deploy_key.deleted",
+    event:
+      | WebhookPayloadDeployKeyEventTypeKeys
+      | WebhookPayloadDeployKeyEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeployKey>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "deployment" | "deployment.created",
+    event:
+      | WebhookPayloadDeploymentEventTypeKeys
+      | WebhookPayloadDeploymentEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeployment>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "deployment_status" | "deployment_status.created",
+    event:
+      | WebhookPayloadDeploymentStatusEventTypeKeys
+      | WebhookPayloadDeploymentStatusEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadDeploymentStatus>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "fork",
+    event: WebhookPayloadForkEventTypeKeys | WebhookPayloadForkEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadFork>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "github_app_authorization" | "github_app_authorization.revoked",
+    event:
+      | WebhookPayloadGithubAppAuthorizationEventTypeKeys
+      | WebhookPayloadGithubAppAuthorizationEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<
         Webhooks.WebhookPayloadGithubAppAuthorization
@@ -4594,7 +4816,9 @@ declare class Webhooks {
   ): void;
 
   public on(
-    event: "gollum",
+    event:
+      | WebhookPayloadGollumEventTypeKeys
+      | WebhookPayloadGollumEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadGollum>
     ) => Promise<void> | void
@@ -4602,12 +4826,8 @@ declare class Webhooks {
 
   public on(
     event:
-      | "installation"
-      | "installation.created"
-      | "installation.deleted"
-      | "installation.new_permissions_accepted"
-      | "installation.suspend"
-      | "installation.unsuspend",
+      | WebhookPayloadInstallationEventTypeKeys
+      | WebhookPayloadInstallationEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadInstallation>
     ) => Promise<void> | void
@@ -4615,9 +4835,8 @@ declare class Webhooks {
 
   public on(
     event:
-      | "installation_repositories"
-      | "installation_repositories.added"
-      | "installation_repositories.removed",
+      | WebhookPayloadInstallationRepositoriesEventTypeKeys
+      | WebhookPayloadInstallationRepositoriesEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<
         Webhooks.WebhookPayloadInstallationRepositories
@@ -4627,10 +4846,8 @@ declare class Webhooks {
 
   public on(
     event:
-      | "issue_comment"
-      | "issue_comment.created"
-      | "issue_comment.deleted"
-      | "issue_comment.edited",
+      | WebhookPayloadIssueCommentEventTypeKeys
+      | WebhookPayloadIssueCommentEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadIssueComment>
     ) => Promise<void> | void
@@ -4638,30 +4855,17 @@ declare class Webhooks {
 
   public on(
     event:
-      | "issues"
-      | "issues.assigned"
-      | "issues.closed"
-      | "issues.deleted"
-      | "issues.demilestoned"
-      | "issues.edited"
-      | "issues.labeled"
-      | "issues.locked"
-      | "issues.milestoned"
-      | "issues.opened"
-      | "issues.pinned"
-      | "issues.reopened"
-      | "issues.transferred"
-      | "issues.unassigned"
-      | "issues.unlabeled"
-      | "issues.unlocked"
-      | "issues.unpinned",
+      | WebhookPayloadIssuesEventTypeKeys
+      | WebhookPayloadIssuesEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadIssues>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "label" | "label.created" | "label.deleted" | "label.edited",
+    event:
+      | WebhookPayloadLabelEventTypeKeys
+      | WebhookPayloadLabelEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadLabel>
     ) => Promise<void> | void
@@ -4669,33 +4873,33 @@ declare class Webhooks {
 
   public on(
     event:
-      | "marketplace_purchase"
-      | "marketplace_purchase.cancelled"
-      | "marketplace_purchase.changed"
-      | "marketplace_purchase.pending_change"
-      | "marketplace_purchase.pending_change_cancelled"
-      | "marketplace_purchase.purchased",
+      | WebhookPayloadMarketplacePurchaseEventTypeKeys
+      | WebhookPayloadMarketplacePurchaseEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMarketplacePurchase>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "member" | "member.added" | "member.edited" | "member.removed",
+    event:
+      | WebhookPayloadMemberEventTypeKeys
+      | WebhookPayloadMemberEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMember>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "membership" | "membership.added" | "membership.removed",
+    event:
+      | WebhookPayloadMembershipEventTypeKeys
+      | WebhookPayloadMembershipEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMembership>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "meta" | "meta.deleted",
+    event: WebhookPayloadMetaEventTypeKeys | WebhookPayloadMetaEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMeta>
     ) => Promise<void> | void
@@ -4703,12 +4907,8 @@ declare class Webhooks {
 
   public on(
     event:
-      | "milestone"
-      | "milestone.closed"
-      | "milestone.created"
-      | "milestone.deleted"
-      | "milestone.edited"
-      | "milestone.opened",
+      | WebhookPayloadMilestoneEventTypeKeys
+      | WebhookPayloadMilestoneEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadMilestone>
     ) => Promise<void> | void
@@ -4716,33 +4916,35 @@ declare class Webhooks {
 
   public on(
     event:
-      | "organization"
-      | "organization.deleted"
-      | "organization.member_added"
-      | "organization.member_invited"
-      | "organization.member_removed"
-      | "organization.renamed",
+      | WebhookPayloadOrganizationEventTypeKeys
+      | WebhookPayloadOrganizationEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadOrganization>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "org_block" | "org_block.blocked" | "org_block.unblocked",
+    event:
+      | WebhookPayloadOrgBlockEventTypeKeys
+      | WebhookPayloadOrgBlockEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadOrgBlock>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "package" | "package.published" | "package.updated",
+    event:
+      | WebhookPayloadPackageEventTypeKeys
+      | WebhookPayloadPackageEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPackage>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "page_build",
+    event:
+      | WebhookPayloadPageBuildEventTypeKeys
+      | WebhookPayloadPageBuildEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPageBuild>
     ) => Promise<void> | void
@@ -4750,12 +4952,8 @@ declare class Webhooks {
 
   public on(
     event:
-      | "project_card"
-      | "project_card.converted"
-      | "project_card.created"
-      | "project_card.deleted"
-      | "project_card.edited"
-      | "project_card.moved",
+      | WebhookPayloadProjectCardEventTypeKeys
+      | WebhookPayloadProjectCardEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadProjectCard>
     ) => Promise<void> | void
@@ -4763,11 +4961,8 @@ declare class Webhooks {
 
   public on(
     event:
-      | "project_column"
-      | "project_column.created"
-      | "project_column.deleted"
-      | "project_column.edited"
-      | "project_column.moved",
+      | WebhookPayloadProjectColumnEventTypeKeys
+      | WebhookPayloadProjectColumnEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadProjectColumn>
     ) => Promise<void> | void
@@ -4775,19 +4970,17 @@ declare class Webhooks {
 
   public on(
     event:
-      | "project"
-      | "project.closed"
-      | "project.created"
-      | "project.deleted"
-      | "project.edited"
-      | "project.reopened",
+      | WebhookPayloadProjectEventTypeKeys
+      | WebhookPayloadProjectEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadProject>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "public",
+    event:
+      | WebhookPayloadPublicEventTypeKeys
+      | WebhookPayloadPublicEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPublic>
     ) => Promise<void> | void
@@ -4795,21 +4988,8 @@ declare class Webhooks {
 
   public on(
     event:
-      | "pull_request"
-      | "pull_request.assigned"
-      | "pull_request.closed"
-      | "pull_request.edited"
-      | "pull_request.labeled"
-      | "pull_request.locked"
-      | "pull_request.opened"
-      | "pull_request.ready_for_review"
-      | "pull_request.reopened"
-      | "pull_request.review_request_removed"
-      | "pull_request.review_requested"
-      | "pull_request.synchronize"
-      | "pull_request.unassigned"
-      | "pull_request.unlabeled"
-      | "pull_request.unlocked",
+      | WebhookPayloadPullRequestEventTypeKeys
+      | WebhookPayloadPullRequestEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPullRequest>
     ) => Promise<void> | void
@@ -4817,10 +4997,8 @@ declare class Webhooks {
 
   public on(
     event:
-      | "pull_request_review"
-      | "pull_request_review.dismissed"
-      | "pull_request_review.edited"
-      | "pull_request_review.submitted",
+      | WebhookPayloadPullRequestReviewEventTypeKeys
+      | WebhookPayloadPullRequestReviewEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPullRequestReview>
     ) => Promise<void> | void
@@ -4828,10 +5006,8 @@ declare class Webhooks {
 
   public on(
     event:
-      | "pull_request_review_comment"
-      | "pull_request_review_comment.created"
-      | "pull_request_review_comment.deleted"
-      | "pull_request_review_comment.edited",
+      | WebhookPayloadPullRequestReviewCommentEventTypeKeys
+      | WebhookPayloadPullRequestReviewCommentEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<
         Webhooks.WebhookPayloadPullRequestReviewComment
@@ -4840,7 +5016,7 @@ declare class Webhooks {
   ): void;
 
   public on(
-    event: "push",
+    event: WebhookPayloadPushEventTypeKeys | WebhookPayloadPushEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPush>
     ) => Promise<void> | void
@@ -4848,20 +5024,17 @@ declare class Webhooks {
 
   public on(
     event:
-      | "release"
-      | "release.created"
-      | "release.deleted"
-      | "release.edited"
-      | "release.prereleased"
-      | "release.published"
-      | "release.unpublished",
+      | WebhookPayloadReleaseEventTypeKeys
+      | WebhookPayloadReleaseEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRelease>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "repository_dispatch" | "repository_dispatch.on-demand-test",
+    event:
+      | WebhookPayloadRepositoryDispatchEventTypeKeys
+      | WebhookPayloadRepositoryDispatchEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepositoryDispatch>
     ) => Promise<void> | void
@@ -4869,23 +5042,17 @@ declare class Webhooks {
 
   public on(
     event:
-      | "repository"
-      | "repository.archived"
-      | "repository.created"
-      | "repository.deleted"
-      | "repository.edited"
-      | "repository.privatized"
-      | "repository.publicized"
-      | "repository.renamed"
-      | "repository.transferred"
-      | "repository.unarchived",
+      | WebhookPayloadRepositoryEventTypeKeys
+      | WebhookPayloadRepositoryEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepository>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "repository_import",
+    event:
+      | WebhookPayloadRepositoryImportEventTypeKeys
+      | WebhookPayloadRepositoryImportEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadRepositoryImport>
     ) => Promise<void> | void
@@ -4893,10 +5060,8 @@ declare class Webhooks {
 
   public on(
     event:
-      | "repository_vulnerability_alert"
-      | "repository_vulnerability_alert.create"
-      | "repository_vulnerability_alert.dismiss"
-      | "repository_vulnerability_alert.resolve",
+      | WebhookPayloadRepositoryVulnerabilityAlertEventTypeKeys
+      | WebhookPayloadRepositoryVulnerabilityAlertEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<
         Webhooks.WebhookPayloadRepositoryVulnerabilityAlert
@@ -4906,10 +5071,8 @@ declare class Webhooks {
 
   public on(
     event:
-      | "security_advisory"
-      | "security_advisory.performed"
-      | "security_advisory.published"
-      | "security_advisory.updated",
+      | WebhookPayloadSecurityAdvisoryEventTypeKeys
+      | WebhookPayloadSecurityAdvisoryEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadSecurityAdvisory>
     ) => Promise<void> | void
@@ -4917,57 +5080,56 @@ declare class Webhooks {
 
   public on(
     event:
-      | "sponsorship"
-      | "sponsorship.created"
-      | "sponsorship.pending_tier_change",
+      | WebhookPayloadSponsorshipEventTypeKeys
+      | WebhookPayloadSponsorshipEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadSponsorship>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "star" | "star.created" | "star.deleted",
+    event: WebhookPayloadStarEventTypeKeys | WebhookPayloadStarEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadStar>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "status",
+    event:
+      | WebhookPayloadStatusEventTypeKeys
+      | WebhookPayloadStatusEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadStatus>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event:
-      | "team"
-      | "team.added_to_repository"
-      | "team.created"
-      | "team.deleted"
-      | "team.edited"
-      | "team.removed_from_repository",
+    event: WebhookPayloadTeamEventTypeKeys | WebhookPayloadTeamEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadTeam>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "team_add",
+    event:
+      | WebhookPayloadTeamAddEventTypeKeys
+      | WebhookPayloadTeamAddEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadTeamAdd>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "watch" | "watch.started",
+    event:
+      | WebhookPayloadWatchEventTypeKeys
+      | WebhookPayloadWatchEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadWatch>
     ) => Promise<void> | void
   ): void;
 
   public on(
-    event: "ping",
+    event: WebhookPayloadPingEventTypeKeys | WebhookPayloadPingEventTypeKeys[],
     callback: (
       event: Webhooks.WebhookEvent<Webhooks.WebhookPayloadPing>
     ) => Promise<void> | void

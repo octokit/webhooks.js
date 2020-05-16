@@ -6,6 +6,7 @@ const TypeWriter = require("@gimenete/type-writer");
 const webhooks = require("@octokit/webhooks-definitions");
 
 const signatures = [];
+const eventTypes = [];
 const tw = new TypeWriter();
 
 webhooks.forEach(({ name, actions, examples }) => {
@@ -29,8 +30,11 @@ webhooks.forEach(({ name, actions, examples }) => {
     `'${name}'`,
     ...actions.map((action) => `'${name}.${action}'`),
   ].join(" | ");
+  const eventTypeName = `${typeName}EventTypeKeys`;
+  const type = `type ${eventTypeName} = ${events};`;
+  eventTypes.push(type);
   signatures.push(`
-    public on (event: ${events}, callback: (event: Webhooks.WebhookEvent<Webhooks.${typeName}>) => (Promise<void> | void)): void
+    public on (event: ${eventTypeName} | ${eventTypeName}[], callback: (event: Webhooks.WebhookEvent<Webhooks.${typeName}>) => (Promise<void> | void)): void
   `);
 });
 
@@ -45,6 +49,8 @@ type Options = {
   path?: string
   transform?: (event: Webhooks.WebhookEvent<any>) => Webhooks.WebhookEvent<any> & { [key: string]: any }
 }
+
+${eventTypes.join("\n")}
 
 declare namespace Webhooks {
   ${tw.generate("typescript", { inlined: false })}
@@ -63,7 +69,7 @@ declare class Webhooks {
   constructor (options?: Options)
 
   public on (event: 'error', callback: (event: Error) => void): void
-  public on (event: '*' | string[], callback: (event: Webhooks.WebhookEvent<any>) => Promise<void> | void): void
+  public on (event: '*', callback: (event: Webhooks.WebhookEvent<any>) => Promise<void> | void): void
   ${signatures.join("\n")}
 
   public sign (data: any): string
