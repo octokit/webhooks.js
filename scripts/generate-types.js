@@ -74,7 +74,7 @@ type Options = {
   path?: string
   transform?: (event: ${eventPayloadsVariable}.WebhookEvent<any>) => ${eventPayloadsVariable}.WebhookEvent<any> & { [key: string]: any }
 }
-export declare class Webhooks {
+declare class Webhooks {
   constructor (options?: Options)
   public on (event: ${eventNamesVariable}.ErrorEvent, callback: (event: Error) => void): void
   public on (event: ${eventNamesVariable}.WildcardEvent | string[], callback: (event: ${eventPayloadsVariable}.WebhookEvent<any>) => Promise<void> | void): void
@@ -87,6 +87,10 @@ export declare class Webhooks {
   public removeListener (event: string | string[], callback: (event: ${eventPayloadsVariable}.WebhookEvent<any>) => Promise<void>): void
   public middleware (request: http.IncomingMessage, response: http.ServerResponse, next?: (err?: any) => void): void | Promise<void>
 }
+
+export function createWebhooksApi(options?: Options);
+export default Webhooks;
+export { Webhooks };
 `;
 
 generateFile("src/generated/api.d.ts", apiContent);

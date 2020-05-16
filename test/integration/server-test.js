@@ -4,7 +4,7 @@ import getPort from "get-port";
 import { promisify } from "util";
 import simple from "simple-mock";
 import Tap from "tap";
-import { createWebhooksApi } from "../../pkg/dist-src/";
+import { Webhooks } from "../../";
 import pushEventPayload from "../fixtures/push-payload.json";
 
 const test = Tap.test;
@@ -16,9 +16,9 @@ beforeEach(() => {
   });
 });
 
-test("initialised without options", (t) => {
+test("initialised without options", {}, (t) => {
   try {
-    createWebhooksApi();
+    new Webhooks();
     t.fail("should throw error");
   } catch (error) {
     t.pass('throws errer if no "secret" option passed');
@@ -26,8 +26,8 @@ test("initialised without options", (t) => {
   t.end();
 });
 
-test("GET /", (t) => {
-  const api = createWebhooksApi({
+test("GET /", {}, (t) => {
+  const api = new Webhooks({
     secret: "mysecret",
   });
   const server = http.createServer(api.middleware);
@@ -53,10 +53,10 @@ test("GET /", (t) => {
     .catch(t.error);
 });
 
-test("POST / with push event payload", (t) => {
+test("POST / with push event payload", {}, (t) => {
   t.plan(2);
 
-  const api = createWebhooksApi({
+  const api = new Webhooks({
     secret: "mysecret",
   });
   const server = http.createServer(api.middleware);
@@ -90,10 +90,11 @@ test("POST / with push event payload", (t) => {
     .catch(t.error);
 });
 
-test("POST / with push event payload (request.body already parsed)", (t) => {
+//TEST
+test("POST / with push event payload (request.body already parsed)", {}, (t) => {
   t.plan(2);
 
-  const api = createWebhooksApi({
+  const api = new Webhooks({
     secret: "mysecret",
   });
   const dataChunks = [];
@@ -139,8 +140,8 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
     .catch(t.error);
 });
 
-test("POST / with push event payload (no signature)", (t) => {
-  const api = createWebhooksApi({
+test("POST / with push event payload (no signature)", {}, (t) => {
+  const api = new Webhooks({
     secret: "mysecret",
   });
   const server = http.createServer(api.middleware);
@@ -174,8 +175,8 @@ test("POST / with push event payload (no signature)", (t) => {
     .catch(t.error);
 });
 
-test("POST / with push event payload (invalid signature)", (t) => {
-  const api = createWebhooksApi({
+test("POST / with push event payload (invalid signature)", {}, (t) => {
+  const api = new Webhooks({
     secret: "mysecret",
   });
   const server = http.createServer(api.middleware);
@@ -210,8 +211,8 @@ test("POST / with push event payload (invalid signature)", (t) => {
     .catch(t.error);
 });
 
-test("POST / with hook error", (t) => {
-  const api = createWebhooksApi({
+test("POST / with hook error", {}, (t) => {
+  const api = new Webhooks({
     secret: "mysecret",
   });
   const server = http.createServer(api.middleware);

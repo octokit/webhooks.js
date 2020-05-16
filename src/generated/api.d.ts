@@ -8,7 +8,7 @@ type Options = {
     event: EventPayloads.WebhookEvent<any>
   ) => EventPayloads.WebhookEvent<any> & { [key: string]: any };
 };
-export declare class Webhooks {
+declare class Webhooks {
   constructor(options?: Options);
   public on(
     event: EventNames.ErrorEvent,
@@ -407,3 +407,7 @@ export declare class Webhooks {
     next?: (err?: any) => void
   ): void | Promise<void>;
 }
+
+export function createWebhooksApi(options?: Options): Webhooks;
+export default Webhooks;
+export { Webhooks };

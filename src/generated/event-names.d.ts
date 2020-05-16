@@ -76,6 +76,8 @@ export namespace EventNames {
     Created = "installation.created",
     Deleted = "installation.deleted",
     NewPermissionsAccepted = "installation.new_permissions_accepted",
+    Suspend = "installation.suspend",
+    Unsuspend = "installation.unsuspend",
   }
 
   const enum InstallationRepositoriesEvent {

@@ -33,6 +33,7 @@ export {
   createEventHandler,
   createMiddleware,
   createWebhooksApi,
+  createWebhooksApi as Webhooks,
   sign,
   verify,
 };
