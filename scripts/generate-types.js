@@ -5,7 +5,6 @@ const prettier = require("prettier");
 const TypeWriter = require("@gimenete/type-writer");
 const webhooks = require("@octokit/webhooks-definitions");
 
-const signatures = [];
 const eventTypes = [];
 const conditionalType = [`type GetWebhookPayloadTypeFromEvent<T> = `];
 
@@ -38,9 +37,6 @@ webhooks.forEach(({ name, actions, examples }) => {
   conditionalType.push(
     `T extends ${eventTypeName} ? Webhooks.WebhookEvent<Webhooks.${typeName}> :`
   );
-  signatures.push(`
-    public on (event: ${eventTypeName}, callback: (event: GetWebhookPayloadTypeFromEvent<${eventTypeName}>) => (Promise<void> | void)): void
-  `);
 });
 
 conditionalType.push(`never;`);
@@ -82,8 +78,8 @@ declare class Webhooks {
 
   public on (event: 'error', callback: (event: Error) => void): void
   public on (event: '*', callback: (event: Webhooks.WebhookEvent<any>) => Promise<void> | void): void
-  ${signatures.join("\n")}
-  public on (event: AllEventTypes[], callback: (event: GetWebhookPayloadTypeFromEvent<AllEventTypes>) => Promise<void> | void): void
+
+  public on <T extends AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void): void
   public sign (data: any): string
   public verify (eventPayload: any, signature: string): boolean
   public verifyAndReceive (options: { id: string, name: string, payload: any, signature: string }): Promise<void>
