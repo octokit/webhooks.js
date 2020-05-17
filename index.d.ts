@@ -4860,9 +4860,10 @@ declare class Webhooks {
   public on(event: "error", callback: (event: Error) => void): void;
   public on(
     event: "*",
-    callback: (event: Webhooks.WebhookEvent<any>) => Promise<void> | void
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<AllEventTypes>
+    ) => Promise<void> | void
   ): void;
-
   public on<T extends AllEventTypes>(
     event: T | T[],
     callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void

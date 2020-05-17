@@ -77,8 +77,7 @@ declare class Webhooks {
   constructor (options?: Options)
 
   public on (event: 'error', callback: (event: Error) => void): void
-  public on (event: '*', callback: (event: Webhooks.WebhookEvent<any>) => Promise<void> | void): void
-
+  public on (event: '*', callback: (event: GetWebhookPayloadTypeFromEvent<AllEventTypes>) => Promise<void> | void): void
   public on <T extends AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void): void
   public sign (data: any): string
   public verify (eventPayload: any, signature: string): boolean
