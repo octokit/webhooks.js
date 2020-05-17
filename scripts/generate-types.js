@@ -5,10 +5,7 @@ const prettier = require("prettier");
 const TypeWriter = require("@gimenete/type-writer");
 const webhooks = require("@octokit/webhooks-definitions");
 
-const eventTypes = [
-  'type EventTypeError = "error"',
-  'type AnyEvent = "*"'
-];
+const eventTypes = ['type EventTypeError = "error"', 'type AnyEvent = "*"'];
 
 const conditionalType = [
   `type GetWebhookPayloadTypeFromEvent<T> = `,
