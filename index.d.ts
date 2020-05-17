@@ -4881,11 +4881,7 @@ declare class Webhooks {
   }): Promise<void>;
   public removeListener<T extends AllEventTypes>(
     event: T | T[],
-    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => void
-  ): void;
-  public removeListener<T extends AllEventTypes>(
-    event: T | T[],
-    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void>
+    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
   ): void;
   public middleware(
     request: http.IncomingMessage,

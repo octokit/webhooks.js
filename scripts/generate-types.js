@@ -85,7 +85,7 @@ declare class Webhooks {
   public verify (eventPayload: any, signature: string): boolean
   public verifyAndReceive (options: { id: string, name: string, payload: any, signature: string }): Promise<void>
   public receive (options: { id: string, name: string, payload: any }): Promise<void>
-  public removeListener <T extends AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void | void): void
+  public removeListener <T extends AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void): void
   public middleware (request: http.IncomingMessage, response: http.ServerResponse, next?: (err?: any) => void): void | Promise<void>
 }
 
