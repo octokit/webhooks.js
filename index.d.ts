@@ -4496,6 +4496,8 @@ declare namespace Webhooks {
   }
 }
 
+type EventTypeError = "error";
+type AnyEvent = "*";
 type WebhookPayloadCheckRunEventTypeKeys =
   | "check_run"
   | "check_run.completed"
@@ -4708,6 +4710,8 @@ type WebhookPayloadWatchEventTypeKeys = "watch" | "watch.started";
 type WebhookPayloadPingEventTypeKeys = "ping";
 
 type AllEventTypes =
+  | EventTypeError
+  | AnyEvent
   | WebhookPayloadCheckRunEventTypeKeys
   | WebhookPayloadCheckSuiteEventTypeKeys
   | WebhookPayloadCommitCommentEventTypeKeys
@@ -4756,9 +4760,11 @@ type AllEventTypes =
   | WebhookPayloadWatchEventTypeKeys
   | WebhookPayloadPingEventTypeKeys;
 
-type GetWebhookPayloadTypeFromEvent<
-  T
-> = T extends WebhookPayloadCheckRunEventTypeKeys
+type GetWebhookPayloadTypeFromEvent<T> = T extends EventTypeError
+  ? Error
+  : T extends AnyEvent
+  ? any
+  : T extends WebhookPayloadCheckRunEventTypeKeys
   ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadCheckRun>
   : T extends WebhookPayloadCheckSuiteEventTypeKeys
   ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadCheckSuite>
@@ -4856,14 +4862,6 @@ type GetWebhookPayloadTypeFromEvent<
 
 declare class Webhooks {
   constructor(options?: Options);
-
-  public on(event: "error", callback: (event: Error) => void): void;
-  public on(
-    event: "*",
-    callback: (
-      event: GetWebhookPayloadTypeFromEvent<AllEventTypes>
-    ) => Promise<void> | void
-  ): void;
   public on<T extends AllEventTypes>(
     event: T | T[],
     callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
@@ -4881,13 +4879,13 @@ declare class Webhooks {
     name: string;
     payload: any;
   }): Promise<void>;
-  public removeListener(
-    event: string | string[],
-    callback: (event: Webhooks.WebhookEvent<any>) => void
+  public removeListener<T extends AllEventTypes>(
+    event: T | T[],
+    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => void
   ): void;
-  public removeListener(
-    event: string | string[],
-    callback: (event: Webhooks.WebhookEvent<any>) => Promise<void>
+  public removeListener<T extends AllEventTypes>(
+    event: T | T[],
+    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void>
   ): void;
   public middleware(
     request: http.IncomingMessage,

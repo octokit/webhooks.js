@@ -5,8 +5,16 @@ const prettier = require("prettier");
 const TypeWriter = require("@gimenete/type-writer");
 const webhooks = require("@octokit/webhooks-definitions");
 
-const eventTypes = [];
-const conditionalType = [`type GetWebhookPayloadTypeFromEvent<T> = `];
+const eventTypes = [
+  'type EventTypeError = "error"',
+  'type AnyEvent = "*"'
+];
+
+const conditionalType = [
+  `type GetWebhookPayloadTypeFromEvent<T> = `,
+  `T extends EventTypeError ? Error :`,
+  `T extends AnyEvent ? any :`,
+];
 
 const tw = new TypeWriter();
 
@@ -75,16 +83,13 @@ ${conditionalType.join("\n")}
 
 declare class Webhooks {
   constructor (options?: Options)
-
-  public on (event: 'error', callback: (event: Error) => void): void
-  public on (event: '*', callback: (event: GetWebhookPayloadTypeFromEvent<AllEventTypes>) => Promise<void> | void): void
   public on <T extends AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void): void
   public sign (data: any): string
   public verify (eventPayload: any, signature: string): boolean
   public verifyAndReceive (options: { id: string, name: string, payload: any, signature: string }): Promise<void>
   public receive (options: { id: string, name: string, payload: any }): Promise<void>
-  public removeListener (event: string | string[], callback: (event: Webhooks.WebhookEvent<any>) => void): void
-  public removeListener (event: string | string[], callback: (event: Webhooks.WebhookEvent<any>) => Promise<void>): void
+  public removeListener <T extends AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => void): void
+  public removeListener <T extends AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void>): void
   public middleware (request: http.IncomingMessage, response: http.ServerResponse, next?: (err?: any) => void): void | Promise<void>
 }
 
