@@ -5,6 +5,7 @@
     "access": "public"
   },
   "description": "GitHub webhook events toolset for Node.js",
+  "main": "pkg/dist-src/index.js",
   "directories": {
     "lib": "lib",
     "test": "test"
