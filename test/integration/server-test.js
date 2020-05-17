@@ -16,7 +16,7 @@ beforeEach(() => {
   });
 });
 
-test("initialised without options", {}, (t) => {
+test("initialised without options", (t) => {
   try {
     new Webhooks();
     t.fail("should throw error");
@@ -26,7 +26,7 @@ test("initialised without options", {}, (t) => {
   t.end();
 });
 
-test("GET /", {}, (t) => {
+test("GET /", (t) => {
   const api = new Webhooks({
     secret: "mysecret",
   });
@@ -53,7 +53,7 @@ test("GET /", {}, (t) => {
     .catch(t.error);
 });
 
-test("POST / with push event payload", {}, (t) => {
+test("POST / with push event payload", (t) => {
   t.plan(2);
 
   const api = new Webhooks({
@@ -93,7 +93,6 @@ test("POST / with push event payload", {}, (t) => {
 //TEST
 test(
   "POST / with push event payload (request.body already parsed)",
-  {},
   (t) => {
     t.plan(2);
 
@@ -144,7 +143,7 @@ test(
   }
 );
 
-test("POST / with push event payload (no signature)", {}, (t) => {
+test("POST / with push event payload (no signature)", (t) => {
   const api = new Webhooks({
     secret: "mysecret",
   });
@@ -179,7 +178,7 @@ test("POST / with push event payload (no signature)", {}, (t) => {
     .catch(t.error);
 });
 
-test("POST / with push event payload (invalid signature)", {}, (t) => {
+test("POST / with push event payload (invalid signature)", (t) => {
   const api = new Webhooks({
     secret: "mysecret",
   });
@@ -215,7 +214,7 @@ test("POST / with push event payload (invalid signature)", {}, (t) => {
     .catch(t.error);
 });
 
-test("POST / with hook error", {}, (t) => {
+test("POST / with hook error", (t) => {
   const api = new Webhooks({
     secret: "mysecret",
   });

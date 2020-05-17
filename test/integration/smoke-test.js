@@ -1,7 +1,7 @@
 import { test } from "tap";
 import { mock } from "simple-mock";
 
-test("@octokit/webhooks", {}, (t) => {
+test("@octokit/webhooks", (t) => {
   const emitWarningMock = mock(process, "emitWarning");
   const { Webhooks } = require("../../");
   const api = new Webhooks({
@@ -20,7 +20,7 @@ test("@octokit/webhooks", {}, (t) => {
   t.end();
 });
 
-test('require("@octokit/webhooks").sign', {}, (t) => {
+test('require("@octokit/webhooks").sign', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
 
   t.doesNotThrow(() => {
@@ -34,7 +34,7 @@ test('require("@octokit/webhooks").sign', {}, (t) => {
   t.end();
 });
 
-test('require("@octokit/webhooks").verify', {}, (t) => {
+test('require("@octokit/webhooks").verify', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
 
   t.doesNotThrow(() => {
@@ -48,7 +48,7 @@ test('require("@octokit/webhooks").verify', {}, (t) => {
   t.end();
 });
 
-test('require("@octokit/webhooks").createEventHandler', {}, (t) => {
+test('require("@octokit/webhooks").createEventHandler', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
 
   t.doesNotThrow(() => {
@@ -62,7 +62,7 @@ test('require("@octokit/webhooks").createEventHandler', {}, (t) => {
   t.end();
 });
 
-test('require("@octokit/webhooks").createMiddleware', {}, (t) => {
+test('require("@octokit/webhooks").createMiddleware', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
 
   t.doesNotThrow(() => {
