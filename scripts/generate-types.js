@@ -75,7 +75,7 @@ declare class Webhooks {
   public middleware (request: http.IncomingMessage, response: http.ServerResponse, next?: (err?: any) => void): void | Promise<void>
 }
 
-export function createWebhooksApi(options?: Options);
+export function createWebhooksApi(options?: Options): Webhooks;
 
 export default Webhooks;
 export { Webhooks };
