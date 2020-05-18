@@ -1,4 +1,4 @@
-import * as Webhooks from "..";
+import Webhooks from "..";
 import { createServer } from "http";
 
 // ************************************************************

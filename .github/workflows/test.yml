@@ -16,3 +16,4 @@ jobs:
           node-version: 12
       - run: npm ci
       - run: npm test
+      - run: npm run validate:ts
