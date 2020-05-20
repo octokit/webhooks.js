@@ -27,5 +27,37 @@ export default async function () {
     webhooks.verify(payload, sig);
   });
 
+  webhooks.on("check_run.completed", () => {});
+
+  webhooks.on(
+    ["check_run.completed", "commit_comment", "label"],
+    ({ name, payload }) => {
+      console.log(name);
+      if ("check_run" in payload) {
+        console.log(payload);
+      }
+      if ("comment" in payload) {
+        console.log(payload.comment);
+      }
+    }
+  );
+
+  webhooks.on(["check_run.completed", "check_run.created"], () => {});
+  webhooks.on("check_run.created", ({ name, payload }) => {
+    console.log(payload.check_run.conclusion, name);
+  });
+
+  webhooks.removeListener("check_run.created", ({ name, payload }) => {
+    console.log(payload.check_run.conclusion, name);
+  });
+  webhooks.removeListener(["commit_comment", "label"], ({ name, payload }) => {
+    console.log(name);
+    if ("label" in payload) {
+      console.log(payload.label.name);
+    } else {
+      console.log(payload.comment.body);
+    }
+  });
+
   createServer(webhooks.middleware).listen(3000);
 }
