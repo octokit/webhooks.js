@@ -3,7 +3,6 @@
 > GitHub webhook events toolset for Node.js
 
 [![Test](https://github.com/octokit/webhooks.js/workflows/Test/badge.svg)](https://github.com/octokit/webhooks.js/actions?query=workflow)
-[![Greenkeeper badge](https://badges.greenkeeper.io/octokit/webhooks.js.svg)](https://greenkeeper.io/)
 
 [GitHub webhooks](https://developer.github.com/webhooks/) can be registered in multiple ways
 
