@@ -145,7 +145,7 @@ webhooks.sign(eventPayload);
 
 Returns a `signature` string. Throws error if `eventPayload` is not passed.
 
-Can also be used [standalone](sign/).
+Can also be used [standalone](src/sign/).
 
 ### webhooks.verify()
 
@@ -186,7 +186,7 @@ webhooks.verify(eventPayload, signature);
 
 Returns `true` or `false`. Throws error if `eventPayload` or `signature` not passed.
 
-Can also be used [standalone](verify/).
+Can also be used [standalone](src/verify/).
 
 ### webhooks.verifyAndReceive()
 
@@ -332,7 +332,7 @@ webhooks.receive({ id, name, payload });
 
 Returns a promise. Runs all handlers set with [`webhooks.on()`](#webhookson) in parallel and waits for them to finish. If one of the handlers rejects or throws an error, then `webhooks.receive()` rejects. The returned error has an `.errors` property which holds an array of all errors caught from the handlers. If no errors occur, `webhooks.receive()` resolves without passing any value.
 
-The `.receive()` method belongs to the [receiver](receiver/) module which can be used standalone.
+The `.receive()` method belongs to the [receiver](src/receiver/) module which can be used standalone.
 
 ### webhooks.on()
 
@@ -388,7 +388,7 @@ webhooks.on(eventNames, handler);
   </tr>
 </table>
 
-The `.on()` method belongs to the [receiver](receiver/) module which can be used standalone.
+The `.on()` method belongs to the [receiver](src/receiver/) module which can be used standalone.
 
 ### webhooks.removeListener()
 
@@ -442,7 +442,7 @@ webhooks.removeListener(eventNames, handler);
   </tr>
 </table>
 
-The `.removeListener()` method belongs to the [receiver](receiver/) module which can be used standalone.
+The `.removeListener()` method belongs to the [receiver](src/receiver/) module which can be used standalone.
 
 ### webhooks.middleware()
 
@@ -496,7 +496,7 @@ webhooks.middleware(request, response[, next])
 
 Returns a `requestListener` (or _middleware_) method which can be directly passed to [`http.createServer()`](https://nodejs.org/docs/latest/api/http.html#http_http_createserver_requestlistener), <a href="http://expressjs.com/">Express</a> and other compatible Node.js server frameworks.
 
-Can also be used [standalone](middleware/).
+Can also be used [standalone](src/middleware/).
 
 ### Webhook events
 
