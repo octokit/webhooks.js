@@ -3,7 +3,7 @@ import Webhooks, {
   createMiddleware,
   createWebhooksApi,
   sign,
-  verify
+  verify,
 } from "..";
 import { createServer } from "http";
 
@@ -29,19 +29,19 @@ export default async function () {
 
   // Check named expors of new API work
   createWebhooksApi({
-    secret: 'bleh'
+    secret: "bleh",
   });
 
-  createEventHandler({ secret: 'bleh' });
+  createEventHandler({ secret: "bleh" });
 
   createMiddleware({
-    secret: 'mysecret',
-    path: '/github-webhooks'
+    secret: "mysecret",
+    path: "/github-webhooks",
   });
 
   sign({});
 
-  verify({}, 'randomSignature');
+  verify({}, "randomSignature");
 
   webhooks.on("*", ({ id, name, payload }) => {
     console.log(name, "event received");
