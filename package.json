@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@gimenete/type-writer": "^0.1.5",
-    "@octokit/webhooks-definitions": "3.10.0",
+    "@octokit/webhooks-definitions": "3.10.1",
     "@pika/pack": "^0.5.0",
     "@pika/plugin-build-node": "^0.9.2",
     "@pika/plugin-build-types": "^0.9.2",
