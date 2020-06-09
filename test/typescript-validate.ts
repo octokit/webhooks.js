@@ -1,4 +1,11 @@
-import { Webhooks, EventNames } from "..";
+import {
+  Webhooks,
+  createEventHandler,
+  createMiddleware,
+  createWebhooksApi,
+  sign,
+  verify,
+} from "..";
 import { createServer } from "http";
 
 // ************************************************************
@@ -21,7 +28,23 @@ export default async function () {
     transform: (event) => event,
   });
 
-  webhooks.on("*", ({ name, payload }) => {
+  // Check named expors of new API work
+  createWebhooksApi({
+    secret: "bleh",
+  });
+
+  createEventHandler({ secret: "bleh" });
+
+  createMiddleware({
+    secret: "mysecret",
+    path: "/github-webhooks",
+  });
+
+  sign({});
+
+  verify({}, "randomSignature");
+
+  webhooks.on("*", ({ id, name, payload }) => {
     console.log(name, "event received");
     const sig = webhooks.sign(payload);
     webhooks.verify(payload, sig);
