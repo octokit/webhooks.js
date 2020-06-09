@@ -8,378 +8,121 @@ type Options = {
     event: EventPayloads.WebhookEvent<any>
   ) => EventPayloads.WebhookEvent<any> & { [key: string]: any };
 };
+
+type GetWebhookPayloadTypeFromEvent<T> = T extends EventNames.ErrorEvent
+  ? Error
+  : T extends EventNames.WildcardEvent
+  ? any
+  : T extends EventNames.CheckRunEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun>
+  : T extends EventNames.CheckSuiteEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckSuite>
+  : T extends EventNames.CommitCommentEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCommitComment>
+  : T extends EventNames.ContentReferenceEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadContentReference>
+  : T extends EventNames.CreateEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCreate>
+  : T extends EventNames.DeleteEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadDelete>
+  : T extends EventNames.DeployKeyEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadDeployKey>
+  : T extends EventNames.DeploymentEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadDeployment>
+  : T extends EventNames.DeploymentStatusEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadDeploymentStatus>
+  : T extends EventNames.ForkEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadFork>
+  : T extends EventNames.GithubAppAuthorizationEvent
+  ? EventPayloads.WebhookEvent<
+      EventPayloads.WebhookPayloadGithubAppAuthorization
+    >
+  : T extends EventNames.GollumEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadGollum>
+  : T extends EventNames.InstallationEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadInstallation>
+  : T extends EventNames.InstallationRepositoriesEvent
+  ? EventPayloads.WebhookEvent<
+      EventPayloads.WebhookPayloadInstallationRepositories
+    >
+  : T extends EventNames.IssueCommentEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadIssueComment>
+  : T extends EventNames.IssuesEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadIssues>
+  : T extends EventNames.LabelEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadLabel>
+  : T extends EventNames.MarketplacePurchaseEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadMarketplacePurchase>
+  : T extends EventNames.MemberEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadMember>
+  : T extends EventNames.MembershipEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadMembership>
+  : T extends EventNames.MetaEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadMeta>
+  : T extends EventNames.MilestoneEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadMilestone>
+  : T extends EventNames.OrganizationEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadOrganization>
+  : T extends EventNames.OrgBlockEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadOrgBlock>
+  : T extends EventNames.PackageEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPackage>
+  : T extends EventNames.PageBuildEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPageBuild>
+  : T extends EventNames.ProjectCardEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadProjectCard>
+  : T extends EventNames.ProjectColumnEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadProjectColumn>
+  : T extends EventNames.ProjectEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadProject>
+  : T extends EventNames.PublicEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPublic>
+  : T extends EventNames.PullRequestEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPullRequest>
+  : T extends EventNames.PullRequestReviewEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPullRequestReview>
+  : T extends EventNames.PullRequestReviewCommentEvent
+  ? EventPayloads.WebhookEvent<
+      EventPayloads.WebhookPayloadPullRequestReviewComment
+    >
+  : T extends EventNames.PushEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPush>
+  : T extends EventNames.ReleaseEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadRelease>
+  : T extends EventNames.RepositoryDispatchEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadRepositoryDispatch>
+  : T extends EventNames.RepositoryEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadRepository>
+  : T extends EventNames.RepositoryImportEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadRepositoryImport>
+  : T extends EventNames.RepositoryVulnerabilityAlertEvent
+  ? EventPayloads.WebhookEvent<
+      EventPayloads.WebhookPayloadRepositoryVulnerabilityAlert
+    >
+  : T extends EventNames.SecurityAdvisoryEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadSecurityAdvisory>
+  : T extends EventNames.SponsorshipEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadSponsorship>
+  : T extends EventNames.StarEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadStar>
+  : T extends EventNames.StatusEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadStatus>
+  : T extends EventNames.TeamEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadTeam>
+  : T extends EventNames.TeamAddEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadTeamAdd>
+  : T extends EventNames.WatchEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadWatch>
+  : T extends EventNames.PingEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPing>
+  : never;
+
 declare class Webhooks {
   constructor(options?: Options);
-  public on(
-    event: EventNames.ErrorEvent,
-    callback: (event: Error) => void
+  public on<T extends EventNames.AllEventTypes>(
+    event: T | T[],
+    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
   ): void;
-  public on(
-    event: EventNames.WildcardEvent | string[],
-    callback: (event: EventPayloads.WebhookEvent<any>) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.CheckRunEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.CheckSuiteEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckSuite>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.CommitCommentEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadCommitComment
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.ContentReferenceEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadContentReference
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.CreateEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCreate>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.DeleteEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadDelete>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.DeployKeyEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadDeployKey>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.DeploymentEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadDeployment>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.DeploymentStatusEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadDeploymentStatus
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.ForkEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadFork>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.GithubAppAuthorizationEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadGithubAppAuthorization
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.GollumEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadGollum>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.InstallationEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadInstallation
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.InstallationRepositoriesEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadInstallationRepositories
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.IssueCommentEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadIssueComment
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.IssuesEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadIssues>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.LabelEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadLabel>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.MarketplacePurchaseEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadMarketplacePurchase
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.MemberEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadMember>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.MembershipEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadMembership>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.MetaEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadMeta>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.MilestoneEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadMilestone>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.OrganizationEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadOrganization
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.OrgBlockEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadOrgBlock>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.PackageEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPackage>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.PageBuildEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPageBuild>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.ProjectCardEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadProjectCard>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.ProjectColumnEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadProjectColumn
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.ProjectEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadProject>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.PublicEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPublic>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.PullRequestEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPullRequest>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.PullRequestReviewEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadPullRequestReview
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.PullRequestReviewCommentEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadPullRequestReviewComment
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.PushEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPush>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.ReleaseEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadRelease>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.RepositoryDispatchEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadRepositoryDispatch
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.RepositoryEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadRepository>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.RepositoryImportEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadRepositoryImport
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.RepositoryVulnerabilityAlertEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadRepositoryVulnerabilityAlert
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.SecurityAdvisoryEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<
-        EventPayloads.WebhookPayloadSecurityAdvisory
-      >
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.SponsorshipEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadSponsorship>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.StarEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadStar>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.StatusEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadStatus>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.TeamEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadTeam>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.TeamAddEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadTeamAdd>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.WatchEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadWatch>
-    ) => Promise<void> | void
-  ): void;
-
-  public on(
-    event: EventNames.PingEvent,
-    callback: (
-      event: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPing>
-    ) => Promise<void> | void
-  ): void;
-
   public sign(data: any): string;
   public verify(eventPayload: any, signature: string): boolean;
   public verifyAndReceive(options: {
@@ -393,13 +136,9 @@ declare class Webhooks {
     name: string;
     payload: any;
   }): Promise<void>;
-  public removeListener(
-    event: string | string[],
-    callback: (event: EventPayloads.WebhookEvent<any>) => void
-  ): void;
-  public removeListener(
-    event: string | string[],
-    callback: (event: EventPayloads.WebhookEvent<any>) => Promise<void>
+  public removeListener<T extends EventNames.AllEventTypes>(
+    event: T | T[],
+    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
   ): void;
   public middleware(
     request: http.IncomingMessage,

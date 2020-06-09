@@ -3,8 +3,7 @@ const TypeWriter = require("@gimenete/type-writer");
 const webhooks = require("@octokit/webhooks-definitions/index.json");
 const { generateFile } = require("./generate-file");
 
-const signatures = [];
-const eventEnums = [];
+const eventTypes = [];
 const tw = new TypeWriter();
 
 const doNotEditThisFileDisclaimer = `
@@ -25,22 +24,25 @@ const generatePayloadType = (typeName) => ({
   },
 });
 
-const generateEventType = (event, typeName) => `
-  public on (
-    event: ${eventNamesVariable}.${event},
-    callback: (event: ${eventPayloadsVariable}.WebhookEvent<${eventPayloadsVariable}.${typeName}>) => (Promise<void> | void)): void
-`;
-
-const generateEventEnum = (event, name, actions) => `
-    const enum ${event} {
-      Default = "${name}",
+const generateEventNameType = (event, name, actions) => `type ${event} =
+      | "${name}"
       ${actions
         .map((action) => {
-          return `${pascalCase(action)} = "${name}.${action}"`;
+          return `| "${name}.${action}"`;
         })
-        .join(",")}
-    }
+        .join("\n")}
 `;
+
+eventTypes.push(
+  `type ErrorEvent = "error"`,
+  `type WildcardEvent = "*"`
+)
+
+const conditionalType = [
+  `type GetWebhookPayloadTypeFromEvent<T> = `,
+  `T extends ${eventNamesVariable}.ErrorEvent ? Error :`,
+  `T extends ${eventNamesVariable}.WildcardEvent ? any :`,
+];
 
 webhooks.forEach(({ name, actions, examples }) => {
   if (!examples) {
@@ -51,10 +53,17 @@ webhooks.forEach(({ name, actions, examples }) => {
   tw.add(examples, generatePayloadType(typeName));
 
   const event = `${pascalCase(name)}Event`;
-  signatures.push(generateEventType(event, typeName));
 
-  eventEnums.push(generateEventEnum(event, name, actions));
+  const eventNameType = generateEventNameType(event, name, actions);
+  const eventNameTypeKey = eventNameType.split(' ')[1];
+
+  eventTypes.push(eventNameType);
+  conditionalType.push(
+    `T extends ${eventNamesVariable}.${eventNameTypeKey} ? ${eventPayloadsVariable}.WebhookEvent<${eventPayloadsVariable}.${typeName}> :`
+  );
 });
+
+conditionalType.push('never')
 
 const definitionIndex = `
 ${doNotEditThisFileDisclaimer}
@@ -74,21 +83,21 @@ type Options = {
   path?: string
   transform?: (event: ${eventPayloadsVariable}.WebhookEvent<any>) => ${eventPayloadsVariable}.WebhookEvent<any> & { [key: string]: any }
 }
+
+${conditionalType.join("\n")}
+
 declare class Webhooks {
   constructor (options?: Options)
-  public on (event: ${eventNamesVariable}.ErrorEvent, callback: (event: Error) => void): void
-  public on (event: ${eventNamesVariable}.WildcardEvent | string[], callback: (event: ${eventPayloadsVariable}.WebhookEvent<any>) => Promise<void> | void): void
-  ${signatures.join("\n")}
+  public on <T extends ${eventNamesVariable}.AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void): void
   public sign (data: any): string
   public verify (eventPayload: any, signature: string): boolean
   public verifyAndReceive (options: { id: string, name: string, payload: any, signature: string }): Promise<void>
   public receive (options: { id: string, name: string, payload: any }): Promise<void>
-  public removeListener (event: string | string[], callback: (event: ${eventPayloadsVariable}.WebhookEvent<any>) => void): void
-  public removeListener (event: string | string[], callback: (event: ${eventPayloadsVariable}.WebhookEvent<any>) => Promise<void>): void
+  public removeListener <T extends ${eventNamesVariable}.AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void): void
   public middleware (request: http.IncomingMessage, response: http.ServerResponse, next?: (err?: any) => void): void | Promise<void>
 }
 
-export function createWebhooksApi(options?: Options);
+export function createWebhooksApi(options?: Options): Webhooks;
 export default Webhooks;
 export { Webhooks };
 `;
@@ -98,13 +107,11 @@ generateFile("src/generated/api.d.ts", apiContent);
 const eventNamesContet = `
 ${doNotEditThisFileDisclaimer}
 export namespace ${eventNamesVariable} {
-  const enum WildcardEvent {
-    Default = "*"
-  }
-  const enum ErrorEvent {
-    Default = "error"
-  }
-  ${eventEnums.join("\n")}
+  ${eventTypes.join("\n")}
+  type AllEventTypes =
+    ${eventTypes
+    .map((event) => event.split(' ')[1])
+    .join(" | ")};
 }
 `;
 

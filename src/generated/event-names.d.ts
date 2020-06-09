@@ -2,332 +2,306 @@
 // make edits in scripts/generate-types.js
 
 export namespace EventNames {
-  const enum WildcardEvent {
-    Default = "*",
-  }
-  const enum ErrorEvent {
-    Default = "error",
-  }
+  type ErrorEvent = "error";
+  type WildcardEvent = "*";
+  type CheckRunEvent =
+    | "check_run"
+    | "check_run.completed"
+    | "check_run.created"
+    | "check_run.requested_action"
+    | "check_run.rerequested";
 
-  const enum CheckRunEvent {
-    Default = "check_run",
-    Completed = "check_run.completed",
-    Created = "check_run.created",
-    RequestedAction = "check_run.requested_action",
-    Rerequested = "check_run.rerequested",
-  }
+  type CheckSuiteEvent =
+    | "check_suite"
+    | "check_suite.completed"
+    | "check_suite.requested"
+    | "check_suite.rerequested";
 
-  const enum CheckSuiteEvent {
-    Default = "check_suite",
-    Completed = "check_suite.completed",
-    Requested = "check_suite.requested",
-    Rerequested = "check_suite.rerequested",
-  }
+  type CommitCommentEvent = "commit_comment" | "commit_comment.created";
 
-  const enum CommitCommentEvent {
-    Default = "commit_comment",
-    Created = "commit_comment.created",
-  }
+  type ContentReferenceEvent =
+    | "content_reference"
+    | "content_reference.created";
 
-  const enum ContentReferenceEvent {
-    Default = "content_reference",
-    Created = "content_reference.created",
-  }
+  type CreateEvent = "create";
 
-  const enum CreateEvent {
-    Default = "create",
-  }
+  type DeleteEvent = "delete";
 
-  const enum DeleteEvent {
-    Default = "delete",
-  }
+  type DeployKeyEvent =
+    | "deploy_key"
+    | "deploy_key.created"
+    | "deploy_key.deleted";
 
-  const enum DeployKeyEvent {
-    Default = "deploy_key",
-    Created = "deploy_key.created",
-    Deleted = "deploy_key.deleted",
-  }
+  type DeploymentEvent = "deployment" | "deployment.created";
 
-  const enum DeploymentEvent {
-    Default = "deployment",
-    Created = "deployment.created",
-  }
+  type DeploymentStatusEvent =
+    | "deployment_status"
+    | "deployment_status.created";
 
-  const enum DeploymentStatusEvent {
-    Default = "deployment_status",
-    Created = "deployment_status.created",
-  }
+  type ForkEvent = "fork";
 
-  const enum ForkEvent {
-    Default = "fork",
-  }
+  type GithubAppAuthorizationEvent =
+    | "github_app_authorization"
+    | "github_app_authorization.revoked";
 
-  const enum GithubAppAuthorizationEvent {
-    Default = "github_app_authorization",
-    Revoked = "github_app_authorization.revoked",
-  }
+  type GollumEvent = "gollum";
 
-  const enum GollumEvent {
-    Default = "gollum",
-  }
+  type InstallationEvent =
+    | "installation"
+    | "installation.created"
+    | "installation.deleted"
+    | "installation.new_permissions_accepted"
+    | "installation.suspend"
+    | "installation.unsuspend";
 
-  const enum InstallationEvent {
-    Default = "installation",
-    Created = "installation.created",
-    Deleted = "installation.deleted",
-    NewPermissionsAccepted = "installation.new_permissions_accepted",
-    Suspend = "installation.suspend",
-    Unsuspend = "installation.unsuspend",
-  }
+  type InstallationRepositoriesEvent =
+    | "installation_repositories"
+    | "installation_repositories.added"
+    | "installation_repositories.removed";
 
-  const enum InstallationRepositoriesEvent {
-    Default = "installation_repositories",
-    Added = "installation_repositories.added",
-    Removed = "installation_repositories.removed",
-  }
+  type IssueCommentEvent =
+    | "issue_comment"
+    | "issue_comment.created"
+    | "issue_comment.deleted"
+    | "issue_comment.edited";
 
-  const enum IssueCommentEvent {
-    Default = "issue_comment",
-    Created = "issue_comment.created",
-    Deleted = "issue_comment.deleted",
-    Edited = "issue_comment.edited",
-  }
+  type IssuesEvent =
+    | "issues"
+    | "issues.assigned"
+    | "issues.closed"
+    | "issues.deleted"
+    | "issues.demilestoned"
+    | "issues.edited"
+    | "issues.labeled"
+    | "issues.locked"
+    | "issues.milestoned"
+    | "issues.opened"
+    | "issues.pinned"
+    | "issues.reopened"
+    | "issues.transferred"
+    | "issues.unassigned"
+    | "issues.unlabeled"
+    | "issues.unlocked"
+    | "issues.unpinned";
 
-  const enum IssuesEvent {
-    Default = "issues",
-    Assigned = "issues.assigned",
-    Closed = "issues.closed",
-    Deleted = "issues.deleted",
-    Demilestoned = "issues.demilestoned",
-    Edited = "issues.edited",
-    Labeled = "issues.labeled",
-    Locked = "issues.locked",
-    Milestoned = "issues.milestoned",
-    Opened = "issues.opened",
-    Pinned = "issues.pinned",
-    Reopened = "issues.reopened",
-    Transferred = "issues.transferred",
-    Unassigned = "issues.unassigned",
-    Unlabeled = "issues.unlabeled",
-    Unlocked = "issues.unlocked",
-    Unpinned = "issues.unpinned",
-  }
+  type LabelEvent =
+    | "label"
+    | "label.created"
+    | "label.deleted"
+    | "label.edited";
 
-  const enum LabelEvent {
-    Default = "label",
-    Created = "label.created",
-    Deleted = "label.deleted",
-    Edited = "label.edited",
-  }
+  type MarketplacePurchaseEvent =
+    | "marketplace_purchase"
+    | "marketplace_purchase.cancelled"
+    | "marketplace_purchase.changed"
+    | "marketplace_purchase.pending_change"
+    | "marketplace_purchase.pending_change_cancelled"
+    | "marketplace_purchase.purchased";
 
-  const enum MarketplacePurchaseEvent {
-    Default = "marketplace_purchase",
-    Cancelled = "marketplace_purchase.cancelled",
-    Changed = "marketplace_purchase.changed",
-    PendingChange = "marketplace_purchase.pending_change",
-    PendingChangeCancelled = "marketplace_purchase.pending_change_cancelled",
-    Purchased = "marketplace_purchase.purchased",
-  }
+  type MemberEvent =
+    | "member"
+    | "member.added"
+    | "member.edited"
+    | "member.removed";
 
-  const enum MemberEvent {
-    Default = "member",
-    Added = "member.added",
-    Edited = "member.edited",
-    Removed = "member.removed",
-  }
+  type MembershipEvent =
+    | "membership"
+    | "membership.added"
+    | "membership.removed";
 
-  const enum MembershipEvent {
-    Default = "membership",
-    Added = "membership.added",
-    Removed = "membership.removed",
-  }
+  type MetaEvent = "meta" | "meta.deleted";
 
-  const enum MetaEvent {
-    Default = "meta",
-    Deleted = "meta.deleted",
-  }
+  type MilestoneEvent =
+    | "milestone"
+    | "milestone.closed"
+    | "milestone.created"
+    | "milestone.deleted"
+    | "milestone.edited"
+    | "milestone.opened";
 
-  const enum MilestoneEvent {
-    Default = "milestone",
-    Closed = "milestone.closed",
-    Created = "milestone.created",
-    Deleted = "milestone.deleted",
-    Edited = "milestone.edited",
-    Opened = "milestone.opened",
-  }
+  type OrganizationEvent =
+    | "organization"
+    | "organization.deleted"
+    | "organization.member_added"
+    | "organization.member_invited"
+    | "organization.member_removed"
+    | "organization.renamed";
 
-  const enum OrganizationEvent {
-    Default = "organization",
-    Deleted = "organization.deleted",
-    MemberAdded = "organization.member_added",
-    MemberInvited = "organization.member_invited",
-    MemberRemoved = "organization.member_removed",
-    Renamed = "organization.renamed",
-  }
+  type OrgBlockEvent =
+    | "org_block"
+    | "org_block.blocked"
+    | "org_block.unblocked";
 
-  const enum OrgBlockEvent {
-    Default = "org_block",
-    Blocked = "org_block.blocked",
-    Unblocked = "org_block.unblocked",
-  }
+  type PackageEvent = "package" | "package.published" | "package.updated";
 
-  const enum PackageEvent {
-    Default = "package",
-    Published = "package.published",
-    Updated = "package.updated",
-  }
+  type PageBuildEvent = "page_build";
 
-  const enum PageBuildEvent {
-    Default = "page_build",
-  }
+  type ProjectCardEvent =
+    | "project_card"
+    | "project_card.converted"
+    | "project_card.created"
+    | "project_card.deleted"
+    | "project_card.edited"
+    | "project_card.moved";
 
-  const enum ProjectCardEvent {
-    Default = "project_card",
-    Converted = "project_card.converted",
-    Created = "project_card.created",
-    Deleted = "project_card.deleted",
-    Edited = "project_card.edited",
-    Moved = "project_card.moved",
-  }
+  type ProjectColumnEvent =
+    | "project_column"
+    | "project_column.created"
+    | "project_column.deleted"
+    | "project_column.edited"
+    | "project_column.moved";
 
-  const enum ProjectColumnEvent {
-    Default = "project_column",
-    Created = "project_column.created",
-    Deleted = "project_column.deleted",
-    Edited = "project_column.edited",
-    Moved = "project_column.moved",
-  }
+  type ProjectEvent =
+    | "project"
+    | "project.closed"
+    | "project.created"
+    | "project.deleted"
+    | "project.edited"
+    | "project.reopened";
 
-  const enum ProjectEvent {
-    Default = "project",
-    Closed = "project.closed",
-    Created = "project.created",
-    Deleted = "project.deleted",
-    Edited = "project.edited",
-    Reopened = "project.reopened",
-  }
+  type PublicEvent = "public";
 
-  const enum PublicEvent {
-    Default = "public",
-  }
+  type PullRequestEvent =
+    | "pull_request"
+    | "pull_request.assigned"
+    | "pull_request.closed"
+    | "pull_request.edited"
+    | "pull_request.labeled"
+    | "pull_request.locked"
+    | "pull_request.opened"
+    | "pull_request.ready_for_review"
+    | "pull_request.reopened"
+    | "pull_request.review_request_removed"
+    | "pull_request.review_requested"
+    | "pull_request.synchronize"
+    | "pull_request.unassigned"
+    | "pull_request.unlabeled"
+    | "pull_request.unlocked";
 
-  const enum PullRequestEvent {
-    Default = "pull_request",
-    Assigned = "pull_request.assigned",
-    Closed = "pull_request.closed",
-    Edited = "pull_request.edited",
-    Labeled = "pull_request.labeled",
-    Locked = "pull_request.locked",
-    Opened = "pull_request.opened",
-    ReadyForReview = "pull_request.ready_for_review",
-    Reopened = "pull_request.reopened",
-    ReviewRequestRemoved = "pull_request.review_request_removed",
-    ReviewRequested = "pull_request.review_requested",
-    Synchronize = "pull_request.synchronize",
-    Unassigned = "pull_request.unassigned",
-    Unlabeled = "pull_request.unlabeled",
-    Unlocked = "pull_request.unlocked",
-  }
+  type PullRequestReviewEvent =
+    | "pull_request_review"
+    | "pull_request_review.dismissed"
+    | "pull_request_review.edited"
+    | "pull_request_review.submitted";
 
-  const enum PullRequestReviewEvent {
-    Default = "pull_request_review",
-    Dismissed = "pull_request_review.dismissed",
-    Edited = "pull_request_review.edited",
-    Submitted = "pull_request_review.submitted",
-  }
+  type PullRequestReviewCommentEvent =
+    | "pull_request_review_comment"
+    | "pull_request_review_comment.created"
+    | "pull_request_review_comment.deleted"
+    | "pull_request_review_comment.edited";
 
-  const enum PullRequestReviewCommentEvent {
-    Default = "pull_request_review_comment",
-    Created = "pull_request_review_comment.created",
-    Deleted = "pull_request_review_comment.deleted",
-    Edited = "pull_request_review_comment.edited",
-  }
+  type PushEvent = "push";
 
-  const enum PushEvent {
-    Default = "push",
-  }
+  type ReleaseEvent =
+    | "release"
+    | "release.created"
+    | "release.deleted"
+    | "release.edited"
+    | "release.prereleased"
+    | "release.published"
+    | "release.unpublished";
 
-  const enum ReleaseEvent {
-    Default = "release",
-    Created = "release.created",
-    Deleted = "release.deleted",
-    Edited = "release.edited",
-    Prereleased = "release.prereleased",
-    Published = "release.published",
-    Unpublished = "release.unpublished",
-  }
+  type RepositoryDispatchEvent =
+    | "repository_dispatch"
+    | "repository_dispatch.on-demand-test";
 
-  const enum RepositoryDispatchEvent {
-    Default = "repository_dispatch",
-    OnDemandTest = "repository_dispatch.on-demand-test",
-  }
+  type RepositoryEvent =
+    | "repository"
+    | "repository.archived"
+    | "repository.created"
+    | "repository.deleted"
+    | "repository.edited"
+    | "repository.privatized"
+    | "repository.publicized"
+    | "repository.renamed"
+    | "repository.transferred"
+    | "repository.unarchived";
 
-  const enum RepositoryEvent {
-    Default = "repository",
-    Archived = "repository.archived",
-    Created = "repository.created",
-    Deleted = "repository.deleted",
-    Edited = "repository.edited",
-    Privatized = "repository.privatized",
-    Publicized = "repository.publicized",
-    Renamed = "repository.renamed",
-    Transferred = "repository.transferred",
-    Unarchived = "repository.unarchived",
-  }
+  type RepositoryImportEvent = "repository_import";
 
-  const enum RepositoryImportEvent {
-    Default = "repository_import",
-  }
+  type RepositoryVulnerabilityAlertEvent =
+    | "repository_vulnerability_alert"
+    | "repository_vulnerability_alert.create"
+    | "repository_vulnerability_alert.dismiss"
+    | "repository_vulnerability_alert.resolve";
 
-  const enum RepositoryVulnerabilityAlertEvent {
-    Default = "repository_vulnerability_alert",
-    Create = "repository_vulnerability_alert.create",
-    Dismiss = "repository_vulnerability_alert.dismiss",
-    Resolve = "repository_vulnerability_alert.resolve",
-  }
+  type SecurityAdvisoryEvent =
+    | "security_advisory"
+    | "security_advisory.performed"
+    | "security_advisory.published"
+    | "security_advisory.updated";
 
-  const enum SecurityAdvisoryEvent {
-    Default = "security_advisory",
-    Performed = "security_advisory.performed",
-    Published = "security_advisory.published",
-    Updated = "security_advisory.updated",
-  }
+  type SponsorshipEvent =
+    | "sponsorship"
+    | "sponsorship.created"
+    | "sponsorship.pending_tier_change";
 
-  const enum SponsorshipEvent {
-    Default = "sponsorship",
-    Created = "sponsorship.created",
-    PendingTierChange = "sponsorship.pending_tier_change",
-  }
+  type StarEvent = "star" | "star.created" | "star.deleted";
 
-  const enum StarEvent {
-    Default = "star",
-    Created = "star.created",
-    Deleted = "star.deleted",
-  }
+  type StatusEvent = "status";
 
-  const enum StatusEvent {
-    Default = "status",
-  }
+  type TeamEvent =
+    | "team"
+    | "team.added_to_repository"
+    | "team.created"
+    | "team.deleted"
+    | "team.edited"
+    | "team.removed_from_repository";
 
-  const enum TeamEvent {
-    Default = "team",
-    AddedToRepository = "team.added_to_repository",
-    Created = "team.created",
-    Deleted = "team.deleted",
-    Edited = "team.edited",
-    RemovedFromRepository = "team.removed_from_repository",
-  }
+  type TeamAddEvent = "team_add";
 
-  const enum TeamAddEvent {
-    Default = "team_add",
-  }
+  type WatchEvent = "watch" | "watch.started";
 
-  const enum WatchEvent {
-    Default = "watch",
-    Started = "watch.started",
-  }
+  type PingEvent = "ping";
 
-  const enum PingEvent {
-    Default = "ping",
-  }
+  type AllEventTypes =
+    | ErrorEvent
+    | WildcardEvent
+    | CheckRunEvent
+    | CheckSuiteEvent
+    | CommitCommentEvent
+    | ContentReferenceEvent
+    | CreateEvent
+    | DeleteEvent
+    | DeployKeyEvent
+    | DeploymentEvent
+    | DeploymentStatusEvent
+    | ForkEvent
+    | GithubAppAuthorizationEvent
+    | GollumEvent
+    | InstallationEvent
+    | InstallationRepositoriesEvent
+    | IssueCommentEvent
+    | IssuesEvent
+    | LabelEvent
+    | MarketplacePurchaseEvent
+    | MemberEvent
+    | MembershipEvent
+    | MetaEvent
+    | MilestoneEvent
+    | OrganizationEvent
+    | OrgBlockEvent
+    | PackageEvent
+    | PageBuildEvent
+    | ProjectCardEvent
+    | ProjectColumnEvent
+    | ProjectEvent
+    | PublicEvent
+    | PullRequestEvent
+    | PullRequestReviewEvent
+    | PullRequestReviewCommentEvent
+    | PushEvent
+    | ReleaseEvent
+    | RepositoryDispatchEvent
+    | RepositoryEvent
+    | RepositoryImportEvent
+    | RepositoryVulnerabilityAlertEvent
+    | SecurityAdvisoryEvent
+    | SponsorshipEvent
+    | StarEvent
+    | StatusEvent
+    | TeamEvent
+    | TeamAddEvent
+    | WatchEvent
+    | PingEvent;
 }
