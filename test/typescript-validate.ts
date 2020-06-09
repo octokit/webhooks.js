@@ -21,7 +21,7 @@ export default async function () {
     transform: (event) => event,
   });
 
-  webhooks.on("*" as EventNames.WildcardEvent, ({ name, payload }) => {
+  webhooks.on("*", ({ name, payload }) => {
     console.log(name, "event received");
     const sig = webhooks.sign(payload);
     webhooks.verify(payload, sig);
