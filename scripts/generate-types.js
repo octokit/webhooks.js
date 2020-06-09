@@ -69,7 +69,14 @@ const definitionIndex = `
 ${doNotEditThisFileDisclaimer}
 export { EventNames } from './src/generated/event-names'
 export { EventPayloads } from './src/generated/event-payloads'
-export { Webhooks } from './src/generated/api'
+export {
+  Webhooks,
+  createWebhooksApi,
+  createEventHandler,
+  createMiddleware,
+  sign,
+  verify
+} from './src/generated/api'
 `;
 
 generateFile("index.d.ts", definitionIndex);
