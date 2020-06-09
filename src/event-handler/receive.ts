@@ -1,10 +1,11 @@
 import { wrapErrorHandler } from "./wrap-error-handler";
 import { WebhookEvent, EventState } from "../types";
+import { EventNames } from '../generated/event-names';
 
 function getHooks(
   state: EventState,
   eventPayloadAction: string,
-  eventName: string | string[]
+  eventName: EventNames.AllEventTypes
 ): Function[] {
   const hooks = [state.hooks[`${eventName}.${eventPayloadAction}`]];
 
