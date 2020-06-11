@@ -5,11 +5,6 @@
     "access": "public"
   },
   "description": "GitHub webhook events toolset for Node.js",
-  "main": "pkg/dist-src/index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
   "dependencies": {
     "debug": "^4.0.0"
   },
@@ -19,9 +14,10 @@
     "@pika/pack": "^0.5.0",
     "@pika/plugin-build-node": "^0.9.2",
     "@pika/plugin-build-types": "^0.9.2",
-    "@pika/plugin-standard-pkg": "^0.9.2",
+    "@pika/plugin-ts-standard-pkg": "^0.9.2",
     "@types/debug": "^4.1.5",
     "@types/express": "^4.17.6",
+    "@types/node": "^14.0.13",
     "@types/prettier": "^2.0.0",
     "axios": "^0.19.0",
     "cheerio": "^1.0.0-rc.2",
@@ -42,7 +38,7 @@
     "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' index.d.ts README.md package.json",
     "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' index.d.ts README.md package.json",
     "pretest": "npm run -s lint; npm run build -s",
-    "test": "tap --100 --coverage 'test/**/*-test.js'",
+    "test": "tap --100 --coverage 'test/integration/*-test.js'",
     "generate-types": "node scripts/generate-types.js",
     "validate:ts": "tsc --noEmit --noImplicitAny test/typescript-validate.ts"
   },
@@ -53,7 +49,7 @@
   "@pika/pack": {
     "pipeline": [
       [
-        "@pika/plugin-standard-pkg"
+        "@pika/plugin-ts-standard-pkg"
       ],
       [
         "@pika/plugin-build-node"
@@ -65,6 +61,5 @@
   },
   "keywords": [],
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
-  "license": "MIT",
-  "types": "index.d.ts"
+  "license": "MIT"
 }

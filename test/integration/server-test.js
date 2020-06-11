@@ -1,11 +1,12 @@
-import http from "http";
-import axios from "axios";
-import getPort from "get-port";
-import { promisify } from "util";
-import simple from "simple-mock";
-import Tap from "tap";
-import { Webhooks } from "../../";
-import pushEventPayload from "../fixtures/push-payload.json";
+const http = require("http");
+const axios = require("axios");
+const getPort = require("get-port");
+const { promisify } = require("util");
+const simple = require("simple-mock");
+const Tap = require("tap");
+
+const { Webhooks } = require("../../pkg");
+const pushEventPayload = require("../fixtures/push-payload.json");
 
 const test = Tap.test;
 const beforeEach = Tap.beforeEach;
@@ -90,7 +91,6 @@ test("POST / with push event payload", (t) => {
     .catch(t.error);
 });
 
-//TEST
 test(
   "POST / with push event payload (request.body already parsed)",
   (t) => {
@@ -105,11 +105,6 @@ test(
       req.once("end", () => {
         req.body = JSON.parse(Buffer.concat(dataChunks).toString());
         api.middleware(req, res);
-
-        setTimeout(() => {
-          res.statusCode = 500;
-          res.end("Middleware timeout");
-        }, 3000);
       });
     });
 
@@ -136,7 +131,7 @@ test(
       })
 
       .then(() => {
-        server.close();
+        server.close(t.end);
       })
 
       .catch(t.error);

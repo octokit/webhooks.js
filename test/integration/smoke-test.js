@@ -1,9 +1,9 @@
-import { test } from "tap";
-import { mock } from "simple-mock";
+const { test } = require("tap");
+const { mock } = require("simple-mock");
 
 test("@octokit/webhooks", (t) => {
   const emitWarningMock = mock(process, "emitWarning");
-  const { Webhooks } = require("../../");
+  const { Webhooks } = require("../../pkg");
   const api = new Webhooks({
     secret: "mysecret",
   });
@@ -24,7 +24,7 @@ test('require("@octokit/webhooks").sign', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
 
   t.doesNotThrow(() => {
-    const { sign } = require("../../pkg/dist-src");
+    const { sign } = require("../../pkg/");
     sign("1234", {});
   });
   t.false(emitWarningMock.called);
@@ -38,7 +38,7 @@ test('require("@octokit/webhooks").verify', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
 
   t.doesNotThrow(() => {
-    const { verify } = require("../../pkg/dist-src/");
+    const { verify } = require("../../pkg/");
     verify("1234", {}, "randomSignature");
   });
   t.false(emitWarningMock.called);
@@ -52,7 +52,7 @@ test('require("@octokit/webhooks").createEventHandler', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
 
   t.doesNotThrow(() => {
-    const { createEventHandler } = require("../../pkg/dist-src");
+    const { createEventHandler } = require("../../pkg/");
     createEventHandler();
   });
   t.false(emitWarningMock.called);
@@ -66,7 +66,7 @@ test('require("@octokit/webhooks").createMiddleware', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
 
   t.doesNotThrow(() => {
-    const { createMiddleware } = require("../../pkg/dist-src");
+    const { createMiddleware } = require("../../pkg/");
     createMiddleware({ secret: "1234" });
   });
   t.false(emitWarningMock.called);

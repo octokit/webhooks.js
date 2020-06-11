@@ -1,5 +1,5 @@
-import { test } from "tap";
-import { verify } from "../../pkg/dist-src/verify";
+const { test } = require("tap");
+const { verify } = require("../../pkg/");
 
 const eventPayload = {
   foo: "bar",

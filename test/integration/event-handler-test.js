@@ -1,7 +1,7 @@
-import { test } from "tap";
-import { createEventHandler } from "../../pkg/dist-src/event-handler";
-import pushEventPayload from "../fixtures/push-payload.json";
-import installationCreatedPayload from "../fixtures/installation-created-payload.json";
+const { test } = require("tap");
+const { createEventHandler } = require("../../pkg/");
+const pushEventPayload = require("../fixtures/push-payload.json");
+const installationCreatedPayload = require("../fixtures/installation-created-payload.json");
 
 test("events", (t) => {
   t.plan(6);
