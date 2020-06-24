@@ -1,4 +1,4 @@
-import http = require("http");
+import http from "http";
 import { EventNames } from "./event-names";
 import { EventPayloads } from "./event-payloads";
 type Options = {

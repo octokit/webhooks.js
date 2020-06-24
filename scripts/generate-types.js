@@ -82,7 +82,7 @@ export {
 generateFile("index.d.ts", definitionIndex);
 
 const apiContent = `
-import http = require('http');
+import http from "http";
 import { ${eventNamesVariable} } from "./event-names";
 import { ${eventPayloadsVariable} } from "./event-payloads";
 type Options = {
