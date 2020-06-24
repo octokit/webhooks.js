@@ -69,6 +69,8 @@ type GetWebhookPayloadTypeFromEvent<T> = T extends EventNames.ErrorEvent
   ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPackage>
   : T extends EventNames.PageBuildEvent
   ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPageBuild>
+  : T extends EventNames.PingEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPing>
   : T extends EventNames.ProjectCardEvent
   ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadProjectCard>
   : T extends EventNames.ProjectColumnEvent
@@ -113,8 +115,6 @@ type GetWebhookPayloadTypeFromEvent<T> = T extends EventNames.ErrorEvent
   ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadTeamAdd>
   : T extends EventNames.WatchEvent
   ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadWatch>
-  : T extends EventNames.PingEvent
-  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadPing>
   : never;
 
 declare class Webhooks {

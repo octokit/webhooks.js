@@ -114,7 +114,7 @@ export default Webhooks;
 export { Webhooks };
 `;
 
-generateFile("src/generated/api.d.ts", apiContent);
+generateFile("src/generated/api.ts", apiContent);
 
 const eventNamesContet = `
 ${doNotEditThisFileDisclaimer}
@@ -127,7 +127,7 @@ export namespace ${eventNamesVariable} {
 }
 `;
 
-generateFile("src/generated/event-names.d.ts", eventNamesContet);
+generateFile("src/generated/event-names.ts", eventNamesContet);
 
 const eventPayloadsContet = `
 ${doNotEditThisFileDisclaimer}
@@ -144,4 +144,4 @@ export namespace ${eventPayloadsVariable} {
 }
 `;
 
-generateFile("src/generated/event-payloads.d.ts", eventPayloadsContet);
+generateFile("src/generated/event-payloads.ts", eventPayloadsContet);

@@ -2,31 +2,6 @@
 // make edits in scripts/generate-types.js
 
 export namespace EventPayloads {
-  type WebhookPayloadPingPayloadHookConfig = {
-    content_type: string;
-    insecure_ssl: string;
-    url: string;
-  };
-  type WebhookPayloadPingPayloadHook = {
-    type: string;
-    id: number;
-    name: string;
-    active: boolean;
-    events: Array<string>;
-    config: WebhookPayloadPingPayloadHookConfig;
-    updated_at: string;
-    created_at: string;
-    app_id: number;
-  };
-  type WebhookPayloadPingPayload = {
-    zen: string;
-    hook_id: number;
-    hook: WebhookPayloadPingPayloadHook;
-  };
-  type WebhookPayloadPing = {
-    event: string;
-    payload: WebhookPayloadPingPayload;
-  };
   type WebhookPayloadWatchSender = {
     login: string;
     id: number;
@@ -2202,6 +2177,57 @@ export namespace EventPayloads {
     project_card: WebhookPayloadProjectCardProjectCard;
     repository: PayloadRepository;
     sender: WebhookPayloadProjectCardSender;
+  };
+  type WebhookPayloadPingSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPingHookLastResponse = {
+    code: null;
+    status: string;
+    message: null;
+  };
+  type WebhookPayloadPingHookConfig = {
+    content_type: string;
+    url: string;
+    insecure_ssl: string;
+  };
+  type WebhookPayloadPingHook = {
+    type: string;
+    id: number;
+    name: string;
+    active: boolean;
+    events: Array<string>;
+    config: WebhookPayloadPingHookConfig;
+    updated_at: string;
+    created_at: string;
+    url: string;
+    test_url: string;
+    ping_url: string;
+    last_response: WebhookPayloadPingHookLastResponse;
+  };
+  type WebhookPayloadPing = {
+    zen: string;
+    hook_id: number;
+    hook: WebhookPayloadPingHook;
+    repository: PayloadRepository;
+    sender: WebhookPayloadPingSender;
   };
   type WebhookPayloadPageBuildSender = {
     login: string;

@@ -136,6 +136,8 @@ export namespace EventNames {
 
   type PageBuildEvent = "page_build";
 
+  type PingEvent = "ping";
+
   type ProjectCardEvent =
     | "project_card"
     | "project_card.converted"
@@ -199,6 +201,7 @@ export namespace EventNames {
     | "release.edited"
     | "release.prereleased"
     | "release.published"
+    | "release.released"
     | "release.unpublished";
 
   type RepositoryDispatchEvent =
@@ -233,8 +236,12 @@ export namespace EventNames {
 
   type SponsorshipEvent =
     | "sponsorship"
+    | "sponsorship.cancelled"
     | "sponsorship.created"
-    | "sponsorship.pending_tier_change";
+    | "sponsorship.edited"
+    | "sponsorship.pending_cancellation"
+    | "sponsorship.pending_tier_change"
+    | "sponsorship.tier_changed";
 
   type StarEvent = "star" | "star.created" | "star.deleted";
 
@@ -251,8 +258,6 @@ export namespace EventNames {
   type TeamAddEvent = "team_add";
 
   type WatchEvent = "watch" | "watch.started";
-
-  type PingEvent = "ping";
 
   type AllEventTypes =
     | ErrorEvent
@@ -283,6 +288,7 @@ export namespace EventNames {
     | OrgBlockEvent
     | PackageEvent
     | PageBuildEvent
+    | PingEvent
     | ProjectCardEvent
     | ProjectColumnEvent
     | ProjectEvent
@@ -302,6 +308,5 @@ export namespace EventNames {
     | StatusEvent
     | TeamEvent
     | TeamAddEvent
-    | WatchEvent
-    | PingEvent;
+    | WatchEvent;
 }
