@@ -1,6 +1,7 @@
+import { EventNames } from './generated/types'
 export interface WebhookEvent {
   id: string | string[] | undefined;
-  name: string | string[] | undefined;
+  name: EventNames.AllEventTypes;
   payload: Payload;
   signature: string | string[] | undefined;
 }

@@ -4,7 +4,7 @@ import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { Request, Response } from "express";
-import { EventState } from "../types";
+import { EventState, WebhookEvent } from "../types";
 
 const debugWebhooks = debug("webhooks:receiver");
 
@@ -40,7 +40,7 @@ export function middleware(
     });
   }
 
-  const eventName = request.headers["x-github-event"];
+  const eventName = request.headers["x-github-event"] as WebhookEvent["name"];
   const signature = request.headers["x-hub-signature"];
   const id = request.headers["x-github-delivery"];
 

@@ -3,11 +3,4 @@
 
 export { EventNames } from "./event-names";
 export { EventPayloads } from "./event-payloads";
-export {
-  Webhooks,
-  createWebhooksApi,
-  createEventHandler,
-  createMiddleware,
-  sign,
-  verify,
-} from "./api";
+export { Webhooks } from "./api";

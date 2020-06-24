@@ -69,14 +69,7 @@ const definitionTypes = `
 ${doNotEditThisFileDisclaimer}
 export { EventNames } from './event-names'
 export { EventPayloads } from './event-payloads'
-export {
-  Webhooks,
-  createWebhooksApi,
-  createEventHandler,
-  createMiddleware,
-  sign,
-  verify
-} from './api'
+export { Webhooks } from './api'
 `;
 
 generateFile("src/generated/types.ts", definitionTypes);
@@ -104,12 +97,6 @@ declare class Webhooks {
   public middleware (request: http.IncomingMessage, response: http.ServerResponse, next?: (err?: any) => void): void | Promise<void>
 }
 
-export function createWebhooksApi(options?: Options): Webhooks;
-export function createEventHandler(options?: Options): Webhooks;
-export function createMiddleware(options?: Options): Webhooks;
-export function sign(data: any): string
-export function verify(eventPayload: any, signature: string): boolean
-
 export default Webhooks;
 export { Webhooks };
 `;
@@ -118,7 +105,7 @@ generateFile("src/generated/api.ts", apiContent);
 
 const eventNamesContet = `
 ${doNotEditThisFileDisclaimer}
-export namespace ${eventNamesVariable} {
+export declare module ${eventNamesVariable} {
   ${eventTypes.join("\n")}
   type AllEventTypes =
     ${eventTypes
@@ -131,7 +118,7 @@ generateFile("src/generated/event-names.ts", eventNamesContet);
 
 const eventPayloadsContet = `
 ${doNotEditThisFileDisclaimer}
-export namespace ${eventPayloadsVariable} {
+export declare module ${eventPayloadsVariable} {
   ${tw.generate("typescript", { inlined: false })}
   interface WebhookEvent<T> {
     id: string;

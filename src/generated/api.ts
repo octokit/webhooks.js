@@ -147,11 +147,5 @@ declare class Webhooks {
   ): void | Promise<void>;
 }
 
-export function createWebhooksApi(options?: Options): Webhooks;
-export function createEventHandler(options?: Options): Webhooks;
-export function createMiddleware(options?: Options): Webhooks;
-export function sign(data: any): string;
-export function verify(eventPayload: any, signature: string): boolean;
-
 export default Webhooks;
 export { Webhooks };
