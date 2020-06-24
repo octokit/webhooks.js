@@ -65,6 +65,5 @@
   },
   "keywords": [],
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
-  "license": "MIT",
-  "types": "index.d.ts"
+  "license": "MIT"
 }
