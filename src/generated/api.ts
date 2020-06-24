@@ -1,4 +1,7 @@
-import http from "http";
+import {
+  IncomingMessage,
+  ServerResponse
+} from "http";
 import { EventNames } from "./event-names";
 import { EventPayloads } from "./event-payloads";
 type Options = {
@@ -141,8 +144,8 @@ export declare class Webhooks {
     callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
   ): void;
   public middleware(
-    request: http.IncomingMessage,
-    response: http.ServerResponse,
+    request: IncomingMessage,
+    response: ServerResponse,
     next?: (err?: any) => void
   ): void | Promise<void>;
 }
