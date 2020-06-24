@@ -1,8 +1,8 @@
-import { createEventHandler } from "./event-handler";
-import { createMiddleware } from "./middleware";
+import { createEventHandler } from "./event-handler/index";
+import { createMiddleware } from "./middleware/index";
 import { middleware } from "./middleware/middleware";
-import { sign } from "./sign";
-import { verify } from "./verify";
+import { sign } from "./sign/index";
+import { verify } from "./verify/index";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
 import { EventHandlerOptions, EventState } from "./types";
 

@@ -1,4 +1,4 @@
-import { createEventHandler } from "../event-handler";
+import { createEventHandler } from "../event-handler/index";
 import { middleware } from "./middleware";
 import { EventHandlerOptions, EventState } from "../types";
 
