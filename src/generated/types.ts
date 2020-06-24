@@ -3,4 +3,3 @@
 
 export { EventNames } from "./event-names";
 export { EventPayloads } from "./event-payloads";
-export { Webhooks } from "./api";

@@ -117,7 +117,7 @@ type GetWebhookPayloadTypeFromEvent<T> = T extends EventNames.ErrorEvent
   ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadWatch>
   : never;
 
-declare class Webhooks {
+export declare class Webhooks {
   constructor(options?: Options);
   public on<T extends EventNames.AllEventTypes>(
     event: T | T[],
@@ -146,6 +146,3 @@ declare class Webhooks {
     next?: (err?: any) => void
   ): void | Promise<void>;
 }
-
-export default Webhooks;
-export { Webhooks };
