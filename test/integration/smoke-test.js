@@ -3,7 +3,7 @@ import { mock } from "simple-mock";
 
 test("@octokit/webhooks", (t) => {
   const emitWarningMock = mock(process, "emitWarning");
-  const { Webhooks } = require("../../");
+  const { Webhooks } = require("../../pkg");
   const api = new Webhooks({
     secret: "mysecret",
   });

@@ -4,7 +4,7 @@ import getPort from "get-port";
 import { promisify } from "util";
 import simple from "simple-mock";
 import Tap from "tap";
-import { Webhooks } from "../../";
+import { Webhooks } from "../../pkg";
 import pushEventPayload from "../fixtures/push-payload.json";
 
 const test = Tap.test;
