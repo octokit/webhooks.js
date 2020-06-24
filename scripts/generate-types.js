@@ -65,10 +65,10 @@ webhooks.forEach(({ name, actions, examples }) => {
 
 conditionalType.push('never')
 
-const definitionIndex = `
+const definitionTypes = `
 ${doNotEditThisFileDisclaimer}
-export { EventNames } from './src/generated/event-names'
-export { EventPayloads } from './src/generated/event-payloads'
+export { EventNames } from './event-names'
+export { EventPayloads } from './event-payloads'
 export {
   Webhooks,
   createWebhooksApi,
@@ -76,10 +76,10 @@ export {
   createMiddleware,
   sign,
   verify
-} from './src/generated/api'
+} from './api'
 `;
 
-generateFile("index.d.ts", definitionIndex);
+generateFile("src/generated/types.ts", definitionTypes);
 
 const apiContent = `
 import http from "http";

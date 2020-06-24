@@ -29,6 +29,8 @@ function createWebhooksApi(options: EventHandlerOptions) {
   };
 }
 
+export * from "./generated/types";
+
 export {
   createEventHandler,
   createMiddleware,
