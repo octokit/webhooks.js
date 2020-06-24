@@ -1,5 +1,5 @@
 import { webhookNames } from "../generated/webhook-names.js";
-import { EventNames } from '../generated/event-names';
+import { EventNames } from "../generated/event-names";
 import { EventState } from "../types";
 
 export function receiverOn(

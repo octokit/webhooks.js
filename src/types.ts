@@ -1,4 +1,4 @@
-import { EventNames } from './generated/types'
+import { EventNames } from "./generated/types";
 export interface WebhookEvent {
   id: string | string[] | undefined;
   name: EventNames.AllEventTypes;

@@ -33,10 +33,7 @@ const generateEventNameType = (event, name, actions) => `type ${event} =
         .join("\n")}
 `;
 
-eventTypes.push(
-  `type ErrorEvent = "error"`,
-  `type WildcardEvent = "*"`
-)
+eventTypes.push(`type ErrorEvent = "error"`, `type WildcardEvent = "*"`);
 
 const conditionalType = [
   `type GetWebhookPayloadTypeFromEvent<T> = `,
@@ -55,7 +52,7 @@ webhooks.forEach(({ name, actions, examples }) => {
   const event = `${pascalCase(name)}Event`;
 
   const eventNameType = generateEventNameType(event, name, actions);
-  const eventNameTypeKey = eventNameType.split(' ')[1];
+  const eventNameTypeKey = eventNameType.split(" ")[1];
 
   eventTypes.push(eventNameType);
   conditionalType.push(
@@ -63,7 +60,7 @@ webhooks.forEach(({ name, actions, examples }) => {
   );
 });
 
-conditionalType.push('never')
+conditionalType.push("never");
 
 const definitionTypes = `
 ${doNotEditThisFileDisclaimer}
@@ -108,9 +105,7 @@ ${doNotEditThisFileDisclaimer}
 export declare module ${eventNamesVariable} {
   ${eventTypes.join("\n")}
   type AllEventTypes =
-    ${eventTypes
-    .map((event) => event.split(' ')[1])
-    .join(" | ")};
+    ${eventTypes.map((event) => event.split(" ")[1]).join(" | ")};
 }
 `;
 
