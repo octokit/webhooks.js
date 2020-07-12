@@ -12,31 +12,6 @@ type Options = {
 };
 
 declare namespace Webhooks {
-  type WebhookPayloadPingPayloadHookConfig = {
-    content_type: string;
-    insecure_ssl: string;
-    url: string;
-  };
-  type WebhookPayloadPingPayloadHook = {
-    type: string;
-    id: number;
-    name: string;
-    active: boolean;
-    events: Array<string>;
-    config: WebhookPayloadPingPayloadHookConfig;
-    updated_at: string;
-    created_at: string;
-    app_id: number;
-  };
-  type WebhookPayloadPingPayload = {
-    zen: string;
-    hook_id: number;
-    hook: WebhookPayloadPingPayloadHook;
-  };
-  type WebhookPayloadPing = {
-    event: string;
-    payload: WebhookPayloadPingPayload;
-  };
   type WebhookPayloadWatchSender = {
     login: string;
     id: number;
@@ -2212,6 +2187,57 @@ declare namespace Webhooks {
     project_card: WebhookPayloadProjectCardProjectCard;
     repository: PayloadRepository;
     sender: WebhookPayloadProjectCardSender;
+  };
+  type WebhookPayloadPingSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPingHookLastResponse = {
+    code: null;
+    status: string;
+    message: null;
+  };
+  type WebhookPayloadPingHookConfig = {
+    content_type: string;
+    url: string;
+    insecure_ssl: string;
+  };
+  type WebhookPayloadPingHook = {
+    type: string;
+    id: number;
+    name: string;
+    active: boolean;
+    events: Array<string>;
+    config: WebhookPayloadPingHookConfig;
+    updated_at: string;
+    created_at: string;
+    url: string;
+    test_url: string;
+    ping_url: string;
+    last_response: WebhookPayloadPingHookLastResponse;
+  };
+  type WebhookPayloadPing = {
+    zen: string;
+    hook_id: number;
+    hook: WebhookPayloadPingHook;
+    repository: PayloadRepository;
+    sender: WebhookPayloadPingSender;
   };
   type WebhookPayloadPageBuildSender = {
     login: string;
@@ -4611,6 +4637,7 @@ type WebhookPayloadPackageEventTypeKeys =
   | "package.published"
   | "package.updated";
 type WebhookPayloadPageBuildEventTypeKeys = "page_build";
+type WebhookPayloadPingEventTypeKeys = "ping";
 type WebhookPayloadProjectCardEventTypeKeys =
   | "project_card"
   | "project_card.converted"
@@ -4666,6 +4693,7 @@ type WebhookPayloadReleaseEventTypeKeys =
   | "release.edited"
   | "release.prereleased"
   | "release.published"
+  | "release.released"
   | "release.unpublished";
 type WebhookPayloadRepositoryDispatchEventTypeKeys =
   | "repository_dispatch"
@@ -4694,8 +4722,12 @@ type WebhookPayloadSecurityAdvisoryEventTypeKeys =
   | "security_advisory.updated";
 type WebhookPayloadSponsorshipEventTypeKeys =
   | "sponsorship"
+  | "sponsorship.cancelled"
   | "sponsorship.created"
-  | "sponsorship.pending_tier_change";
+  | "sponsorship.edited"
+  | "sponsorship.pending_cancellation"
+  | "sponsorship.pending_tier_change"
+  | "sponsorship.tier_changed";
 type WebhookPayloadStarEventTypeKeys = "star" | "star.created" | "star.deleted";
 type WebhookPayloadStatusEventTypeKeys = "status";
 type WebhookPayloadTeamEventTypeKeys =
@@ -4707,7 +4739,6 @@ type WebhookPayloadTeamEventTypeKeys =
   | "team.removed_from_repository";
 type WebhookPayloadTeamAddEventTypeKeys = "team_add";
 type WebhookPayloadWatchEventTypeKeys = "watch" | "watch.started";
-type WebhookPayloadPingEventTypeKeys = "ping";
 
 type AllEventTypes =
   | EventTypeError
@@ -4738,6 +4769,7 @@ type AllEventTypes =
   | WebhookPayloadOrgBlockEventTypeKeys
   | WebhookPayloadPackageEventTypeKeys
   | WebhookPayloadPageBuildEventTypeKeys
+  | WebhookPayloadPingEventTypeKeys
   | WebhookPayloadProjectCardEventTypeKeys
   | WebhookPayloadProjectColumnEventTypeKeys
   | WebhookPayloadProjectEventTypeKeys
@@ -4757,8 +4789,7 @@ type AllEventTypes =
   | WebhookPayloadStatusEventTypeKeys
   | WebhookPayloadTeamEventTypeKeys
   | WebhookPayloadTeamAddEventTypeKeys
-  | WebhookPayloadWatchEventTypeKeys
-  | WebhookPayloadPingEventTypeKeys;
+  | WebhookPayloadWatchEventTypeKeys;
 
 type GetWebhookPayloadTypeFromEvent<T> = T extends EventTypeError
   ? Error
@@ -4816,6 +4847,8 @@ type GetWebhookPayloadTypeFromEvent<T> = T extends EventTypeError
   ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadPackage>
   : T extends WebhookPayloadPageBuildEventTypeKeys
   ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadPageBuild>
+  : T extends WebhookPayloadPingEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadPing>
   : T extends WebhookPayloadProjectCardEventTypeKeys
   ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadProjectCard>
   : T extends WebhookPayloadProjectColumnEventTypeKeys
@@ -4856,8 +4889,6 @@ type GetWebhookPayloadTypeFromEvent<T> = T extends EventTypeError
   ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadTeamAdd>
   : T extends WebhookPayloadWatchEventTypeKeys
   ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadWatch>
-  : T extends WebhookPayloadPingEventTypeKeys
-  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadPing>
   : never;
 
 declare class Webhooks {
@@ -4893,8 +4924,12 @@ declare class Webhooks {
 export function createWebhooksApi(options?: Options): Webhooks;
 export function createEventHandler(options?: Options): Webhooks;
 export function createMiddleware(options?: Options): Webhooks;
-export function sign(data: any): string;
-export function verify(eventPayload: any, signature: string): boolean;
+export function sign(secret: string, data: any): string;
+export function verify(
+  secret: string,
+  eventPayload: any,
+  signature: string
+): boolean;
 
 export default Webhooks;
 export { Webhooks };
