@@ -6,7 +6,7 @@ export interface WebhookEvent {
   signature: string | string[] | undefined;
 }
 
-type Payload = {
+export type Payload = {
   action: string;
 };
 

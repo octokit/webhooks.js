@@ -3,15 +3,15 @@ import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
-import { Request, Response } from "express";
-import { EventState, WebhookEvent } from "../types";
+import { IncomingMessage, ServerResponse } from "http"
+import { EventState, WebhookEvent, Payload } from "../types";
 
 const debugWebhooks = debug("webhooks:receiver");
 
 export function middleware(
   state: EventState,
-  request: Request,
-  response: Response,
+  request: IncomingMessage,
+  response: ServerResponse,
   next?: Function
 ): Promise<void> | undefined {
   if (isntWebhook(request, { path: state.path })) {
@@ -47,7 +47,7 @@ export function middleware(
   debugWebhooks(`${eventName} event received (id: ${id})`);
 
   return getPayload(request)
-    .then((payload) => {
+    .then((payload: Payload) => {
       return verifyAndReceive(state, {
         id: id,
         name: eventName,
