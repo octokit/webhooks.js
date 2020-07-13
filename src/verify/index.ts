@@ -6,7 +6,7 @@ export function verify(
   secret?: string,
   eventPayload?: object,
   signature?: string | string[]
-) {
+): boolean {
   if (!secret || !eventPayload || !signature) {
     throw new TypeError("secret, eventPayload & signature required");
   }

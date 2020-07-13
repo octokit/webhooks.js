@@ -1,6 +1,6 @@
 import { createHmac } from "crypto";
 
-export function sign(secret: string, payload: string | object) {
+export function sign(secret: string, payload: string | object): string {
   if (!secret || !payload) {
     throw new TypeError("secret & payload required");
   }

@@ -86,8 +86,8 @@ ${conditionalType.join("\n")}
 declare class Webhooks {
   constructor (options?: Options)
   public on <T extends ${eventNamesVariable}.AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void): void
-  public sign (data: any): string
-  public verify (eventPayload: any, signature: string): boolean
+  public sign (secret: string, payload: string | object): string
+  public verify (secret?: string, eventPayload?: object, signature?: string | string[]): boolean
   public verifyAndReceive (options: { id: string, name: string, payload: any, signature: string }): Promise<void>
   public receive (options: { id: string, name: string, payload: any }): Promise<void>
   public removeListener <T extends ${eventNamesVariable}.AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void): void
