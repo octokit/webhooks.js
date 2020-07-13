@@ -94,6 +94,12 @@ declare class Webhooks {
   public middleware (request: http.IncomingMessage, response: http.ServerResponse, next?: (err?: any) => void): void | Promise<void>
 }
 
+export function createWebhooksApi(options?: Options): Webhooks;
+export function createEventHandler(options?: Options): Webhooks;
+export function createMiddleware(options?: Options): Webhooks;
+export function sign(secret: string, data: any): string
+export function verify(secret: string, eventPayload: any, signature: string): boolean
+
 export default Webhooks;
 export { Webhooks };
 `;
