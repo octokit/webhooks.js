@@ -39,9 +39,9 @@ export default async function () {
     path: "/github-webhooks",
   });
 
-  sign({});
+  sign("randomSecret", {});
 
-  verify({}, "randomSignature");
+  verify("randomSecret", {}, "randomSignature");
 
   webhooks.on("*", ({ id, name, payload }) => {
     console.log(name, "event received");
