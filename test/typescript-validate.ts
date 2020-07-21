@@ -56,11 +56,13 @@ export default async function () {
 
   webhooks.on(
     ["check_run.completed", "commit_comment", "label"],
-    ({ name, payload }:
-      EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun> |
-      EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCommitComment> |
-      EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadLabel>
-    ) => {
+    ({
+      name,
+      payload,
+    }:
+      | EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun>
+      | EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCommitComment>
+      | EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadLabel>) => {
       console.log(name);
       if ("check_run" in payload) {
         console.log(payload);
@@ -72,24 +74,41 @@ export default async function () {
   );
 
   webhooks.on(["check_run.completed", "check_run.created"], () => {});
-  webhooks.on("check_run.created", ({ name, payload }: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun>) => {
-    console.log(payload.check_run.conclusion, name);
-  });
-
-  webhooks.removeListener("check_run.created", ({ name, payload }: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun>) => {
-    console.log(payload.check_run.conclusion, name);
-  });
-  webhooks.removeListener(["commit_comment", "label"], ({ name, payload }:
-    EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCommitComment> |
-    EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadLabel>
-  ) => {
-    console.log(name);
-    if ("label" in payload) {
-      console.log(payload.label.name);
-    } else {
-      console.log(payload.comment.body);
+  webhooks.on(
+    "check_run.created",
+    ({
+      name,
+      payload,
+    }: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun>) => {
+      console.log(payload.check_run.conclusion, name);
     }
-  });
+  );
+
+  webhooks.removeListener(
+    "check_run.created",
+    ({
+      name,
+      payload,
+    }: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun>) => {
+      console.log(payload.check_run.conclusion, name);
+    }
+  );
+  webhooks.removeListener(
+    ["commit_comment", "label"],
+    ({
+      name,
+      payload,
+    }:
+      | EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCommitComment>
+      | EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadLabel>) => {
+      console.log(name);
+      if ("label" in payload) {
+        console.log(payload.label.name);
+      } else {
+        console.log(payload.comment.body);
+      }
+    }
+  );
 
   createServer(webhooks.middleware).listen(3000);
 }

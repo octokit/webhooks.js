@@ -1,4 +1,4 @@
-import { IncomingMessage } from "http"
+import { IncomingMessage } from "http";
 
 const WEBHOOK_HEADERS = [
   "x-github-event",

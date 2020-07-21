@@ -3,7 +3,7 @@ import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
-import { IncomingMessage, ServerResponse } from "http"
+import { IncomingMessage, ServerResponse } from "http";
 import { EventState, WebhookEvent, Payload } from "../types";
 
 const debugWebhooks = debug("webhooks:receiver");

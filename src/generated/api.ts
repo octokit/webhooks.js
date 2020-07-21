@@ -1,7 +1,4 @@
-import {
-  IncomingMessage,
-  ServerResponse
-} from "http";
+import { IncomingMessage, ServerResponse } from "http";
 import { EventNames } from "./event-names";
 import { EventPayloads } from "./event-payloads";
 type Options = {

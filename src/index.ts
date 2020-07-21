@@ -5,19 +5,13 @@ import { sign } from "./sign/index";
 import { verify } from "./verify/index";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
 import { EventHandlerOptions, EventState } from "./types";
-import { EventNames } from './generated/types';
-import {
-  IncomingMessage,
-  ServerResponse
-} from "http";
+import { EventNames } from "./generated/types";
+import { IncomingMessage, ServerResponse } from "http";
 
 class Webhooks {
   public sign: Function;
   public verify: Function;
-  public on: (
-    event: EventNames.AllEventTypes,
-    handler: Function
-  ) => void;
+  public on: (event: EventNames.AllEventTypes, handler: Function) => void;
   public removeListener: Function;
   public receive: Function;
   public middleware: (
@@ -51,10 +45,7 @@ class Webhooks {
 
 const createWebhooksApi = Webhooks.prototype.constructor;
 
-export {
-  EventNames,
-  EventPayloads
-} from "./generated/types";
+export { EventNames, EventPayloads } from "./generated/types";
 
 export {
   createEventHandler,
