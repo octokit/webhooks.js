@@ -10,7 +10,7 @@ const debugWebhooks = debug("webhooks:receiver");
 
 export function middleware(
   state: EventState,
-  request: IncomingMessage,
+  request: IncomingMessage & { body?: Payload },
   response: ServerResponse,
   next?: Function
 ): Promise<void> | undefined {
