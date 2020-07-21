@@ -56,7 +56,11 @@ export default async function () {
   webhooks.on("check_run.completed", () => {});
 
   webhooks.on(
-    ["check_run.completed", "commit_comment", "label"] as unknown as EventNames.AllEventTypes,
+    ([
+      "check_run.completed",
+      "commit_comment",
+      "label",
+    ] as unknown) as EventNames.AllEventTypes,
     ({
       name,
       payload,
@@ -74,7 +78,13 @@ export default async function () {
     }
   );
 
-  webhooks.on(["check_run.completed", "check_run.created"] as unknown as EventNames.AllEventTypes, () => {})
+  webhooks.on(
+    ([
+      "check_run.completed",
+      "check_run.created",
+    ] as unknown) as EventNames.AllEventTypes,
+    () => {}
+  );
   webhooks.on(
     "check_run.created",
     ({
