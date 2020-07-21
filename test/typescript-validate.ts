@@ -7,6 +7,7 @@ import {
   verify,
 } from "../pkg";
 import { WebhookEvent } from "../pkg/dist-types/types";
+import { EventNames } from "../pkg/dist-types/generated/event-names";
 import { EventPayloads } from "../pkg/dist-types/generated/event-payloads";
 import { createServer } from "http";
 
@@ -55,7 +56,7 @@ export default async function () {
   webhooks.on("check_run.completed", () => {});
 
   webhooks.on(
-    ["check_run.completed", "commit_comment", "label"],
+    ["check_run.completed", "commit_comment", "label"] as unknown as EventNames.AllEventTypes,
     ({
       name,
       payload,
@@ -73,7 +74,7 @@ export default async function () {
     }
   );
 
-  webhooks.on(["check_run.completed", "check_run.created"], () => {});
+  webhooks.on(["check_run.completed", "check_run.created"] as unknown as EventNames.AllEventTypes, () => {})
   webhooks.on(
     "check_run.created",
     ({
