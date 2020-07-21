@@ -4,9 +4,9 @@ import { Payload } from "../types";
 export function getPayload(request: IncomingMessage): Promise<Payload> {
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
-  // if (request.body) {
-  //   return Promise.resolve(request.body);
-  // }
+
+  // @ts-ignore
+  if (request.body) return Promise.resolve(request.body);
 
   return new Promise((resolve, reject) => {
     let data = "";
