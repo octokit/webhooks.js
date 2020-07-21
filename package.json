@@ -38,7 +38,7 @@
     "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
     "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
     "pretest": "npm run -s lint; npm run build -s",
-    "test": "tap --100 --coverage 'test/**/*-test.js'",
+    "test": "tap --100 --no-coverage 'test/**/*-test.js'",
     "generate-types": "node scripts/generate-types.js",
     "validate:ts": "tsc --noEmit --noImplicitAny test/typescript-validate.ts"
   },
