@@ -5,7 +5,9 @@ import {
   createWebhooksApi,
   sign,
   verify,
-} from "..";
+} from "../pkg";
+import { WebhookEvent } from "../pkg/dist-types/types";
+import { EventPayloads } from "../pkg/dist-types/generated/event-payloads";
 import { createServer } from "http";
 
 // ************************************************************
@@ -25,7 +27,7 @@ export default async function () {
   const webhooks = new Webhooks({
     secret: "bleh",
     path: "/webhooks",
-    transform: (event) => event,
+    transform: (event: WebhookEvent) => event,
   });
 
   // Check named expors of new API work
@@ -44,7 +46,7 @@ export default async function () {
 
   verify("randomSecret", {}, "randomSignature");
 
-  webhooks.on("*", ({ id, name, payload }) => {
+  webhooks.on("*", ({ id, name, payload }: WebhookEvent) => {
     console.log(name, "event received");
     const sig = webhooks.sign(payload);
     webhooks.verify(payload, sig);
@@ -54,7 +56,11 @@ export default async function () {
 
   webhooks.on(
     ["check_run.completed", "commit_comment", "label"],
-    ({ name, payload }) => {
+    ({ name, payload }:
+      EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun> |
+      EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCommitComment> |
+      EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadLabel>
+    ) => {
       console.log(name);
       if ("check_run" in payload) {
         console.log(payload);
@@ -66,14 +72,17 @@ export default async function () {
   );
 
   webhooks.on(["check_run.completed", "check_run.created"], () => {});
-  webhooks.on("check_run.created", ({ name, payload }) => {
+  webhooks.on("check_run.created", ({ name, payload }: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun>) => {
     console.log(payload.check_run.conclusion, name);
   });
 
-  webhooks.removeListener("check_run.created", ({ name, payload }) => {
+  webhooks.removeListener("check_run.created", ({ name, payload }: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun>) => {
     console.log(payload.check_run.conclusion, name);
   });
-  webhooks.removeListener(["commit_comment", "label"], ({ name, payload }) => {
+  webhooks.removeListener(["commit_comment", "label"], ({ name, payload }:
+    EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCommitComment> |
+    EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadLabel>
+  ) => {
     console.log(name);
     if ("label" in payload) {
       console.log(payload.label.name);
