@@ -11,7 +11,10 @@ import { IncomingMessage, ServerResponse } from "http";
 class Webhooks {
   public sign: Function;
   public verify: Function;
-  public on: (event: EventNames.AllEventTypes, handler: Function) => void;
+  public on: (
+    event: EventNames.AllEventTypes | EventNames.AllEventTypes[],
+    handler: Function
+  ) => void;
   public removeListener: Function;
   public receive: Function;
   public middleware: (
