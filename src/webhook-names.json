@@ -120,6 +120,7 @@
   "pull_request.edited",
   "pull_request.labeled",
   "pull_request.locked",
+  "pull_request.merged",
   "pull_request.opened",
   "pull_request.ready_for_review",
   "pull_request.reopened",
@@ -144,6 +145,7 @@
   "release.edited",
   "release.prereleased",
   "release.published",
+  "release.released",
   "release.unpublished",
   "repository",
   "repository.archived",
@@ -167,8 +169,12 @@
   "security_advisory.published",
   "security_advisory.updated",
   "sponsorship",
+  "sponsorship.cancelled",
   "sponsorship.created",
+  "sponsorship.edited",
+  "sponsorship.pending_cancellation",
   "sponsorship.pending_tier_change",
+  "sponsorship.tier_changed",
   "star",
   "star.created",
   "star.deleted",
@@ -181,5 +187,6 @@
   "team.removed_from_repository",
   "team_add",
   "watch",
-  "watch.started"
+  "watch.started",
+  "workflow_dispatch"
 ]

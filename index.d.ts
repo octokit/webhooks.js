@@ -12,6 +12,49 @@ type Options = {
 };
 
 declare namespace Webhooks {
+  type WebhookPayloadWorkflowDispatchSender = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadWorkflowDispatchOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
+  type WebhookPayloadWorkflowDispatchInputs = { name: string };
+  type WebhookPayloadWorkflowDispatch = {
+    inputs: WebhookPayloadWorkflowDispatchInputs;
+    ref: string;
+    repository: PayloadRepository;
+    organization: WebhookPayloadWorkflowDispatchOrganization;
+    sender: WebhookPayloadWorkflowDispatchSender;
+    workflow: string;
+  };
   type WebhookPayloadWatchSender = {
     login: string;
     id: number;
@@ -872,6 +915,10 @@ declare namespace Webhooks {
     open_issues: number;
     watchers: number;
     default_branch: string;
+    allow_squash_merge?: boolean;
+    allow_merge_commit?: boolean;
+    allow_rebase_merge?: boolean;
+    delete_branch_on_merge?: boolean;
   };
   type WebhookPayloadPullRequestReviewCommentPullRequestBaseUser = {
     login: string;
@@ -994,6 +1041,10 @@ declare namespace Webhooks {
     open_issues: number;
     watchers: number;
     default_branch: string;
+    allow_squash_merge?: boolean;
+    allow_merge_commit?: boolean;
+    allow_rebase_merge?: boolean;
+    delete_branch_on_merge?: boolean;
   };
   type WebhookPayloadPullRequestReviewCommentPullRequestHeadUser = {
     login: string;
@@ -1280,6 +1331,10 @@ declare namespace Webhooks {
     open_issues: number;
     watchers: number;
     default_branch: string;
+    allow_squash_merge?: boolean;
+    allow_merge_commit?: boolean;
+    allow_rebase_merge?: boolean;
+    delete_branch_on_merge?: boolean;
   };
   type WebhookPayloadPullRequestReviewPullRequestBaseUser = {
     login: string;
@@ -1402,6 +1457,10 @@ declare namespace Webhooks {
     open_issues: number;
     watchers: number;
     default_branch: string;
+    allow_squash_merge?: boolean;
+    allow_merge_commit?: boolean;
+    allow_rebase_merge?: boolean;
+    delete_branch_on_merge?: boolean;
   };
   type WebhookPayloadPullRequestReviewPullRequestHeadUser = {
     login: string;
@@ -1781,6 +1840,10 @@ declare namespace Webhooks {
     open_issues: number;
     watchers: number;
     default_branch: string;
+    allow_squash_merge?: boolean;
+    allow_merge_commit?: boolean;
+    allow_rebase_merge?: boolean;
+    delete_branch_on_merge?: boolean;
   };
   type WebhookPayloadPullRequestPullRequestBaseUser = {
     login: string;
@@ -1903,6 +1966,10 @@ declare namespace Webhooks {
     open_issues: number;
     watchers: number;
     default_branch: string;
+    allow_squash_merge?: boolean;
+    allow_merge_commit?: boolean;
+    allow_rebase_merge?: boolean;
+    delete_branch_on_merge?: boolean;
   };
   type WebhookPayloadPullRequestPullRequestHeadUser = {
     login: string;
@@ -4666,6 +4733,7 @@ type WebhookPayloadPullRequestEventTypeKeys =
   | "pull_request.edited"
   | "pull_request.labeled"
   | "pull_request.locked"
+  | "pull_request.merged"
   | "pull_request.opened"
   | "pull_request.ready_for_review"
   | "pull_request.reopened"
@@ -4739,6 +4807,7 @@ type WebhookPayloadTeamEventTypeKeys =
   | "team.removed_from_repository";
 type WebhookPayloadTeamAddEventTypeKeys = "team_add";
 type WebhookPayloadWatchEventTypeKeys = "watch" | "watch.started";
+type WebhookPayloadWorkflowDispatchEventTypeKeys = "workflow_dispatch";
 
 type AllEventTypes =
   | EventTypeError
@@ -4789,7 +4858,8 @@ type AllEventTypes =
   | WebhookPayloadStatusEventTypeKeys
   | WebhookPayloadTeamEventTypeKeys
   | WebhookPayloadTeamAddEventTypeKeys
-  | WebhookPayloadWatchEventTypeKeys;
+  | WebhookPayloadWatchEventTypeKeys
+  | WebhookPayloadWorkflowDispatchEventTypeKeys;
 
 type GetWebhookPayloadTypeFromEvent<T> = T extends EventTypeError
   ? Error
@@ -4889,6 +4959,8 @@ type GetWebhookPayloadTypeFromEvent<T> = T extends EventTypeError
   ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadTeamAdd>
   : T extends WebhookPayloadWatchEventTypeKeys
   ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadWatch>
+  : T extends WebhookPayloadWorkflowDispatchEventTypeKeys
+  ? Webhooks.WebhookEvent<Webhooks.WebhookPayloadWorkflowDispatch>
   : never;
 
 declare class Webhooks {
