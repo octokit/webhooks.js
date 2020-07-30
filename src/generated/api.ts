@@ -1,6 +1,8 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { EventNames } from "./event-names";
 import { EventPayloads } from "./event-payloads";
+import { WebhookEvent as WebhookEventOptions } from "../types";
+
 type Options = {
   secret: string;
   path?: string;
@@ -125,12 +127,7 @@ export declare class Webhooks {
   ): void;
   public sign(data: any): string;
   public verify(eventPayload: any, signature: string): boolean;
-  public verifyAndReceive(options: {
-    id: string;
-    name: string;
-    payload: any;
-    signature: string;
-  }): Promise<void>;
+  public verifyAndReceive(options: WebhookEventOptions): Promise<void>;
   public receive(options: {
     id: string;
     name: string;
