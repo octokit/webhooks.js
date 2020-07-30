@@ -1,10 +1,4 @@
 {
-	"compilerOptions": {
-		"esModuleInterop": true,
-		"module": "esnext",
-		"moduleResolution": "node",
-		"strict": true,
-		"target": "es2020"
-	},
+	"extends": "@tsconfig/node10/tsconfig.json",
 	"include": ["src/**/*"]
 }
