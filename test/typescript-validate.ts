@@ -6,7 +6,7 @@ import {
   sign,
   verify,
   EventNames,
-  EventPayloads
+  EventPayloads,
 } from "../src/index";
 import { WebhookEvent } from "../src/types";
 import { createServer } from "http";
@@ -49,7 +49,7 @@ export default async function () {
 
   webhooks.on("*", ({ id, name, payload }: WebhookEvent) => {
     console.log(name, "event received");
-    const sig = webhooks.sign('secret', payload);
+    const sig = webhooks.sign("secret", payload);
     webhooks.verify(payload, sig);
   });
 
@@ -121,12 +121,9 @@ export default async function () {
     }
   );
 
-  webhooks.on(
-    "issues",
-    event => {
-      console.log(event.payload.issue)
-    }
-  );
+  webhooks.on("issues", (event) => {
+    console.log(event.payload.issue);
+  });
 
   createServer(webhooks.middleware).listen(3000);
 }
