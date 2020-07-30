@@ -115,6 +115,8 @@ type GetWebhookPayloadTypeFromEvent<T> = T extends EventNames.ErrorEvent
   ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadTeamAdd>
   : T extends EventNames.WatchEvent
   ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadWatch>
+  : T extends EventNames.WorkflowDispatchEvent
+  ? EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadWorkflowDispatch>
   : never;
 
 export declare class Webhooks {

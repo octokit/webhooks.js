@@ -170,6 +170,7 @@ export declare module EventNames {
     | "pull_request.edited"
     | "pull_request.labeled"
     | "pull_request.locked"
+    | "pull_request.merged"
     | "pull_request.opened"
     | "pull_request.ready_for_review"
     | "pull_request.reopened"
@@ -259,6 +260,8 @@ export declare module EventNames {
 
   type WatchEvent = "watch" | "watch.started";
 
+  type WorkflowDispatchEvent = "workflow_dispatch";
+
   type AllEventTypes =
     | ErrorEvent
     | WildcardEvent
@@ -308,5 +311,6 @@ export declare module EventNames {
     | StatusEvent
     | TeamEvent
     | TeamAddEvent
-    | WatchEvent;
+    | WatchEvent
+    | WorkflowDispatchEvent;
 }
