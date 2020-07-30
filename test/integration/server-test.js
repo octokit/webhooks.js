@@ -98,13 +98,14 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
     secret: "mysecret",
   });
   const dataChunks = [];
+  let timeout;
   const server = http.createServer((req, res) => {
     req.once("data", (chunk) => dataChunks.push(chunk));
     req.once("end", () => {
       req.body = JSON.parse(Buffer.concat(dataChunks).toString());
       api.middleware(req, res);
 
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         res.statusCode = 500;
         res.end("Middleware timeout");
       }, 3000);
@@ -135,6 +136,7 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
 
     .then(() => {
       server.close();
+      clearTimeout(timeout);
     })
 
     .catch(t.error);
