@@ -17,7 +17,8 @@ function getHooks(
 
   hooks.push(state.hooks["*"]);
 
-  return hooks.filter(Boolean).flat();
+  // @ts-ignore
+  return [].concat(...hooks.filter(Boolean));
 }
 
 // main handler function
@@ -41,7 +42,7 @@ export function receiverHandle(state: EventState, event: WebhookEvent) {
   }
 
   // flatten arrays of event listeners and remove undefined values
-  const hooks = getHooks(state, event.payload.action, event.name).flat();
+  const hooks = getHooks(state, event.payload.action, event.name);
 
   if (hooks.length === 0) {
     return Promise.resolve();
