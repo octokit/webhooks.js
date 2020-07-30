@@ -1,19 +1,16 @@
-import { EventNames } from "./generated/types";
-export interface WebhookEvent {
-  id: string | string[] | undefined;
-  name: EventNames.AllEventTypes;
-  payload: Payload;
-  signature: string | string[] | undefined;
+// import { EventNames } from "./generated/types";
+export interface WebhookEvent<T> {
+  id: string;
+  name: string; // EventNames.AllEventTypes is not correct, only the event names are supported here, not the <event name>.<action> combinations
+  payload: T;
 }
-
-export type Payload = {
-  action: string;
-};
 
 export interface EventHandlerOptions {
   path?: string;
   secret?: string;
-  transform?: (value: WebhookEvent) => WebhookEvent | PromiseLike<WebhookEvent>;
+  transform?: (
+    value: WebhookEvent<any>
+  ) => WebhookEvent<any> | PromiseLike<WebhookEvent<any>>;
 }
 
 type Hooks = {

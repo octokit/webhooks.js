@@ -1,7 +1,6 @@
 import { IncomingMessage } from "http";
-import { Payload } from "../types";
 
-export function getPayload(request: IncomingMessage): Promise<Payload> {
+export function getPayload(request: IncomingMessage): Promise<any> {
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
 

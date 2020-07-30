@@ -4568,13 +4568,4 @@ export declare module EventPayloads {
     organization?: WebhookPayloadCheckRunOrganization;
     installation?: WebhookPayloadCheckRunInstallation;
   };
-
-  interface WebhookEvent<T> {
-    id: string;
-    name: string;
-    payload: T;
-    protocol?: "http" | "https";
-    host?: string;
-    url?: string;
-  }
 }

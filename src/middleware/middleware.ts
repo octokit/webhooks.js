@@ -4,7 +4,7 @@ import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
-import { EventState, WebhookEvent, Payload } from "../types";
+import { EventState } from "../types";
 
 const debugWebhooks = debug("webhooks:receiver");
 
@@ -40,14 +40,14 @@ export function middleware(
     });
   }
 
-  const eventName = request.headers["x-github-event"] as WebhookEvent["name"];
-  const signature = request.headers["x-hub-signature"];
-  const id = request.headers["x-github-delivery"];
+  const eventName = request.headers["x-github-event"] as string;
+  const signature = request.headers["x-hub-signature"] as string;
+  const id = request.headers["x-github-delivery"] as string;
 
   debugWebhooks(`${eventName} event received (id: ${id})`);
 
   return getPayload(request)
-    .then((payload: Payload) => {
+    .then((payload: any) => {
       return verifyAndReceive(state, {
         id: id,
         name: eventName,
