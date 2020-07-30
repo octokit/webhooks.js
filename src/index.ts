@@ -4,25 +4,40 @@ import { middleware } from "./middleware/middleware";
 import { sign } from "./sign/index";
 import { verify } from "./verify/index";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
-import { EventHandlerOptions, EventState } from "./types";
+import {
+  EventHandlerOptions,
+  EventState,
+  WebhookEvent as WebhookEventOptions,
+} from "./types";
 import { EventNames } from "./generated/types";
+import { GetWebhookPayloadTypeFromEvent } from "./generated/api";
 import { IncomingMessage, ServerResponse } from "http";
 
 class Webhooks {
-  public sign: Function;
-  public verify: Function;
-  public on: (
-    event: EventNames.AllEventTypes | EventNames.AllEventTypes[],
-    handler: Function
+  public sign: (secret: string, payload: string | object) => string;
+  public verify: (
+    eventPayload?: object,
+    signature?: string | string[]
+  ) => boolean;
+  public on: <T extends EventNames.AllEventTypes>(
+    event: T | T[],
+    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
   ) => void;
-  public removeListener: Function;
-  public receive: Function;
+  public removeListener: <T extends EventNames.AllEventTypes>(
+    event: T | T[],
+    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
+  ) => void;
+  public receive: (options: {
+    id: string;
+    name: string;
+    payload: any;
+  }) => Promise<void>;
   public middleware: (
     request: IncomingMessage,
     response: ServerResponse,
     next?: (err?: any) => void
   ) => void | Promise<void>;
-  public verifyAndReceive: Function;
+  public verifyAndReceive: (options: WebhookEventOptions) => Promise<void>;
 
   constructor(options?: EventHandlerOptions) {
     if (!options || !options.secret) {

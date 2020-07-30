@@ -1,6 +1,8 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { EventNames } from "./event-names";
 import { EventPayloads } from "./event-payloads";
+import { WebhookEvent as WebhookEventOptions } from "../types";
+
 type Options = {
   secret: string;
   path?: string;
@@ -9,7 +11,7 @@ type Options = {
   ) => EventPayloads.WebhookEvent<any> & { [key: string]: any };
 };
 
-type GetWebhookPayloadTypeFromEvent<T> = T extends EventNames.ErrorEvent
+export type GetWebhookPayloadTypeFromEvent<T> = T extends EventNames.ErrorEvent
   ? Error
   : T extends EventNames.WildcardEvent
   ? any
@@ -126,17 +128,8 @@ export declare class Webhooks {
     callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
   ): void;
   public sign(secret: string, payload: string | object): string;
-  public verify(
-    secret?: string,
-    eventPayload?: object,
-    signature?: string | string[]
-  ): boolean;
-  public verifyAndReceive(options: {
-    id: string;
-    name: string;
-    payload: any;
-    signature: string;
-  }): Promise<void>;
+  public verify(eventPayload?: object, signature?: string | string[]): boolean;
+  public verifyAndReceive(options: WebhookEventOptions): Promise<void>;
   public receive(options: {
     id: string;
     name: string;
