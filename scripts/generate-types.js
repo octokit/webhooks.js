@@ -66,13 +66,15 @@ const definitionTypes = `
 ${doNotEditThisFileDisclaimer}
 export { EventNames } from './event-names'
 export { EventPayloads } from './event-payloads'
-export { Webhooks } from './api'
 `;
 
 generateFile("src/generated/types.ts", definitionTypes);
 
 const apiContent = `
-import http from "http";
+import {
+  IncomingMessage,
+  ServerResponse
+} from "http";
 import { ${eventNamesVariable} } from "./event-names";
 import { ${eventPayloadsVariable} } from "./event-payloads";
 type Options = {
@@ -83,7 +85,7 @@ type Options = {
 
 ${conditionalType.join("\n")}
 
-declare class Webhooks {
+export declare class Webhooks {
   constructor (options?: Options)
   public on <T extends ${eventNamesVariable}.AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void): void
   public sign (secret: string, payload: string | object): string
@@ -91,17 +93,8 @@ declare class Webhooks {
   public verifyAndReceive (options: { id: string, name: string, payload: any, signature: string }): Promise<void>
   public receive (options: { id: string, name: string, payload: any }): Promise<void>
   public removeListener <T extends ${eventNamesVariable}.AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void): void
-  public middleware (request: http.IncomingMessage, response: http.ServerResponse, next?: (err?: any) => void): void | Promise<void>
+  public middleware (request: IncomingMessage, response: ServerResponse, next?: (err?: any) => void): void | Promise<void>
 }
-
-export function createWebhooksApi(options?: Options): Webhooks;
-export function createEventHandler(options?: Options): Webhooks;
-export function createMiddleware(options?: Options): Webhooks;
-export function sign(secret: string, data: any): string
-export function verify(secret: string, eventPayload: any, signature: string): boolean
-
-export default Webhooks;
-export { Webhooks };
 `;
 
 generateFile("src/generated/api.ts", apiContent);
