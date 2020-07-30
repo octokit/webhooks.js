@@ -123,8 +123,12 @@ export declare class Webhooks {
     event: T | T[],
     callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
   ): void;
-  public sign(data: any): string;
-  public verify(eventPayload: any, signature: string): boolean;
+  public sign(secret: string, payload: string | object): string;
+  public verify(
+    secret?: string,
+    eventPayload?: object,
+    signature?: string | string[]
+  ): boolean;
   public verifyAndReceive(options: {
     id: string;
     name: string;
