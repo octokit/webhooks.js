@@ -5,10 +5,10 @@ import {
   createWebhooksApi,
   sign,
   verify,
-} from "../pkg";
-import { WebhookEvent } from "../pkg/dist-types/types";
-import { EventNames } from "../pkg/dist-types/generated/event-names";
-import { EventPayloads } from "../pkg/dist-types/generated/event-payloads";
+  EventNames,
+  EventPayloads
+} from "../src/index";
+import { WebhookEvent } from "../src/types";
 import { createServer } from "http";
 
 // ************************************************************
@@ -49,7 +49,7 @@ export default async function () {
 
   webhooks.on("*", ({ id, name, payload }: WebhookEvent) => {
     console.log(name, "event received");
-    const sig = webhooks.sign(payload);
+    const sig = webhooks.sign('secret', payload);
     webhooks.verify(payload, sig);
   });
 
@@ -118,6 +118,13 @@ export default async function () {
       } else {
         console.log(payload.comment.body);
       }
+    }
+  );
+
+  webhooks.on(
+    "issues",
+    event => {
+      console.log(event.payload.issue)
     }
   );
 
