@@ -862,6 +862,10 @@ export declare module EventPayloads {
     open_issues: number;
     watchers: number;
     default_branch: string;
+    allow_squash_merge?: boolean;
+    allow_merge_commit?: boolean;
+    allow_rebase_merge?: boolean;
+    delete_branch_on_merge?: boolean;
   };
   type WebhookPayloadPullRequestReviewCommentPullRequestBaseUser = {
     login: string;
@@ -984,6 +988,10 @@ export declare module EventPayloads {
     open_issues: number;
     watchers: number;
     default_branch: string;
+    allow_squash_merge?: boolean;
+    allow_merge_commit?: boolean;
+    allow_rebase_merge?: boolean;
+    delete_branch_on_merge?: boolean;
   };
   type WebhookPayloadPullRequestReviewCommentPullRequestHeadUser = {
     login: string;
@@ -1270,6 +1278,10 @@ export declare module EventPayloads {
     open_issues: number;
     watchers: number;
     default_branch: string;
+    allow_squash_merge?: boolean;
+    allow_merge_commit?: boolean;
+    allow_rebase_merge?: boolean;
+    delete_branch_on_merge?: boolean;
   };
   type WebhookPayloadPullRequestReviewPullRequestBaseUser = {
     login: string;
@@ -1392,6 +1404,10 @@ export declare module EventPayloads {
     open_issues: number;
     watchers: number;
     default_branch: string;
+    allow_squash_merge?: boolean;
+    allow_merge_commit?: boolean;
+    allow_rebase_merge?: boolean;
+    delete_branch_on_merge?: boolean;
   };
   type WebhookPayloadPullRequestReviewPullRequestHeadUser = {
     login: string;
@@ -1771,6 +1787,10 @@ export declare module EventPayloads {
     open_issues: number;
     watchers: number;
     default_branch: string;
+    allow_squash_merge?: boolean;
+    allow_merge_commit?: boolean;
+    allow_rebase_merge?: boolean;
+    delete_branch_on_merge?: boolean;
   };
   type WebhookPayloadPullRequestPullRequestBaseUser = {
     login: string;
@@ -1893,6 +1913,10 @@ export declare module EventPayloads {
     open_issues: number;
     watchers: number;
     default_branch: string;
+    allow_squash_merge?: boolean;
+    allow_merge_commit?: boolean;
+    allow_rebase_merge?: boolean;
+    delete_branch_on_merge?: boolean;
   };
   type WebhookPayloadPullRequestPullRequestHeadUser = {
     login: string;

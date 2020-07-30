@@ -1,8 +1,8 @@
 name: Update
-"on":
+on:
   push:
     branches:
-      - dependabot/npm_and_yarn/@octokit/webhooks-definitions-*
+      - dependabot/npm_and_yarn/octokit/webhooks-definitions-*
 jobs:
   test:
     runs-on: ubuntu-latest
