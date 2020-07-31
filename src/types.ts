@@ -1,7 +1,7 @@
-// import { EventNames } from "./generated/types";
+import { EventNames } from "./generated/types";
 export interface WebhookEvent<T> {
   id: string;
-  name: string; // EventNames.All is not correct, only the event names are supported here, not the <event name>.<action> combinations
+  name: EventNames.StringNames;
   payload: T;
 }
 

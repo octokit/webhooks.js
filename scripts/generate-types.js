@@ -85,6 +85,10 @@ ${doNotEditThisFileDisclaimer}
 
 export declare module ${eventNamesVariable} {
   ${eventTypes.join("\n")}
+
+  type StringNames =
+    ${webhooks.map(({ name }) => `"${name}"`).join(" | ")};
+
   type All =
     ${eventTypes.map((event) => event.split(" ")[1]).join(" | ")};
 }

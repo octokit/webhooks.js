@@ -5,6 +5,7 @@ import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
 import { State } from "../types";
+import { EventNames } from "../generated/types";
 
 const debugWebhooks = debug("webhooks:receiver");
 
@@ -40,7 +41,7 @@ export function middleware(
     });
   }
 
-  const eventName = request.headers["x-github-event"] as string;
+  const eventName = request.headers["x-github-event"] as EventNames.StringNames;
   const signature = request.headers["x-hub-signature"] as string;
   const id = request.headers["x-github-delivery"] as string;
 
