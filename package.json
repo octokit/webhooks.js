@@ -5,6 +5,9 @@
     "access": "public"
   },
   "description": "GitHub webhook events toolset for Node.js",
+  "keywords": [],
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "license": "MIT",
   "dependencies": {
     "@pika/plugin-ts-standard-pkg": "^0.9.2",
     "debug": "^4.0.0"
@@ -57,7 +60,17 @@
       ]
     ]
   },
-  "keywords": [],
-  "author": "Gregor Martynus (https://twitter.com/gr2m)",
-  "license": "MIT"
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/github",
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "./pkg"
+        }
+      ]
+    ]
+  }
 }
