@@ -1,7 +1,7 @@
-import { EventState } from "../types";
+import { State } from "../types";
 
 export function removeListener(
-  state: EventState,
+  state: State,
   webhookNameOrNames: string | string[],
   handler: Function
 ) {

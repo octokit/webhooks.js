@@ -1,9 +1,9 @@
 import { wrapErrorHandler } from "./wrap-error-handler";
-import { WebhookEvent, EventState } from "../types";
+import { WebhookEvent, State } from "../types";
 // import { EventNames } from "../generated/event-names";
 
 function getHooks(
-  state: EventState,
+  state: State,
   eventPayloadAction: string,
   eventName: string // EventNames.AllEventTypes is not correct, only the event names are supported here, not the <event name>.<action> combinations
 ): Function[] {
@@ -22,7 +22,7 @@ function getHooks(
 }
 
 // main handler function
-export function receiverHandle(state: EventState, event: WebhookEvent<any>) {
+export function receiverHandle(state: State, event: WebhookEvent<any>) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {

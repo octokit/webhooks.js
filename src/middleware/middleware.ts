@@ -4,12 +4,12 @@ import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
-import { EventState } from "../types";
+import { State } from "../types";
 
 const debugWebhooks = debug("webhooks:receiver");
 
 export function middleware(
-  state: EventState,
+  state: State,
   request: IncomingMessage,
   response: ServerResponse,
   next?: Function

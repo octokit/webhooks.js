@@ -1,9 +1,9 @@
 import { webhookNames } from "../generated/webhook-names.js";
 import { EventNames } from "../generated/event-names";
-import { EventState } from "../types";
+import { State } from "../types";
 
 export function receiverOn(
-  state: EventState,
+  state: State,
   webhookNameOrNames: EventNames.AllEventTypes | EventNames.AllEventTypes[],
   handler: Function
 ) {

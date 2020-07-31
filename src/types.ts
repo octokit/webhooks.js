@@ -17,7 +17,7 @@ type Hooks = {
   [key: string]: Function[];
 };
 
-export interface EventState extends Options {
+export interface State extends Options {
   eventHandler?: any;
   hooks: Hooks;
 }
