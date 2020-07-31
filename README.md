@@ -7,7 +7,7 @@
 
 <!-- toc -->
 
-- [Example](#example)
+- [Usage](#usage)
 - [Local development](#local-development)
 - [API](#api)
   - [Constructor](#constructor)
@@ -22,6 +22,10 @@
   - [Special events](#special-events)
     - [`*` wildcard event](#-wildcard-event)
     - [`error` event](#error-event)
+- [TypeScript](#typescript)
+  - [`WebhookEvent`](#webhookevent)
+  - [`EventNames`](#eventnames)
+  - [`EventPayloads`](#eventpayloads)
 - [License](#license)
 
 <!-- tocstop -->
@@ -604,6 +608,26 @@ webhooks.on("error", (error) => {
 ```
 
 Asynchronous `error` event handler are not blocking the `.receive()` method from completing.
+
+## TypeScript
+
+`@octokit/webhooks` exports 3 types that can be used independent from the code.
+
+Note that changes to the exported types are not considered breaking changes, as the changes will not impact production code, but only fail locally or during CI at build time.
+
+### `WebhookEvent`
+
+The `WebhookEvent` type is an object with the properties `id`, `name`, and `payload`. `name` must be one of the known event names. The type for `payload` be set using an optional type parameter, e.g. `WebhookEvent<MyPayloadType>`
+
+### `EventNames`
+
+The `EventNames` type is a module containing types for all known event names and event/action combinations. For example, `EventNames.CheckRunEvent` is a string enum for `"check_run" | "check_run.completed" | "check_run.created" | "check_run.requested_action" | "check_run.rerequested"`.
+
+`EventNames.All` is an enum of all event/action combinations. `EventNames.StringNames` is an enum for the known event names only.
+
+### `EventPayloads`
+
+The `EventPayloads` type exports payload types for all known evens. For example `EventPayloads.WebhookPayloadCheckRun` exports the payload type for the `check_run` event.
 
 ## License
 
