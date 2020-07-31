@@ -15,6 +15,24 @@ import { createServer } from "http";
 // THIS CODE IS NOT EXECUTED. IT IS JUST FOR TYPECHECKING
 // ************************************************************
 
+const myWebhook: WebhookEvent<{ foo: string}> = {
+  id: '123',
+  name: 'my-event',
+  payload: {
+    foo: 'bar'
+  }
+}
+
+const myEventName: EventNames.AllEventTypes = 'check_run.completed'
+
+const myEvenTPayload: EventPayloads.WebhookPayloadCheckRunCheckRunOutput = {
+  annotations_count: 0,
+  annotations_url: '',
+  summary: '',
+  text: '',
+  title: ''
+}
+
 export default async function () {
   // Check empty constructor
   new Webhooks();
