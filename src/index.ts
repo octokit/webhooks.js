@@ -11,10 +11,7 @@ import { IncomingMessage, ServerResponse } from "http";
 
 class Webhooks {
   public sign: (payload: string | object) => string;
-  public verify: (
-    eventPayload?: object,
-    signature?: string | string[]
-  ) => boolean;
+  public verify: (eventPayload?: object, signature?: string) => boolean;
   public on: <T extends EventNames.All>(
     event: T | T[],
     callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
