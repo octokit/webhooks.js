@@ -3,7 +3,7 @@ import { State, WebhookEvent } from "../types";
 
 export function verifyAndReceive(
   state: State,
-  event: WebhookEvent<any> & { signature: string }
+  event: WebhookEvent & { signature: string }
 ): any {
   const matchesSignature = verify(state.secret, event.payload, event.signature);
 

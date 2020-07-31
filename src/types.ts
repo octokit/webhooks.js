@@ -1,5 +1,5 @@
 import { EventNames } from "./generated/event-names";
-export interface WebhookEvent<T> {
+export interface WebhookEvent<T = any> {
   id: string;
   name: EventNames.StringNames;
   payload: T;
@@ -8,9 +8,7 @@ export interface WebhookEvent<T> {
 export interface Options {
   path?: string;
   secret?: string;
-  transform?: (
-    value: WebhookEvent<any>
-  ) => WebhookEvent<any> | PromiseLike<WebhookEvent<any>>;
+  transform?: (value: WebhookEvent) => WebhookEvent | PromiseLike<WebhookEvent>;
 }
 
 type Hooks = {

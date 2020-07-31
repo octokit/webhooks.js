@@ -22,7 +22,7 @@ function getHooks(
 }
 
 // main handler function
-export function receiverHandle(state: State, event: WebhookEvent<any>) {
+export function receiverHandle(state: State, event: WebhookEvent) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {

@@ -31,7 +31,7 @@ class Webhooks {
     next?: (err?: any) => void
   ) => void | Promise<void>;
   public verifyAndReceive: (
-    options: WebhookEvent<any> & { signature: string }
+    options: WebhookEvent & { signature: string }
   ) => Promise<void>;
 
   constructor(options?: Options) {
