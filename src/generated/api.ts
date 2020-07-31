@@ -119,9 +119,11 @@ export declare class Webhooks {
     event: T | T[],
     callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
   ): void;
-  public sign(secret: string, payload: string | object): string;
+  public sign(payload: string | object): string;
   public verify(eventPayload?: object, signature?: string | string[]): boolean;
-  public verifyAndReceive(options: WebhookEvent<any>): Promise<void>;
+  public verifyAndReceive(
+    options: WebhookEvent<any> & { signature: string }
+  ): Promise<void>;
   public receive(options: {
     id: string;
     name: string;
