@@ -61,15 +61,6 @@ webhooks.forEach(({ name, actions, examples }) => {
 
 conditionalType.push("never");
 
-const definitionTypes = `
-${doNotEditThisFileDisclaimer}
-
-export { EventNames } from './event-names'
-export { EventPayloads } from './event-payloads'
-`;
-
-generateFile("src/generated/types.ts", definitionTypes);
-
 const getWebhookPayloadTypeFromEvent = `
 import { ${eventNamesVariable} } from "./event-names";
 import { ${eventPayloadsVariable} } from "./event-payloads";

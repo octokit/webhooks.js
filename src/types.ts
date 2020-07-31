@@ -1,4 +1,4 @@
-import { EventNames } from "./generated/types";
+import { EventNames } from "./generated/event-names";
 export interface WebhookEvent<T> {
   id: string;
   name: EventNames.StringNames;

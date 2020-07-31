@@ -5,7 +5,7 @@ import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
 import { State } from "../types";
-import { EventNames } from "../generated/types";
+import { EventNames } from "../generated/event-names";
 
 const debugWebhooks = debug("webhooks:receiver");
 

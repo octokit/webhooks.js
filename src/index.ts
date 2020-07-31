@@ -5,7 +5,7 @@ import { sign } from "./sign/index";
 import { verify } from "./verify/index";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
 import { Options, State, WebhookEvent } from "./types";
-import { EventNames } from "./generated/types";
+import { EventNames } from "./generated/event-names";
 import { GetWebhookPayloadTypeFromEvent } from "./generated/get-webhook-payload-type-from-event";
 import { IncomingMessage, ServerResponse } from "http";
 
@@ -61,7 +61,8 @@ class Webhooks {
 
 const createWebhooksApi = Webhooks.prototype.constructor;
 
-export { EventNames, EventPayloads } from "./generated/types";
+export { EventNames } from "./generated/event-names";
+export { EventPayloads } from "./generated/event-payloads";
 
 export {
   createEventHandler,

@@ -1,6 +1,6 @@
 import { wrapErrorHandler } from "./wrap-error-handler";
 import { WebhookEvent, State } from "../types";
-import { EventNames } from "../generated/types";
+import { EventNames } from "../generated/event-names";
 
 function getHooks(
   state: State,
