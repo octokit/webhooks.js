@@ -28,11 +28,11 @@
 
 `@octokit/webhooks` helps to handle webhook events received from GitHub.
 
-[GitHub webhooks](https://developer.github.com/webhooks/) can be registered in multiple ways
+[GitHub webhooks](https://docs.github.com/webhooks/) can be registered in multiple ways
 
 1. In repository or organization settings on [github.com](https://github.com/).
-2. Using the REST API for [repositories](https://developer.github.com/v3/repos/hooks/) or [organizations](https://developer.github.com/v3/orgs/hooks/)
-3. By installing a [GitHub App](https://developer.github.com/apps/).
+2. Using the REST API for [repositories](https://docs.github.com/rest/reference/repos#webhooks) or [organizations](https://docs.github.com/rest/reference/orgs#webhooks/)
+3. By installing a [GitHub App](https://docs.github.com/apps/).
 
 Note that while setting a secret is optional on GitHub, it is required to be set in order to use `@octokit/webhooks`. Content Type must be set to `application/json`, `application/x-www-form-urlencoded` is not supported.
 
@@ -241,7 +241,7 @@ webhooks.verifyAndReceive({ id, name, payload, signature });
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. (Event names are set as <a href="https://developer.github.com/webhooks/#delivery-headers"><code>X-GitHub-Event</code> header</a>
+      Name of the event. (Event names are set as <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads#delivery-headers"><code>X-GitHub-Event</code> header</a>
       in the webhook event request.)
     </td>
   </tr>
@@ -332,7 +332,7 @@ webhooks.receive({ id, name, payload });
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. (Event names are set as <a href="https://developer.github.com/webhooks/#delivery-headers"><code>X-GitHub-Event</code> header</a>
+      Name of the event. (Event names are set as <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads#delivery-headers"><code>X-GitHub-Event</code> header</a>
       in the webhook event request.)
     </td>
   </tr>
@@ -375,7 +375,7 @@ webhooks.on(eventNames, handler);
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. One of <a href="https://developer.github.com/webhooks/#events">GitHub's supported event names</a>.
+      Name of the event. One of <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads">GitHub's supported event names</a>.
     </td>
   </tr>
   <tr>
@@ -431,7 +431,7 @@ webhooks.removeListener(eventNames, handler);
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. One of <a href="https://developer.github.com/webhooks/#events">GitHub’s supported event names</a>.
+      Name of the event. One of <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads">GitHub’s supported event names</a>.
     </td>
   </tr>
   <tr>
@@ -522,7 +522,7 @@ Can also be used [standalone](src/middleware/).
 
 ### Webhook events
 
-See the full list of [event types with example payloads](https://developer.github.com/v3/activity/events/types/).
+See the full list of [event types with example payloads](https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads/).
 
 If there are actions for a webhook, events are emitted for both, the webhook name as well as a combination of the webhook name and the action, e.g. `installation` and `installation.created`.
 
