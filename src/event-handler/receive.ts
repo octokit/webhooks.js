@@ -5,7 +5,7 @@ import { WebhookEvent, State } from "../types";
 function getHooks(
   state: State,
   eventPayloadAction: string,
-  eventName: string // EventNames.AllEventTypes is not correct, only the event names are supported here, not the <event name>.<action> combinations
+  eventName: string // EventNames.All is not correct, only the event names are supported here, not the <event name>.<action> combinations
 ): Function[] {
   const hooks = [state.hooks[`${eventName}.${eventPayloadAction}`]];
 

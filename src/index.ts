@@ -15,11 +15,11 @@ class Webhooks {
     eventPayload?: object,
     signature?: string | string[]
   ) => boolean;
-  public on: <T extends EventNames.AllEventTypes>(
+  public on: <T extends EventNames.All>(
     event: T | T[],
     callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
   ) => void;
-  public removeListener: <T extends EventNames.AllEventTypes>(
+  public removeListener: <T extends EventNames.All>(
     event: T | T[],
     callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
   ) => void;

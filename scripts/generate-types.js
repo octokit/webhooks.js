@@ -85,7 +85,7 @@ ${doNotEditThisFileDisclaimer}
 
 export declare module ${eventNamesVariable} {
   ${eventTypes.join("\n")}
-  type AllEventTypes =
+  type All =
     ${eventTypes.map((event) => event.split(" ")[1]).join(" | ")};
 }
 `;

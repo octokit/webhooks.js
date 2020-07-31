@@ -4,7 +4,7 @@ import { State } from "../types";
 
 export function receiverOn(
   state: State,
-  webhookNameOrNames: EventNames.AllEventTypes | EventNames.AllEventTypes[],
+  webhookNameOrNames: EventNames.All | EventNames.All[],
   handler: Function
 ) {
   if (Array.isArray(webhookNameOrNames)) {

@@ -23,7 +23,7 @@ const myWebhook: WebhookEvent<{ foo: string }> = {
   },
 };
 
-const myEventName: EventNames.AllEventTypes = "check_run.completed";
+const myEventName: EventNames.All = "check_run.completed";
 
 const myEvenTPayload: EventPayloads.WebhookPayloadCheckRunCheckRunOutput = {
   annotations_count: 0,

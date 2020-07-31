@@ -262,7 +262,56 @@ export declare module EventNames {
 
   type WorkflowDispatchEvent = "workflow_dispatch";
 
-  type AllEventTypes =
+  type All =
+    | CheckRunEvent
+    | CheckSuiteEvent
+    | CommitCommentEvent
+    | ContentReferenceEvent
+    | CreateEvent
+    | DeleteEvent
+    | DeployKeyEvent
+    | DeploymentEvent
+    | DeploymentStatusEvent
+    | ForkEvent
+    | GithubAppAuthorizationEvent
+    | GollumEvent
+    | InstallationEvent
+    | InstallationRepositoriesEvent
+    | IssueCommentEvent
+    | IssuesEvent
+    | LabelEvent
+    | MarketplacePurchaseEvent
+    | MemberEvent
+    | MembershipEvent
+    | MetaEvent
+    | MilestoneEvent
+    | OrganizationEvent
+    | OrgBlockEvent
+    | PackageEvent
+    | PageBuildEvent
+    | PingEvent
+    | ProjectCardEvent
+    | ProjectColumnEvent
+    | ProjectEvent
+    | PublicEvent
+    | PullRequestEvent
+    | PullRequestReviewEvent
+    | PullRequestReviewCommentEvent
+    | PushEvent
+    | ReleaseEvent
+    | RepositoryDispatchEvent
+    | RepositoryEvent
+    | RepositoryImportEvent
+    | RepositoryVulnerabilityAlertEvent
+    | SecurityAdvisoryEvent
+    | SponsorshipEvent
+    | StarEvent
+    | StatusEvent
+    | TeamEvent
+    | TeamAddEvent
+    | WatchEvent
+    | WorkflowDispatchEvent;
+  type All =
     | ErrorEvent
     | WildcardEvent
     | CheckRunEvent
