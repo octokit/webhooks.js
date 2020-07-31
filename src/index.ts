@@ -6,7 +6,7 @@ import { verify } from "./verify/index";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
 import { Options, State, WebhookEvent } from "./types";
 import { EventNames } from "./generated/types";
-import { GetWebhookPayloadTypeFromEvent } from "./generated/api";
+import { GetWebhookPayloadTypeFromEvent } from "./generated/get-webhook-payload-type-from-event";
 import { IncomingMessage, ServerResponse } from "http";
 
 class Webhooks {

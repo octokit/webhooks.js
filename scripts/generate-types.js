@@ -70,7 +70,7 @@ export { EventPayloads } from './event-payloads'
 
 generateFile("src/generated/types.ts", definitionTypes);
 
-const apiContent = `
+const getWebhookPayloadTypeFromEvent = `
 import { ${eventNamesVariable} } from "./event-names";
 import { ${eventPayloadsVariable} } from "./event-payloads";
 import { WebhookEvent } from "../types";
@@ -78,7 +78,10 @@ import { WebhookEvent } from "../types";
 ${conditionalType.join("\n")}
 `;
 
-generateFile("src/generated/api.ts", apiContent);
+generateFile(
+  "src/generated/get-webhook-payload-type-from-event.ts",
+  getWebhookPayloadTypeFromEvent
+);
 
 const eventNamesContet = `
 ${doNotEditThisFileDisclaimer}
