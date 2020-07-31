@@ -1,8 +1,7 @@
-const test = require("tap").test;
-
-const { createMiddleware } = require("../../src");
+import { test } from "tap";
+import { createMiddleware as Middleware } from "../../pkg/dist-src/middleware";
 
 test("options: none", (t) => {
-  t.throws(createMiddleware);
+  t.throws(Middleware);
   t.end();
 });

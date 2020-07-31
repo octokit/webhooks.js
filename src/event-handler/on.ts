@@ -1,8 +1,12 @@
-module.exports = receiverOn;
+import { webhookNames } from "../generated/webhook-names.js";
+import { EventNames } from "../generated/event-names";
+import { State } from "../types";
 
-const webhookNames = require("../webhook-names.json");
-
-function receiverOn(state, webhookNameOrNames, handler) {
+export function receiverOn(
+  state: State,
+  webhookNameOrNames: EventNames.All | EventNames.All[],
+  handler: Function
+) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>
       receiverOn(state, webhookName, handler)

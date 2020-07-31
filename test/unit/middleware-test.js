@@ -1,7 +1,7 @@
-const simple = require("simple-mock");
-const test = require("tap").test;
+import simple from "simple-mock";
+import { test } from "tap";
+import { middleware } from "../../pkg/dist-src/middleware/middleware";
 
-const middleware = require("../../src/middleware/middleware");
 const state = {};
 
 test("next() callback", (t) => {

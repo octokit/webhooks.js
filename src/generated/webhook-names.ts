@@ -1,4 +1,4 @@
-[
+export const webhookNames = [
   "*",
   "check_run",
   "check_run.completed",
@@ -188,5 +188,5 @@
   "team_add",
   "watch",
   "watch.started",
-  "workflow_dispatch"
-]
+  "workflow_dispatch",
+];

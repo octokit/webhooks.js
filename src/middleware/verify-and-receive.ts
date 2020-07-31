@@ -1,8 +1,10 @@
-module.exports = verifyAndReceive;
+import { verify } from "../verify/index";
+import { State, WebhookEvent } from "../types";
 
-const { verify } = require("../verify");
-
-function verifyAndReceive(state, event) {
+export function verifyAndReceive(
+  state: State,
+  event: WebhookEvent & { signature: string }
+): any {
   const matchesSignature = verify(state.secret, event.payload, event.signature);
 
   if (!matchesSignature) {
@@ -10,10 +12,9 @@ function verifyAndReceive(state, event) {
       "signature does not match event payload and secret"
     );
 
-    error.event = event;
-    error.status = 400;
-
-    return state.eventHandler.receive(error);
+    return state.eventHandler.receive(
+      Object.assign(error, { event, status: 400 })
+    );
   }
 
   return state.eventHandler.receive({

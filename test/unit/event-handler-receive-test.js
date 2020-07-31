@@ -1,10 +1,9 @@
-const test = require("tap").test;
-
-const receive = require("../../src/event-handler/receive");
+import { test } from "tap";
+import { receiverHandle as receive } from "../../pkg/dist-src/event-handler/receive";
 
 const state = {
   secret: "mysecret",
-  hooks: [],
+  hooks: {},
 };
 
 test("options: none", (t) => {
@@ -24,6 +23,25 @@ test("options: name", (t) => {
 test("options: name, payload", (t) => {
   t.doesNotThrow(() => {
     receive(state, { name: "foo", payload: {} });
+  });
+  t.end();
+});
+
+test("options: [name1, name2]", (t) => {
+  t.throws(() => {
+    receive(state, {
+      name: ["foo", "bar"],
+    });
+  });
+  t.end();
+});
+
+test("options: [name1, name2], payload", (t) => {
+  t.doesNotThrow(() => {
+    receive(state, {
+      name: ["foo", "bar"],
+      payload: {},
+    });
   });
   t.end();
 });

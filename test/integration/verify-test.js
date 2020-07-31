@@ -1,6 +1,5 @@
-const test = require("tap").test;
-
-const { verify } = require("../../src");
+import { test } from "tap";
+import { verify } from "../../pkg/dist-src/verify";
 
 const eventPayload = {
   foo: "bar",

@@ -1,9 +1,9 @@
-const test = require("tap").test;
-const { mock } = require("simple-mock");
+import { test } from "tap";
+import { mock } from "simple-mock";
 
 test("@octokit/webhooks", (t) => {
   const emitWarningMock = mock(process, "emitWarning");
-  const { Webhooks } = require("../../");
+  const { Webhooks } = require("../../pkg");
   const api = new Webhooks({
     secret: "mysecret",
   });
@@ -24,9 +24,11 @@ test('require("@octokit/webhooks").sign', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
 
   t.doesNotThrow(() => {
-    const { sign } = require("../../src");
+    const { sign } = require("../../pkg/dist-src");
     sign("1234", {});
   });
+  t.false(emitWarningMock.called);
+
   t.false(emitWarningMock.called);
 
   t.end();
@@ -36,9 +38,11 @@ test('require("@octokit/webhooks").verify', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
 
   t.doesNotThrow(() => {
-    const { verify } = require("../../src");
+    const { verify } = require("../../pkg/dist-src/");
     verify("1234", {}, "randomSignature");
   });
+  t.false(emitWarningMock.called);
+
   t.false(emitWarningMock.called);
 
   t.end();
@@ -48,23 +52,25 @@ test('require("@octokit/webhooks").createEventHandler', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
 
   t.doesNotThrow(() => {
-    const { createEventHandler } = require("../../src");
+    const { createEventHandler } = require("../../pkg/dist-src");
     createEventHandler();
   });
+  t.false(emitWarningMock.called);
+
   t.false(emitWarningMock.called);
 
   t.end();
 });
 
-test('require("@octokit/webhooks).createMiddleware")', (t) => {
+test('require("@octokit/webhooks").createMiddleware', (t) => {
   const emitWarningMock = mock(process, "emitWarning");
 
   t.doesNotThrow(() => {
-    const { createMiddleware } = require("../../src");
-    createMiddleware({
-      secret: "1234",
-    });
+    const { createMiddleware } = require("../../pkg/dist-src");
+    createMiddleware({ secret: "1234" });
   });
+  t.false(emitWarningMock.called);
+
   t.false(emitWarningMock.called);
 
   t.end();

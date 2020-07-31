@@ -1,7 +1,6 @@
-const simple = require("simple-mock");
-const test = require("tap").test;
-
-const wrapErrorHandler = require("../../src/event-handler/wrap-error-handler");
+import simple from "simple-mock";
+import { test } from "tap";
+import { wrapErrorHandler } from "../../pkg/dist-src/event-handler/wrap-error-handler";
 
 test("error thrown in error handler", (t) => {
   t.plan(2);

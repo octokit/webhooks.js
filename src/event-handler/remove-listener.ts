@@ -1,11 +1,13 @@
-"use strict";
+import { State } from "../types";
 
-module.exports = receiverListener;
-
-function receiverListener(state, webhookNameOrNames, handler) {
+export function removeListener(
+  state: State,
+  webhookNameOrNames: string | string[],
+  handler: Function
+) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>
-      receiverListener(state, webhookName, handler)
+      removeListener(state, webhookName, handler)
     );
     return;
   }

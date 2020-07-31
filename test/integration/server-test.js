@@ -1,13 +1,11 @@
-const http = require("http");
-
-const axios = require("axios");
-const getPort = require("get-port");
-const { promisify } = require("util");
-const simple = require("simple-mock");
-const Tap = require("tap");
-
-const Webhooks = require("../../");
-const pushEventPayload = require("../fixtures/push-payload");
+import http from "http";
+import axios from "axios";
+import getPort from "get-port";
+import { promisify } from "util";
+import simple from "simple-mock";
+import Tap from "tap";
+import { Webhooks } from "../../pkg";
+import pushEventPayload from "../fixtures/push-payload.json";
 
 const test = Tap.test;
 const beforeEach = Tap.beforeEach;
@@ -20,7 +18,7 @@ beforeEach(() => {
 
 test("initialised without options", (t) => {
   try {
-    Webhooks();
+    new Webhooks();
     t.fail("should throw error");
   } catch (error) {
     t.pass('throws errer if no "secret" option passed');
@@ -100,13 +98,14 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
     secret: "mysecret",
   });
   const dataChunks = [];
+  let timeout;
   const server = http.createServer((req, res) => {
     req.once("data", (chunk) => dataChunks.push(chunk));
     req.once("end", () => {
       req.body = JSON.parse(Buffer.concat(dataChunks).toString());
       api.middleware(req, res);
 
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         res.statusCode = 500;
         res.end("Middleware timeout");
       }, 3000);
@@ -137,6 +136,7 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
 
     .then(() => {
       server.close();
+      clearTimeout(timeout);
     })
 
     .catch(t.error);

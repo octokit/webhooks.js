@@ -1,10 +1,8 @@
 const { readFileSync, writeFileSync } = require("fs");
-
 const Table = require("table-builder");
+const WEBOOOKS = require("@octokit/webhooks-definitions/index.json");
+const { generateFile } = require("./generate-file");
 
-const WEBOOOKS = require("@octokit/webhooks-definitions");
-
-// update src/webhook-names.json
 const newWebhookNames = WEBOOOKS.reduce(
   (list, event) => {
     list.push(
@@ -15,9 +13,10 @@ const newWebhookNames = WEBOOOKS.reduce(
   },
   ["*", "error"]
 ).sort();
-writeFileSync(
-  "src/webhook-names.json",
-  JSON.stringify([...newWebhookNames], null, 2) + "\n"
+
+generateFile(
+  "src/generated/webhook-names.ts",
+  `export const webhookNames = ${JSON.stringify([...newWebhookNames], null, 2)}`
 );
 
 // update README.md

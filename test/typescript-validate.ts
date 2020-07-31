@@ -1,15 +1,37 @@
-import Webhooks, {
+import {
+  Webhooks,
   createEventHandler,
   createMiddleware,
   createWebhooksApi,
   sign,
   verify,
-} from "..";
+  EventNames,
+  EventPayloads,
+  WebhookEvent,
+} from "../src/index";
 import { createServer } from "http";
 
 // ************************************************************
-// THIS CODE IS NOT EXECUTED. IT IS JUST FOR TYPECHECKING
+// THIS CODE IS NOT EXECUTED. IT IS FOR TYPECHECKING ONLY
 // ************************************************************
+
+const myWebhook: WebhookEvent<{ foo: string }> = {
+  id: "123",
+  name: "check_run",
+  payload: {
+    foo: "bar",
+  },
+};
+
+const myEventName: EventNames.All = "check_run.completed";
+
+const myEvenTPayload: EventPayloads.WebhookPayloadCheckRunCheckRunOutput = {
+  annotations_count: 0,
+  annotations_url: "",
+  summary: "",
+  text: "",
+  title: "",
+};
 
 export default async function () {
   // Check empty constructor
@@ -24,7 +46,10 @@ export default async function () {
   const webhooks = new Webhooks({
     secret: "bleh",
     path: "/webhooks",
-    transform: (event) => event,
+    transform: (event) => {
+      console.log(event.payload);
+      return event;
+    },
   });
 
   // Check named expors of new API work
@@ -56,10 +81,10 @@ export default async function () {
     ({ name, payload }) => {
       console.log(name);
       if ("check_run" in payload) {
-        console.log(payload);
+        console.log(payload.check_run.output.title);
       }
       if ("comment" in payload) {
-        console.log(payload.comment);
+        console.log(payload.comment.user.login);
       }
     }
   );
@@ -79,6 +104,10 @@ export default async function () {
     } else {
       console.log(payload.comment.body);
     }
+  });
+
+  webhooks.on("issues", (event) => {
+    console.log(event.payload.issue);
   });
 
   createServer(webhooks.middleware).listen(3000);

@@ -1,19 +1,18 @@
-module.exports = getPayload;
+import { IncomingMessage } from "http";
 
-function getPayload(request) {
+export function getPayload(request: IncomingMessage): Promise<any> {
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
-  if (request.body) {
-    return Promise.resolve(request.body);
-  }
+
+  // @ts-ignore
+  if (request.body) return Promise.resolve(request.body);
 
   return new Promise((resolve, reject) => {
-    const dataChunks = [];
+    let data = "";
 
     request.on("error", reject);
-    request.on("data", (chunk) => dataChunks.push(chunk));
+    request.on("data", (chunk) => (data += chunk));
     request.on("end", () => {
-      const data = Buffer.concat(dataChunks).toString();
       try {
         resolve(JSON.parse(data));
       } catch (error) {

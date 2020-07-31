@@ -2,19 +2,45 @@
 
 > GitHub webhook events toolset for Node.js
 
+[![@latest](https://img.shields.io/npm/v/@octokit/webhooks.svg)](https://www.npmjs.com/package/@octokit/webhooks)
 [![Test](https://github.com/octokit/webhooks.js/workflows/Test/badge.svg)](https://github.com/octokit/webhooks.js/actions?query=workflow)
 
-[GitHub webhooks](https://developer.github.com/webhooks/) can be registered in multiple ways
+<!-- toc -->
 
-1. In repository or organization settings on [github.com](https://github.com/).
-2. Using the REST API for [repositories](https://developer.github.com/v3/repos/hooks/) or [organizations](https://developer.github.com/v3/orgs/hooks/)
-3. By installing a [GitHub App](https://developer.github.com/apps/).
+- [Usage](#usage)
+- [Local development](#local-development)
+- [API](#api)
+  - [Constructor](#constructor)
+  - [webhooks.sign()](#webhookssign)
+  - [webhooks.verify()](#webhooksverify)
+  - [webhooks.verifyAndReceive()](#webhooksverifyandreceive)
+  - [webhooks.receive()](#webhooksreceive)
+  - [webhooks.on()](#webhookson)
+  - [webhooks.removeListener()](#webhooksremovelistener)
+  - [webhooks.middleware()](#webhooksmiddleware)
+  - [Webhook events](#webhook-events)
+  - [Special events](#special-events)
+    - [`*` wildcard event](#-wildcard-event)
+    - [`error` event](#error-event)
+- [TypeScript](#typescript)
+  - [`WebhookEvent`](#webhookevent)
+  - [`EventNames`](#eventnames)
+  - [`EventPayloads`](#eventpayloads)
+- [License](#license)
+
+<!-- tocstop -->
 
 `@octokit/webhooks` helps to handle webhook events received from GitHub.
 
+[GitHub webhooks](https://docs.github.com/webhooks/) can be registered in multiple ways
+
+1. In repository or organization settings on [github.com](https://github.com/).
+2. Using the REST API for [repositories](https://docs.github.com/rest/reference/repos#webhooks) or [organizations](https://docs.github.com/rest/reference/orgs#webhooks/)
+3. By [creating a GitHub App](https://docs.github.com/developers/apps/creating-a-github-app).
+
 Note that while setting a secret is optional on GitHub, it is required to be set in order to use `@octokit/webhooks`. Content Type must be set to `application/json`, `application/x-www-form-urlencoded` is not supported.
 
-## Example
+## Usage
 
 ```js
 // install with: npm install @octokit/webhooks
@@ -76,7 +102,7 @@ source.onmessage = (event) => {
 ### Constructor
 
 ```js
-new WebhooksApi({secret[, path]})
+new WebhooksApi({secret[, path, transform]})
 ```
 
 <table width="100%">
@@ -95,18 +121,6 @@ new WebhooksApi({secret[, path]})
   <tr>
     <td>
       <code>
-        transform
-      </code>
-      <em>(Function)</em>
-    </td>
-    <td>
-      Only relevant for <a href="#webhookson"><code>webhooks.on</code></a>.
-      Transform emitted event before calling handlers. Can be asynchronous.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
         path
       </code>
       <em>(String)</em>
@@ -114,6 +128,18 @@ new WebhooksApi({secret[, path]})
     <td>
       Only relevant for <a href="#webhooksmiddleware"><code>webhooks.middleware</code></a>.
       Custom path to match requests against. Defaults to <code>/</code>.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        transform
+      </code>
+      <em>(Function)</em>
+    </td>
+    <td>
+      Only relevant for <a href="#webhookson"><code>webhooks.on</code></a>.
+      Transform emitted event before calling handlers. Can be asynchronous.
     </td>
   </tr>
 </table>
@@ -219,7 +245,7 @@ webhooks.verifyAndReceive({ id, name, payload, signature });
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. (Event names are set as <a href="https://developer.github.com/webhooks/#delivery-headers"><code>X-GitHub-Event</code> header</a>
+      Name of the event. (Event names are set as <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads#delivery-headers"><code>X-GitHub-Event</code> header</a>
       in the webhook event request.)
     </td>
   </tr>
@@ -257,7 +283,7 @@ Returns a promise.
 
 Verifies event using [webhooks.verify()](#webhooksverify), then handles the event using [webhooks.receive()](#webhooksreceive).
 
-Additionally, if verification fails, rejects return promise and emits an `error` event.
+Additionally, if verification fails, rejects the returned promise and emits an `error` event.
 
 Example
 
@@ -310,7 +336,7 @@ webhooks.receive({ id, name, payload });
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. (Event names are set as <a href="https://developer.github.com/webhooks/#delivery-headers"><code>X-GitHub-Event</code> header</a>
+      Name of the event. (Event names are set as <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads#delivery-headers"><code>X-GitHub-Event</code> header</a>
       in the webhook event request.)
     </td>
   </tr>
@@ -353,7 +379,7 @@ webhooks.on(eventNames, handler);
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. One of <a href="https://developer.github.com/webhooks/#events">GitHub's supported event names</a>.
+      Name of the event. One of <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads">GitHub's supported event names</a>.
     </td>
   </tr>
   <tr>
@@ -409,7 +435,7 @@ webhooks.removeListener(eventNames, handler);
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. One of <a href="https://developer.github.com/webhooks/#events">GitHub’s supported event names</a>.
+      Name of the event. One of <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads">GitHub’s supported event names</a>.
     </td>
   </tr>
   <tr>
@@ -500,7 +526,7 @@ Can also be used [standalone](src/middleware/).
 
 ### Webhook events
 
-See the full list of [event types with example payloads](https://developer.github.com/v3/activity/events/types/).
+See the full list of [event types with example payloads](https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads/).
 
 If there are actions for a webhook, events are emitted for both, the webhook name as well as a combination of the webhook name and the action, e.g. `installation` and `installation.created`.
 
@@ -582,6 +608,26 @@ webhooks.on("error", (error) => {
 ```
 
 Asynchronous `error` event handler are not blocking the `.receive()` method from completing.
+
+## TypeScript
+
+`@octokit/webhooks` exports 3 types that can be used independent from the code.
+
+Note that changes to the exported types are not considered breaking changes, as the changes will not impact production code, but only fail locally or during CI at build time.
+
+### `WebhookEvent`
+
+The `WebhookEvent` type is an object with the properties `id`, `name`, and `payload`. `name` must be one of the known event names. The type for `payload` be set using an optional type parameter, e.g. `WebhookEvent<MyPayloadType>`
+
+### `EventNames`
+
+The `EventNames` type is a module containing types for all known event names and event/action combinations. For example, `EventNames.CheckRunEvent` is a string enum for `"check_run" | "check_run.completed" | "check_run.created" | "check_run.requested_action" | "check_run.rerequested"`.
+
+`EventNames.All` is an enum of all event/action combinations. `EventNames.StringNames` is an enum for the known event names only.
+
+### `EventPayloads`
+
+The `EventPayloads` type exports payload types for all known evens. For example `EventPayloads.WebhookPayloadCheckRun` exports the payload type for the `check_run` event.
 
 ## License
 

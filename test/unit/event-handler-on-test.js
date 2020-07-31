@@ -1,7 +1,6 @@
-const simple = require("simple-mock");
-const test = require("tap").test;
-
-const receiverOn = require("../../src/event-handler/on");
+import simple from "simple-mock";
+import { test } from "tap";
+import { receiverOn } from "../../pkg/dist-src/event-handler/on";
 
 function noop() {}
 
