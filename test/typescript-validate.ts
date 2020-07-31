@@ -12,12 +12,12 @@ import {
 import { createServer } from "http";
 
 // ************************************************************
-// THIS CODE IS NOT EXECUTED. IT IS JUST FOR TYPECHECKING
+// THIS CODE IS NOT EXECUTED. IT IS FOR TYPECHECKING ONLY
 // ************************************************************
 
 const myWebhook: WebhookEvent<{ foo: string }> = {
   id: "123",
-  name: "my-event",
+  name: "check_run",
   payload: {
     foo: "bar",
   },
