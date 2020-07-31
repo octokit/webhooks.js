@@ -1,8 +1,8 @@
 import { createEventHandler } from "../event-handler/index";
 import { middleware } from "./middleware";
-import { EventHandlerOptions, EventState } from "../types";
+import { Options, EventState } from "../types";
 
-export function createMiddleware(options: EventHandlerOptions) {
+export function createMiddleware(options: Options) {
   if (!options || !options.secret) {
     throw new Error("options.secret required");
   }

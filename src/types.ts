@@ -5,7 +5,7 @@ export interface WebhookEvent<T> {
   payload: T;
 }
 
-export interface EventHandlerOptions {
+export interface Options {
   path?: string;
   secret?: string;
   transform?: (
@@ -17,7 +17,7 @@ type Hooks = {
   [key: string]: Function[];
 };
 
-export interface EventState extends EventHandlerOptions {
+export interface EventState extends Options {
   eventHandler?: any;
   hooks: Hooks;
 }

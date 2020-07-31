@@ -4,7 +4,7 @@ import { middleware } from "./middleware/middleware";
 import { sign } from "./sign/index";
 import { verify } from "./verify/index";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
-import { EventHandlerOptions, EventState, WebhookEvent } from "./types";
+import { Options, EventState, WebhookEvent } from "./types";
 import { EventNames } from "./generated/types";
 import { GetWebhookPayloadTypeFromEvent } from "./generated/api";
 import { IncomingMessage, ServerResponse } from "http";
@@ -33,9 +33,9 @@ class Webhooks {
     response: ServerResponse,
     next?: (err?: any) => void
   ) => void | Promise<void>;
-  public verifyAndReceive: (options: WebhookEvent<any>) => Promise<void>;
+  public verifyAndReceive: (options: WebhookEvent<any> & { signature: string }) => Promise<void>;
 
-  constructor(options?: EventHandlerOptions) {
+  constructor(options?: Options) {
     if (!options || !options.secret) {
       throw new Error("options.secret required");
     }
