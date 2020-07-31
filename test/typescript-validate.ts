@@ -7,7 +7,7 @@ import {
   verify,
   EventNames,
   EventPayloads,
-  WebhookEvent
+  WebhookEvent,
 } from "../src/index";
 import { createServer } from "http";
 
@@ -15,23 +15,23 @@ import { createServer } from "http";
 // THIS CODE IS NOT EXECUTED. IT IS JUST FOR TYPECHECKING
 // ************************************************************
 
-const myWebhook: WebhookEvent<{ foo: string}> = {
-  id: '123',
-  name: 'my-event',
+const myWebhook: WebhookEvent<{ foo: string }> = {
+  id: "123",
+  name: "my-event",
   payload: {
-    foo: 'bar'
-  }
-}
+    foo: "bar",
+  },
+};
 
-const myEventName: EventNames.AllEventTypes = 'check_run.completed'
+const myEventName: EventNames.AllEventTypes = "check_run.completed";
 
 const myEvenTPayload: EventPayloads.WebhookPayloadCheckRunCheckRunOutput = {
   annotations_count: 0,
-  annotations_url: '',
-  summary: '',
-  text: '',
-  title: ''
-}
+  annotations_url: "",
+  summary: "",
+  text: "",
+  title: "",
+};
 
 export default async function () {
   // Check empty constructor
@@ -47,8 +47,8 @@ export default async function () {
     secret: "bleh",
     path: "/webhooks",
     transform: (event) => {
-      console.log(event.payload)
-      return event
+      console.log(event.payload);
+      return event;
     },
   });
 
@@ -77,15 +77,8 @@ export default async function () {
   webhooks.on("check_run.completed", () => {});
 
   webhooks.on(
-    [
-      "check_run.completed",
-      "commit_comment",
-      "label",
-    ],
-    ({
-      name,
-      payload,
-    }) => {
+    ["check_run.completed", "commit_comment", "label"],
+    ({ name, payload }) => {
       console.log(name);
       if ("check_run" in payload) {
         console.log(payload.check_run.output.title);
@@ -96,46 +89,22 @@ export default async function () {
     }
   );
 
-  webhooks.on(
-    [
-      "check_run.completed",
-      "check_run.created",
-    ],
-    () => {}
-  );
-  webhooks.on(
-    "check_run.created",
-    ({
-      name,
-      payload,
-    }) => {
-      console.log(payload.check_run.conclusion, name);
-    }
-  );
+  webhooks.on(["check_run.completed", "check_run.created"], () => {});
+  webhooks.on("check_run.created", ({ name, payload }) => {
+    console.log(payload.check_run.conclusion, name);
+  });
 
-  webhooks.removeListener(
-    "check_run.created",
-    ({
-      name,
-      payload,
-    }) => {
-      console.log(payload.check_run.conclusion, name);
+  webhooks.removeListener("check_run.created", ({ name, payload }) => {
+    console.log(payload.check_run.conclusion, name);
+  });
+  webhooks.removeListener(["commit_comment", "label"], ({ name, payload }) => {
+    console.log(name);
+    if ("label" in payload) {
+      console.log(payload.label.name);
+    } else {
+      console.log(payload.comment.body);
     }
-  );
-  webhooks.removeListener(
-    ["commit_comment", "label"],
-    ({
-      name,
-      payload,
-    }) => {
-      console.log(name);
-      if ("label" in payload) {
-        console.log(payload.label.name);
-      } else {
-        console.log(payload.comment.body);
-      }
-    }
-  );
+  });
 
   webhooks.on("issues", (event) => {
     console.log(event.payload.issue);
