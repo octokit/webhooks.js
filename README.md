@@ -5,17 +5,38 @@
 [![@latest](https://img.shields.io/npm/v/@octokit/webhooks.svg)](https://www.npmjs.com/package/@octokit/webhooks)
 [![Test](https://github.com/octokit/webhooks.js/workflows/Test/badge.svg)](https://github.com/octokit/webhooks.js/actions?query=workflow)
 
+<!-- toc -->
+
+- [Example](#example)
+- [Local development](#local-development)
+- [API](#api)
+  - [Constructor](#constructor)
+  - [webhooks.sign()](#webhookssign)
+  - [webhooks.verify()](#webhooksverify)
+  - [webhooks.verifyAndReceive()](#webhooksverifyandreceive)
+  - [webhooks.receive()](#webhooksreceive)
+  - [webhooks.on()](#webhookson)
+  - [webhooks.removeListener()](#webhooksremovelistener)
+  - [webhooks.middleware()](#webhooksmiddleware)
+  - [Webhook events](#webhook-events)
+  - [Special events](#special-events)
+    - [`*` wildcard event](#-wildcard-event)
+    - [`error` event](#error-event)
+- [License](#license)
+
+<!-- tocstop -->
+
+`@octokit/webhooks` helps to handle webhook events received from GitHub.
+
 [GitHub webhooks](https://developer.github.com/webhooks/) can be registered in multiple ways
 
 1. In repository or organization settings on [github.com](https://github.com/).
 2. Using the REST API for [repositories](https://developer.github.com/v3/repos/hooks/) or [organizations](https://developer.github.com/v3/orgs/hooks/)
 3. By installing a [GitHub App](https://developer.github.com/apps/).
 
-`@octokit/webhooks` helps to handle webhook events received from GitHub.
-
 Note that while setting a secret is optional on GitHub, it is required to be set in order to use `@octokit/webhooks`. Content Type must be set to `application/json`, `application/x-www-form-urlencoded` is not supported.
 
-## Example
+## Usage
 
 ```js
 // install with: npm install @octokit/webhooks
