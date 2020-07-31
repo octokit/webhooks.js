@@ -7,8 +7,8 @@ import {
   verify,
   EventNames,
   EventPayloads,
+  WebhookEvent
 } from "../src/index";
-import { WebhookEvent } from "../src/types";
 import { createServer } from "http";
 
 // ************************************************************
@@ -28,7 +28,10 @@ export default async function () {
   const webhooks = new Webhooks({
     secret: "bleh",
     path: "/webhooks",
-    transform: (event: WebhookEvent) => event,
+    transform: (event) => {
+      console.log(event.payload)
+      return event
+    },
   });
 
   // Check named expors of new API work
@@ -47,42 +50,39 @@ export default async function () {
 
   verify("randomSecret", {}, "randomSignature");
 
-  webhooks.on("*", ({ id, name, payload }: WebhookEvent) => {
+  webhooks.on("*", ({ id, name, payload }) => {
     console.log(name, "event received");
-    const sig = webhooks.sign("secret", payload);
+    const sig = webhooks.sign(payload);
     webhooks.verify(payload, sig);
   });
 
   webhooks.on("check_run.completed", () => {});
 
   webhooks.on(
-    ([
+    [
       "check_run.completed",
       "commit_comment",
       "label",
-    ] as unknown) as EventNames.AllEventTypes,
+    ],
     ({
       name,
       payload,
-    }:
-      | EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun>
-      | EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCommitComment>
-      | EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadLabel>) => {
+    }) => {
       console.log(name);
       if ("check_run" in payload) {
-        console.log(payload);
+        console.log(payload.check_run.output.title);
       }
       if ("comment" in payload) {
-        console.log(payload.comment);
+        console.log(payload.comment.user.login);
       }
     }
   );
 
   webhooks.on(
-    ([
+    [
       "check_run.completed",
       "check_run.created",
-    ] as unknown) as EventNames.AllEventTypes,
+    ],
     () => {}
   );
   webhooks.on(
@@ -90,7 +90,7 @@ export default async function () {
     ({
       name,
       payload,
-    }: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun>) => {
+    }) => {
       console.log(payload.check_run.conclusion, name);
     }
   );
@@ -100,7 +100,7 @@ export default async function () {
     ({
       name,
       payload,
-    }: EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCheckRun>) => {
+    }) => {
       console.log(payload.check_run.conclusion, name);
     }
   );
@@ -109,9 +109,7 @@ export default async function () {
     ({
       name,
       payload,
-    }:
-      | EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadCommitComment>
-      | EventPayloads.WebhookEvent<EventPayloads.WebhookPayloadLabel>) => {
+    }) => {
       console.log(name);
       if ("label" in payload) {
         console.log(payload.label.name);
