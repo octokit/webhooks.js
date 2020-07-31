@@ -2,6 +2,7 @@
 
 > GitHub webhook events toolset for Node.js
 
+[![@latest](https://img.shields.io/npm/v/@octokit/webhooks.svg)](https://www.npmjs.com/package/@octokit/webhooks)
 [![Test](https://github.com/octokit/webhooks.js/workflows/Test/badge.svg)](https://github.com/octokit/webhooks.js/actions?query=workflow)
 
 [GitHub webhooks](https://developer.github.com/webhooks/) can be registered in multiple ways
