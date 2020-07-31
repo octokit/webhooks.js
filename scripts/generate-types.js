@@ -71,32 +71,11 @@ export { EventPayloads } from './event-payloads'
 generateFile("src/generated/types.ts", definitionTypes);
 
 const apiContent = `
-import {
-  IncomingMessage,
-  ServerResponse
-} from "http";
 import { ${eventNamesVariable} } from "./event-names";
 import { ${eventPayloadsVariable} } from "./event-payloads";
 import { WebhookEvent } from "../types";
 
-type Options = {
-  secret: string
-  path?: string
-  transform?: (event: WebhookEvent<any>) => WebhookEvent<any> & { [key: string]: any }
-}
-
 ${conditionalType.join("\n")}
-
-export declare class Webhooks {
-  constructor (options?: Options)
-  public on <T extends ${eventNamesVariable}.AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void): void
-  public sign (payload: string | object): string
-  public verify (eventPayload?: object, signature?: string | string[]): boolean
-  public verifyAndReceive (options: WebhookEvent<any> & { signature: string }): Promise<void>
-  public receive (options: { id: string, name: string, payload: any }): Promise<void>
-  public removeListener <T extends ${eventNamesVariable}.AllEventTypes>(event: T | T[], callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void): void
-  public middleware (request: IncomingMessage, response: ServerResponse, next?: (err?: any) => void): void | Promise<void>
-}
 `;
 
 generateFile("src/generated/api.ts", apiContent);

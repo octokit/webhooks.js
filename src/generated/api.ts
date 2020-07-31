@@ -1,15 +1,6 @@
-import { IncomingMessage, ServerResponse } from "http";
 import { EventNames } from "./event-names";
 import { EventPayloads } from "./event-payloads";
 import { WebhookEvent } from "../types";
-
-type Options = {
-  secret: string;
-  path?: string;
-  transform?: (
-    event: WebhookEvent<any>
-  ) => WebhookEvent<any> & { [key: string]: any };
-};
 
 export type GetWebhookPayloadTypeFromEvent<T> = T extends EventNames.ErrorEvent
   ? Error
@@ -112,30 +103,3 @@ export type GetWebhookPayloadTypeFromEvent<T> = T extends EventNames.ErrorEvent
   : T extends EventNames.WorkflowDispatchEvent
   ? WebhookEvent<EventPayloads.WebhookPayloadWorkflowDispatch>
   : never;
-
-export declare class Webhooks {
-  constructor(options?: Options);
-  public on<T extends EventNames.AllEventTypes>(
-    event: T | T[],
-    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
-  ): void;
-  public sign(payload: string | object): string;
-  public verify(eventPayload?: object, signature?: string | string[]): boolean;
-  public verifyAndReceive(
-    options: WebhookEvent<any> & { signature: string }
-  ): Promise<void>;
-  public receive(options: {
-    id: string;
-    name: string;
-    payload: any;
-  }): Promise<void>;
-  public removeListener<T extends EventNames.AllEventTypes>(
-    event: T | T[],
-    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
-  ): void;
-  public middleware(
-    request: IncomingMessage,
-    response: ServerResponse,
-    next?: (err?: any) => void
-  ): void | Promise<void>;
-}
