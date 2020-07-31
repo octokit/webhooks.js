@@ -32,7 +32,7 @@
 
 1. In repository or organization settings on [github.com](https://github.com/).
 2. Using the REST API for [repositories](https://docs.github.com/rest/reference/repos#webhooks) or [organizations](https://docs.github.com/rest/reference/orgs#webhooks/)
-3. By installing a [GitHub App](https://docs.github.com/apps/).
+3. By [creating a GitHub App](https://docs.github.com/developers/apps/creating-a-github-app).
 
 Note that while setting a secret is optional on GitHub, it is required to be set in order to use `@octokit/webhooks`. Content Type must be set to `application/json`, `application/x-www-form-urlencoded` is not supported.
 
@@ -98,7 +98,7 @@ source.onmessage = (event) => {
 ### Constructor
 
 ```js
-new WebhooksApi({secret[, path]})
+new WebhooksApi({secret[, path, transform]})
 ```
 
 <table width="100%">
@@ -117,18 +117,6 @@ new WebhooksApi({secret[, path]})
   <tr>
     <td>
       <code>
-        transform
-      </code>
-      <em>(Function)</em>
-    </td>
-    <td>
-      Only relevant for <a href="#webhookson"><code>webhooks.on</code></a>.
-      Transform emitted event before calling handlers. Can be asynchronous.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
         path
       </code>
       <em>(String)</em>
@@ -136,6 +124,18 @@ new WebhooksApi({secret[, path]})
     <td>
       Only relevant for <a href="#webhooksmiddleware"><code>webhooks.middleware</code></a>.
       Custom path to match requests against. Defaults to <code>/</code>.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        transform
+      </code>
+      <em>(Function)</em>
+    </td>
+    <td>
+      Only relevant for <a href="#webhookson"><code>webhooks.on</code></a>.
+      Transform emitted event before calling handlers. Can be asynchronous.
     </td>
   </tr>
 </table>
@@ -279,7 +279,7 @@ Returns a promise.
 
 Verifies event using [webhooks.verify()](#webhooksverify), then handles the event using [webhooks.receive()](#webhooksreceive).
 
-Additionally, if verification fails, rejects return promise and emits an `error` event.
+Additionally, if verification fails, rejects the returned promise and emits an `error` event.
 
 Example
 
