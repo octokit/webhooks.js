@@ -48,7 +48,7 @@ export default async function () {
     path: "/webhooks",
     transform: (event) => {
       console.log(event.payload);
-      return event;
+      return Object.assign(event, { foo: "bar" });
     },
   });
 
@@ -108,6 +108,11 @@ export default async function () {
 
   webhooks.on("issues", (event) => {
     console.log(event.payload.issue);
+  });
+
+  webhooks.on("issues", (event) => {
+    // foo is set by options.transform
+    console.log(event.foo);
   });
 
   createServer(webhooks.middleware).listen(3000);
