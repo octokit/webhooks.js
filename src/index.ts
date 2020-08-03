@@ -9,16 +9,18 @@ import { EventNames } from "./generated/event-names";
 import { GetWebhookPayloadTypeFromEvent } from "./generated/get-webhook-payload-type-from-event";
 import { IncomingMessage, ServerResponse } from "http";
 
-class Webhooks {
+class Webhooks<T extends WebhookEvent = WebhookEvent> {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload?: object, signature?: string) => boolean;
-  public on: <T extends EventNames.All>(
-    event: T | T[],
-    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
+  public on: <E extends EventNames.All>(
+    event: E | E[],
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<E> & T
+    ) => Promise<void> | void
   ) => void;
-  public removeListener: <T extends EventNames.All>(
-    event: T | T[],
-    callback: (event: GetWebhookPayloadTypeFromEvent<T>) => Promise<void> | void
+  public removeListener: <E extends EventNames.All>(
+    event: E | E[],
+    callback: (event: GetWebhookPayloadTypeFromEvent<E>) => Promise<void> | void
   ) => void;
   public receive: (options: {
     id: string;
@@ -34,7 +36,7 @@ class Webhooks {
     options: WebhookEvent & { signature: string }
   ) => Promise<void>;
 
-  constructor(options?: Options) {
+  constructor(options?: Options<T>) {
     if (!options || !options.secret) {
       throw new Error("options.secret required");
     }

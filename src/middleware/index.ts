@@ -2,7 +2,7 @@ import { createEventHandler } from "../event-handler/index";
 import { middleware } from "./middleware";
 import { Options, State } from "../types";
 
-export function createMiddleware(options: Options) {
+export function createMiddleware(options: Options<any>) {
   if (!options || !options.secret) {
     throw new Error("options.secret required");
   }
