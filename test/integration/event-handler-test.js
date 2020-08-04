@@ -4,7 +4,7 @@ import pushEventPayload from "../fixtures/push-payload.json";
 import installationCreatedPayload from "../fixtures/installation-created-payload.json";
 
 test("events", (t) => {
-  t.plan(6);
+  t.plan(7);
 
   const eventHandler = createEventHandler();
 
@@ -73,7 +73,7 @@ test("events", (t) => {
       eventHandler.on("error", (error) => {
         t.ok(error.event.payload);
         t.pass("error event triggered");
-        t.is(error.message, "oops");
+        t.match(error.message, /oops/);
       });
 
       eventHandler.on("push", () => {
@@ -88,8 +88,12 @@ test("events", (t) => {
     })
 
     .catch((error) => {
-      t.is(error.errors.length, 1);
-      t.is(error.errors[0].message, "oops");
+      t.match(error.message, /oops/);
+
+      const errors = Array.from(error);
+
+      t.is(errors.length, 1);
+      t.is(Array.from(error)[0].message, "oops");
     })
 
     .catch(t.error);
@@ -133,4 +137,32 @@ test("async options.transform", (t) => {
     name: "push",
     payload: pushEventPayload,
   });
+});
+
+test("multiple errors in same event handler", (t) => {
+  t.plan(2);
+
+  const eventHandler = createEventHandler();
+
+  eventHandler.on("push", () => {
+    throw new Error("oops");
+  });
+
+  eventHandler.on("push", () => {
+    throw new Error("oops");
+  });
+
+  eventHandler
+    .receive({
+      id: "123",
+      name: "push",
+      payload: pushEventPayload,
+    })
+
+    .catch((error) => {
+      t.match(error.message, "oops");
+      t.is(Array.from(error).length, 2);
+    })
+
+    .catch(t.error);
 });
