@@ -1,5 +1,13 @@
+import AggregateError from "aggregate-error";
+import { Deprecation } from "deprecation";
+
 import { wrapErrorHandler } from "./wrap-error-handler";
-import { WebhookEvent, State } from "../types";
+import {
+  WebhookEvent,
+  State,
+  OctokitError,
+  WebhookEventHandlerError,
+} from "../types";
 import { EventNames } from "../generated/event-names";
 
 function getHooks(
@@ -48,7 +56,7 @@ export function receiverHandle(state: State, event: WebhookEvent) {
     return Promise.resolve();
   }
 
-  const errors: Error[] = [];
+  const errors: OctokitError[] = [];
   const promises = hooks.map((handler: Function) => {
     let promise = Promise.resolve(event);
 
@@ -69,11 +77,13 @@ export function receiverHandle(state: State, event: WebhookEvent) {
       return;
     }
 
-    errorHandlers.forEach((handler) =>
-      errors.forEach(wrapErrorHandler.bind(null, handler))
-    );
+    const error = new AggregateError(errors) as WebhookEventHandlerError;
+    Object.assign(error, {
+      event,
+      errors,
+    });
 
-    const error = Object.assign(new Error("Webhook handler error"), { errors });
+    errorHandlers.forEach((handler) => wrapErrorHandler(handler, error));
 
     throw error;
   });

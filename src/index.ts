@@ -15,12 +15,14 @@ class Webhooks<T extends WebhookEvent = WebhookEvent> {
   public on: <E extends EventNames.All>(
     event: E | E[],
     callback: (
-      event: GetWebhookPayloadTypeFromEvent<E> & T
+      event: GetWebhookPayloadTypeFromEvent<E, T>
     ) => Promise<void> | void
   ) => void;
   public removeListener: <E extends EventNames.All>(
     event: E | E[],
-    callback: (event: GetWebhookPayloadTypeFromEvent<E>) => Promise<void> | void
+    callback: (
+      event: GetWebhookPayloadTypeFromEvent<E, T>
+    ) => Promise<void> | void
   ) => void;
   public receive: (options: {
     id: string;
