@@ -35,9 +35,9 @@ const generateEventNameType = (event, name, actions) => `type ${event} =
 eventTypes.push(`type ErrorEvent = "error"`, `type WildcardEvent = "*"`);
 
 const conditionalType = [
-  `export type GetWebhookPayloadTypeFromEvent<T> = `,
-  `T extends ${eventNamesVariable}.ErrorEvent ? Error :`,
-  `T extends ${eventNamesVariable}.WildcardEvent ? any :`,
+  `export type GetWebhookPayloadTypeFromEvent<E = EventNames.All, T = WebhookEvent> = `,
+  `E extends ${eventNamesVariable}.ErrorEvent ? WebhookEventHandlerError :`,
+  `E extends ${eventNamesVariable}.WildcardEvent ? any :`,
 ];
 
 webhooks.forEach(({ name, actions, examples }) => {
@@ -55,7 +55,7 @@ webhooks.forEach(({ name, actions, examples }) => {
 
   eventTypes.push(eventNameType);
   conditionalType.push(
-    `T extends ${eventNamesVariable}.${eventNameTypeKey} ? WebhookEvent<${eventPayloadsVariable}.${typeName}> :`
+    `E extends ${eventNamesVariable}.${eventNameTypeKey} ? WebhookEvent<${eventPayloadsVariable}.${typeName}> & T:`
   );
 });
 
@@ -64,7 +64,7 @@ conditionalType.push("never");
 const getWebhookPayloadTypeFromEvent = `
 import { ${eventNamesVariable} } from "./event-names";
 import { ${eventPayloadsVariable} } from "./event-payloads";
-import { WebhookEvent } from "../types";
+import { WebhookEvent, WebhookEventHandlerError } from "../types";
 
 ${conditionalType.join("\n")}
 `;
