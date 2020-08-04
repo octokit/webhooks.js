@@ -1654,6 +1654,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  type WebhookPayloadPullRequestInstallation = { id: number; node_id: string };
   type WebhookPayloadPullRequestAssignee = {
     login: string;
     id: number;
@@ -2063,6 +2064,7 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadPullRequestSender;
     assignee?: WebhookPayloadPullRequestAssignee;
+    installation?: WebhookPayloadPullRequestInstallation;
     label?: WebhookPayloadPullRequestLabel;
   };
   type WebhookPayloadPublicSender = {
