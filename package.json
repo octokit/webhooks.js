@@ -9,7 +9,9 @@
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "license": "MIT",
   "dependencies": {
+    "@octokit/request-error": "^2.0.2",
     "@pika/plugin-ts-standard-pkg": "^0.9.2",
+    "aggregate-error": "^3.0.1",
     "debug": "^4.0.0"
   },
   "devDependencies": {
@@ -44,7 +46,7 @@
     "pretest": "npm run -s lint && npm run build -s",
     "test": "tap --100 --no-coverage 'test/**/*-test.js'",
     "generate-types": "node scripts/generate-types.js",
-    "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 test/typescript-validate.ts"
+    "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 --esModuleInterop --moduleResolution node test/typescript-validate.ts"
   },
   "repository": {
     "type": "git",

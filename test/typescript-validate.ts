@@ -115,5 +115,13 @@ export default async function () {
     console.log(event.foo);
   });
 
+  webhooks.on("error", (error) => {
+    console.log(error.event.name);
+    const [firstError] = Array.from(error);
+    console.log(firstError.status);
+    console.log(firstError.headers);
+    console.log(firstError.request);
+  });
+
   createServer(webhooks.middleware).listen(3000);
 }
