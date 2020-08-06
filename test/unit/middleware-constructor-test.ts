@@ -1,5 +1,5 @@
-import { createMiddleware as Middleware } from '../../src/middleware';
+import { createMiddleware as Middleware } from "../../src/middleware";
 
-test('options: none', () => {
+test("options: none", () => {
   expect(Middleware()).toThrow();
 });
