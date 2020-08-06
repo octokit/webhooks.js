@@ -33,19 +33,24 @@ export function receiverHandle(state: State, event: WebhookEvent) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {
-    errorHandlers.forEach((handler: Function) =>
-      wrapErrorHandler(handler, event)
+    const error = Object.assign(
+      new AggregateError([event]) as WebhookEventHandlerError,
+      {
+        event,
+        errors: [event],
+      }
     );
 
-    return Promise.reject(event);
+    errorHandlers.forEach((handler) => wrapErrorHandler(handler, error));
+    return Promise.reject(error);
   }
 
   if (!event || !event.name) {
-    throw new Error("Event name not passed");
+    throw new AggregateError(["Event name not passed"]);
   }
 
   if (!event.payload) {
-    throw new Error("Event payload not passed");
+    throw new AggregateError(["Event payload not passed"]);
   }
 
   // flatten arrays of event listeners and remove undefined values
