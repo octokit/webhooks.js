@@ -1,5 +1,4 @@
 import AggregateError from "aggregate-error";
-import { Deprecation } from "deprecation";
 
 import { wrapErrorHandler } from "./wrap-error-handler";
 import {
