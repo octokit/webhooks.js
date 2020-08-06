@@ -189,4 +189,6 @@ export const webhookNames = [
   "watch",
   "watch.started",
   "workflow_dispatch",
+  "workflow_run",
+  "workflow_run.action",
 ];
