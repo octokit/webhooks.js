@@ -262,6 +262,8 @@ export declare module EventNames {
 
   type WorkflowDispatchEvent = "workflow_dispatch";
 
+  type WorkflowRunEvent = "workflow_run" | "workflow_run.action";
+
   type StringNames =
     | "check_run"
     | "check_suite"
@@ -310,7 +312,8 @@ export declare module EventNames {
     | "team"
     | "team_add"
     | "watch"
-    | "workflow_dispatch";
+    | "workflow_dispatch"
+    | "workflow_run";
 
   type All =
     | ErrorEvent
@@ -362,5 +365,6 @@ export declare module EventNames {
     | TeamEvent
     | TeamAddEvent
     | WatchEvent
-    | WorkflowDispatchEvent;
+    | WorkflowDispatchEvent
+    | WorkflowRunEvent;
 }

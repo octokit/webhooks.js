@@ -105,4 +105,6 @@ export type GetWebhookPayloadTypeFromEvent<
   ? WebhookEvent<EventPayloads.WebhookPayloadWatch> & T
   : E extends EventNames.WorkflowDispatchEvent
   ? WebhookEvent<EventPayloads.WebhookPayloadWorkflowDispatch> & T
+  : E extends EventNames.WorkflowRunEvent
+  ? WebhookEvent<EventPayloads.WebhookPayloadWorkflowRun> & T
   : never;
