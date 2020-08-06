@@ -23,7 +23,7 @@ test("Invalid payload", (t) => {
   const middleware = createMiddleware({ secret: "mysecret" });
   middleware(requestMock, responseMock).then(() => {
     t.is(responseMock.statusCode, 400);
-    t.is(responseMock.end.lastCall.arg, "SyntaxError: Invalid JSON");
+    t.match(responseMock.end.lastCall.arg, /SyntaxError: Invalid JSON/);
     t.end();
   });
 
@@ -44,7 +44,7 @@ test("request error", (t) => {
   const middleware = createMiddleware({ secret: "mysecret" });
   middleware(requestMock, responseMock).then(() => {
     t.is(responseMock.statusCode, 500);
-    t.is(responseMock.end.lastCall.arg, "Error: oops");
+    t.match(responseMock.end.lastCall.arg, /Error: oops/);
 
     t.end();
   });

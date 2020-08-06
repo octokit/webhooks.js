@@ -4,8 +4,9 @@ import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
-import { State } from "../types";
+import { State, OctokitError, WebhookEventHandlerError } from "../types";
 import { EventNames } from "../generated/event-names";
+import AggregateError from "aggregate-error";
 
 const debugWebhooks = debug("webhooks:receiver");
 
@@ -61,8 +62,9 @@ export function middleware(
       response.end("ok\n");
     })
 
-    .catch((error) => {
-      response.statusCode = error.status || 500;
+    .catch((error: WebhookEventHandlerError) => {
+      const statusCode = Array.from(error)[0].status;
+      response.statusCode = statusCode || 500;
       response.end(error.toString());
     });
 }

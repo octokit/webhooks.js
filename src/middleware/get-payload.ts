@@ -1,3 +1,5 @@
+import AggregateError from "aggregate-error";
+
 import { IncomingMessage } from "http";
 
 export function getPayload(request: IncomingMessage): Promise<any> {
@@ -10,7 +12,7 @@ export function getPayload(request: IncomingMessage): Promise<any> {
   return new Promise((resolve, reject) => {
     let data = "";
 
-    request.on("error", reject);
+    request.on("error", (error) => reject(new AggregateError([error])));
     request.on("data", (chunk) => (data += chunk));
     request.on("end", () => {
       try {
@@ -18,7 +20,7 @@ export function getPayload(request: IncomingMessage): Promise<any> {
       } catch (error) {
         error.message = "Invalid JSON";
         error.status = 400;
-        reject(error);
+        reject(new AggregateError([error]));
       }
     });
   });
