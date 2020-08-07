@@ -7,17 +7,20 @@ const state: State = {
 };
 
 test("options: none", () => {
+  // @ts-ignore
   expect(() => receive(state)).toThrow();
 });
 
 test("options: name", () => {
   expect(() => {
+    // @ts-ignore
     receive(state, { name: "foo" });
   }).toThrow();
 });
 
 test("options: name, payload", () => {
   expect(() => {
+    // @ts-ignore
     receive(state, { name: "foo", payload: {} });
   }).not.toThrow();
 });
@@ -25,6 +28,7 @@ test("options: name, payload", () => {
 test("options: [name1, name2]", () => {
   expect(() => {
     receive(state, {
+      // @ts-ignore
       name: ["foo", "bar"],
     });
   }).toThrow();
@@ -33,6 +37,7 @@ test("options: [name1, name2]", () => {
 test("options: [name1, name2], payload", () => {
   expect(() => {
     receive(state, {
+      // @ts-ignore
       name: ["foo", "bar"],
       payload: {},
     });
