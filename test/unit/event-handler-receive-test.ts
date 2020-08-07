@@ -7,30 +7,34 @@ const state: State = {
 };
 
 test("options: none", () => {
-  expect(receive(state)).toThrow();
+  expect(() => receive(state)).toThrow();
 });
 
 test("options: name", () => {
-  expect(receive(state, { name: "foo" })).toThrow();
+  expect(() => {
+    receive(state, { name: "foo" });
+  }).toThrow();
 });
 
 test("options: name, payload", () => {
-  expect(receive(state, { name: "foo", payload: {} })).not.toThrow();
+  expect(() => {
+    receive(state, { name: "foo", payload: {} });
+  }).not.toThrow();
 });
 
 test("options: [name1, name2]", () => {
-  expect(
+  expect(() => {
     receive(state, {
       name: ["foo", "bar"],
-    })
-  ).toThrow();
+    });
+  }).toThrow();
 });
 
 test("options: [name1, name2], payload", () => {
-  expect(
+  expect(() => {
     receive(state, {
       name: ["foo", "bar"],
       payload: {},
-    })
-  ).not.toThrow();
+    });
+  }).not.toThrow();
 });
