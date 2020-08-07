@@ -47,7 +47,7 @@
     "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
     "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
     "pretest": "npm run -s lint && npm run build -s",
-    "test": "jest 'test/**/*-test.js'",
+    "test": "jest --coverage",
     "generate-types": "node scripts/generate-types.js",
     "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 --esModuleInterop --moduleResolution node test/typescript-validate.ts"
   },
@@ -64,6 +64,19 @@
         "@pika/plugin-build-node"
       ]
     ]
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testMatch": null,
+    "testRegex": "test/.*/.*.ts",
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+      }
+    }
   },
   "release": {
     "plugins": [
