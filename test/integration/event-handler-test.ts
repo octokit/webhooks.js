@@ -1,12 +1,11 @@
-import { test } from "tap";
-import { createEventHandler } from "../../pkg/dist-src/event-handler";
+import { createEventHandler } from "../../src/event-handler";
 import pushEventPayload from "../fixtures/push-payload.json";
 import installationCreatedPayload from "../fixtures/installation-created-payload.json";
 
-test("events", (t) => {
-  t.plan(7);
+test("events", () => {
+  expect.assertions(7);
 
-  const eventHandler = createEventHandler();
+  const eventHandler = createEventHandler({});
 
   const hooksCalled = [];
   function hook1() {
@@ -61,7 +60,7 @@ test("events", (t) => {
     })
 
     .then(() => {
-      t.deepEqual(hooksCalled, [
+      expect(hooksCalled).toStrictEqual([
         "hook2",
         "* (push)",
         "hook1",
@@ -71,9 +70,9 @@ test("events", (t) => {
       ]);
 
       eventHandler.on("error", (error) => {
-        t.ok(error.event.payload);
+        expect(error.event.payload).toBeTruthy();
         t.pass("error event triggered");
-        t.match(error.message, /oops/);
+        expect(error.message).toMatch(/oops/);
       });
 
       eventHandler.on("push", () => {
@@ -88,29 +87,29 @@ test("events", (t) => {
     })
 
     .catch((error) => {
-      t.match(error.message, /oops/);
+      expect(error.message).toMatch(/oops/);
 
       const errors = Array.from(error);
 
-      t.is(errors.length, 1);
-      t.is(Array.from(error)[0].message, "oops");
+      expect(errors.length).toBe(1);
+      expect(Array.from(error)[0].message).toBe("oops");
     })
 
     .catch(t.error);
 });
 
 test("options.transform", (t) => {
-  t.plan(2);
+  expect.assertions(2);
 
   const eventHandler = createEventHandler({
     transform: (event) => {
-      t.is(event.id, "123");
+      expect(event.id).toBe("123");
       return "funky";
     },
   });
 
   eventHandler.on("push", (event) => {
-    t.is(event, "funky");
+    expect(event).toBe("funky");
   });
 
   eventHandler.receive({
@@ -128,8 +127,7 @@ test("async options.transform", (t) => {
   });
 
   eventHandler.on("push", (event) => {
-    t.is(event, "funky");
-    t.end();
+    expect(event).toBe("funky");
   });
 
   eventHandler.receive({
@@ -140,9 +138,9 @@ test("async options.transform", (t) => {
 });
 
 test("multiple errors in same event handler", (t) => {
-  t.plan(2);
+  expect.assertions(2);
 
-  const eventHandler = createEventHandler();
+  const eventHandler = createEventHandler({});
 
   eventHandler.on("push", () => {
     throw new Error("oops");
@@ -160,8 +158,8 @@ test("multiple errors in same event handler", (t) => {
     })
 
     .catch((error) => {
-      t.match(error.message, "oops");
-      t.is(Array.from(error).length, 2);
+      expect(error.message).toMatch("oops");
+      expect(Array.from(error).length).toBe(2);
     })
 
     .catch(t.error);
