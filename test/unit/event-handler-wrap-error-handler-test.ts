@@ -1,8 +1,8 @@
 import simple from "simple-mock";
 import { wrapErrorHandler } from "../../src/event-handler/wrap-error-handler";
 
-test("error thrown in error handler", (t) => {
-  t.plan(2);
+test("error thrown in error handler", () => {
+  expect.assertions(2);
 
   const messages = [];
   simple.mock(console, "log", messages.push.bind(messages));
@@ -12,12 +12,12 @@ test("error thrown in error handler", (t) => {
     }, new Error("oops"))
   ).not.toThrow();
 
-  t.ok(messages.find((message) => /FATAL/.test(message)));
+  expect(messages.find((message) => /FATAL/.test(message))).toBeTruthy();
   simple.restore();
 });
 
-test("error handler returns rejected Error", (t) => {
-  t.plan(2);
+test("error handler returns rejected Error", () => {
+  expect.assertions(2);
 
   const messages = [];
   simple.mock(console, "log", messages.push.bind(messages));
@@ -25,7 +25,7 @@ test("error handler returns rejected Error", (t) => {
   expect(wrapErrorHandler(() => promise, new Error("oops"))).not.toThrow();
 
   promise.catch(() => {
-    t.ok(messages.find((message) => /FATAL/.test(message)));
+    expect(messages.find((message) => /FATAL/.test(message))).toBeTruthy();
     simple.restore();
   });
 });
