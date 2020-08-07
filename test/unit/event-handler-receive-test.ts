@@ -8,6 +8,7 @@ const state: State = {
 
 test('options: none', () => {
   expect(receive(state)).toThrow();
+});
 
 test('options: name', () => {
   expect(
