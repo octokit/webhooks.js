@@ -10,11 +10,11 @@ test("sign() without options throws", () => {
 });
 
 test("sign(undefined, eventPayload) without secret throws", () => {
-  expect(() => sign.bind(null, undefined, eventPayload)).toThrow();
+  expect(() => sign.bind(null, undefined, eventPayload)()).toThrow();
 });
 
 test("sign(secret) without eventPayload throws", () => {
-  expect(() => sign.bind(null, secret)).toThrow();
+  expect(() => sign.bind(null, secret)()).toThrow();
 });
 
 test("sign(secret, eventPayload) with eventPayload as object returns expected signature", () => {
