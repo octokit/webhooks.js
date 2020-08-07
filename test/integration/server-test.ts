@@ -6,11 +6,10 @@ import axios from "axios";
 import getPort from "get-port";
 import { promisify } from "util";
 import simple from "simple-mock";
-import Tap from "tap";
-import { Webhooks } from "../../pkg";
+import { Webhooks } from "../../src";
 import pushEventPayload from "../fixtures/push-payload.json";
+import { OctokitError } from "../../src/types";
 
-const test = Tap.test;
 const beforeEach = Tap.beforeEach;
 
 beforeEach(() => {
@@ -26,7 +25,6 @@ test("initialised without options", (t) => {
   } catch (error) {
     t.pass('throws errer if no "secret" option passed');
   }
-  t.end();
 });
 
 test("GET /", (t) => {
@@ -46,7 +44,7 @@ test("GET /", (t) => {
     })
 
     .catch((error) => {
-      t.is(error.response.status, 404);
+      expect(error.response.status).toBe(404);
     })
 
     .then(() => {
@@ -57,7 +55,7 @@ test("GET /", (t) => {
 });
 
 test("POST / with push event payload", (t) => {
-  t.plan(2);
+  expect.assertions(2);
 
   const api = new Webhooks({
     secret: "mysecret",
@@ -65,7 +63,7 @@ test("POST / with push event payload", (t) => {
   const server = http.createServer(api.middleware);
 
   api.on("push", (event) => {
-    t.is(event.id, "123e4567-e89b-12d3-a456-426655440000");
+    expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
   });
 
   promisify(server.listen.bind(server))(this.port)
@@ -83,7 +81,7 @@ test("POST / with push event payload", (t) => {
     .catch(t.error)
 
     .then((result) => {
-      t.is(result.status, 200);
+      expect(result.status).toBe(200);
     })
 
     .then(() => {
@@ -93,15 +91,15 @@ test("POST / with push event payload", (t) => {
     .catch(t.error);
 });
 
-//TEST
+// TEST
 test("POST / with push event payload (request.body already parsed)", (t) => {
-  t.plan(2);
+  expect.assertions(2);
 
   const api = new Webhooks({
     secret: "mysecret",
   });
   const dataChunks = [];
-  let timeout;
+  let timeout: NodeJS.Timeout;
   const server = http.createServer((req, res) => {
     req.once("data", (chunk) => dataChunks.push(chunk));
     req.once("end", () => {
@@ -116,7 +114,7 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
   });
 
   api.on("push", (event) => {
-    t.is(event.id, "123e4567-e89b-12d3-a456-426655440000");
+    expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
   });
 
   promisify(server.listen.bind(server))(this.port)
@@ -134,7 +132,7 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
     .catch(t.error)
 
     .then((result) => {
-      t.is(result.status, 200);
+      expect(result.status).toBe(200);
     })
 
     .then(() => {
@@ -169,12 +167,12 @@ test("POST / with push event payload (no signature)", (t) => {
     })
 
     .catch((error) => {
-      t.is(error.response.status, 400);
+      expect(error.response.status).toBe(400);
     })
 
     .then(() => {
-      t.is(errorHandler.callCount, 1, 'calls "error" event handler');
-      server.close(t.end);
+      expect(errorHandler.callCount).toBe(1); // calls "error" event handler
+      server.close(t);
     })
 
     .catch(t.error);
@@ -205,12 +203,12 @@ test("POST / with push event payload (invalid signature)", (t) => {
     })
 
     .catch((error) => {
-      t.is(error.response.status, 400);
+      expect(error.response.status).toBe(400);
     })
 
     .then(() => {
-      t.is(errorHandler.callCount, 1, 'calls "error" event handler');
-      server.close(t.end);
+      expect(errorHandler.callCount).toBe(1); // calls "error" event handler
+      server.close(t);
     })
 
     .catch(t.error);
@@ -243,11 +241,11 @@ test("POST / with hook error", (t) => {
     })
 
     .catch((error) => {
-      t.is(error.response.status, 500);
+      expect(error.response.status).toBe(500);
     })
 
     .then(() => {
-      server.close(t.end);
+      server.close(t);
     })
 
     .catch(t.error);
