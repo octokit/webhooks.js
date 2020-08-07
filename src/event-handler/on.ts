@@ -1,4 +1,4 @@
-import { webhookNames } from "../generated/webhook-names.js";
+import { webhookNames } from "../generated/webhook-names";
 import { EventNames } from "../generated/event-names";
 import { State } from "../types";
 
