@@ -10,7 +10,7 @@ test("remove-listener: single listener", () => {
     },
   };
 
-  expect(removeListener(state, "push", push)).not.toThrow();
+  expect(() => removeListener(state, "push", push)).not.toThrow();
   expect(state).toStrictEqual({ hooks: { push: [] } });
 });
 
