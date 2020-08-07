@@ -9,7 +9,7 @@ const headers = {
   "x-hub-signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
 };
 
-test("Invalid payload", (t) => {
+test("Invalid payload", () => {
   const requestMock = new EventEmitter();
   requestMock.method = "POST";
   requestMock.headers = headers;
@@ -29,7 +29,7 @@ test("Invalid payload", (t) => {
   requestMock.emit("end");
 });
 
-test("request error", (t) => {
+test("request error", () => {
   const requestMock = new EventEmitter();
   requestMock.method = "POST";
   requestMock.headers = headers;
