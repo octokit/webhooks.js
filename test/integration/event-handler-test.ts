@@ -2,8 +2,8 @@ import { createEventHandler } from "../../src/event-handler";
 import pushEventPayload from "../fixtures/push-payload.json";
 import installationCreatedPayload from "../fixtures/installation-created-payload.json";
 
-test("events", () => {
-  expect.assertions(7);
+test("events", (t) => {
+  // expect.assertions(7);
 
   const eventHandler = createEventHandler({});
 
@@ -71,7 +71,7 @@ test("events", () => {
 
       eventHandler.on("error", (error) => {
         expect(error.event.payload).toBeTruthy();
-        t.pass("error event triggered");
+        // t.pass("error event triggered");
         expect(error.message).toMatch(/oops/);
       });
 
@@ -92,10 +92,12 @@ test("events", () => {
       const errors = Array.from(error);
 
       expect(errors.length).toBe(1);
-      expect(Array.from(error)[0].message).toBe("oops");
+      expect((Array.from(error) as { message: string }[])[0].message).toBe(
+        "oops"
+      );
     })
 
-    .catch(t.error);
+    .catch((e) => expect(e instanceof Error).toBeTruthy());
 });
 
 test("options.transform", (t) => {
@@ -119,7 +121,7 @@ test("options.transform", (t) => {
   });
 });
 
-test("async options.transform", (t) => {
+test("async options.transform", (done) => {
   const eventHandler = createEventHandler({
     transform: (event) => {
       return Promise.resolve("funky");
@@ -128,6 +130,7 @@ test("async options.transform", (t) => {
 
   eventHandler.on("push", (event) => {
     expect(event).toBe("funky");
+    done();
   });
 
   eventHandler.receive({
@@ -162,5 +165,5 @@ test("multiple errors in same event handler", (t) => {
       expect(Array.from(error).length).toBe(2);
     })
 
-    .catch(t.error);
+    .catch((e) => expect(e instanceof Error).toBeTruthy());
 });
