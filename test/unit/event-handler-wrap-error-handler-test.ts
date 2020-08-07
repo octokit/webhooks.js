@@ -6,11 +6,11 @@ test("error thrown in error handler", () => {
 
   const messages = [];
   simple.mock(console, "log", messages.push.bind(messages));
-  expect(
+  expect(() => {
     wrapErrorHandler(() => {
       throw new Error("oopsydoopsy");
-    }, new Error("oops"))
-  ).not.toThrow();
+    }, new Error("oops"));
+  }).not.toThrow();
 
   expect(messages.find((message) => /FATAL/.test(message))).toBeTruthy();
   simple.restore();
@@ -22,7 +22,9 @@ test("error handler returns rejected Error", () => {
   const messages = [];
   simple.mock(console, "log", messages.push.bind(messages));
   const promise = Promise.reject(new Error("oopsydoopsy"));
-  expect(wrapErrorHandler(() => promise, new Error("oops"))).not.toThrow();
+  expect(() =>
+    wrapErrorHandler(() => promise, new Error("oops"))
+  ).not.toThrow();
 
   promise.catch(() => {
     expect(messages.find((message) => /FATAL/.test(message))).toBeTruthy();
