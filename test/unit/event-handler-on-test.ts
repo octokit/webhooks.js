@@ -8,9 +8,11 @@ const state: State = {
   hooks: {},
 };
 
+// Test broken with TypeScript without the ignore
 test("receiver.on with invalid event name", () => {
   simple.mock(console, "warn").callFn(function () {});
-  receiverOn(state, "*", noop);
+  // @ts-ignore
+  receiverOn(state, "foo", noop);
   expect((console.warn as simple.Stub<void>).callCount).toBe(1);
   expect((console.warn as simple.Stub<void>).lastCall.arg).toBe(
     '"foo" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)'
