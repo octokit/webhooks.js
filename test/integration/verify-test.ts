@@ -1,4 +1,3 @@
-import { test } from "tap";
 import { verify } from "../../pkg/dist-src/verify";
 
 const eventPayload = {
@@ -9,43 +8,33 @@ const signature = "sha1=d03207e4b030cf234e3447bac4d93add4c6643d8";
 
 test("verify() without options throws", (t) => {
   t.throws(verify);
-  t.end();
 });
 
 test("verify(undefined, eventPayload) without secret throws", (t) => {
   t.throws(verify.bind(null, undefined, eventPayload));
-  t.end();
 });
 
 test("verify(secret) without eventPayload throws", (t) => {
   t.throws(verify.bind(null, secret));
-  t.end();
 });
 
 test("verify(secret, eventPayload) without options.signature throws", (t) => {
   t.throws(verify.bind(null, secret, eventPayload));
-  t.end();
 });
 
 test("verify(secret, eventPayload, signature) returns true for correct signature", (t) => {
   const signatureMatches = verify(secret, eventPayload, signature);
-  t.is(signatureMatches, true);
-
-  t.end();
+  expect(signatureMatches).toBe(true);
 });
 
 test("verify(secret, eventPayload, signature) returns false for incorrect signature", (t) => {
   const signatureMatches = verify(secret, eventPayload, "foo");
-  t.is(signatureMatches, false);
-
-  t.end();
+  expect(signatureMatches).toBe(false);
 });
 
 test("verify(secret, eventPayload, signature) returns false for correct secret", (t) => {
   const signatureMatches = verify("foo", eventPayload, signature);
-  t.is(signatureMatches, false);
-
-  t.end();
+  expect(signatureMatches).toBe(false);
 });
 
 test("verify(secret, eventPayload, signature) returns true if eventPayload contains (#71)", (t) => {
@@ -57,7 +46,7 @@ test("verify(secret, eventPayload, signature) returns true if eventPayload conta
     },
     "sha1=7316ec5e7866e42e4aba4af550d21a5f036f949d"
   );
-  t.is(signatureMatchesLowerCaseSequence, true);
+  expect(signatureMatchesLowerCaseSequence).toBe(true);
   const signatureMatchesUpperCaseSequence = verify(
     "development",
     {
@@ -65,7 +54,7 @@ test("verify(secret, eventPayload, signature) returns true if eventPayload conta
     },
     "sha1=7316ec5e7866e42e4aba4af550d21a5f036f949d"
   );
-  t.is(signatureMatchesUpperCaseSequence, true);
+  expect(signatureMatchesUpperCaseSequence).toBe(true);
   const signatureMatchesEscapedSequence = verify(
     "development",
     {
@@ -73,7 +62,5 @@ test("verify(secret, eventPayload, signature) returns true if eventPayload conta
     },
     "sha1=2c440a176f4cb84c8c921dfee882d594c2465097"
   );
-  t.is(signatureMatchesEscapedSequence, true);
-
-  t.end();
+  expect(signatureMatchesEscapedSequence).toBe(true);
 });
