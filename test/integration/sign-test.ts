@@ -6,6 +6,7 @@ const eventPayload = {
 const secret = "mysecret";
 
 test("sign() without options throws", () => {
+  // @ts-ignore
   expect(() => sign()).toThrow();
 });
 
