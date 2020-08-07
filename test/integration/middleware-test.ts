@@ -1,8 +1,7 @@
 import EventEmitter from "events";
 import { Buffer } from "buffer";
-import { test } from "tap";
 import simple from "simple-mock";
-import { createMiddleware } from "../../pkg/dist-src/middleware";
+import { createMiddleware } from "../../src/middleware";
 
 const headers = {
   "x-github-delivery": "123e4567-e89b-12d3-a456-426655440000",
@@ -22,9 +21,8 @@ test("Invalid payload", (t) => {
 
   const middleware = createMiddleware({ secret: "mysecret" });
   middleware(requestMock, responseMock).then(() => {
-    t.is(responseMock.statusCode, 400);
-    t.match(responseMock.end.lastCall.arg, /SyntaxError: Invalid JSON/);
-    t.end();
+    expect(responseMock.statusCode).toBe(400);
+    expect(responseMock.end.lastCall.arg).toMatch(/SyntaxError: Invalid JSON/);
   });
 
   requestMock.emit("data", Buffer.from("foo"));
@@ -43,10 +41,8 @@ test("request error", (t) => {
 
   const middleware = createMiddleware({ secret: "mysecret" });
   middleware(requestMock, responseMock).then(() => {
-    t.is(responseMock.statusCode, 500);
-    t.match(responseMock.end.lastCall.arg, /Error: oops/);
-
-    t.end();
+    expect(responseMock.statusCode).toBe(500);
+    expect(responseMock.end.lastCall.arg).toMatch(/Error: oops/);
   });
 
   const error = new Error("oops");
