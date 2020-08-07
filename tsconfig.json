@@ -1,9 +1,10 @@
 {
-  "extends": "@tsconfig/node10/tsconfig.json",
   "compilerOptions": {
-    // required for aggregate-error
     "esModuleInterop": true,
-    "moduleResolution": "node"
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "target": "es2018"
   },
   "include": ["src/**/*"]
 }
