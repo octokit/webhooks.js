@@ -1,4 +1,4 @@
-import { verify } from "../../pkg/dist-src/verify";
+import { verify } from "../../src/verify";
 
 const eventPayload = {
   foo: "bar",
@@ -6,38 +6,38 @@ const eventPayload = {
 const secret = "mysecret";
 const signature = "sha1=d03207e4b030cf234e3447bac4d93add4c6643d8";
 
-test("verify() without options throws", (t) => {
-  t.throws(verify);
+test("verify() without options throws", () => {
+  expect(() => verify()).toThrow();
 });
 
-test("verify(undefined, eventPayload) without secret throws", (t) => {
-  t.throws(verify.bind(null, undefined, eventPayload));
+test("verify(undefined, eventPayload) without secret throws", () => {
+  expect(() => verify.bind(null, undefined, eventPayload)()).toThrow();
 });
 
-test("verify(secret) without eventPayload throws", (t) => {
-  t.throws(verify.bind(null, secret));
+test("verify(secret) without eventPayload throws", () => {
+  expect(() => verify.bind(null, secret)()).toThrow();
 });
 
-test("verify(secret, eventPayload) without options.signature throws", (t) => {
-  t.throws(verify.bind(null, secret, eventPayload));
+test("verify(secret, eventPayload) without options.signature throws", () => {
+  expect(() => verify.bind(null, secret, eventPayload)()).toThrow();
 });
 
-test("verify(secret, eventPayload, signature) returns true for correct signature", (t) => {
+test("verify(secret, eventPayload, signature) returns true for correct signature", () => {
   const signatureMatches = verify(secret, eventPayload, signature);
   expect(signatureMatches).toBe(true);
 });
 
-test("verify(secret, eventPayload, signature) returns false for incorrect signature", (t) => {
+test("verify(secret, eventPayload, signature) returns false for incorrect signature", () => {
   const signatureMatches = verify(secret, eventPayload, "foo");
   expect(signatureMatches).toBe(false);
 });
 
-test("verify(secret, eventPayload, signature) returns false for correct secret", (t) => {
+test("verify(secret, eventPayload, signature) returns false for correct secret", () => {
   const signatureMatches = verify("foo", eventPayload, signature);
   expect(signatureMatches).toBe(false);
 });
 
-test("verify(secret, eventPayload, signature) returns true if eventPayload contains (#71)", (t) => {
+test("verify(secret, eventPayload, signature) returns true if eventPayload contains (#71)", () => {
   // https://github.com/octokit/webhooks.js/issues/71
   const signatureMatchesLowerCaseSequence = verify(
     "development",
