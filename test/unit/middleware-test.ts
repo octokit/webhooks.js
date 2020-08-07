@@ -7,7 +7,7 @@ const state: State = {
 };
 
 test("next() callback", () => {
-  const next = simple.spy();
+  const next = simple.spy(() => {});
 
   middleware(state, { method: "POST", url: "/foo" }, {}, next);
   expect(next.callCount).toBe(1);

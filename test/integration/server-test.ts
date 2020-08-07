@@ -1,5 +1,5 @@
 import http from "http";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import getPort from "get-port";
 import { promisify } from "util";
 import simple from "simple-mock";
@@ -18,7 +18,7 @@ test("initialised without options", (t) => {
     new Webhooks();
     t.fail("should throw error");
   } catch (error) {
-    t.pass('throws errer if no "secret" option passed');
+    t('throws errer if no "secret" option passed');
   }
 });
 
@@ -75,7 +75,7 @@ test("POST / with push event payload", (t) => {
 
     .catch(t.error)
 
-    .then((result) => {
+    .then((result: AxiosResponse) => {
       expect(result.status).toBe(200);
     })
 
@@ -126,7 +126,7 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
 
     .catch(t.error)
 
-    .then((result) => {
+    .then((result: AxiosResponse) => {
       expect(result.status).toBe(200);
     })
 
