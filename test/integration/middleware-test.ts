@@ -9,15 +9,24 @@ const headers = {
   "x-hub-signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
 };
 
+type requestMock = EventEmitter & {
+  method: "POST";
+  headers: { [key: string]: string };
+  url: string;
+};
+
 test("Invalid payload", () => {
-  const requestMock = new EventEmitter();
-  requestMock.method = "POST";
-  requestMock.headers = headers;
-  requestMock.url = "/";
-  requestMock.setEncoding = function (encoding) {};
+  const requestMock = {
+    ...new EventEmitter(),
+    method: "POST",
+    headers,
+    url: "/",
+    setEncoding: function (encoding: string) {},
+  };
 
   const responseMock = {
     end: simple.spy(),
+    statusCode: 0,
   };
 
   const middleware = createMiddleware({ secret: "mysecret" });
@@ -31,14 +40,17 @@ test("Invalid payload", () => {
 });
 
 test("request error", () => {
-  const requestMock = new EventEmitter();
-  requestMock.method = "POST";
-  requestMock.headers = headers;
-  requestMock.url = "/";
-  requestMock.setEncoding = function (encoding) {};
+  const requestMock = {
+    ...new EventEmitter(),
+    method: "POST",
+    headers,
+    url: "/",
+    setEncoding: function (encoding: string) {},
+  };
 
   const responseMock = {
     end: simple.spy(),
+    statusCode: 0,
   };
 
   const middleware = createMiddleware({ secret: "mysecret" });

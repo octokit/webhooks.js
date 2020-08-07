@@ -49,7 +49,7 @@ test("GET /", (t) => {
       server.close(t);
     })
 
-    .catch(t.error);
+    .catch((e) => expect(e instanceof Error).toBeTruthy());
 });
 
 test("POST / with push event payload", (t) => {
@@ -76,7 +76,7 @@ test("POST / with push event payload", (t) => {
       });
     })
 
-    .catch(t.error)
+    .catch((e) => expect(e instanceof Error).toBeTruthy())
 
     .then((result: AxiosResponse) => {
       expect(result.status).toBe(200);
@@ -86,7 +86,7 @@ test("POST / with push event payload", (t) => {
       server.close();
     })
 
-    .catch(t.error);
+    .catch((e) => expect(e instanceof Error).toBeTruthy());
 });
 
 // TEST
@@ -127,7 +127,7 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
       });
     })
 
-    .catch(t.error)
+    .catch((e: Error) => expect(e instanceof Error).toBe(true))
 
     .then((result: AxiosResponse) => {
       expect(result.status).toBe(200);
@@ -138,7 +138,7 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
       clearTimeout(timeout);
     })
 
-    .catch(t.error);
+    .catch((e) => expect(e instanceof Error).toBeTruthy());
 });
 
 test("POST / with push event payload (no signature)", (t) => {
@@ -146,7 +146,7 @@ test("POST / with push event payload (no signature)", (t) => {
     secret: "mysecret",
   });
   const server = http.createServer(api.middleware);
-  const errorHandler = simple.spy();
+  const errorHandler = simple.spy(undefined);
   api.on("error", errorHandler);
 
   promisify(server.listen.bind(server))(this.port)
@@ -173,7 +173,7 @@ test("POST / with push event payload (no signature)", (t) => {
       server.close(t);
     })
 
-    .catch(t.error);
+    .catch((e) => expect(e instanceof Error).toBeTruthy());
 });
 
 test("POST / with push event payload (invalid signature)", (t) => {
@@ -209,7 +209,7 @@ test("POST / with push event payload (invalid signature)", (t) => {
       server.close(t);
     })
 
-    .catch(t.error);
+    .catch((e) => expect(e instanceof Error).toBeTruthy());
 });
 
 test("POST / with hook error", (t) => {
@@ -246,7 +246,7 @@ test("POST / with hook error", (t) => {
       server.close(t);
     })
 
-    .catch(t.error);
+    .catch((e) => expect(e instanceof Error).toBeTruthy());
 });
 
 test("POST / with timeout", async (t) => {
