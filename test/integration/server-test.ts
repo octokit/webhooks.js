@@ -2,15 +2,13 @@ import http from "http";
 
 import FakeTimers from "@sinonjs/fake-timers";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import getPort from "get-port";
 import { promisify } from "util";
 import simple from "simple-mock";
 import { Webhooks } from "../../src";
 import pushEventPayload from "../fixtures/push-payload.json";
-import { OctokitError } from "../../src/types";
-
-const beforeEach = Tap.beforeEach;
+import { WebhookError } from "../../src/types";
 
 beforeEach(() => {
   return getPort().then((port) => {
@@ -43,12 +41,12 @@ test("GET /", (t) => {
       t.fail("should return a 404");
     })
 
-    .catch((error) => {
+    .catch((error: AxiosError) => {
       expect(error.response.status).toBe(404);
     })
 
     .then(() => {
-      server.close(t.end);
+      server.close(t);
     })
 
     .catch(t.error);
@@ -166,7 +164,7 @@ test("POST / with push event payload (no signature)", (t) => {
       t.fail("should return a 400");
     })
 
-    .catch((error) => {
+    .catch((error: AxiosError) => {
       expect(error.response.status).toBe(400);
     })
 
@@ -202,7 +200,7 @@ test("POST / with push event payload (invalid signature)", (t) => {
       t.fail("should return a 400");
     })
 
-    .catch((error) => {
+    .catch((error: AxiosError) => {
       expect(error.response.status).toBe(400);
     })
 
@@ -240,7 +238,7 @@ test("POST / with hook error", (t) => {
       t.fail("should return a 500");
     })
 
-    .catch((error) => {
+    .catch((error: AxiosError) => {
       expect(error.response.status).toBe(500);
     })
 
