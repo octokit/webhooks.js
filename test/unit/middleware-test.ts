@@ -16,5 +16,5 @@ test("next() callback", () => {
     next
   );
 
-  expect(next).toBeCalledTimes(1);
+  expect(next).toHaveBeenCalled();
 });
