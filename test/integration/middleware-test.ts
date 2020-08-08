@@ -43,6 +43,7 @@ test("Invalid payload", (done) => {
 
   requestMock.emit("data", Buffer.from("foo"));
   requestMock.emit("end");
+  expect.assertions(2);
 });
 
 test("request error", (done) => {
@@ -69,4 +70,5 @@ test("request error", (done) => {
 
   const error = new Error("oops");
   requestMock.emit("error", error);
+  expect.assertions(2);
 });
