@@ -2,7 +2,6 @@ import http from "http";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import getPort from "get-port";
 import { promisify } from "util";
-import simple from "simple-mock";
 import { Webhooks } from "../../src";
 import pushEventPayload from "../fixtures/push-payload.json";
 import { OctokitError } from "../../src/types";
@@ -143,7 +142,7 @@ test("POST / with push event payload (no signature)", (t) => {
     secret: "mysecret",
   });
   const server = http.createServer(api.middleware);
-  const errorHandler = simple.spy(undefined);
+  const errorHandler = jest.fn();
   api.on("error", errorHandler);
 
   promisify(server.listen.bind(server))(this.port)
@@ -166,7 +165,7 @@ test("POST / with push event payload (no signature)", (t) => {
     })
 
     .then(() => {
-      expect(errorHandler.callCount).toBe(1); // calls "error" event handler
+      expect(errorHandler).toHaveBeenCalled(); // calls "error" event handler
       server.close(t);
     })
 
@@ -178,7 +177,7 @@ test("POST / with push event payload (invalid signature)", (t) => {
     secret: "mysecret",
   });
   const server = http.createServer(api.middleware);
-  const errorHandler = simple.spy();
+  const errorHandler = jest.fn();
   api.on("error", errorHandler);
 
   promisify(server.listen.bind(server))(this.port)
@@ -202,7 +201,7 @@ test("POST / with push event payload (invalid signature)", (t) => {
     })
 
     .then(() => {
-      expect(errorHandler.callCount).toBe(1); // calls "error" event handler
+      expect(errorHandler).toHaveBeenCalled(); // calls "error" event handler
       server.close(t);
     })
 
