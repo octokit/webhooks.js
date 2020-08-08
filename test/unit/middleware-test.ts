@@ -1,4 +1,4 @@
-import simple from "simple-mock";
+import { IncomingMessage, ServerResponse } from "http";
 import { middleware } from "../../src/middleware/middleware";
 import { State } from "../../src/types";
 
@@ -7,8 +7,14 @@ const state: State = {
 };
 
 test("next() callback", () => {
-  const next = simple.spy(() => {});
+  const next = jest.fn();
 
-  middleware(state, { method: "POST", url: "/foo" }, {}, next);
-  expect(next.callCount).toBe(1);
+  middleware(
+    state,
+    { method: "POST", url: "/foo" } as IncomingMessage,
+    {} as ServerResponse,
+    next
+  );
+
+  expect(next).toBeCalledTimes(1);
 });
