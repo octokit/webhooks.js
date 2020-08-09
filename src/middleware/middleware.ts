@@ -4,11 +4,15 @@ import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
-import { State, OctokitError, WebhookEventHandlerError } from "../types";
+import { State, WebhookEventHandlerError } from "../types";
 import { EventNames } from "../generated/event-names";
-import AggregateError from "aggregate-error";
+import consoleLogLevel from "console-log-level";
 
 const debugWebhooks = debug("webhooks:receiver");
+const logWebhooks = consoleLogLevel({
+  prefix: "webhooks:receiver",
+  level: "info",
+});
 
 export function middleware(
   state: State,
@@ -27,6 +31,7 @@ export function middleware(
     }
 
     debugWebhooks(`ignored: ${request.method} ${request.url}`);
+    logWebhooks.info(`ignored: ${request.method} ${request.url}`);
     response.statusCode = 404;
     response.end("Not found");
     return;
@@ -47,6 +52,7 @@ export function middleware(
   const id = request.headers["x-github-delivery"] as string;
 
   debugWebhooks(`${eventName} event received (id: ${id})`);
+  logWebhooks.info(`${eventName} event received (id: ${id})`);
 
   return getPayload(request)
     .then((payload: any) => {
