@@ -17,9 +17,14 @@ export function verifyAndReceive(
     );
   }
 
+  const payload =
+    typeof event.payload === "string"
+      ? JSON.parse(event.payload)
+      : event.payload;
+
   return state.eventHandler.receive({
     id: event.id,
     name: event.name,
-    payload: event.payload,
+    payload,
   });
 }
