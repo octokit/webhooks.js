@@ -12,6 +12,7 @@ export function getPayload(request: IncomingMessage): Promise<any> {
   return new Promise((resolve, reject) => {
     let data = "";
 
+    request.setEncoding("utf8");
     request.on("error", (error) => reject(new AggregateError([error])));
     request.on("data", (chunk) => (data += chunk));
     request.on("end", () => {

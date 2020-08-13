@@ -15,6 +15,7 @@ test("Invalid payload", (t) => {
   requestMock.method = "POST";
   requestMock.headers = headers;
   requestMock.url = "/";
+  requestMock.setEncoding = function (encoding) {};
 
   const responseMock = {
     end: simple.spy(),
@@ -36,6 +37,7 @@ test("request error", (t) => {
   requestMock.method = "POST";
   requestMock.headers = headers;
   requestMock.url = "/";
+  requestMock.setEncoding = function (encoding) {};
 
   const responseMock = {
     end: simple.spy(),
