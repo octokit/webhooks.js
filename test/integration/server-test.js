@@ -1,4 +1,7 @@
 import http from "http";
+
+import FakeTimers from "@sinonjs/fake-timers";
+
 import axios from "axios";
 import getPort from "get-port";
 import { promisify } from "util";
@@ -248,4 +251,52 @@ test("POST / with hook error", (t) => {
     })
 
     .catch(t.error);
+});
+
+test("POST / with timeout", async (t) => {
+  t.plan(1);
+
+  const clock = FakeTimers.install({
+    toFake: ["setTimeout"],
+  });
+
+  const api = new Webhooks({
+    secret: "mysecret",
+  });
+  const server = http.createServer(api.middleware);
+  const tenSecondsInMs = 10 * 1000;
+
+  api.on("push", async (event) => {
+    await new Promise((resolve) => setTimeout(resolve, tenSecondsInMs));
+  });
+
+  promisify(server.listen.bind(server))(this.port)
+
+    .then(() => {
+      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
+        headers: {
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+        },
+      });
+    })
+
+    .catch(t.error)
+
+    .then((result) => {
+      t.is(result.status, 202);
+    })
+
+    .then(() => {
+      server.close();
+      clock.uninstall();
+    })
+
+    .catch(t.error);
+
+  await clock.nextAsync();
+  await clock.nextAsync();
+  await clock.nextAsync();
+  await clock.nextAsync();
 });
