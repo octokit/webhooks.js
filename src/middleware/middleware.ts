@@ -4,7 +4,7 @@ import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
-import { State, OctokitError, WebhookEventHandlerError } from "../types";
+import { State, WebhookError, WebhookEventHandlerError } from "../types";
 import { EventNames } from "../generated/event-names";
 import AggregateError from "aggregate-error";
 
