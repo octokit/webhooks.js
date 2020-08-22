@@ -9,6 +9,8 @@ import { Webhooks } from "../../src";
 import pushEventPayload from "../fixtures/push-payload.json";
 import { WebhookError } from "../../src/types";
 
+let port: number;
+
 beforeEach(() => {
   return getPort().then((port) => {
     globalThis.port = port;
@@ -41,7 +43,7 @@ test("GET /", (t) => {
     })
 
     .catch((error: AxiosError) => {
-      expect(error.response.status).toBe(404);
+      expect(error.response?.status).toBe(404);
     })
 
     .then(() => {
@@ -176,7 +178,7 @@ test("POST / with push event payload (no signature)", (t) => {
     })
 
     .catch((error: AxiosError) => {
-      expect(error.response.status).toBe(400);
+      expect(error.response?.status).toBe(400);
     })
 
     .then(() => {
@@ -216,7 +218,7 @@ test("POST / with push event payload (invalid signature)", (t) => {
     })
 
     .catch((error: AxiosError) => {
-      expect(error.response.status).toBe(400);
+      expect(error.response?.status).toBe(400);
     })
 
     .then(() => {
@@ -258,7 +260,7 @@ test("POST / with hook error", (t) => {
     })
 
     .catch((error: AxiosError) => {
-      expect(error.response.status).toBe(500);
+      expect(error.response?.status).toBe(500);
     })
 
     .then(() => {
@@ -302,7 +304,7 @@ test("POST / with timeout", async (t) => {
     })
 
     .catch((error: AxiosError) => {
-      expect(error.response.status).toBe(400);
+      expect(error.response?.status).toBe(400);
     })
 
     .then((result: AxiosResponse) => {
@@ -315,7 +317,7 @@ test("POST / with timeout", async (t) => {
     })
 
     .catch((error: AxiosError) => {
-      expect(error.response.status).toBe(400);
+      expect(error.response?.status).toBe(400);
     });
 
   await clock.nextAsync();
