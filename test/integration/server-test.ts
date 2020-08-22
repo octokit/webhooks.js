@@ -311,13 +311,13 @@ describe("server-test", () => {
       .catch((error: AxiosError) => {
         expect(error.response?.status).toBe(400);
       })
-      .then(() => {
-        server.close();
-        clock.uninstall();
-      })
-
       .catch((error: AxiosError) => {
         expect(error.response?.status).toBe(400);
+      })
+      .finally(() => {
+        server.close();
+        clock.uninstall();
+        t();
       });
 
     await clock.nextAsync();
