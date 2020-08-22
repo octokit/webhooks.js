@@ -22,7 +22,7 @@ describe("server-test", () => {
       new Webhooks();
       t.fail("should throw error");
     } catch (error) {
-      t('throws errer if no "secret" option passed');
+      t();
     }
   });
 
