@@ -4,7 +4,7 @@ import { wrapErrorHandler } from "../../src/event-handler/wrap-error-handler";
 test("error thrown in error handler", () => {
   expect.assertions(2);
 
-  const messages = [];
+  const messages: string[] = [];
   simple.mock(console, "log", messages.push.bind(messages));
   expect(() => {
     wrapErrorHandler(() => {
@@ -19,7 +19,7 @@ test("error thrown in error handler", () => {
 test("error handler returns rejected Error", () => {
   expect.assertions(2);
 
-  const messages = [];
+  const messages: string[] = [];
   simple.mock(console, "log", messages.push.bind(messages));
   const promise = Promise.reject(new Error("oopsydoopsy"));
   expect(() =>
