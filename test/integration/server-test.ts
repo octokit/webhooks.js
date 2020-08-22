@@ -90,7 +90,8 @@ describe("server-test", () => {
         server.close();
       })
 
-      .catch((e) => expect(e instanceof Error).toBeTruthy());
+      .catch((e) => expect(e instanceof Error).toBeTruthy())
+      .finally(t);
   });
 
   // TEST
@@ -145,7 +146,8 @@ describe("server-test", () => {
         clearTimeout(timeout);
       })
 
-      .catch((e) => expect(e instanceof Error).toBeTruthy());
+      .catch((e) => expect(e instanceof Error).toBeTruthy())
+      .finally(t);
   });
 
   test("POST / with push event payload (no signature)", (t) => {
