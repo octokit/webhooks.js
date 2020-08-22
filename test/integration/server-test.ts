@@ -101,11 +101,12 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
   const api = new Webhooks({
     secret: "mysecret",
   });
-  const dataChunks = [];
+  const dataChunks: any[] = [];
   let timeout: NodeJS.Timeout;
   const server = http.createServer((req, res) => {
     req.once("data", (chunk) => dataChunks.push(chunk));
     req.once("end", () => {
+      // @ts-ignore
       req.body = JSON.parse(Buffer.concat(dataChunks).toString());
       api.middleware(req, res);
 
