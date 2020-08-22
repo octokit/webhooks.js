@@ -11,7 +11,7 @@ import { WebhookError } from "../../src/types";
 
 beforeEach(() => {
   return getPort().then((port) => {
-    this.port = port;
+    globalThis.port = port;
   });
 });
 
@@ -30,10 +30,10 @@ test("GET /", (t) => {
   });
   const server = http.createServer(api.middleware);
 
-  promisify(server.listen.bind(server))(this.port)
+  promisify(server.listen.bind(server))(globalThis.port)
 
     .then(() => {
-      return axios.get(`http://localhost:${this.port}`);
+      return axios.get(`http://localhost:${globalThis.port}`);
     })
 
     .then(() => {
@@ -63,16 +63,20 @@ test("POST / with push event payload", (t) => {
     expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
   });
 
-  promisify(server.listen.bind(server))(this.port)
+  promisify(server.listen.bind(server))(globalThis.port)
 
     .then(() => {
-      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
-        headers: {
-          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-          "X-GitHub-Event": "push",
-          "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
-        },
-      });
+      return axios.post(
+        `http://localhost:${globalThis.port}`,
+        pushEventPayload,
+        {
+          headers: {
+            "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            "X-GitHub-Event": "push",
+            "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+          },
+        }
+      );
     })
 
     .catch((e) => expect(e instanceof Error).toBeTruthy())
@@ -114,16 +118,20 @@ test("POST / with push event payload (request.body already parsed)", (t) => {
     expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
   });
 
-  promisify(server.listen.bind(server))(this.port)
+  promisify(server.listen.bind(server))(globalThis.port)
 
     .then(() => {
-      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
-        headers: {
-          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-          "X-GitHub-Event": "push",
-          "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
-        },
-      });
+      return axios.post(
+        `http://localhost:${globalThis.port}`,
+        pushEventPayload,
+        {
+          headers: {
+            "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            "X-GitHub-Event": "push",
+            "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+          },
+        }
+      );
     })
 
     .catch((e: Error) => expect(e instanceof Error).toBe(true))
@@ -148,15 +156,19 @@ test("POST / with push event payload (no signature)", (t) => {
   const errorHandler = jest.fn();
   api.on("error", errorHandler);
 
-  promisify(server.listen.bind(server))(this.port)
+  promisify(server.listen.bind(server))(globalThis.port)
 
     .then(() => {
-      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
-        headers: {
-          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-          "X-GitHub-Event": "push",
-        },
-      });
+      return axios.post(
+        `http://localhost:${globalThis.port}`,
+        pushEventPayload,
+        {
+          headers: {
+            "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            "X-GitHub-Event": "push",
+          },
+        }
+      );
     })
 
     .then(() => {
@@ -183,16 +195,20 @@ test("POST / with push event payload (invalid signature)", (t) => {
   const errorHandler = jest.fn();
   api.on("error", errorHandler);
 
-  promisify(server.listen.bind(server))(this.port)
+  promisify(server.listen.bind(server))(globalThis.port)
 
     .then(() => {
-      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
-        headers: {
-          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-          "X-GitHub-Event": "push",
-          "X-Hub-Signature": "sha1=foo",
-        },
-      });
+      return axios.post(
+        `http://localhost:${globalThis.port}`,
+        pushEventPayload,
+        {
+          headers: {
+            "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            "X-GitHub-Event": "push",
+            "X-Hub-Signature": "sha1=foo",
+          },
+        }
+      );
     })
 
     .then(() => {
@@ -221,16 +237,20 @@ test("POST / with hook error", (t) => {
     throw new Error("Oops");
   });
 
-  promisify(server.listen.bind(server))(this.port)
+  promisify(server.listen.bind(server))(globalThis.port)
 
     .then(() => {
-      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
-        headers: {
-          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-          "X-GitHub-Event": "push",
-          "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
-        },
-      });
+      return axios.post(
+        `http://localhost:${globalThis.port}`,
+        pushEventPayload,
+        {
+          headers: {
+            "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            "X-GitHub-Event": "push",
+            "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+          },
+        }
+      );
     })
 
     .then(() => {
@@ -265,16 +285,20 @@ test("POST / with timeout", async (t) => {
     await new Promise((resolve) => setTimeout(resolve, tenSecondsInMs));
   });
 
-  promisify(server.listen.bind(server))(this.port)
+  promisify(server.listen.bind(server))(globalThis.port)
 
     .then(() => {
-      return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
-        headers: {
-          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-          "X-GitHub-Event": "push",
-          "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
-        },
-      });
+      return axios.post(
+        `http://localhost:${globalThis.port}`,
+        pushEventPayload,
+        {
+          headers: {
+            "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            "X-GitHub-Event": "push",
+            "X-Hub-Signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+          },
+        }
+      );
     })
 
     .catch((error: AxiosError) => {
