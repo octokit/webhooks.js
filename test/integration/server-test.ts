@@ -82,12 +82,10 @@ describe("server-test", () => {
         );
       })
 
-      .catch((e) => expect(e instanceof Error).toBeTruthy())
-
       .then((result: AxiosResponse) => {
         expect(result.status).toBe(200);
       })
-
+      .catch((e) => expect(e instanceof Error).toBeTruthy())
       .then(() => {
         server.close();
       })
@@ -138,13 +136,10 @@ describe("server-test", () => {
           }
         );
       })
-
-      .catch((e: Error) => expect(e instanceof Error).toBe(true))
-
       .then((result: AxiosResponse) => {
         expect(result.status).toBe(200);
       })
-
+      .catch((e: Error) => expect(e instanceof Error).toBe(true))
       .then(() => {
         server.close();
         clearTimeout(timeout);
@@ -308,14 +303,12 @@ describe("server-test", () => {
         );
       })
 
-      .catch((error: AxiosError) => {
-        expect(error.response?.status).toBe(400);
-      })
-
       .then((result: AxiosResponse) => {
         expect(result.status).toBe(202);
       })
-
+      .catch((error: AxiosError) => {
+        expect(error.response?.status).toBe(400);
+      })
       .then(() => {
         server.close();
         clock.uninstall();
