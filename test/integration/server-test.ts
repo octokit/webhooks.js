@@ -249,7 +249,7 @@ test("POST / with hook error", (t) => {
 });
 
 test("POST / with timeout", async (t) => {
-  t.plan(1);
+  expect.assertions(1);
 
   const clock = FakeTimers.install({
     toFake: ["setTimeout"],
@@ -277,10 +277,12 @@ test("POST / with timeout", async (t) => {
       });
     })
 
-    .catch(t.error)
+    .catch((error: AxiosError) => {
+      expect(error.response.status).toBe(400);
+    })
 
-    .then((result) => {
-      t.is(result.status, 202);
+    .then((result: AxiosResponse) => {
+      expect(result.status).toBe(202);
     })
 
     .then(() => {
@@ -288,7 +290,9 @@ test("POST / with timeout", async (t) => {
       clock.uninstall();
     })
 
-    .catch(t.error);
+    .catch((error: AxiosError) => {
+      expect(error.response.status).toBe(400);
+    });
 
   await clock.nextAsync();
   await clock.nextAsync();
