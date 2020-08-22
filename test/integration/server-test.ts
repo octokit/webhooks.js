@@ -7,9 +7,6 @@ import getPort from "get-port";
 import { promisify } from "util";
 import { Webhooks } from "../../src";
 import pushEventPayload from "../fixtures/push-payload.json";
-import { WebhookError } from "../../src/types";
-
-let port: number;
 
 beforeEach(() => {
   return getPort().then((port) => {
