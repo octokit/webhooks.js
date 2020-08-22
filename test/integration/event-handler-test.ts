@@ -1,11 +1,12 @@
 import { createEventHandler } from "../../src/event-handler";
 import pushEventPayload from "../fixtures/push-payload.json";
 import installationCreatedPayload from "../fixtures/installation-created-payload.json";
+import { WebhookError, WebhookEvent } from "../../src/types";
 
 test("events", (done) => {
   const eventHandler = createEventHandler({});
 
-  const hooksCalled = [];
+  const hooksCalled: string[] = [];
   function hook1() {
     return Promise.resolve().then(() => {
       hooksCalled.push("hook1");
@@ -26,7 +27,7 @@ test("events", (done) => {
   function hook6() {
     hooksCalled.push("installation.created");
   }
-  function hook7(event) {
+  function hook7(event: WebhookEvent) {
     hooksCalled.push(`* (${event.name})`);
   }
 
@@ -67,7 +68,7 @@ test("events", (done) => {
         "* (installation)",
       ]);
 
-      eventHandler.on("error", (error) => {
+      eventHandler.on("error", (error: WebhookError) => {
         expect(error.event.payload).toBeTruthy();
         // t.pass("error event triggered");
         expect(error.message).toMatch(/oops/);
@@ -109,7 +110,7 @@ test("options.transform", (done) => {
     },
   });
 
-  eventHandler.on("push", (event) => {
+  eventHandler.on("push", (event: WebhookEvent) => {
     expect(event).toBe("funky");
 
     done();
@@ -129,7 +130,7 @@ test("async options.transform", (done) => {
     },
   });
 
-  eventHandler.on("push", (event) => {
+  eventHandler.on("push", (event: WebhookEvent) => {
     expect(event).toBe("funky");
     done();
   });
