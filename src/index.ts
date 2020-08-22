@@ -4,7 +4,7 @@ import { middleware } from "./middleware/middleware";
 import { sign } from "./sign/index";
 import { verify } from "./verify/index";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
-import { Options, State, WebhookEvent } from "./types";
+import { Options, State, WebhookEvent, WebhookError } from "./types";
 import { EventNames } from "./generated/event-names";
 import { GetWebhookPayloadTypeFromEvent } from "./generated/get-webhook-payload-type-from-event";
 import { IncomingMessage, ServerResponse } from "http";
@@ -71,6 +71,7 @@ export {
   createWebhooksApi,
   Webhooks,
   WebhookEvent,
+  WebhookError,
   sign,
   verify,
 };

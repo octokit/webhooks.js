@@ -4,7 +4,7 @@ import { wrapErrorHandler } from "./wrap-error-handler";
 import {
   WebhookEvent,
   State,
-  OctokitError,
+  WebhookError,
   WebhookEventHandlerError,
 } from "../types";
 import { EventNames } from "../generated/event-names";
@@ -60,7 +60,7 @@ export function receiverHandle(state: State, event: WebhookEvent) {
     return Promise.resolve();
   }
 
-  const errors: OctokitError[] = [];
+  const errors: WebhookError[] = [];
   const promises = hooks.map((handler: Function) => {
     let promise = Promise.resolve(event);
 

@@ -24,6 +24,7 @@ test("Invalid payload", (done) => {
     method: RequestMethodType.POST,
     headers,
     url: "/",
+    setEncoding: function (encoding) { }
   });
 
   const responseMock = {
@@ -50,6 +51,7 @@ test("request error", (done) => {
     method: RequestMethodType.POST,
     headers,
     url: "/",
+    setEncoding: function (encoding) { }
   });
 
   const responseMock = {

@@ -8,6 +8,7 @@ import {
   EventNames,
   EventPayloads,
   WebhookEvent,
+  WebhookError,
 } from "../src/index";
 import { createServer } from "http";
 
@@ -124,4 +125,10 @@ export default async function () {
   });
 
   createServer(webhooks.middleware).listen(3000);
+}
+
+export function webhookErrorTest(error: WebhookError) {
+  const { event, request } = error;
+  console.log(event);
+  console.log(request);
 }
