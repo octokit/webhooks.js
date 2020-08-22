@@ -41,16 +41,10 @@ describe("server-test", () => {
       .then(() => {
         t.fail("should return a 404");
       })
-
       .catch((error: AxiosError) => {
         expect(error.response?.status).toBe(404);
       })
-
-      .then(() => {
-        server.close(t);
-      })
-
-      .catch((e) => expect(e instanceof Error).toBeTruthy());
+      .finally(() => server.close(t));
   });
 
   test("POST / with push event payload", (t) => {
@@ -86,12 +80,7 @@ describe("server-test", () => {
         expect(result.status).toBe(200);
       })
       .catch((e) => expect(e instanceof Error).toBeTruthy())
-      .then(() => {
-        server.close();
-      })
-
-      .catch((e) => expect(e instanceof Error).toBeTruthy())
-      .finally(t);
+      .finally(() => server.close(t));
   });
 
   // TEST
@@ -140,14 +129,11 @@ describe("server-test", () => {
       .then((result: AxiosResponse) => {
         expect(result.status).toBe(200);
       })
-      .catch((e: Error) => expect(e instanceof Error).toBe(true))
-      .then(() => {
-        server.close();
+      .catch((e: Error) => expect(e).toBeInstanceOf(Error))
+      .finally(() => {
         clearTimeout(timeout);
-      })
-
-      .catch((e) => expect(e instanceof Error).toBeTruthy())
-      .finally(t);
+        server.close(t);
+      });
   });
 
   test("POST / with push event payload (no signature)", (t) => {
@@ -176,17 +162,13 @@ describe("server-test", () => {
       .then(() => {
         t.fail("should return a 400");
       })
-
       .catch((error: AxiosError) => {
         expect(error.response?.status).toBe(400);
       })
-
-      .then(() => {
+      .finally(() => {
         expect(errorHandler).toHaveBeenCalled(); // calls "error" event handler
         server.close(t);
-      })
-
-      .catch((e) => expect(e instanceof Error).toBeTruthy());
+      });
   });
 
   test("POST / with push event payload (invalid signature)", (t) => {
@@ -216,17 +198,13 @@ describe("server-test", () => {
       .then(() => {
         t.fail("should return a 400");
       })
-
       .catch((error: AxiosError) => {
         expect(error.response?.status).toBe(400);
       })
-
-      .then(() => {
+      .finally(() => {
         expect(errorHandler).toHaveBeenCalled(); // calls "error" event handler
         server.close(t);
-      })
-
-      .catch((e) => expect(e instanceof Error).toBeTruthy());
+      });
   });
 
   test("POST / with hook error", (t) => {
@@ -259,16 +237,12 @@ describe("server-test", () => {
       .then(() => {
         t.fail("should return a 500");
       })
-
       .catch((error: AxiosError) => {
         expect(error.response?.status).toBe(500);
       })
-
-      .then(() => {
+      .finally(() => {
         server.close(t);
-      })
-
-      .catch((e) => expect(e instanceof Error).toBeTruthy());
+      });
   });
 
   test("POST / with timeout", async (t) => {
@@ -307,9 +281,6 @@ describe("server-test", () => {
 
       .then((result: AxiosResponse) => {
         expect(result.status).toBe(202);
-      })
-      .catch((error: AxiosError) => {
-        expect(error.response?.status).toBe(400);
       })
       .catch((error: AxiosError) => {
         expect(error.response?.status).toBe(400);
