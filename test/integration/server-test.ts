@@ -42,7 +42,7 @@ describe("server-test", () => {
         t.fail("should return a 404");
       })
       .catch((error: AxiosError) => {
-        expect(error.response?.status).toBe(404);
+        error.response && expect(error.response.status).toBe(404);
       })
       .finally(() => server.close(t));
   });
@@ -163,7 +163,7 @@ describe("server-test", () => {
         t.fail("should return a 400");
       })
       .catch((error: AxiosError) => {
-        expect(error.response?.status).toBe(400);
+        error.response && expect(error.response.status).toBe(400);
       })
       .finally(() => {
         expect(errorHandler).toHaveBeenCalled(); // calls "error" event handler
@@ -199,7 +199,7 @@ describe("server-test", () => {
         t.fail("should return a 400");
       })
       .catch((error: AxiosError) => {
-        expect(error.response?.status).toBe(400);
+        error.response && expect(error.response.status).toBe(400);
       })
       .finally(() => {
         expect(errorHandler).toHaveBeenCalled(); // calls "error" event handler
@@ -238,7 +238,7 @@ describe("server-test", () => {
         t.fail("should return a 500");
       })
       .catch((error: AxiosError) => {
-        expect(error.response?.status).toBe(500);
+        error.response && expect(error.response.status).toBe(500);
       })
       .finally(() => {
         server.close(t);
@@ -283,7 +283,7 @@ describe("server-test", () => {
         expect(result.status).toBe(202);
       })
       .catch((error: AxiosError) => {
-        expect(error.response?.status).toBe(400);
+        error.response && expect(error.response.status).toBe(400);
       })
       .finally(() => {
         server.close();
