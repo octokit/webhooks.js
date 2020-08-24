@@ -1,6 +1,6 @@
 import { createHmac } from "crypto";
 
-export function sign(secret: string, payload: string | object): string {
+export function sign(secret?: string, payload?: string | object): string {
   // @ts-ignore throw friendly error message when required options are missing
   if (!secret || !payload) {
     throw new TypeError("secret & payload required");
