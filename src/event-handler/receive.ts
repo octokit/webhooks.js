@@ -33,10 +33,13 @@ export function receiverHandle(state: State, event: WebhookEvent) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {
-    const error = Object.assign(new AggregateError([event]), {
-      event,
-      errors: [event],
-    });
+    const error = Object.assign(
+      new AggregateError([event]) as WebhookEventHandlerError,
+      {
+        event,
+        errors: [event],
+      }
+    );
 
     errorHandlers.forEach((handler) => wrapErrorHandler(handler, error));
     return Promise.reject(error);
