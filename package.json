@@ -46,7 +46,7 @@
     "update-known-events": "node scripts/update-known-events.js",
     "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
     "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
-    "pretest": "npm run -s lint && npm run build -s",
+    "pretest": "npm run -s lint",
     "test": "jest --coverage",
     "generate-types": "node scripts/generate-types.js",
     "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 --esModuleInterop --moduleResolution node test/typescript-validate.ts"
