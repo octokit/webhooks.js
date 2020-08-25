@@ -11,10 +11,12 @@ test("sign() without options throws", () => {
 });
 
 test("sign(undefined, eventPayload) without secret throws", () => {
+  // @ts-ignore
   expect(() => sign.bind(null, undefined, eventPayload)()).toThrow();
 });
 
 test("sign(secret) without eventPayload throws", () => {
+  // @ts-ignore
   expect(() => sign.bind(null, secret)()).toThrow();
 });
 
