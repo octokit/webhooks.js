@@ -1,7 +1,5 @@
 import http from "http";
 
-import FakeTimers from "@sinonjs/fake-timers";
-
 import axios, { AxiosError, AxiosResponse } from "axios";
 import getPort from "get-port";
 import { promisify } from "util";
@@ -12,6 +10,8 @@ describe("server-test", () => {
   let availablePort: number;
 
   beforeEach(() => {
+    jest.useFakeTimers();
+
     return getPort().then((port) => {
       availablePort = port;
     });
@@ -246,11 +246,7 @@ describe("server-test", () => {
   });
 
   test("POST / with timeout", async (t) => {
-    expect.assertions(1);
-
-    const clock = FakeTimers.install({
-      toFake: ["setTimeout"],
-    });
+    expect.assertions(2);
 
     const api = new Webhooks({
       secret: "mysecret",
@@ -258,8 +254,11 @@ describe("server-test", () => {
     const server = http.createServer(api.middleware);
     const tenSecondsInMs = 10 * 1000;
 
-    api.on("push", async (event) => {
-      await new Promise((resolve) => setTimeout(resolve, tenSecondsInMs));
+    api.on("push", async () => {
+      await new Promise((resolve) => {
+        jest.runAllTimers();
+        setTimeout(resolve, tenSecondsInMs);
+      });
     });
 
     promisify(server.listen.bind(server))(availablePort)
@@ -280,6 +279,7 @@ describe("server-test", () => {
       })
 
       .then((result: AxiosResponse) => {
+        expect(setTimeout).toHaveBeenCalled();
         expect(result.status).toBe(202);
       })
       .catch((error: AxiosError) => {
@@ -287,13 +287,9 @@ describe("server-test", () => {
       })
       .finally(() => {
         server.close();
-        clock.uninstall();
         t();
       });
-
-    await clock.nextAsync();
-    await clock.nextAsync();
-    await clock.nextAsync();
-    await clock.nextAsync();
   });
+
+  afterEach(() => jest.clearAllTimers());
 });
