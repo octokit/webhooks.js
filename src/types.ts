@@ -1,4 +1,4 @@
-import type AggregateError from "aggregate-error";
+import AggregateError = require("aggregate-error");
 import type { RequestError } from "@octokit/request-error";
 
 import type { EventNames } from "./generated/event-names";
