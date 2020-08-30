@@ -2085,7 +2085,7 @@ export declare module EventPayloads {
     mergeable: null | boolean;
     rebaseable: null | boolean;
     mergeable_state: string;
-    merged_by: null;
+    merged_by?: { login: string };
     comments: number;
     review_comments: number;
     maintainer_can_modify: boolean;
