@@ -3,7 +3,7 @@ import { receiverHandle as receive } from "./receive";
 import { removeListener } from "./remove-listener";
 import { Options, State } from "../types";
 
-export function createEventHandler(options: Options<any>) {
+export function createEventHandler(options: Options) {
   const state: State = {
     hooks: {},
   };

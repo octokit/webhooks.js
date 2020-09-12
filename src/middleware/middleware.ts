@@ -4,9 +4,8 @@ import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
-import { State, WebhookError, WebhookEventHandlerError } from "../types";
-import { EventNames } from "../generated/event-names";
-import AggregateError from "aggregate-error";
+import { State, WebhookEventHandlerError } from "../types";
+import { All } from "../generated/get-webhook-payload-type-from-event";
 
 const debugWebhooks = debug("webhooks:receiver");
 
@@ -42,7 +41,7 @@ export function middleware(
     });
   }
 
-  const eventName = request.headers["x-github-event"] as EventNames.StringNames;
+  const eventName = request.headers["x-github-event"] as All;
   const signature = request.headers["x-hub-signature"] as string;
   const id = request.headers["x-github-delivery"] as string;
 

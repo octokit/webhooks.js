@@ -5,24 +5,22 @@ import { sign } from "./sign/index";
 import { verify } from "./verify/index";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
 import { Options, State, WebhookEvent, WebhookError } from "./types";
-import { EventNames } from "./generated/event-names";
-import { GetWebhookPayloadTypeFromEvent } from "./generated/get-webhook-payload-type-from-event";
+import {
+  All,
+  GetWebhookPayloadTypeFromEvent,
+} from "./generated/get-webhook-payload-type-from-event";
 import { IncomingMessage, ServerResponse } from "http";
 
-class Webhooks<T extends WebhookEvent = WebhookEvent> {
+class Webhooks {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload?: object, signature?: string) => boolean;
-  public on: <E extends EventNames.All>(
+  public on: <E extends All>(
     event: E | E[],
-    callback: (
-      event: GetWebhookPayloadTypeFromEvent<E, T>
-    ) => Promise<void> | void
+    callback: (event: GetWebhookPayloadTypeFromEvent<E>) => Promise<void> | void
   ) => void;
-  public removeListener: <E extends EventNames.All>(
+  public removeListener: <E extends All>(
     event: E | E[],
-    callback: (
-      event: GetWebhookPayloadTypeFromEvent<E, T>
-    ) => Promise<void> | void
+    callback: (event: GetWebhookPayloadTypeFromEvent<E>) => Promise<void> | void
   ) => void;
   public receive: (options: {
     id: string;
@@ -38,7 +36,7 @@ class Webhooks<T extends WebhookEvent = WebhookEvent> {
     options: WebhookEvent & { signature: string }
   ) => Promise<void>;
 
-  constructor(options?: Options<T>) {
+  constructor(options?: Options) {
     if (!options || !options.secret) {
       throw new Error("options.secret required");
     }
@@ -62,7 +60,6 @@ class Webhooks<T extends WebhookEvent = WebhookEvent> {
 
 const createWebhooksApi = Webhooks.prototype.constructor;
 
-export { EventNames } from "./generated/event-names";
 export { EventPayloads } from "./generated/event-payloads";
 
 export {

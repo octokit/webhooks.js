@@ -1,29 +1,26 @@
 import type AggregateError from "aggregate-error";
 import type { RequestError } from "@octokit/request-error";
-
-import type { EventNames } from "./generated/event-names";
+import { All } from "./generated/get-webhook-payload-type-from-event";
 
 export interface WebhookEvent<T = any> {
   id: string;
-  name: EventNames.StringNames;
+  name: All;
   payload: T;
 }
 
-export interface Options<T extends WebhookEvent> {
+export interface Options {
   path?: string;
   secret?: string;
-  transform?: TransformMethod<T>;
+  transform?: TransformMethod;
 }
 
-type TransformMethod<T extends WebhookEvent> = (
-  event: WebhookEvent
-) => T | PromiseLike<T>;
+type TransformMethod = (event: WebhookEvent) => any | PromiseLike<any>;
 
 type Hooks = {
   [key: string]: Function[];
 };
 
-export interface State extends Options<any> {
+export interface State extends Options {
   eventHandler?: any;
   hooks: Hooks;
 }
