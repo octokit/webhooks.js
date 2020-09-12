@@ -8,19 +8,21 @@ export interface WebhookEvent<T = any> {
   payload: T;
 }
 
-export interface Options {
+export interface Options<T extends WebhookEvent> {
   path?: string;
   secret?: string;
-  transform?: TransformMethod;
+  transform?: TransformMethod<T>;
 }
 
-type TransformMethod = (event: WebhookEvent) => any | PromiseLike<any>;
+type TransformMethod<T extends WebhookEvent> = (
+  event: WebhookEvent
+) => T | PromiseLike<T>;
 
 type Hooks = {
   [key: string]: Function[];
 };
 
-export interface State extends Options {
+export interface State extends Options<any> {
   eventHandler?: any;
   hooks: Hooks;
 }

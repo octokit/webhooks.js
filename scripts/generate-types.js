@@ -48,13 +48,13 @@ webhooks.forEach(({ name, actions, examples }) => {
 
 const getWebhookPayloadTypeFromEvent = `
 import { ${eventPayloadsVariable} } from "./event-payloads";
-import { WebhookEventHandlerError } from "../types";
+import { WebhookEvent, WebhookEventHandlerError } from "../types";
 export interface EventTypesPayload {
   ${eventPayloadMapping.map(([name, type]) => `"${name}": ${type}`).join(`,\n`)}
 }
 export type All = keyof EventTypesPayload;
 
-export type GetWebhookPayloadTypeFromEvent<E extends All> = EventTypesPayload[E];
+export type GetWebhookPayloadTypeFromEvent<E extends All, T = WebhookEvent> = EventTypesPayload[E] & T;
 `;
 
 generateFile(

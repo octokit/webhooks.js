@@ -1,5 +1,5 @@
 import { EventPayloads } from "./event-payloads";
-import { WebhookEventHandlerError } from "../types";
+import { WebhookEvent, WebhookEventHandlerError } from "../types";
 export interface EventTypesPayload {
   error: WebhookEventHandlerError;
   "*": any;
@@ -197,5 +197,6 @@ export interface EventTypesPayload {
 export type All = keyof EventTypesPayload;
 
 export type GetWebhookPayloadTypeFromEvent<
-  E extends All
-> = EventTypesPayload[E];
+  E extends All,
+  T = WebhookEvent
+> = EventTypesPayload[E] & T;
