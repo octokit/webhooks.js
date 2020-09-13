@@ -198,5 +198,5 @@ export type All = keyof EventTypesPayload;
 
 export type GetWebhookPayloadTypeFromEvent<
   E extends All,
-  T = WebhookEvent
-> = EventTypesPayload[E] & T;
+  T = {}
+> = WebhookEvent<EventTypesPayload[E]> & T;

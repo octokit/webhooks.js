@@ -1,10 +1,10 @@
 import { verify } from "../verify/index";
 import { State, WebhookEvent } from "../types";
 
-export function verifyAndReceive(
+export function verifyAndReceive<T>(
   state: State,
-  event: WebhookEvent & { signature: string }
-): any {
+  event: WebhookEvent<T> & { signature: string }
+) {
   const matchesSignature = verify(state.secret, event.payload, event.signature);
 
   if (!matchesSignature) {

@@ -12,9 +12,9 @@ import { All } from "../generated/get-webhook-payload-type-from-event";
 function getHooks(
   state: State,
   eventPayloadAction: string,
-  eventName: All
+  eventName: All | All[]
 ): Function[] {
-  const hooks = [state.hooks[`${eventName}.${eventPayloadAction}`]];
+  const hooks = [state.hooks[`${eventName}.${eventPayloadAction}` as All]];
 
   if (Array.isArray(eventName)) {
     eventName.forEach((name) => hooks.push(state.hooks[name]));
@@ -29,7 +29,7 @@ function getHooks(
 }
 
 // main handler function
-export function receiverHandle(state: State, event: WebhookEvent) {
+export function receiverHandle<T>(state: State, event: WebhookEvent<T>) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {

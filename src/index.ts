@@ -11,7 +11,7 @@ import {
 } from "./generated/get-webhook-payload-type-from-event";
 import { IncomingMessage, ServerResponse } from "http";
 
-class Webhooks<T extends WebhookEvent = WebhookEvent> {
+class Webhooks<T> {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload?: object, signature?: string) => boolean;
   public on: <E extends All>(
@@ -37,10 +37,10 @@ class Webhooks<T extends WebhookEvent = WebhookEvent> {
     next?: (err?: any) => void
   ) => void | Promise<void>;
   public verifyAndReceive: (
-    options: WebhookEvent & { signature: string }
+    options: WebhookEvent<T> & { signature: string }
   ) => Promise<void>;
 
-  constructor(options?: Options<T>) {
+  constructor(options?: Options) {
     if (!options || !options.secret) {
       throw new Error("options.secret required");
     }

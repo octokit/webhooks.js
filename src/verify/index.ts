@@ -4,7 +4,7 @@ import { sign } from "../sign/index";
 
 export function verify(
   secret?: string,
-  eventPayload?: object,
+  eventPayload?: any,
   signature?: string
 ): boolean {
   if (!secret || !eventPayload || !signature) {

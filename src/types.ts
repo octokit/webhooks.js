@@ -1,28 +1,31 @@
 import type AggregateError from "aggregate-error";
 import type { RequestError } from "@octokit/request-error";
-import { All } from "./generated/get-webhook-payload-type-from-event";
+import {
+  All,
+  GetWebhookPayloadTypeFromEvent,
+} from "./generated/get-webhook-payload-type-from-event";
 
-export interface WebhookEvent<T = any> {
+export interface WebhookEvent<T> {
   id: string;
   name: All;
   payload: T;
 }
 
-export interface Options<T extends WebhookEvent> {
+export interface Options {
   path?: string;
   secret?: string;
-  transform?: TransformMethod<T>;
+  transform?: (
+    value: WebhookEvent<any>
+  ) => WebhookEvent<any> | PromiseLike<WebhookEvent<any>>;
 }
 
-type TransformMethod<T extends WebhookEvent> = (
-  event: WebhookEvent
-) => T | PromiseLike<T>;
+type Hooks<E extends All = any, T = {}> = Partial<
+  {
+    [key in All]: ((e: GetWebhookPayloadTypeFromEvent<E, T>) => any)[];
+  }
+>;
 
-type Hooks = {
-  [key: string]: Function[];
-};
-
-export interface State extends Options<any> {
+export interface State extends Options {
   eventHandler?: any;
   hooks: Hooks;
 }
@@ -35,11 +38,11 @@ export type WebhookError = Error &
     /**
      * @deprecated `error.event` is deprecated. Use the `.event` property on the aggregated error instance
      */
-    event: WebhookEvent;
+    event: WebhookEvent<any>;
   };
 
 export interface WebhookEventHandlerError extends AggregateError<WebhookError> {
-  event: WebhookEvent;
+  event: WebhookEvent<any>;
 
   /**
    * @deprecated `error.errors` is deprecated. Use `Array.from(error)`. See https://npm.im/aggregate-error

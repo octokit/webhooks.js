@@ -27,7 +27,7 @@ test("events", (done) => {
   function hook6() {
     hooksCalled.push("installation.created");
   }
-  function hook7(event: WebhookEvent) {
+  function hook7(event: WebhookEvent<T>) {
     hooksCalled.push(`* (${event.name})`);
   }
 
@@ -110,7 +110,7 @@ test("options.transform", (done) => {
     },
   });
 
-  eventHandler.on("push", (event: WebhookEvent) => {
+  eventHandler.on("push", (event) => {
     expect(event).toBe("funky");
 
     done();
@@ -130,7 +130,7 @@ test("async options.transform", (done) => {
     },
   });
 
-  eventHandler.on("push", (event: WebhookEvent) => {
+  eventHandler.on("push", (event) => {
     expect(event).toBe("funky");
     done();
   });

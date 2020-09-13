@@ -75,7 +75,9 @@ export default async function () {
     webhooks.verify(payload, sig);
   });
 
-  webhooks.on("check_run.completed", (asd) => {});
+  webhooks.on("check_run.completed", (asd) => {
+    asd
+  });
 
   webhooks.on(
     ["check_run.completed", "commit_comment", "label"],

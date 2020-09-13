@@ -1,11 +1,14 @@
-import { All } from "../generated/get-webhook-payload-type-from-event";
+import {
+  All,
+  GetWebhookPayloadTypeFromEvent,
+} from "../generated/get-webhook-payload-type-from-event";
 import { webhookNames } from "../generated/webhook-names";
 import { State } from "../types";
 
-export function receiverOn(
+export function receiverOn<E extends All, T = {}>(
   state: State,
   webhookNameOrNames: All | All[],
-  handler: Function
+  handler: (e: GetWebhookPayloadTypeFromEvent<E, T>) => any
 ) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>
@@ -24,5 +27,5 @@ export function receiverOn(
     state.hooks[webhookNameOrNames] = [];
   }
 
-  state.hooks[webhookNameOrNames].push(handler);
+  state.hooks[webhookNameOrNames]!.push(handler);
 }
