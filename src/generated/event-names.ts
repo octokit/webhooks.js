@@ -17,6 +17,15 @@ export declare module EventNames {
     | "check_suite.requested"
     | "check_suite.rerequested";
 
+  type CodeScanningAlertEvent =
+    | "code_scanning_alert"
+    | "code_scanning_alert.appeared_in_branch"
+    | "code_scanning_alert.closed_by_user"
+    | "code_scanning_alert.created"
+    | "code_scanning_alert.fixed"
+    | "code_scanning_alert.reopened"
+    | "code_scanning_alert.reopened_by_user";
+
   type CommitCommentEvent = "commit_comment" | "commit_comment.created";
 
   type ContentReferenceEvent =
@@ -267,6 +276,7 @@ export declare module EventNames {
   type StringNames =
     | "check_run"
     | "check_suite"
+    | "code_scanning_alert"
     | "commit_comment"
     | "content_reference"
     | "create"
@@ -320,6 +330,7 @@ export declare module EventNames {
     | WildcardEvent
     | CheckRunEvent
     | CheckSuiteEvent
+    | CodeScanningAlertEvent
     | CommitCommentEvent
     | ContentReferenceEvent
     | CreateEvent

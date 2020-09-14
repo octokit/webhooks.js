@@ -13,6 +13,8 @@ export type GetWebhookPayloadTypeFromEvent<
   ? WebhookEvent<EventPayloads.WebhookPayloadCheckRun> & T
   : E extends EventNames.CheckSuiteEvent
   ? WebhookEvent<EventPayloads.WebhookPayloadCheckSuite> & T
+  : E extends EventNames.CodeScanningAlertEvent
+  ? WebhookEvent<EventPayloads.WebhookPayloadCodeScanningAlert> & T
   : E extends EventNames.CommitCommentEvent
   ? WebhookEvent<EventPayloads.WebhookPayloadCommitComment> & T
   : E extends EventNames.ContentReferenceEvent
