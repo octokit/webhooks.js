@@ -4117,6 +4117,56 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadCommitCommentSender;
   };
+  type WebhookPayloadCodeScanningAlertOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
+  type WebhookPayloadCodeScanningAlertAlertTool = {
+    name: string;
+    version: null;
+  };
+  type WebhookPayloadCodeScanningAlertAlertRule = {
+    id: string;
+    severity: string;
+    description: string;
+  };
+  type WebhookPayloadCodeScanningAlertAlertInstancesItem = {
+    ref: string;
+    analysis_key: string;
+    environment: string;
+    state: string;
+  };
+  type WebhookPayloadCodeScanningAlertAlert = {
+    number: number;
+    created_at: string;
+    url: string;
+    html_url: string;
+    instances: Array<WebhookPayloadCodeScanningAlertAlertInstancesItem>;
+    state: string;
+    dismissed_by: null;
+    dismissed_at: null;
+    dismissed_reason: null;
+    rule: WebhookPayloadCodeScanningAlertAlertRule;
+    tool: WebhookPayloadCodeScanningAlertAlertTool;
+  };
+  type WebhookPayloadCodeScanningAlert = {
+    action: string;
+    alert: WebhookPayloadCodeScanningAlertAlert;
+    ref: string;
+    commit_oid: string;
+    repository: PayloadRepository;
+    organization: WebhookPayloadCodeScanningAlertOrganization;
+  };
   type WebhookPayloadCheckSuiteInstallation = { id: number; node_id: string };
   type WebhookPayloadCheckSuiteSender = {
     login: string;
