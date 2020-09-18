@@ -77,6 +77,13 @@
         "functions": 100,
         "lines": 100
       }
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": {
+          "esModuleInterop": true
+        }
+      }
     }
   },
   "release": {
