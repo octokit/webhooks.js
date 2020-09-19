@@ -6,7 +6,6 @@ import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
 import { State, WebhookError, WebhookEventHandlerError } from "../types";
 import { EventNames } from "../generated/event-names";
-import AggregateError from "aggregate-error";
 
 const debugWebhooks = debug("webhooks:receiver");
 
