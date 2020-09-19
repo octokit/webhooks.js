@@ -47,6 +47,13 @@ export interface WebhookEventHandlerError extends AggregateError<WebhookError> {
   errors: WebhookError[];
 }
 
+/**
+ * Workaround for TypeScript incompatibility with types exported by aggregate-error.
+ * Credit: https://git.io/JUEEr
+ * @copyright Sindre Sorhus
+ * @license MIT (https://git.io/JUEEK)
+ * @see https://github.com/octokit/webhooks.js/pull/270/files
+ */
 declare class AggregateError<T extends Error = Error>
   extends Error
   implements Iterable<T> {
