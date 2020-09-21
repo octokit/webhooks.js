@@ -19,9 +19,11 @@ export interface Options {
   ) => WebhookEvent<any> | PromiseLike<WebhookEvent<any>>;
 }
 
-type Hooks<E extends All = any, T = {}> = Partial<
+type Hooks<E extends All = All, T = {}> = Partial<
   {
-    [key in All]: ((e: GetWebhookPayloadTypeFromEvent<E, T>) => any)[];
+    [key in All]: ((
+      e: GetWebhookPayloadTypeFromEvent<E, T>
+    ) => Promise<void> | void)[];
   }
 >;
 

@@ -8,7 +8,7 @@ import { State } from "../types";
 export function receiverOn<E extends All, T = {}>(
   state: State,
   webhookNameOrNames: All | All[],
-  handler: (e: GetWebhookPayloadTypeFromEvent<E, T>) => any
+  handler: (e: GetWebhookPayloadTypeFromEvent<E, T>) => Promise<void> | void
 ) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>

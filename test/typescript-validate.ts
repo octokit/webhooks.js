@@ -76,7 +76,7 @@ export default async function () {
   });
 
   webhooks.on("check_run.completed", (asd) => {
-    asd
+    
   });
 
   webhooks.on(
