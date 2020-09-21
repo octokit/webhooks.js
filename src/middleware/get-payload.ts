@@ -1,9 +1,7 @@
 import AggregateError from "aggregate-error";
 
 import { IncomingMessage } from "http";
-import { EventTypesPayload } from "../generated/get-webhook-payload-type-from-event";
-
-type AllPayloadTypes = EventTypesPayload[keyof Omit<EventTypesPayload, "*">];
+import { AllPayloadTypes } from "../generated/get-webhook-payload-type-from-event";
 
 export function getPayload(request: IncomingMessage): Promise<AllPayloadTypes> {
   // If request.body already exists we can stop here

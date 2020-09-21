@@ -3,6 +3,7 @@ import type { RequestError } from "@octokit/request-error";
 import {
   All,
   GetWebhookPayloadTypeFromEvent,
+  AllPayloadTypes,
 } from "./generated/get-webhook-payload-type-from-event";
 
 export interface WebhookEvent<T> {
@@ -14,11 +15,10 @@ export interface WebhookEvent<T> {
 export interface Options {
   path?: string;
   secret?: string;
-  transform?: (
-    value: WebhookEvent<any>
-  ) => WebhookEvent<any> | PromiseLike<WebhookEvent<any>>;
+  transform?: Transform;
 }
 
+type Transform<T = {}> = (value: AllPayloadTypes) => T;
 type Hooks<E extends All = All, T = {}> = Partial<
   {
     [key in All]: ((

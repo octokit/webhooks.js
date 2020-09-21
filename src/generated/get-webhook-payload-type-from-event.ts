@@ -196,7 +196,11 @@ export interface EventTypesPayload {
 }
 export type All = keyof EventTypesPayload;
 
-export type GetWebhookPayloadTypeFromEvent<
-  E extends All,
-  T = {}
-> = WebhookEvent<EventTypesPayload[E]> & T;
+export type GetWebhookPayloadTypeFromEvent<E extends All, T> = WebhookEvent<
+  EventTypesPayload[E]
+> &
+  T;
+export type AllPayloadTypes = EventTypesPayload[keyof Omit<
+  EventTypesPayload,
+  "*"
+>];
