@@ -1,9 +1,13 @@
 import { verify } from "../verify/index";
-import { State, WebhookEvent } from "../types";
+import { State } from "../types";
+import {
+  All,
+  EventTypesPayload,
+} from "../generated/get-webhook-payload-type-from-event";
 
-export function verifyAndReceive<T>(
-  state: State,
-  event: WebhookEvent<T> & { signature: string }
+export function verifyAndReceive<T extends All>(
+  state: State<T>,
+  event: EventTypesPayload[T] & { signature: string }
 ) {
   const matchesSignature = verify(state.secret, event.payload, event.signature);
 

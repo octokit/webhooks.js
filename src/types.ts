@@ -28,15 +28,21 @@ export type Handler<T extends All> = (
   arg: ReturnType<Transform<T>>
 ) => Promise<void> | void;
 
-type Hooks<T extends All> = Partial<Record<All, Handler<T>[]>>;
+type Hooks<T extends All> = { [key in All]: Handler<T>[] };
 
-type EventHandler = {
-  on: typeof receiverOn;
-  removeListener: typeof removeListener;
-  receive: typeof receiverHandle;
+type ReceiverEvent = Parameters<typeof receiverOn>;
+type EventHandler<T extends All> = {
+  on: (event: ReceiverEvent) => ReturnType<typeof receiverOn>;
+  removeListener: (
+    webhookNameOrNames: All | All[],
+    handler: Handler<T>
+  ) => ReturnType<typeof removeListener>;
+  receive: (
+    event: WebhookEvent<EventTypesPayload[T]>
+  ) => ReturnType<typeof receiverHandle>;
 };
 export interface State<T extends All> extends Options<T> {
-  eventHandler?: EventHandler;
+  eventHandler: EventHandler<T>;
   hooks: Hooks<T>;
 }
 

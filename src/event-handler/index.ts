@@ -8,6 +8,7 @@ const identity = <T>(arg: T) => arg;
 
 export function createEventHandler<T extends All>(options: Options<T>) {
   const state: State<T> = {
+    // @ts-ignore
     hooks: {},
     transform: options.transform || identity,
   };

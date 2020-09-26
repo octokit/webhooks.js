@@ -2,7 +2,7 @@ import { createEventHandler } from "../event-handler/index";
 import { middleware } from "./middleware";
 import { Options, State } from "../types";
 import { All } from "../generated/get-webhook-payload-type-from-event";
-// fixme this returns any :/
+
 export function createMiddleware<T extends All>(options: Options<T>) {
   if (!options || !options.secret) {
     throw new Error("options.secret required");

@@ -8,7 +8,10 @@ import {
   WebhookError,
   WebhookEventHandlerError,
 } from "../types";
-import { All } from "../generated/get-webhook-payload-type-from-event";
+import {
+  All,
+  EventTypesPayload,
+} from "../generated/get-webhook-payload-type-from-event";
 
 function getHooks<T extends All>(
   state: State<T>,
@@ -31,7 +34,7 @@ function getHooks<T extends All>(
 // main handler function
 export function receiverHandle<T extends All>(
   state: State<T>,
-  event: WebhookEvent<T>
+  event: WebhookEvent<EventTypesPayload[T]>
 ) {
   const errorHandlers = state.hooks.error || [];
 
