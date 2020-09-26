@@ -13,15 +13,14 @@ import { All } from "../generated/get-webhook-payload-type-from-event";
 function getHooks(
   state: State,
   eventPayloadAction: string,
-  eventName: All | All[]
+  eventName: All
 ): Function[] {
   const hooks = [state.hooks[`${eventName}.${eventPayloadAction}` as All]];
 
-  if (Array.isArray(eventName)) {
-    eventName.forEach((name) => hooks.push(state.hooks[name]));
-  } else {
-    hooks.push(state.hooks[eventName]);
-  }
+  // removed array handling as eventName is not an array
+  // is it okay?
+  // cc: @gr2m / @oscarDOM
+  hooks.push(state.hooks[eventName]);
 
   hooks.push(state.hooks["*"]);
 

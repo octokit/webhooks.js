@@ -17,7 +17,7 @@ export interface Options {
   transform?: Transform;
 }
 
-type Transform<T = {}> = (value: WebhookEvent<AllPayloadTypes>) => T;
+type Transform<T = any> = (value: WebhookEvent<AllPayloadTypes>) => T;
 type Hooks<E extends All = All, T = {}> = Partial<
   {
     [key in All]: ((
