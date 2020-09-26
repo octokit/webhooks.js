@@ -3,7 +3,7 @@ import { Handler, State } from "../types";
 
 export function removeListener<T extends All>(
   state: State<T>,
-  webhookNameOrNames: All | All[],
+  webhookNameOrNames: T | T[],
   handler: Handler<T>
 ) {
   if (Array.isArray(webhookNameOrNames)) {

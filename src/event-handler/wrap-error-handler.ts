@@ -1,6 +1,5 @@
 // Errors thrown or rejected Promises in "error" event handlers are not handled
 // as they are in the webhook event handlers. If errors occur, we log a
-
 import AggregateError from "aggregate-error";
 import { EventTypesPayload } from "../generated/get-webhook-payload-type-from-event";
 import { Handler } from "../types";

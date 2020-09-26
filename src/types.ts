@@ -20,8 +20,8 @@ export interface Options<T extends All> {
   transform?: Transform<T>;
 }
 
-type Transform<T extends All, O = EventTypesPayload[T]> = (
-  value: EventTypesPayload[T]
+export type Transform<T extends All, O = WebhookEvent<EventTypesPayload[T]>> = (
+  value: WebhookEvent<EventTypesPayload[T]>
 ) => O;
 
 export type Handler<T extends All> = (

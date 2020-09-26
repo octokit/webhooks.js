@@ -1,10 +1,11 @@
 import { timingSafeEqual } from "crypto";
 import { Buffer } from "buffer";
 import { sign } from "../sign/index";
+import { AllPayloadTypes } from "../generated/get-webhook-payload-type-from-event";
 
 export function verify(
   secret?: string,
-  eventPayload?: any,
+  eventPayload?: AllPayloadTypes,
   signature?: string
 ): boolean {
   if (!secret || !eventPayload || !signature) {

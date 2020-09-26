@@ -4,37 +4,38 @@ import { middleware } from "./middleware/middleware";
 import { sign } from "./sign/index";
 import { verify } from "./verify/index";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
-import { Options, State, WebhookEvent, WebhookError } from "./types";
-import { All } from "./generated/get-webhook-payload-type-from-event";
+import {
+  Options,
+  State,
+  WebhookEvent,
+  WebhookError,
+  Handler,
+  Transform,
+} from "./types";
+import {
+  All,
+  AllPayloadTypes,
+  EventTypesPayload,
+} from "./generated/get-webhook-payload-type-from-event";
 import { IncomingMessage, ServerResponse } from "http";
 
 class Webhooks<T extends All> {
-  public sign: (payload: string | object) => string;
-  public verify: (eventPayload?: object, signature?: string) => boolean;
-  public on: <E extends All>(
-    event: E | E[],
-    callback: (
-      event: GetWebhookPayloadTypeFromEvent<E, T>
-    ) => Promise<void> | void
-  ) => void;
-  public removeListener: <E extends All>(
-    event: E | E[],
-    callback: (
-      event: GetWebhookPayloadTypeFromEvent<E, T>
-    ) => Promise<void> | void
-  ) => void;
-  public receive: (options: {
+  sign: (payload: string | object) => string;
+  verify: (eventPayload?: AllPayloadTypes, signature?: string) => boolean;
+  on: <E extends All>(event: E | E[], callback: Handler<E>) => void;
+  removeListener: <E extends All>(event: E | E[], callback: Handler<E>) => void;
+  receive: (options: {
     id: string;
     name: string;
-    payload: any;
+    payload: ReturnType<Transform<T>>;
   }) => Promise<void>;
-  public middleware: (
+  middleware: (
     request: IncomingMessage,
     response: ServerResponse,
     next?: (err?: any) => void
   ) => void | Promise<void>;
-  public verifyAndReceive: (
-    options: WebhookEvent<T> & { signature: string }
+  verifyAndReceive: (
+    options: EventTypesPayload[T] & { signature: string }
   ) => Promise<void>;
 
   constructor(options?: Options<T>) {
