@@ -1,9 +1,10 @@
-import { State } from "../types";
+import { All } from "../generated/get-webhook-payload-type-from-event";
+import { Handler, State } from "../types";
 
-export function removeListener(
-  state: State,
-  webhookNameOrNames: string | string[],
-  handler: Function
+export function removeListener<T extends All>(
+  state: State<T>,
+  webhookNameOrNames: All | All[],
+  handler: Handler<T>
 ) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>

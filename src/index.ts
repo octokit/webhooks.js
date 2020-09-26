@@ -5,13 +5,10 @@ import { sign } from "./sign/index";
 import { verify } from "./verify/index";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
 import { Options, State, WebhookEvent, WebhookError } from "./types";
-import {
-  All,
-  GetWebhookPayloadTypeFromEvent,
-} from "./generated/get-webhook-payload-type-from-event";
+import { All } from "./generated/get-webhook-payload-type-from-event";
 import { IncomingMessage, ServerResponse } from "http";
 
-class Webhooks<T> {
+class Webhooks<T extends All> {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload?: object, signature?: string) => boolean;
   public on: <E extends All>(
@@ -40,12 +37,12 @@ class Webhooks<T> {
     options: WebhookEvent<T> & { signature: string }
   ) => Promise<void>;
 
-  constructor(options?: Options) {
+  constructor(options?: Options<T>) {
     if (!options || !options.secret) {
       throw new Error("options.secret required");
     }
 
-    const state: State = {
+    const state: State<T> = {
       eventHandler: createEventHandler(options),
       path: options.path || "/",
       secret: options.secret,

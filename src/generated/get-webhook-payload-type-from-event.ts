@@ -195,11 +195,6 @@ export interface EventTypesPayload {
   "workflow_run.action": EventPayloads.WebhookPayloadWorkflowRun;
 }
 export type All = keyof EventTypesPayload;
-
-export type GetWebhookPayloadTypeFromEvent<E extends All, T> = WebhookEvent<
-  EventTypesPayload[E]
-> &
-  T;
 export type AllPayloadTypes = EventTypesPayload[keyof Omit<
   EventTypesPayload,
   "*"

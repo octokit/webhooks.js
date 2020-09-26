@@ -1,8 +1,11 @@
 import type { RequestError } from "@octokit/request-error";
+import { createEventHandler } from "./event-handler";
+import { receiverOn } from "./event-handler/on";
+import { receiverHandle } from "./event-handler/receive";
+import { removeListener } from "./event-handler/remove-listener";
 import {
   All,
-  GetWebhookPayloadTypeFromEvent,
-  AllPayloadTypes,
+  EventTypesPayload,
 } from "./generated/get-webhook-payload-type-from-event";
 
 export interface WebhookEvent<T> {
@@ -11,24 +14,30 @@ export interface WebhookEvent<T> {
   payload: T;
 }
 
-export interface Options {
+export interface Options<T extends All> {
   path?: string;
   secret?: string;
-  transform?: Transform;
+  transform?: Transform<T>;
 }
 
-type Transform<T = any> = (value: WebhookEvent<AllPayloadTypes>) => T;
-type Hooks<E extends All = All, T = {}> = Partial<
-  {
-    [key in All]: ((
-      e: GetWebhookPayloadTypeFromEvent<E, T>
-    ) => Promise<void> | void)[];
-  }
->;
+type Transform<T extends All, O = EventTypesPayload[T]> = (
+  value: EventTypesPayload[T]
+) => O;
 
-export interface State extends Options {
-  eventHandler?: any;
-  hooks: Hooks;
+export type Handler<T extends All> = (
+  arg: ReturnType<Transform<T>>
+) => Promise<void> | void;
+
+type Hooks<T extends All> = Partial<Record<All, Handler<T>[]>>;
+
+type EventHandler = {
+  on: typeof receiverOn;
+  removeListener: typeof removeListener;
+  receive: typeof receiverHandle;
+};
+export interface State<T extends All> extends Options<T> {
+  eventHandler?: EventHandler;
+  hooks: Hooks<T>;
 }
 
 /**

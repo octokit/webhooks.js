@@ -53,8 +53,6 @@ export interface EventTypesPayload {
   ${eventPayloadMapping.map(([name, type]) => `"${name}": ${type}`).join(`,\n`)}
 }
 export type All = keyof EventTypesPayload;
-
-export type GetWebhookPayloadTypeFromEvent<E extends All, T> = WebhookEvent<EventTypesPayload[E]> & T;
 export type AllPayloadTypes = EventTypesPayload[keyof Omit<EventTypesPayload, "*">];
 `;
 

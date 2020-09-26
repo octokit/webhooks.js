@@ -2,15 +2,13 @@
 // as they are in the webhook event handlers. If errors occur, we log a
 
 import AggregateError from "aggregate-error";
-import {
-  All,
-  GetWebhookPayloadTypeFromEvent,
-} from "../generated/get-webhook-payload-type-from-event";
+import { EventTypesPayload } from "../generated/get-webhook-payload-type-from-event";
+import { Handler } from "../types";
 
 // "Fatal: Error occured" message to stdout
 export function wrapErrorHandler(
-  handler: (e: GetWebhookPayloadTypeFromEvent<"error", {}>) => any,
-  error: GetWebhookPayloadTypeFromEvent<"error", {}> | AggregateError<any>
+  handler: Handler<"error">,
+  error: EventTypesPayload["error"] | AggregateError<any>
 ) {
   let returnValue;
 

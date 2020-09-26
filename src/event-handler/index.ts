@@ -2,15 +2,15 @@ import { receiverOn as on } from "./on";
 import { receiverHandle as receive } from "./receive";
 import { removeListener } from "./remove-listener";
 import { Options, State } from "../types";
+import { All } from "../generated/get-webhook-payload-type-from-event";
 
-export function createEventHandler(options: Options) {
-  const state: State = {
+const identity = <T>(arg: T) => arg;
+
+export function createEventHandler<T extends All>(options: Options<T>) {
+  const state: State<T> = {
     hooks: {},
+    transform: options.transform || identity,
   };
-
-  if (options && options.transform) {
-    state.transform = options.transform;
-  }
 
   return {
     on: on.bind(null, state),

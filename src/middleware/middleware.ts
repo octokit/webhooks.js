@@ -9,8 +9,8 @@ import { All } from "../generated/get-webhook-payload-type-from-event";
 
 const debugWebhooks = debug("webhooks:receiver");
 
-export function middleware(
-  state: State,
+export function middleware<T extends All>(
+  state: State<T>,
   request: IncomingMessage,
   response: ServerResponse,
   next?: Function

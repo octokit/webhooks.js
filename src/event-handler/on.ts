@@ -1,15 +1,11 @@
-import {
-  All,
-  AllPayloadTypes,
-  GetWebhookPayloadTypeFromEvent,
-} from "../generated/get-webhook-payload-type-from-event";
+import { All } from "../generated/get-webhook-payload-type-from-event";
 import { webhookNames } from "../generated/webhook-names";
-import { State } from "../types";
+import { Handler, State } from "../types";
 
-export function receiverOn<E extends All, T extends AllPayloadTypes>(
-  state: State,
+export function receiverOn<T extends All>(
+  state: State<T>,
   webhookNameOrNames: All | All[],
-  handler: (e: GetWebhookPayloadTypeFromEvent<E, T>) => Promise<void> | void
+  handler: Handler<T>
 ) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>
