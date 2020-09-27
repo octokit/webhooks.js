@@ -30,9 +30,11 @@ export type Handler<T extends All> = (
 
 type Hooks<T extends All> = { [key in All]: Handler<T>[] };
 
-type ReceiverEvent = Parameters<typeof receiverOn>;
-type EventHandler<T extends All> = {
-  on: (event: ReceiverEvent) => ReturnType<typeof receiverOn>;
+export type EventHandler<T extends All> = {
+  on: (
+    webhookNameOrNames: T | T[],
+    handler: Handler<T>
+  ) => ReturnType<typeof receiverOn>;
   removeListener: (
     webhookNameOrNames: All | All[],
     handler: Handler<T>

@@ -9,8 +9,7 @@ import {
   State,
   WebhookEvent,
   WebhookError,
-  Handler,
-  Transform,
+  EventHandler,
 } from "./types";
 import {
   All,
@@ -22,13 +21,9 @@ import { IncomingMessage, ServerResponse } from "http";
 class Webhooks<T extends All> {
   sign: (payload: string | object) => string;
   verify: (eventPayload?: AllPayloadTypes, signature?: string) => boolean;
-  on: <E extends All>(event: E | E[], callback: Handler<E>) => void;
-  removeListener: <E extends All>(event: E | E[], callback: Handler<E>) => void;
-  receive: (options: {
-    id: string;
-    name: string;
-    payload: ReturnType<Transform<T>>;
-  }) => Promise<void>;
+  on: EventHandler<T>["on"];
+  removeListener: EventHandler<T>["removeListener"];
+  receive: EventHandler<T>["receive"];
   middleware: (
     request: IncomingMessage,
     response: ServerResponse,
