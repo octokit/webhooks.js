@@ -38,7 +38,10 @@ type EventHandler<T extends All> = {
     handler: Handler<T>
   ) => ReturnType<typeof removeListener>;
   receive: (
-    event: WebhookEvent<EventTypesPayload[T]>
+    event:
+      | WebhookEvent<EventTypesPayload[T]>
+      | (Error & { event: WebhookEvent<EventTypesPayload[T]>; status: number })
+      | Error
   ) => ReturnType<typeof receiverHandle>;
 };
 export interface State<T extends All> extends Options<T> {

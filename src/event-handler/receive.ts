@@ -7,6 +7,7 @@ import {
   State,
   WebhookError,
   WebhookEventHandlerError,
+  Handler,
 } from "../types";
 import {
   All,
@@ -17,12 +18,9 @@ function getHooks<T extends All>(
   state: State<T>,
   eventPayloadAction: string,
   eventName: All
-): Function[] {
+): Handler<T>[] {
   const hooks = [state.hooks[`${eventName}.${eventPayloadAction}` as All]];
 
-  // removed array handling as eventName is not an array
-  // is it okay?
-  // cc: @gr2m / @oscarDOM
   hooks.push(state.hooks[eventName]);
 
   hooks.push(state.hooks["*"]);
