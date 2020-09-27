@@ -2,13 +2,7 @@
 import AggregateError from "aggregate-error";
 
 import { wrapErrorHandler } from "./wrap-error-handler";
-import {
-  WebhookEvent,
-  State,
-  WebhookError,
-  WebhookEventHandlerError,
-  Handler,
-} from "../types";
+import { WebhookEvent, State, WebhookError, Handler } from "../types";
 import {
   All,
   EventTypesPayload,
@@ -32,7 +26,10 @@ function getHooks<T extends All>(
 // main handler function
 export function receiverHandle<T extends All>(
   state: State<T>,
-  event: WebhookEvent<EventTypesPayload[T]>
+  event:
+    | WebhookEvent<EventTypesPayload[T]>
+    | (Error & { event: WebhookEvent<EventTypesPayload[T]>; status: number })
+    | Error
 ) {
   const errorHandlers = state.hooks.error || [];
 
@@ -82,7 +79,7 @@ export function receiverHandle<T extends All>(
       return;
     }
 
-    const error = new AggregateError(errors) as WebhookEventHandlerError;
+    const error = new AggregateError(errors);
     Object.assign(error, {
       event,
       errors,

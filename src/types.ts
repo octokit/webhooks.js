@@ -1,4 +1,5 @@
 import type { RequestError } from "@octokit/request-error";
+import { IncomingMessage, ServerResponse } from "http";
 import { createEventHandler } from "./event-handler";
 import { receiverOn } from "./event-handler/on";
 import { receiverHandle } from "./event-handler/receive";
@@ -31,10 +32,7 @@ export type Handler<T extends All> = (
 type Hooks<T extends All> = { [key in All]: Handler<T>[] };
 
 export type EventHandler<T extends All> = {
-  on: (
-    webhookNameOrNames: T | T[],
-    handler: Handler<T>
-  ) => ReturnType<typeof receiverOn>;
+  on: (webhookNameOrNames: T | T[], handler: Handler<T>) => void;
   removeListener: (
     webhookNameOrNames: All | All[],
     handler: Handler<T>
@@ -49,6 +47,16 @@ export type EventHandler<T extends All> = {
 export interface State<T extends All> extends Options<T> {
   eventHandler: EventHandler<T>;
   hooks: Hooks<T>;
+}
+
+type Middleware = (
+  request: IncomingMessage,
+  response: ServerResponse,
+  next?: Function
+) => Promise<any> | void;
+export interface MiddlewareAPI<T extends All> extends Middleware {
+  on: EventHandler<T>["on"];
+  removeListener: EventHandler<T>["removeListener"];
 }
 
 /**

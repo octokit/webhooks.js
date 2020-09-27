@@ -42,6 +42,7 @@ class Webhooks<T extends All> {
       eventHandler: createEventHandler(options),
       path: options.path || "/",
       secret: options.secret,
+      // @ts-ignore
       hooks: {},
     };
 

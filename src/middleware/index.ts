@@ -1,9 +1,11 @@
 import { createEventHandler } from "../event-handler/index";
 import { middleware } from "./middleware";
-import { Options, State } from "../types";
+import { MiddlewareAPI, Options, State } from "../types";
 import { All } from "../generated/get-webhook-payload-type-from-event";
 
-export function createMiddleware<T extends All>(options: Options<T>) {
+export function createMiddleware<T extends All>(
+  options: Options<T>
+): MiddlewareAPI<T> {
   if (!options || !options.secret) {
     throw new Error("options.secret required");
   }
@@ -12,10 +14,12 @@ export function createMiddleware<T extends All>(options: Options<T>) {
     eventHandler: createEventHandler(options),
     path: options.path || "/",
     secret: options.secret,
+    // @ts-ignore
     hooks: {},
   };
 
-  const api = middleware.bind(null, state);
+  // @ts-ignore
+  const api: MiddlewareAPI<T> = middleware.bind(null, state);
 
   api.on = state.eventHandler.on;
   api.removeListener = state.eventHandler.removeListener;
