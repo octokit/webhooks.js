@@ -102,7 +102,7 @@ source.onmessage = (event) => {
 ### Constructor
 
 ```js
-new WebhooksApi({secret[, path, transform]})
+new Webhooks({secret[, path, transform]})
 ```
 
 <table width="100%">
