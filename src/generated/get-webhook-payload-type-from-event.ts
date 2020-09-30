@@ -1,3 +1,6 @@
+// THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY
+// make edits in scripts/generate-types.js
+
 import { EventNames } from "./event-names";
 import { EventPayloads } from "./event-payloads";
 import { WebhookEvent, WebhookEventHandlerError } from "../types";
