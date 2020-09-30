@@ -128,6 +128,15 @@ export default async function () {
 }
 
 export function webhookErrorTest(error: WebhookError) {
+  const { request } = error;
+  console.log(request);
+}
+
+// ************************************************************
+// DEPRECATIONS RETRO-COMPATIBILITY
+// ************************************************************
+
+export function webhookErrorTestDeprecated(error: WebhookError) {
   const { event, request } = error;
   console.log(event);
   console.log(request);
