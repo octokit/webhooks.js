@@ -4,9 +4,14 @@ import { middleware } from "./middleware/middleware";
 import { sign } from "./sign/index";
 import { verify } from "./verify/index";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
-import { Options, State, WebhookEvent, WebhookError } from "./types";
+import {
+  Options,
+  State,
+  WebhookEvent,
+  WebhookError,
+  HandlerFunction,
+} from "./types";
 import { EventNames } from "./generated/event-names";
-import { GetWebhookPayloadTypeFromEvent } from "./generated/get-webhook-payload-type-from-event";
 import { IncomingMessage, ServerResponse } from "http";
 
 class Webhooks<T extends WebhookEvent = WebhookEvent> {
@@ -14,15 +19,11 @@ class Webhooks<T extends WebhookEvent = WebhookEvent> {
   public verify: (eventPayload?: object, signature?: string) => boolean;
   public on: <E extends EventNames.All>(
     event: E | E[],
-    callback: (
-      event: GetWebhookPayloadTypeFromEvent<E, T>
-    ) => Promise<void> | void
+    callback: HandlerFunction<E, T>
   ) => void;
   public removeListener: <E extends EventNames.All>(
     event: E | E[],
-    callback: (
-      event: GetWebhookPayloadTypeFromEvent<E, T>
-    ) => Promise<void> | void
+    callback: HandlerFunction<E, T>
   ) => void;
   public receive: (options: {
     id: string;
