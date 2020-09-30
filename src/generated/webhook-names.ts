@@ -1,3 +1,6 @@
+// THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY
+// make edits in scripts/update-known-events.js
+
 export const webhookNames = [
   "*",
   "check_run",
