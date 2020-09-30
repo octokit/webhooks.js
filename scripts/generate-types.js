@@ -62,6 +62,8 @@ webhooks.forEach(({ name, actions, examples }) => {
 conditionalType.push("never");
 
 const getWebhookPayloadTypeFromEvent = `
+${doNotEditThisFileDisclaimer}
+
 import { ${eventNamesVariable} } from "./event-names";
 import { ${eventPayloadsVariable} } from "./event-payloads";
 import { WebhookEvent, WebhookEventHandlerError } from "../types";
