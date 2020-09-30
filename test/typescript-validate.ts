@@ -128,7 +128,6 @@ export default async function () {
 }
 
 export function webhookErrorTest(error: WebhookError) {
-  const { event, request } = error;
-  console.log(event);
+  const { request } = error;
   console.log(request);
 }
