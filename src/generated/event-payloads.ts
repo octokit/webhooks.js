@@ -794,6 +794,10 @@ export declare module EventPayloads {
     pusher: WebhookPayloadPushPusher;
     sender: WebhookPayloadPushSender;
   };
+  type WebhookPayloadPullRequestReviewCommentInstallation = {
+    id: number;
+    node_id: string;
+  };
   type WebhookPayloadPullRequestReviewCommentSender = {
     login: string;
     id: number;
@@ -1215,6 +1219,11 @@ export declare module EventPayloads {
     pull_request: WebhookPayloadPullRequestReviewCommentPullRequest;
     repository: PayloadRepository;
     sender: WebhookPayloadPullRequestReviewCommentSender;
+    installation?: WebhookPayloadPullRequestReviewCommentInstallation;
+  };
+  type WebhookPayloadPullRequestReviewInstallation = {
+    id: number;
+    node_id: string;
   };
   type WebhookPayloadPullRequestReviewSender = {
     login: string;
@@ -1616,6 +1625,7 @@ export declare module EventPayloads {
     pull_request: WebhookPayloadPullRequestReviewPullRequest;
     repository: PayloadRepository;
     sender: WebhookPayloadPullRequestReviewSender;
+    installation?: WebhookPayloadPullRequestReviewInstallation;
   };
   type WebhookPayloadPullRequestLabel = {
     id: number;
