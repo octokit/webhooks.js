@@ -7,7 +7,7 @@ import {
 
 export function verifyAndReceive<T extends All>(
   state: State<T>,
-  event: EventTypesPayload[T] & { signature: string }
+  event: EventTypesPayload[T] & { signature?: string }
 ) {
   const matchesSignature = verify(state.secret, event.payload, event.signature);
 
@@ -15,7 +15,6 @@ export function verifyAndReceive<T extends All>(
     const error = new Error(
       "signature does not match event payload and secret"
     );
-
     return state.eventHandler.receive(
       Object.assign(error, { event, status: 400 })
     );

@@ -1,7 +1,6 @@
 import type { RequestError } from "@octokit/request-error";
+import AggregateError from "aggregate-error";
 import { IncomingMessage, ServerResponse } from "http";
-import { createEventHandler } from "./event-handler";
-import { receiverOn } from "./event-handler/on";
 import { receiverHandle } from "./event-handler/receive";
 import { removeListener } from "./event-handler/remove-listener";
 import {
@@ -77,20 +76,4 @@ export interface WebhookEventHandlerError extends AggregateError<WebhookError> {
    * @deprecated `error.errors` is deprecated. Use `Array.from(error)`. See https://npm.im/aggregate-error
    */
   errors: WebhookError[];
-}
-
-/**
- * Workaround for TypeScript incompatibility with types exported by aggregate-error.
- * Credit: https://git.io/JUEEr
- * @copyright Sindre Sorhus
- * @license MIT (https://git.io/JUEEK)
- * @see https://github.com/octokit/webhooks.js/pull/270/files
- */
-declare class AggregateError<T extends Error = Error>
-  extends Error
-  implements Iterable<T> {
-  readonly name: "AggregateError";
-  constructor(errors: ReadonlyArray<T | { [key: string]: any } | string>);
-
-  [Symbol.iterator](): IterableIterator<T>;
 }

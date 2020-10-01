@@ -4,7 +4,8 @@
     "moduleResolution": "node",
     "strict": true,
     "target": "es2020",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "typeRoots": ["node_modules/@types", "@types"]
   },
   "include": ["src/**/*"]
 }

@@ -1,8 +1,13 @@
-// @ts-ignore to address #245
 import AggregateError from "aggregate-error";
 
 import { wrapErrorHandler } from "./wrap-error-handler";
-import { WebhookEvent, State, WebhookError, Handler } from "../types";
+import {
+  WebhookEvent,
+  State,
+  WebhookError,
+  Handler,
+  WebhookEventHandlerError,
+} from "../types";
 import {
   All,
   EventTypesPayload,
@@ -26,11 +31,8 @@ function getHooks<T extends All>(
 // main handler function
 export function receiverHandle<T extends All>(
   state: State<T>,
-  event:
-    | WebhookEvent<EventTypesPayload[T]>
-    | (Error & { event: WebhookEvent<EventTypesPayload[T]>; status: number })
-    | Error
-) {
+  event: WebhookEvent<EventTypesPayload[T]> | WebhookEventHandlerError | Error
+): Promise<void> {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {
@@ -59,7 +61,7 @@ export function receiverHandle<T extends All>(
   }
 
   const errors: WebhookError[] = [];
-  const promises = hooks.map((handler: Function) => {
+  const promises = hooks.map((handler) => {
     let promise = Promise.resolve(event);
 
     if (state.transform) {
@@ -79,8 +81,7 @@ export function receiverHandle<T extends All>(
       return;
     }
 
-    const error = new AggregateError(errors);
-    Object.assign(error, {
+    const error = Object.assign(new AggregateError(errors), {
       event,
       errors,
     });

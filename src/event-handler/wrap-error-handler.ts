@@ -1,21 +1,14 @@
 // Errors thrown or rejected Promises in "error" event handlers are not handled
 // as they are in the webhook event handlers. If errors occur, we log a
-// "Fatal: Error occured" message to stdout
-// @ts-ignore
-import AggregateError from "aggregate-error";
-import {
-  All,
-  EventTypesPayload,
-} from "../generated/get-webhook-payload-type-from-event";
-import { Handler } from "../types";
+import { All } from "../generated/get-webhook-payload-type-from-event";
+import { Handler, WebhookEventHandlerError } from "../types";
 
 // "Fatal: Error occured" message to stdout
-export function wrapErrorHandler<T extends All>(
-  handler: Handler<T>,
-  error: EventTypesPayload["error"] | AggregateError<any>
+export function wrapErrorHandler(
+  handler: Handler<"error">,
+  error: WebhookEventHandlerError
 ) {
   let returnValue;
-
   try {
     returnValue = handler(error);
   } catch (error) {
