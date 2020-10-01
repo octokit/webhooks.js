@@ -95,6 +95,14 @@ export default async function () {
     console.log(payload.check_run.conclusion, name);
   });
 
+  webhooks.on("check_run.created", () => {
+    return 2;
+  });
+
+  webhooks.on("check_run.created", () => {
+    return Promise.resolve(10);
+  });
+
   webhooks.removeListener("check_run.created", ({ name, payload }) => {
     console.log(payload.check_run.conclusion, name);
   });
