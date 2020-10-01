@@ -1,12 +1,4 @@
 {
-  "compilerOptions": {
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strict": true,
-    "target": "es2020",
-    "resolveJsonModule": true
-  },
+  "extends": "@octokit/tsconfig",
   "include": ["src/**/*"]
 }
