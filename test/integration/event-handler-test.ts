@@ -125,7 +125,7 @@ test("options.transform", (done) => {
 
 test("async options.transform", (done) => {
   const eventHandler = createEventHandler({
-    transform: (event) => {
+    transform: () => {
       return Promise.resolve("funky");
     },
   });
