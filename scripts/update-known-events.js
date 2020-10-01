@@ -3,6 +3,9 @@ const Table = require("table-builder");
 const WEBOOOKS = require("@octokit/webhooks-definitions/index.json");
 const { generateFile } = require("./generate-file");
 
+const doNotEditThisFileDisclaimer = `
+// THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY
+// make edits in scripts/update-known-events.js`;
 const newWebhookNames = WEBOOOKS.reduce(
   (list, event) => {
     list.push(
@@ -16,7 +19,11 @@ const newWebhookNames = WEBOOOKS.reduce(
 
 generateFile(
   "src/generated/webhook-names.ts",
-  `export const webhookNames = ${JSON.stringify([...newWebhookNames], null, 2)}`
+  `
+  ${doNotEditThisFileDisclaimer}
+
+    export const webhookNames = ${JSON.stringify([...newWebhookNames], null, 2)}
+  `
 );
 
 // update README.md
