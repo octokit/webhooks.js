@@ -24,22 +24,3 @@ test("options: name, payload", () => {
     receive(state, { name: "foo", payload: {} });
   }).not.toThrow();
 });
-
-test("options: [name1, name2]", () => {
-  expect(() => {
-    receive(state, {
-      // @ts-ignore
-      name: ["foo", "bar"],
-    });
-  }).toThrow();
-});
-
-test("options: [name1, name2], payload", () => {
-  expect(() => {
-    receive(state, {
-      // @ts-ignore
-      name: ["foo", "bar"],
-      payload: {},
-    });
-  }).not.toThrow();
-});
