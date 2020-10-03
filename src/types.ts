@@ -21,8 +21,8 @@ type TransformMethod<T extends WebhookEvent, V = T> = (
   event: WebhookEvent
 ) => V | PromiseLike<V>;
 
-export type HandlerFunction<E extends All> = (
-  event: EventTypesPayload[E]
+export type HandlerFunction<E extends All, U> = (
+  event: EventTypesPayload[E] & U
 ) => any;
 
 type Hooks = {

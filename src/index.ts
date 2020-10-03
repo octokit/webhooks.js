@@ -14,16 +14,16 @@ import {
 import { IncomingMessage, ServerResponse } from "http";
 import { All } from "./generated/get-webhook-payload-type-from-event";
 
-class Webhooks<T extends WebhookEvent = WebhookEvent> {
+class Webhooks<T extends WebhookEvent = WebhookEvent, U = {}> {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload?: object, signature?: string) => boolean;
   public on: <E extends All>(
     event: E | E[],
-    callback: HandlerFunction<E>
+    callback: HandlerFunction<E, U>
   ) => void;
   public removeListener: <E extends All>(
     event: E | E[],
-    callback: HandlerFunction<E>
+    callback: HandlerFunction<E, U>
   ) => void;
   public receive: (options: {
     id: string;
