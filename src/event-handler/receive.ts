@@ -17,12 +17,7 @@ function getHooks(
 ): Function[] {
   const hooks = [state.hooks[`${eventName}.${eventPayloadAction}`]];
 
-  if (Array.isArray(eventName)) {
-    eventName.forEach((name) => hooks.push(state.hooks[name]));
-  } else {
-    hooks.push(state.hooks[eventName]);
-  }
-
+  hooks.push(state.hooks[eventName]);
   hooks.push(state.hooks["*"]);
 
   // @ts-ignore
