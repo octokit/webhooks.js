@@ -6,7 +6,7 @@ import { WebhookEvent, WebhookEventHandlerError } from "../types";
 
 export interface EventTypesPayload {
   error: WebhookEventHandlerError;
-  "*": any;
+  "*": WebhookEvent<any>;
   check_run: WebhookEvent<EventPayloads.WebhookPayloadCheckRun>;
   "check_run.completed": WebhookEvent<EventPayloads.WebhookPayloadCheckRun>;
   "check_run.created": WebhookEvent<EventPayloads.WebhookPayloadCheckRun>;

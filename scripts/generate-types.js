@@ -6,7 +6,7 @@ const { generateFile } = require("./generate-file");
 const tw = new TypeWriter();
 const eventPayloadMapping = [
   ["error", "WebhookEventHandlerError"],
-  ["*", "any"],
+  ["*", "WebhookEvent<any>"],
 ];
 
 const doNotEditThisFileDisclaimer = `
