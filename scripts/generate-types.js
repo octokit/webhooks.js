@@ -59,8 +59,6 @@ import { WebhookEvent, WebhookEventHandlerError } from "../types";
 export interface EventTypesPayload {
   ${eventPayloadMapping.map(([name, type]) => `"${name}": ${type}`).join(`,\n`)}
 }
-
-export type All = keyof EventTypesPayload;
 `;
 
 generateFile(
@@ -70,11 +68,9 @@ generateFile(
 
 const eventNamesContet = `
 ${doNotEditThisFileDisclaimer}
-
+import {EventTypesPayload} from './get-webhook-payload-type-from-event';
 export declare module ${eventNamesVariable} {
-
-  type StringNames =
-    ${webhooks.map(({ name }) => `"${name}"`).join(" | ")};
+  type All = keyof EventTypesPayload
 }
 `;
 

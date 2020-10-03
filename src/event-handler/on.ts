@@ -1,10 +1,10 @@
+import { EventNames } from "../generated/event-names";
 import { webhookNames } from "../generated/webhook-names";
 import { State } from "../types";
-import { All } from "../generated/get-webhook-payload-type-from-event";
 
 export function receiverOn(
   state: State,
-  webhookNameOrNames: All | All[],
+  webhookNameOrNames: EventNames.All | EventNames.All[],
   handler: Function
 ) {
   if (Array.isArray(webhookNameOrNames)) {
