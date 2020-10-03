@@ -3,8 +3,11 @@ const TypeWriter = require("@gimenete/type-writer");
 const webhooks = require("@octokit/webhooks-definitions/index.json");
 const { generateFile } = require("./generate-file");
 
-const eventTypes = [];
 const tw = new TypeWriter();
+const eventPayloadMapping = [
+  ["error", "WebhookEventHandlerError"],
+  ["*", "any"],
+];
 
 const doNotEditThisFileDisclaimer = `
 // THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY
@@ -23,21 +26,11 @@ const generatePayloadType = (typeName) => ({
   },
 });
 
-const generateEventNameType = (event, name, actions) => `type ${event} =
-      | "${name}"
-      ${actions
-        .map((action) => {
-          return `| "${name}.${action}"`;
-        })
-        .join("\n")}
-`;
-
-eventTypes.push(`type ErrorEvent = "error"`, `type WildcardEvent = "*"`);
-
-const conditionalType = [
-  `export type GetWebhookPayloadTypeFromEvent<E = EventNames.All, T = WebhookEvent> = `,
-  `E extends ${eventNamesVariable}.ErrorEvent ? WebhookEventHandlerError :`,
-  `E extends ${eventNamesVariable}.WildcardEvent ? any :`,
+const generateEventNameType = (name, actions) => [
+  name,
+  ...actions.map((action) => {
+    return `${name}.${action}`;
+  }),
 ];
 
 webhooks.forEach(({ name, actions, examples }) => {
@@ -48,27 +41,26 @@ webhooks.forEach(({ name, actions, examples }) => {
   const typeName = `WebhookPayload${pascalCase(name)}`;
   tw.add(examples, generatePayloadType(typeName));
 
-  const event = `${pascalCase(name)}Event`;
-
-  const eventNameType = generateEventNameType(event, name, actions);
-  const eventNameTypeKey = eventNameType.split(" ")[1];
-
-  eventTypes.push(eventNameType);
-  conditionalType.push(
-    `E extends ${eventNamesVariable}.${eventNameTypeKey} ? WebhookEvent<${eventPayloadsVariable}.${typeName}> & T:`
-  );
+  const eventNameTypes = generateEventNameType(name, actions);
+  eventNameTypes.forEach((type) => {
+    eventPayloadMapping.push([
+      type,
+      `WebhookEvent<${eventPayloadsVariable}.${typeName}>`,
+    ]);
+  });
 });
-
-conditionalType.push("never");
 
 const getWebhookPayloadTypeFromEvent = `
 ${doNotEditThisFileDisclaimer}
 
-import { ${eventNamesVariable} } from "./event-names";
 import { ${eventPayloadsVariable} } from "./event-payloads";
 import { WebhookEvent, WebhookEventHandlerError } from "../types";
 
-${conditionalType.join("\n")}
+export interface EventTypesPayload {
+  ${eventPayloadMapping.map(([name, type]) => `"${name}": ${type}`).join(`,\n`)}
+}
+
+export type All = keyof EventTypesPayload;
 `;
 
 generateFile(
@@ -80,13 +72,9 @@ const eventNamesContet = `
 ${doNotEditThisFileDisclaimer}
 
 export declare module ${eventNamesVariable} {
-  ${eventTypes.join("\n")}
 
   type StringNames =
     ${webhooks.map(({ name }) => `"${name}"`).join(" | ")};
-
-  type All =
-    ${eventTypes.map((event) => event.split(" ")[1]).join(" | ")};
 }
 `;
 

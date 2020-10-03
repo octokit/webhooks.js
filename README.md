@@ -625,7 +625,7 @@ The `WebhookEvent` type is an object with the properties `id`, `name`, and `payl
 
 The `EventNames` type is a module containing types for all known event names and event/action combinations. For example, `EventNames.CheckRunEvent` is a string enum for `"check_run" | "check_run.completed" | "check_run.created" | "check_run.requested_action" | "check_run.rerequested"`.
 
-`EventNames.All` is an enum of all event/action combinations. `EventNames.StringNames` is an enum for the known event names only.
+`All` is an enum of all event/action combinations. `EventNames.StringNames` is an enum for the known event names only.
 
 ### `EventPayloads`
 

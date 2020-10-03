@@ -5,12 +5,12 @@ import {
   createWebhooksApi,
   sign,
   verify,
-  EventNames,
   EventPayloads,
   WebhookEvent,
   WebhookError,
 } from "../src/index";
 import { createServer } from "http";
+import { All } from "../src/generated/get-webhook-payload-type-from-event";
 
 // ************************************************************
 // THIS CODE IS NOT EXECUTED. IT IS FOR TYPECHECKING ONLY
@@ -24,7 +24,7 @@ const myWebhook: WebhookEvent<{ foo: string }> = {
   },
 };
 
-const myEventName: EventNames.All = "check_run.completed";
+const myEventName: All = "check_run.completed";
 
 const myEvenTPayload: EventPayloads.WebhookPayloadCheckRunCheckRunOutput = {
   annotations_count: 0,
