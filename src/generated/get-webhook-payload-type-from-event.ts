@@ -351,3 +351,5 @@ export interface EventTypesPayload {
   workflow_run: WebhookEvent<EventPayloads.WebhookPayloadWorkflowRun>;
   "workflow_run.action": WebhookEvent<EventPayloads.WebhookPayloadWorkflowRun>;
 }
+
+export type All = keyof EventTypesPayload;

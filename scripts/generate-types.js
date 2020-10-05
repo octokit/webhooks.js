@@ -13,7 +13,6 @@ const doNotEditThisFileDisclaimer = `
 // THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY
 // make edits in scripts/generate-types.js`;
 const eventPayloadsVariable = "EventPayloads";
-const eventNamesVariable = "EventNames";
 
 const generatePayloadType = (typeName) => ({
   rootTypeName: typeName,
@@ -59,6 +58,8 @@ import { WebhookEvent, WebhookEventHandlerError } from "../types";
 export interface EventTypesPayload {
   ${eventPayloadMapping.map(([name, type]) => `"${name}": ${type}`).join(`,\n`)}
 }
+
+export type All = keyof EventTypesPayload
 `;
 
 generateFile(
@@ -66,21 +67,11 @@ generateFile(
   getWebhookPayloadTypeFromEvent
 );
 
-const eventNamesContet = `
-${doNotEditThisFileDisclaimer}
-import {EventTypesPayload} from './get-webhook-payload-type-from-event';
-export declare module ${eventNamesVariable} {
-  type All = keyof EventTypesPayload
-}
-`;
-
-generateFile("src/generated/event-names.ts", eventNamesContet);
-
-const eventPayloadsContet = `
+const eventPayloadsContent = `
 ${doNotEditThisFileDisclaimer}
 
 export declare module ${eventPayloadsVariable} {
   ${tw.generate("typescript", { inlined: false })}}
 `;
 
-generateFile("src/generated/event-payloads.ts", eventPayloadsContet);
+generateFile("src/generated/event-payloads.ts", eventPayloadsContent);

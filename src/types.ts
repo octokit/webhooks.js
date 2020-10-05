@@ -1,11 +1,12 @@
 import type { RequestError } from "@octokit/request-error";
-import { EventNames } from "./generated/event-names";
-
-import { EventTypesPayload } from "./generated/get-webhook-payload-type-from-event";
+import {
+  All,
+  EventTypesPayload,
+} from "./generated/get-webhook-payload-type-from-event";
 
 export interface WebhookEvent<T = any> {
   id: string;
-  name: EventNames.All;
+  name: All;
   payload: T;
 }
 
@@ -19,7 +20,7 @@ type TransformMethod<T extends WebhookEvent, V = T> = (
   event: WebhookEvent
 ) => V | PromiseLike<V>;
 
-export type HandlerFunction<E extends EventNames.All, U> = (
+export type HandlerFunction<E extends All, U> = (
   event: EventTypesPayload[E] & U
 ) => any;
 
