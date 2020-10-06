@@ -11,19 +11,20 @@ import {
   WebhookError,
   HandlerFunction,
 } from "./types";
-import { EventNames } from "./generated/event-names";
 import { IncomingMessage, ServerResponse } from "http";
+import { All } from "./generated/get-webhook-payload-type-from-event";
 
-class Webhooks<T extends WebhookEvent = WebhookEvent> {
+// U holds the return value of `transform` function in Options
+class Webhooks<T extends WebhookEvent = WebhookEvent, U = {}> {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload?: object, signature?: string) => boolean;
-  public on: <E extends EventNames.All>(
+  public on: <E extends All>(
     event: E | E[],
-    callback: HandlerFunction<E, T>
+    callback: HandlerFunction<E, U>
   ) => void;
-  public removeListener: <E extends EventNames.All>(
+  public removeListener: <E extends All>(
     event: E | E[],
-    callback: HandlerFunction<E, T>
+    callback: HandlerFunction<E, U>
   ) => void;
   public receive: (options: {
     id: string;
@@ -63,7 +64,6 @@ class Webhooks<T extends WebhookEvent = WebhookEvent> {
 
 const createWebhooksApi = Webhooks.prototype.constructor;
 
-export { EventNames } from "./generated/event-names";
 export { EventPayloads } from "./generated/event-payloads";
 
 export {
