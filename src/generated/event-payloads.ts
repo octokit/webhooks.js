@@ -798,6 +798,54 @@ export declare module EventPayloads {
     id: number;
     node_id: string;
   };
+  type WebhookPayloadPullRequestReviewCommentPullRequestLabelsItem = {
+    id: number;
+    node_id: string;
+    url: string;
+    name: string;
+    color: string;
+    default: boolean;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestRequestedReviewersItem = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewCommentPullRequestAssigneesItem = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
   type WebhookPayloadPullRequestReviewCommentSender = {
     login: string;
     id: number;
@@ -1144,10 +1192,14 @@ export declare module EventPayloads {
     merged_at: null;
     merge_commit_sha: string;
     assignee: null;
-    assignees: Array<any>;
-    requested_reviewers: Array<any>;
+    assignees: Array<
+      WebhookPayloadPullRequestReviewCommentPullRequestAssigneesItem
+    >;
+    requested_reviewers: Array<
+      WebhookPayloadPullRequestReviewCommentPullRequestRequestedReviewersItem
+    >;
     requested_teams: Array<any>;
-    labels: Array<any>;
+    labels: Array<WebhookPayloadPullRequestReviewCommentPullRequestLabelsItem>;
     milestone: null;
     commits_url: string;
     review_comments_url: string;
@@ -1224,6 +1276,54 @@ export declare module EventPayloads {
   type WebhookPayloadPullRequestReviewInstallation = {
     id: number;
     node_id: string;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestLabelsItem = {
+    id: number;
+    node_id: string;
+    url: string;
+    name: string;
+    color: string;
+    default: boolean;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestRequestedReviewersItem = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestReviewPullRequestAssigneesItem = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
   };
   type WebhookPayloadPullRequestReviewSender = {
     login: string;
@@ -1565,10 +1665,12 @@ export declare module EventPayloads {
     merged_at: null;
     merge_commit_sha: string;
     assignee: null;
-    assignees: Array<any>;
-    requested_reviewers: Array<any>;
+    assignees: Array<WebhookPayloadPullRequestReviewPullRequestAssigneesItem>;
+    requested_reviewers: Array<
+      WebhookPayloadPullRequestReviewPullRequestRequestedReviewersItem
+    >;
     requested_teams: Array<any>;
-    labels: Array<any>;
+    labels: Array<WebhookPayloadPullRequestReviewPullRequestLabelsItem>;
     milestone: null;
     commits_url: string;
     review_comments_url: string;
@@ -1673,14 +1775,6 @@ export declare module EventPayloads {
     due_on: string;
     closed_at: string;
   };
-  type WebhookPayloadPullRequestPullRequestLabelsItem = {
-    id: number;
-    node_id: string;
-    url: string;
-    name: string;
-    color: string;
-    default: boolean;
-  };
   type WebhookPayloadPullRequestPullRequestAssignee = null | {
     login: string;
     id: number;
@@ -1703,6 +1797,34 @@ export declare module EventPayloads {
   };
   type WebhookPayloadPullRequestInstallation = { id: number; node_id: string };
   type WebhookPayloadPullRequestAssignee = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadPullRequestPullRequestLabelsItem = {
+    id: number;
+    node_id: string;
+    url: string;
+    name: string;
+    color: string;
+    default: boolean;
+  };
+  type WebhookPayloadPullRequestPullRequestRequestedReviewersItem = {
     login: string;
     id: number;
     node_id: string;
@@ -2077,7 +2199,9 @@ export declare module EventPayloads {
     merge_commit_sha: null | string;
     assignee: WebhookPayloadPullRequestPullRequestAssignee;
     assignees: Array<WebhookPayloadPullRequestPullRequestAssigneesItem>;
-    requested_reviewers: Array<any>;
+    requested_reviewers: Array<
+      WebhookPayloadPullRequestPullRequestRequestedReviewersItem
+    >;
     requested_teams: Array<any>;
     labels: Array<WebhookPayloadPullRequestPullRequestLabelsItem>;
     milestone: WebhookPayloadPullRequestPullRequestMilestone;
