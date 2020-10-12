@@ -17,4 +17,4 @@ labels: bug, typescript
 
 **Linked issue in @octokit/webhooks**
 
-<!-- Create a linked issue to this issue on @octokit/webhooks, once is fixed this package will get the fix in next update -->
+<!-- Create an issue on @octokit/webhooks (https://github.com/octokit/webhooks/issues/new) and add a link back to this one. Once it is fixed there, this package will get the fix during the next update -->
