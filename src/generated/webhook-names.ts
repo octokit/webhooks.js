@@ -201,4 +201,6 @@ export const webhookNames = [
   "workflow_dispatch",
   "workflow_run",
   "workflow_run.action",
+  "workflow_run.completed",
+  "workflow_run.requested",
 ];
