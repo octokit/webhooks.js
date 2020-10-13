@@ -8,7 +8,7 @@ import {
   EventPayloads,
   WebhookEvent,
   WebhookError,
-  WebhooksEvents
+  WebhooksEvents,
 } from "../src/index";
 import { createServer } from "http";
 
