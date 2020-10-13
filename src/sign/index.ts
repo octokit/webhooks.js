@@ -30,7 +30,9 @@ export function sign(
   }
 
   if (!Object.values(Algorithm).includes(algorithm as Algorithm)) {
-    throw new TypeError("[@octokit/webhooks] algorithm should be 'sha1' or 'sha256'");
+    throw new TypeError(
+      "[@octokit/webhooks] algorithm should be 'sha1' or 'sha256'"
+    );
   }
 
   payload =
