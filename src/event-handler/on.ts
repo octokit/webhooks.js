@@ -34,9 +34,9 @@ export function receiverOn(
   if (webhookNameOrNames === "*" || webhookNameOrNames === "error") {
     const webhookName = webhookNameOrNames === "*" ? "any" : webhookNameOrNames;
     console.warn(
-      `Using the "${webhookNameOrNames}" event with the regular Webhooks.on() function is deprecated. Please use either the Webhooks.on${
+      `Using the "${webhookNameOrNames}" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.on${
         webhookName.charAt(0).toUpperCase() + webhookName.slice(1)
-      } method instead`
+      }() method instead`
     );
   }
 
