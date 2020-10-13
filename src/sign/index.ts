@@ -1,6 +1,29 @@
 import { createHmac } from "crypto";
 
-export function sign(secret: string, payload: string | object): string {
+export enum Algorithm {
+  SHA1 = "sha1",
+  SHA256 = "sha256",
+}
+
+type SignOptions = {
+  secret: string;
+  algorithm?: Algorithm;
+};
+
+export function sign(
+  options: SignOptions | string,
+  payload: string | object
+): string {
+  let secret;
+  let algorithm;
+
+  if (typeof options === "string") {
+    secret = options;
+    algorithm = Algorithm.SHA1;
+  } else {
+    secret = options.secret;
+    algorithm = options.algorithm ?? Algorithm.SHA1;
+  }
   // @ts-ignore throw friendly error message when required options are missing
   if (!secret || !payload) {
     throw new TypeError("secret & payload required");
@@ -8,7 +31,9 @@ export function sign(secret: string, payload: string | object): string {
 
   payload =
     typeof payload === "string" ? payload : toNormalizedJsonString(payload);
-  return "sha1=" + createHmac("sha1", secret).update(payload).digest("hex");
+  return `${algorithm}=${createHmac(algorithm, secret)
+    .update(payload)
+    .digest("hex")}`;
 }
 
 function toNormalizedJsonString(payload: object) {
