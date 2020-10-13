@@ -26,11 +26,11 @@ export function sign(
   }
   // @ts-ignore throw friendly error message when required options are missing
   if (!secret || !payload) {
-    throw new TypeError("secret & payload required");
+    throw new TypeError("[@octokit/webhooks] secret & payload required");
   }
 
   if (!Object.values(Algorithm).includes(algorithm as Algorithm)) {
-    throw new TypeError("algorithm should be 'sha1' or 'sha256'");
+    throw new TypeError("[@octokit/webhooks] algorithm should be 'sha1' or 'sha256'");
   }
 
   payload =
