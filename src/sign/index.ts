@@ -7,7 +7,7 @@ export enum Algorithm {
 
 type SignOptions = {
   secret: string;
-  algorithm?: Algorithm;
+  algorithm?: string;
 };
 
 export function sign(
@@ -27,6 +27,10 @@ export function sign(
   // @ts-ignore throw friendly error message when required options are missing
   if (!secret || !payload) {
     throw new TypeError("secret & payload required");
+  }
+
+  if (!Object.values(Algorithm).includes(algorithm as Algorithm)) {
+    throw new TypeError("algorithm should be 'sha1' or 'sha256'");
   }
 
   payload =

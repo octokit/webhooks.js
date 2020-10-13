@@ -1,4 +1,4 @@
-import { sign, Algorithm } from "../../src/sign";
+import { sign } from "../../src/sign";
 
 const eventPayload = {
   foo: "bar",
@@ -20,6 +20,13 @@ test("sign(secret) without eventPayload throws", () => {
   expect(() => sign.bind(null, secret)()).toThrow();
 });
 
+test("sign({secret, algorithm}) with an invalit algorithm throws", () => {
+  // @ts-ignore
+  expect(() =>
+    sign.bind(null, { secret, algorithm: "sha2" }, eventPayload)()
+  ).toThrow();
+});
+
 describe("with eventPayload as object", () => {
   describe("resturns expected sha1 signature", () => {
     test("sign(secret, eventPayload)", () => {
@@ -33,20 +40,14 @@ describe("with eventPayload as object", () => {
     });
 
     test("sign({secret, sha1}, eventPayload)", () => {
-      const signature = sign(
-        { secret, algorithm: Algorithm.SHA1 },
-        eventPayload
-      );
+      const signature = sign({ secret, algorithm: "sha1" }, eventPayload);
       expect(signature).toBe("sha1=d03207e4b030cf234e3447bac4d93add4c6643d8");
     });
   });
 
   describe("resturns expected sha256 signature", () => {
     test("sign({secret, algorithm}, eventPayload)", () => {
-      const signature = sign(
-        { secret, algorithm: Algorithm.SHA256 },
-        eventPayload
-      );
+      const signature = sign({ secret, algorithm: "sha256" }, eventPayload);
       expect(signature).toBe(
         "sha256=4864d2759938a15468b5df9ade20bf161da9b4f737ea61794142f3484236bda3"
       );
@@ -68,7 +69,7 @@ describe("with eventPayload as string", () => {
 
     test("sign({secret, sha1}, eventPayload)", () => {
       const signature = sign(
-        { secret, algorithm: Algorithm.SHA1 },
+        { secret, algorithm: "sha1" },
         JSON.stringify(eventPayload)
       );
       expect(signature).toBe("sha1=d03207e4b030cf234e3447bac4d93add4c6643d8");
@@ -78,7 +79,7 @@ describe("with eventPayload as string", () => {
   describe("resturns expected sha256 signature", () => {
     test("sign({secret, algorithm}, eventPayload)", () => {
       const signature = sign(
-        { secret, algorithm: Algorithm.SHA256 },
+        { secret, algorithm: "sha256" },
         JSON.stringify(eventPayload)
       );
       expect(signature).toBe(
