@@ -59,7 +59,7 @@ export interface EventTypesPayload {
   ${eventPayloadMapping.map(([name, type]) => `"${name}": ${type}`).join(`,\n`)}
 }
 
-export type Events = keyof EventTypesPayload
+export type WebhooksEvents = keyof EventTypesPayload
 `;
 
 generateFile(

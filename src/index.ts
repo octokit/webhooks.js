@@ -12,17 +12,17 @@ import {
   HandlerFunction,
 } from "./types";
 import { IncomingMessage, ServerResponse } from "http";
-import { Events } from "./generated/get-webhook-payload-type-from-event";
+import { WebhooksEvents } from "./generated/get-webhook-payload-type-from-event";
 
 // U holds the return value of `transform` function in Options
 class Webhooks<T extends WebhookEvent = WebhookEvent, U = {}> {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload?: object, signature?: string) => boolean;
-  public on: <E extends Events>(
+  public on: <E extends WebhooksEvents>(
     event: E | E[],
     callback: HandlerFunction<E, U>
   ) => void;
-  public removeListener: <E extends Events>(
+  public removeListener: <E extends WebhooksEvents>(
     event: E | E[],
     callback: HandlerFunction<E, U>
   ) => void;
@@ -65,7 +65,7 @@ class Webhooks<T extends WebhookEvent = WebhookEvent, U = {}> {
 const createWebhooksApi = Webhooks.prototype.constructor;
 
 export { EventPayloads } from "./generated/event-payloads";
-export { Events } from "./generated/get-webhook-payload-type-from-event";
+export { WebhooksEvents } from "./generated/get-webhook-payload-type-from-event";
 
 export {
   createEventHandler,
