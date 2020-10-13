@@ -20,6 +20,14 @@ export function receiverOn(
     );
   }
 
+  if (webhookNameOrNames === "*" || webhookNameOrNames === "error") {
+    console.warn(
+      `Using the "${webhookNameOrNames}" event with the regular Webhooks.on() function is deprecated. Please use either the Webhooks.on${
+        webhookNameOrNames.charAt(0).toUpperCase() + webhookNameOrNames.slice(1)
+      } method instead`
+    );
+  }
+
   if (!state.hooks[webhookNameOrNames]) {
     state.hooks[webhookNameOrNames] = [];
   }
