@@ -65,6 +65,7 @@ export default async function () {
     path: "/github-webhooks",
   });
 
+  sign("randomSecret", {});
   sign({ secret: "randomSecret" }, {});
   sign({ secret: "randomSecret", algorithm: "sha1" }, {});
   sign({ secret: "randomSecret", algorithm: "sha256" }, {});
@@ -151,5 +152,3 @@ export function webhookErrorTestDeprecated(error: WebhookError) {
   console.log(event);
   console.log(request);
 }
-
-sign("randomSecret", {});
