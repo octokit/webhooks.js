@@ -14,16 +14,14 @@ export function sign(
   options: SignOptions | string,
   payload: string | object
 ): string {
-  let secret;
-  let algorithm;
+  const { secret, algorithm } =
+    typeof options === "string"
+      ? { secret: options, algorithm: Algorithm.SHA1 }
+      : {
+          secret: options.secret,
+          algorithm: options.algorithm || Algorithm.SHA1,
+        };
 
-  if (typeof options === "string") {
-    secret = options;
-    algorithm = Algorithm.SHA1;
-  } else {
-    secret = options.secret;
-    algorithm = options.algorithm || Algorithm.SHA1;
-  }
   // @ts-ignore throw friendly error message when required options are missing
   if (!secret || !payload) {
     throw new TypeError("[@octokit/webhooks] secret & payload required");
@@ -31,7 +29,7 @@ export function sign(
 
   if (!Object.values(Algorithm).includes(algorithm as Algorithm)) {
     throw new TypeError(
-      "[@octokit/webhooks] algorithm should be 'sha1' or 'sha256'"
+      `[@octokit/webhooks] Algorithm ${algorithm} is not supported. Must be  'sha1' or 'sha256'`
     );
   }
 
