@@ -8,7 +8,7 @@ import {
   EventPayloads,
   WebhookEvent,
   WebhookError,
-  WebhooksEvents,
+  WebhookEvents,
 } from "../src/index";
 import { createServer } from "http";
 
@@ -24,7 +24,7 @@ const myWebhook: WebhookEvent<{ foo: string }> = {
   },
 };
 
-const myEventName: WebhooksEvents = "check_run.completed";
+const myEventName: WebhookEvents = "check_run.completed";
 
 const myEvenTPayload: EventPayloads.WebhookPayloadCheckRunCheckRunOutput = {
   annotations_count: 0,

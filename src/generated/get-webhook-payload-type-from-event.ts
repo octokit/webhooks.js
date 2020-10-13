@@ -358,4 +358,4 @@ export interface EventTypesPayload {
   >;
 }
 
-export type WebhooksEvents = keyof EventTypesPayload;
+export type WebhookEvents = keyof EventTypesPayload;

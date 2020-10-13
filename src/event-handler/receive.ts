@@ -8,12 +8,12 @@ import {
   WebhookError,
   WebhookEventHandlerError,
 } from "../types";
-import { WebhooksEvents } from "../generated/get-webhook-payload-type-from-event";
+import { WebhookEvents } from "../generated/get-webhook-payload-type-from-event";
 
 function getHooks(
   state: State,
   eventPayloadAction: string,
-  eventName: WebhooksEvents
+  eventName: WebhookEvents
 ): Function[] {
   const hooks = [state.hooks[`${eventName}.${eventPayloadAction}`]];
 
