@@ -22,7 +22,7 @@ export function sign(
     algorithm = Algorithm.SHA1;
   } else {
     secret = options.secret;
-    algorithm = options.algorithm ?? Algorithm.SHA1;
+    algorithm = options.algorithm || Algorithm.SHA1;
   }
   // @ts-ignore throw friendly error message when required options are missing
   if (!secret || !payload) {
