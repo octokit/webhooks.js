@@ -1,7 +1,7 @@
 import { createEventHandler } from "../../src/event-handler";
 import pushEventPayload from "../fixtures/push-payload.json";
 import installationCreatedPayload from "../fixtures/installation-created-payload.json";
-import { WebhookError, WebhookEvent } from "../../src/types";
+import { WebhookEvent, WebhookEventHandlerError } from "../../src/types";
 
 test("events", (done) => {
   const eventHandler = createEventHandler({});
@@ -38,6 +38,7 @@ test("events", (done) => {
   eventHandler.on("installation", hook5);
   eventHandler.on("installation.created", hook6);
   eventHandler.on("*", hook7);
+  eventHandler.onAny(hook7);
 
   eventHandler.removeListener("push", hook3);
   eventHandler.removeListener(["push"], hook4);
@@ -68,7 +69,13 @@ test("events", (done) => {
         "* (installation)",
       ]);
 
-      eventHandler.on("error", (error: WebhookError) => {
+      eventHandler.on("error", (error: WebhookEventHandlerError) => {
+        expect(error.event.payload).toBeTruthy();
+        // t.pass("error event triggered");
+        expect(error.message).toMatch(/oops/);
+      });
+
+      eventHandler.onError((error: WebhookEventHandlerError) => {
         expect(error.event.payload).toBeTruthy();
         // t.pass("error event triggered");
         expect(error.message).toMatch(/oops/);

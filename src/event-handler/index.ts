@@ -14,6 +14,8 @@ export function createEventHandler(options: Options<any>) {
 
   return {
     on: on.bind(null, state),
+    onAny: on.bind(null, state).bind(null, "*"),
+    onError: on.bind(null, state).bind(null, "error"),
     removeListener: removeListener.bind(null, state),
     receive: receive.bind(null, state),
   };
