@@ -37,7 +37,6 @@ test("events", (done) => {
   eventHandler.on(["push"], hook4);
   eventHandler.on("installation", hook5);
   eventHandler.on("installation.created", hook6);
-  eventHandler.on("*", hook7);
   eventHandler.onAny(hook7);
 
   eventHandler.removeListener("push", hook3);
@@ -68,12 +67,6 @@ test("events", (done) => {
         "installation",
         "* (installation)",
       ]);
-
-      eventHandler.on("error", (error: WebhookEventHandlerError) => {
-        expect(error.event.payload).toBeTruthy();
-        // t.pass("error event triggered");
-        expect(error.message).toMatch(/oops/);
-      });
 
       eventHandler.onError((error: WebhookEventHandlerError) => {
         expect(error.event.payload).toBeTruthy();
