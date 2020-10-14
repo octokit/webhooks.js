@@ -5,6 +5,7 @@ The `sign` method can be used as a standalone method.
 ```js
 const { sign } = require('@octokit/webhooks')
 const signature = sign(secret, eventPayload)
+const signature = sign({ secret, algorithm }, eventPayload)
 // string like "sha1=d03207e4b030cf234e3447bac4d93add4c6643d8"
 ```
 
@@ -12,13 +13,26 @@ const signature = sign(secret, eventPayload)
   <tr>
     <td>
       <code>
-        options.secret
+        secret
       </code>
       <em>(String)</em>
     </td>
     <td>
       <strong>Required.</strong>
       Secret as configured in GitHub Settings.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        algorithm
+      </code>
+      <em>
+        (String)
+      </em>
+    </td>
+    <td>
+      Algorithm to calculate signature. Can be set to `sha1` or `sha256`. Defaults to `sha1`.
     </td>
   </tr>
   <tr>
