@@ -284,6 +284,7 @@ export declare module EventPayloads {
     sender: WebhookPayloadWorkflowDispatchSender;
     workflow: string;
   };
+  type WebhookPayloadWatchInstallation = { id: number; node_id: string };
   type WebhookPayloadWatchSender = {
     login: string;
     id: number;
@@ -308,7 +309,9 @@ export declare module EventPayloads {
     action: string;
     repository: PayloadRepository;
     sender: WebhookPayloadWatchSender;
+    installation?: WebhookPayloadWatchInstallation;
   };
+  type WebhookPayloadTeamAddInstallation = { id: number; node_id: string };
   type WebhookPayloadTeamAddSender = {
     login: string;
     id: number;
@@ -361,6 +364,7 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     organization: WebhookPayloadTeamAddOrganization;
     sender: WebhookPayloadTeamAddSender;
+    installation?: WebhookPayloadTeamAddInstallation;
   };
   type WebhookPayloadTeamChanges = {};
   type WebhookPayloadTeamSender = {
@@ -423,6 +427,7 @@ export declare module EventPayloads {
     sender: WebhookPayloadTeamSender;
     changes?: WebhookPayloadTeamChanges;
   };
+  type WebhookPayloadStatusInstallation = { id: number; node_id: string };
   type WebhookPayloadStatusSender = {
     login: string;
     id: number;
@@ -540,6 +545,7 @@ export declare module EventPayloads {
     updated_at: string;
     repository: PayloadRepository;
     sender: WebhookPayloadStatusSender;
+    installation?: WebhookPayloadStatusInstallation;
   };
   type WebhookPayloadStarSender = {
     login: string;
@@ -803,6 +809,7 @@ export declare module EventPayloads {
     organization: WebhookPayloadRepositoryImportOrganization;
     sender: WebhookPayloadRepositoryImportSender;
   };
+  type WebhookPayloadRepositoryInstallation = { id: number; node_id: string };
   type WebhookPayloadRepositoryOrganization = {
     login: string;
     id: number;
@@ -842,6 +849,7 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadRepositorySender;
     organization?: WebhookPayloadRepositoryOrganization;
+    installation?: WebhookPayloadRepositoryInstallation;
   };
   type WebhookPayloadRepositoryDispatchInstallation = {
     id: number;
@@ -891,6 +899,7 @@ export declare module EventPayloads {
     sender: WebhookPayloadRepositoryDispatchSender;
     installation: WebhookPayloadRepositoryDispatchInstallation;
   };
+  type WebhookPayloadReleaseInstallation = { id: number; node_id: string };
   type WebhookPayloadReleaseSender = {
     login: string;
     id: number;
@@ -956,6 +965,7 @@ export declare module EventPayloads {
     release: WebhookPayloadReleaseRelease;
     repository: PayloadRepository;
     sender: WebhookPayloadReleaseSender;
+    installation?: WebhookPayloadReleaseInstallation;
   };
   type WebhookPayloadPushOrganization = {
     login: string;
@@ -988,6 +998,7 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  type WebhookPayloadPushInstallation = { id: number; node_id: string };
   type WebhookPayloadPushSender = {
     login: string;
     id: number;
@@ -1023,6 +1034,7 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     pusher: WebhookPayloadPushPusher;
     sender: WebhookPayloadPushSender;
+    installation?: WebhookPayloadPushInstallation;
     organization?: WebhookPayloadPushOrganization;
   };
   type WebhookPayloadPullRequestReviewCommentOrganization = {
@@ -2565,6 +2577,7 @@ export declare module EventPayloads {
     organization?: WebhookPayloadPullRequestOrganization;
     label?: WebhookPayloadPullRequestLabel;
   };
+  type WebhookPayloadPublicInstallation = { id: number; node_id: string };
   type WebhookPayloadPublicSender = {
     login: string;
     id: number;
@@ -2588,7 +2601,9 @@ export declare module EventPayloads {
   type WebhookPayloadPublic = {
     repository: PayloadRepository;
     sender: WebhookPayloadPublicSender;
+    installation?: WebhookPayloadPublicInstallation;
   };
+  type WebhookPayloadProjectInstallation = { id: number; node_id: string };
   type WebhookPayloadProjectSender = {
     login: string;
     id: number;
@@ -2649,6 +2664,11 @@ export declare module EventPayloads {
     project: WebhookPayloadProjectProject;
     repository: PayloadRepository;
     sender: WebhookPayloadProjectSender;
+    installation?: WebhookPayloadProjectInstallation;
+  };
+  type WebhookPayloadProjectColumnInstallation = {
+    id: number;
+    node_id: string;
   };
   type WebhookPayloadProjectColumnSender = {
     login: string;
@@ -2685,6 +2705,7 @@ export declare module EventPayloads {
     project_column: WebhookPayloadProjectColumnProjectColumn;
     repository: PayloadRepository;
     sender: WebhookPayloadProjectColumnSender;
+    installation?: WebhookPayloadProjectColumnInstallation;
   };
   type WebhookPayloadProjectCardOrganization = {
     login: string;
@@ -2717,6 +2738,7 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  type WebhookPayloadProjectCardInstallation = { id: number; node_id: string };
   type WebhookPayloadProjectCardSender = {
     login: string;
     id: number;
@@ -2775,6 +2797,7 @@ export declare module EventPayloads {
     project_card: WebhookPayloadProjectCardProjectCard;
     repository: PayloadRepository;
     sender: WebhookPayloadProjectCardSender;
+    installation?: WebhookPayloadProjectCardInstallation;
     organization?: WebhookPayloadProjectCardOrganization;
   };
   type WebhookPayloadPingSender = {
@@ -2828,6 +2851,7 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadPingSender;
   };
+  type WebhookPayloadPageBuildInstallation = { id: number; node_id: string };
   type WebhookPayloadPageBuildSender = {
     login: string;
     id: number;
@@ -2884,6 +2908,7 @@ export declare module EventPayloads {
     build: WebhookPayloadPageBuildBuild;
     repository: PayloadRepository;
     sender: WebhookPayloadPageBuildSender;
+    installation?: WebhookPayloadPageBuildInstallation;
   };
   type WebhookPayloadPackageSender = {
     login: string;
@@ -3038,6 +3063,7 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadPackageSender;
   };
+  type WebhookPayloadOrgBlockInstallation = { id: number; node_id: string };
   type WebhookPayloadOrgBlockSender = {
     login: string;
     id: number;
@@ -3097,7 +3123,9 @@ export declare module EventPayloads {
     blocked_user: WebhookPayloadOrgBlockBlockedUser;
     organization: WebhookPayloadOrgBlockOrganization;
     sender: WebhookPayloadOrgBlockSender;
+    installation?: WebhookPayloadOrgBlockInstallation;
   };
+  type WebhookPayloadOrganizationInstallation = { id: number; node_id: string };
   type WebhookPayloadOrganizationSender = {
     login: string;
     id: number;
@@ -3164,7 +3192,9 @@ export declare module EventPayloads {
     membership: WebhookPayloadOrganizationMembership;
     organization: WebhookPayloadOrganizationOrganization;
     sender: WebhookPayloadOrganizationSender;
+    installation?: WebhookPayloadOrganizationInstallation;
   };
+  type WebhookPayloadMilestoneInstallation = { id: number; node_id: string };
   type WebhookPayloadMilestoneSender = {
     login: string;
     id: number;
@@ -3228,6 +3258,7 @@ export declare module EventPayloads {
     milestone: WebhookPayloadMilestoneMilestone;
     repository: PayloadRepository;
     sender: WebhookPayloadMilestoneSender;
+    installation?: WebhookPayloadMilestoneInstallation;
   };
   type WebhookPayloadMetaSender = {
     login: string;
@@ -3271,6 +3302,7 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadMetaSender;
   };
+  type WebhookPayloadMembershipInstallation = { id: number; node_id: string };
   type WebhookPayloadMembershipOrganization = {
     login: string;
     id: number;
@@ -3345,11 +3377,13 @@ export declare module EventPayloads {
     sender: WebhookPayloadMembershipSender;
     team: WebhookPayloadMembershipTeam;
     organization: WebhookPayloadMembershipOrganization;
+    installation?: WebhookPayloadMembershipInstallation;
   };
   type WebhookPayloadMemberChangesPermission = { from: string };
   type WebhookPayloadMemberChanges = {
     permission: WebhookPayloadMemberChangesPermission;
   };
+  type WebhookPayloadMemberInstallation = { id: number; node_id: string };
   type WebhookPayloadMemberSender = {
     login: string;
     id: number;
@@ -3395,6 +3429,7 @@ export declare module EventPayloads {
     member: WebhookPayloadMemberMember;
     repository: PayloadRepository;
     sender: WebhookPayloadMemberSender;
+    installation?: WebhookPayloadMemberInstallation;
     changes?: WebhookPayloadMemberChanges;
   };
   type WebhookPayloadMarketplacePurchasePreviousMarketplacePurchasePlan = {
@@ -3477,6 +3512,7 @@ export declare module EventPayloads {
   };
   type WebhookPayloadLabelChangesColor = { from: string };
   type WebhookPayloadLabelChanges = { color: WebhookPayloadLabelChangesColor };
+  type WebhookPayloadLabelInstallation = { id: number; node_id: string };
   type WebhookPayloadLabelSender = {
     login: string;
     id: number;
@@ -3510,6 +3546,7 @@ export declare module EventPayloads {
     label: WebhookPayloadLabelLabel;
     repository: PayloadRepository;
     sender: WebhookPayloadLabelSender;
+    installation?: WebhookPayloadLabelInstallation;
     changes?: WebhookPayloadLabelChanges;
   };
   type WebhookPayloadIssuesLabel = {
@@ -3557,6 +3594,7 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  type WebhookPayloadIssuesInstallation = { id: number; node_id: string };
   type WebhookPayloadIssuesAssignee = {
     login: string;
     id: number;
@@ -3737,6 +3775,7 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadIssuesSender;
     assignee?: WebhookPayloadIssuesAssignee;
+    installation?: WebhookPayloadIssuesInstallation;
     organization?: WebhookPayloadIssuesOrganization;
     label?: WebhookPayloadIssuesLabel;
   };
@@ -3744,6 +3783,7 @@ export declare module EventPayloads {
   type WebhookPayloadIssueCommentChanges = {
     body: WebhookPayloadIssueCommentChangesBody;
   };
+  type WebhookPayloadIssueCommentInstallation = { id: number; node_id: string };
   type WebhookPayloadIssueCommentOrganization = {
     login: string;
     id: number;
@@ -3965,6 +4005,7 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadIssueCommentSender;
     organization?: WebhookPayloadIssueCommentOrganization;
+    installation?: WebhookPayloadIssueCommentInstallation;
     changes?: WebhookPayloadIssueCommentChanges;
   };
   type WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem = {
@@ -4145,6 +4186,7 @@ export declare module EventPayloads {
     repositories: Array<WebhookPayloadInstallationRepositoriesItem>;
     sender: WebhookPayloadInstallationSender;
   };
+  type WebhookPayloadGollumInstallation = { id: number; node_id: string };
   type WebhookPayloadGollumSender = {
     login: string;
     id: number;
@@ -4177,6 +4219,7 @@ export declare module EventPayloads {
     pages: Array<WebhookPayloadGollumPagesItem>;
     repository: PayloadRepository;
     sender: WebhookPayloadGollumSender;
+    installation?: WebhookPayloadGollumInstallation;
   };
   type WebhookPayloadGithubAppAuthorizationSender = {
     login: string;
@@ -4202,6 +4245,7 @@ export declare module EventPayloads {
     action: string;
     sender: WebhookPayloadGithubAppAuthorizationSender;
   };
+  type WebhookPayloadForkInstallation = { id: number; node_id: string };
   type WebhookPayloadForkSender = {
     login: string;
     id: number;
@@ -4322,6 +4366,11 @@ export declare module EventPayloads {
     forkee: WebhookPayloadForkForkee;
     repository: PayloadRepository;
     sender: WebhookPayloadForkSender;
+    installation?: WebhookPayloadForkInstallation;
+  };
+  type WebhookPayloadDeploymentStatusInstallation = {
+    id: number;
+    node_id: string;
   };
   type WebhookPayloadDeploymentStatusSender = {
     login: string;
@@ -4421,7 +4470,9 @@ export declare module EventPayloads {
     deployment: WebhookPayloadDeploymentStatusDeployment;
     repository: PayloadRepository;
     sender: WebhookPayloadDeploymentStatusSender;
+    installation?: WebhookPayloadDeploymentStatusInstallation;
   };
+  type WebhookPayloadDeploymentInstallation = { id: number; node_id: string };
   type WebhookPayloadDeploymentSender = {
     login: string;
     id: number;
@@ -4485,6 +4536,7 @@ export declare module EventPayloads {
     deployment: WebhookPayloadDeploymentDeployment;
     repository: PayloadRepository;
     sender: WebhookPayloadDeploymentSender;
+    installation?: WebhookPayloadDeploymentInstallation;
   };
   type WebhookPayloadDeployKeySender = {
     login: string;
@@ -4552,6 +4604,7 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  type WebhookPayloadDeleteInstallation = { id: number; node_id: string };
   type WebhookPayloadDeleteSender = {
     login: string;
     id: number;
@@ -4578,6 +4631,7 @@ export declare module EventPayloads {
     pusher_type: string;
     repository: PayloadRepository;
     sender: WebhookPayloadDeleteSender;
+    installation?: WebhookPayloadDeleteInstallation;
     organization?: WebhookPayloadDeleteOrganization;
   };
   type WebhookPayloadCreateOrganization = {
@@ -4611,6 +4665,7 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  type WebhookPayloadCreateInstallation = { id: number; node_id: string };
   type WebhookPayloadCreateSender = {
     login: string;
     id: number;
@@ -4639,6 +4694,7 @@ export declare module EventPayloads {
     pusher_type: string;
     repository: PayloadRepository;
     sender: WebhookPayloadCreateSender;
+    installation?: WebhookPayloadCreateInstallation;
     organization?: WebhookPayloadCreateOrganization;
   };
   type WebhookPayloadContentReferenceInstallation = {
@@ -4676,6 +4732,10 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadContentReferenceSender;
     installation: WebhookPayloadContentReferenceInstallation;
+  };
+  type WebhookPayloadCommitCommentInstallation = {
+    id: number;
+    node_id: string;
   };
   type WebhookPayloadCommitCommentOrganization = {
     login: string;
@@ -4769,6 +4829,11 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadCommitCommentSender;
     organization?: WebhookPayloadCommitCommentOrganization;
+    installation?: WebhookPayloadCommitCommentInstallation;
+  };
+  type WebhookPayloadCodeScanningAlertInstallation = {
+    id: number;
+    node_id: string;
   };
   type WebhookPayloadCodeScanningAlertOrganization = {
     login: string;
@@ -4819,6 +4884,7 @@ export declare module EventPayloads {
     commit_oid: string;
     repository: PayloadRepository;
     organization: WebhookPayloadCodeScanningAlertOrganization;
+    installation?: WebhookPayloadCodeScanningAlertInstallation;
   };
   type WebhookPayloadCheckSuiteInstallation = { id: number; node_id: string };
   type WebhookPayloadCheckSuiteOrganization = {
@@ -4995,7 +5061,7 @@ export declare module EventPayloads {
     organization?: WebhookPayloadCheckSuiteOrganization;
     installation?: WebhookPayloadCheckSuiteInstallation;
   };
-  type WebhookPayloadCheckRunInstallation = { id: number };
+  type WebhookPayloadCheckRunInstallation = { id: number; node_id: string };
   type WebhookPayloadCheckRunOrganization = {
     login: string;
     id: number;
