@@ -150,6 +150,7 @@ Returns the `webhooks` API.
 
 ```js
 webhooks.sign(secret, eventPayload);
+webhooks.sign({ secret, algorithm }, eventPayload);
 ```
 
 <table width="100%">
@@ -170,44 +171,14 @@ webhooks.sign(secret, eventPayload);
   <tr>
     <td>
       <code>
-        eventPayload
+        algorithm
       </code>
       <em>
-        (Object)
+        (string)
       </em>
     </td>
     <td>
-      <strong>Required.</strong>
-      Webhook request payload as received from GitHub
-    </td>
-  </tr>
-</table>
-
-or
-
-```js
-webhooks.sign({
-  secret: <my_awesome_secret>,
-  algorithm: <"sha1" | "sha256">
-}, eventPayload);
-```
-
-<table width="100%">
-  <tr>
-    <td>
-      <code>
-        options
-      </code>
-      <em>
-        (Object)
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong> secret to generated the signature
-      algorithm: secret to generated the signature
-    </td>
-    <td>
-      algorithm to be applied when encrypting (sha1 by default)
+      Algorithm to calculate signature. Can be set to `sha1` or `sha256`. Defaults to `sha1`.
     </td>
   </tr>
   <tr>
