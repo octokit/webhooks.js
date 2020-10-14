@@ -3,7 +3,7 @@ import { Buffer } from "buffer";
 import { sign } from "../sign/index";
 
 const getAlgorithm = (signature: string) => {
-  return signature.startsWith("sha256=")? "sha256" : "sha1";
+  return signature.startsWith("sha256=") ? "sha256" : "sha1";
 };
 
 export function verify(
