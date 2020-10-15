@@ -87,6 +87,41 @@ describe("server-test", () => {
       .finally(() => server.close(t));
   });
 
+  test("POST / with push event payload with only sha1", (t) => {
+    expect.assertions(2);
+
+    const api = new Webhooks({
+      secret: "mysecret",
+    });
+    const server = http.createServer(api.middleware);
+
+    api.on("push", (event) => {
+      expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
+    });
+
+    promisify(server.listen.bind(server))(availablePort)
+
+      .then(() => {
+        return axios.post(
+          `http://localhost:${availablePort}`,
+          pushEventPayload,
+          {
+            headers: {
+              "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+              "X-GitHub-Event": "push",
+              "X-Hub-Signature": signatureSha1,
+            },
+          }
+        );
+      })
+
+      .then((result: AxiosResponse) => {
+        expect(result.status).toBe(200);
+      })
+      .catch((e) => expect(e instanceof Error).toBeTruthy())
+      .finally(() => server.close(t));
+  });
+
   test("POST / with push event payload", (t) => {
     expect.assertions(2);
 
