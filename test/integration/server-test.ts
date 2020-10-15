@@ -6,6 +6,10 @@ import { promisify } from "util";
 import { Webhooks } from "../../src";
 import pushEventPayload from "../fixtures/push-payload.json";
 
+const signatureSha1 = "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f";
+const signatureSha256 =
+  "sha256=4864d2759938a15468b5df9ade20bf161da9b4f737ea61794142f3484236bda3";
+
 describe("server-test", () => {
   let availablePort: number;
 
@@ -47,6 +51,42 @@ describe("server-test", () => {
       .finally(() => server.close(t));
   });
 
+  test("POST / with push event payload with wrong sha1 but right sha256", (t) => {
+    expect.assertions(2);
+
+    const api = new Webhooks({
+      secret: "mysecret",
+    });
+    const server = http.createServer(api.middleware);
+
+    api.on("push", (event) => {
+      expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
+    });
+
+    promisify(server.listen.bind(server))(availablePort)
+
+      .then(() => {
+        return axios.post(
+          `http://localhost:${availablePort}`,
+          pushEventPayload,
+          {
+            headers: {
+              "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+              "X-GitHub-Event": "push",
+              "X-Hub-Signature": signatureSha1,
+              "X-Hub-Signature-256": signatureSha256,
+            },
+          }
+        );
+      })
+
+      .then((result: AxiosResponse) => {
+        expect(result.status).toBe(200);
+      })
+      .catch((e) => expect(e instanceof Error).toBeTruthy())
+      .finally(() => server.close(t));
+  });
+
   test("POST / with push event payload", (t) => {
     expect.assertions(2);
 
@@ -69,8 +109,8 @@ describe("server-test", () => {
             headers: {
               "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
               "X-GitHub-Event": "push",
-              "X-Hub-Signature":
-                "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+              "X-Hub-Signature": "sha1=foo",
+              "X-Hub-Signature-256": signatureSha256,
             },
           }
         );
@@ -120,8 +160,8 @@ describe("server-test", () => {
             headers: {
               "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
               "X-GitHub-Event": "push",
-              "X-Hub-Signature":
-                "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+              "X-Hub-Signature": signatureSha1,
+              "X-Hub-Signature-256": signatureSha256,
             },
           }
         );
@@ -190,6 +230,7 @@ describe("server-test", () => {
               "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
               "X-GitHub-Event": "push",
               "X-Hub-Signature": "sha1=foo",
+              "X-Hub-Signature-256": "sha256=foo",
             },
           }
         );
@@ -227,8 +268,8 @@ describe("server-test", () => {
             headers: {
               "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
               "X-GitHub-Event": "push",
-              "X-Hub-Signature":
-                "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+              "X-Hub-Signature": signatureSha1,
+              "X-Hub-Signature-256": signatureSha256,
             },
           }
         );
@@ -271,8 +312,8 @@ describe("server-test", () => {
             headers: {
               "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
               "X-GitHub-Event": "push",
-              "X-Hub-Signature":
-                "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+              "X-Hub-Signature": signatureSha1,
+              "X-Hub-Signature-256": signatureSha256,
             },
           }
         );
