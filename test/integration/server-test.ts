@@ -73,7 +73,7 @@ describe("server-test", () => {
             headers: {
               "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
               "X-GitHub-Event": "push",
-              "X-Hub-Signature": signatureSha1,
+              "X-Hub-Signature": "ignored",
               "X-Hub-Signature-256": signatureSha256,
             },
           }
