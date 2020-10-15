@@ -8,7 +8,7 @@ import pushEventPayload from "../fixtures/push-payload.json";
 
 const signatureSha1 = "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f";
 const signatureSha256 =
-  "sha256=4864d2759938a15468b5df9ade20bf161da9b4f737ea61794142f3484236bda3";
+  "sha256=2b49327af77d51c4c23700118b11d15c81d90c3bd57dafbbe32eb50085ce67e0";
 
 describe("server-test", () => {
   let availablePort: number;
