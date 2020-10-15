@@ -42,7 +42,8 @@ export function middleware(
   }
 
   const eventName = request.headers["x-github-event"] as WebhookEvents;
-  const signature = request.headers["x-hub-signature"] as string;
+  const signatureSHA1 = request.headers["x-hub-signature"] as string;
+  const signatureSHA256 = request.headers["x-hub-signature-256"] as string;
   const id = request.headers["x-github-delivery"] as string;
 
   debugWebhooks(`${eventName} event received (id: ${id})`);
@@ -62,7 +63,7 @@ export function middleware(
         id: id,
         name: eventName,
         payload,
-        signature,
+        signature: signatureSHA256 || signatureSHA1,
       });
     })
 
