@@ -8,19 +8,19 @@ const signatureSHA1 = "sha1=d03207e4b030cf234e3447bac4d93add4c6643d8";
 const signatureSHA256 =
   "sha256=4864d2759938a15468b5df9ade20bf161da9b4f737ea61794142f3484236bda3";
 
-test("verify() without options", () => {
+test("verify() without options throws", () => {
   expect(() => verify()).toThrow();
 });
 
-test("verify(undefined, eventPayload) without secret", () => {
+test("verify(undefined, eventPayload) without secret throws", () => {
   expect(() => verify.bind(null, undefined, eventPayload)()).toThrow();
 });
 
-test("verify(secret) without eventPayload", () => {
+test("verify(secret) without eventPayload throws", () => {
   expect(() => verify.bind(null, secret)()).toThrow();
 });
 
-test("verify(secret, eventPayload) without options.signature", () => {
+test("verify(secret, eventPayload) without options.signature throws", () => {
   expect(() => verify.bind(null, secret, eventPayload)()).toThrow();
 });
 
@@ -39,7 +39,7 @@ test("verify(secret, eventPayload, signatureSHA1) returns false for correct secr
   expect(signatureMatches).toBe(false);
 });
 
-test("verify(secret, eventPayload, signatureSHA1) returns true if eventPayload contains (#71)", () => {
+test("verify(secret, eventPayload, signatureSHA1) returns true if eventPayload contains special characters (#71)", () => {
   // https://github.com/octokit/webhooks.js/issues/71
   const signatureMatchesLowerCaseSequence = verify(
     "development",
