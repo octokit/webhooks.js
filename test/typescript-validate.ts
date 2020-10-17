@@ -72,7 +72,14 @@ export default async function () {
 
   verify("randomSecret", {}, "randomSignature");
 
+  // This is deprecated usage
   webhooks.on("*", ({ id, name, payload }) => {
+    console.log(name, "event received");
+    const sig = webhooks.sign(payload);
+    webhooks.verify(payload, sig);
+  });
+
+  webhooks.onAny(({ id, name, payload }) => {
     console.log(name, "event received");
     const sig = webhooks.sign(payload);
     webhooks.verify(payload, sig);
@@ -127,7 +134,16 @@ export default async function () {
     console.log(event.foo);
   });
 
+  // This is deprecated usage
   webhooks.on("error", (error) => {
+    console.log(error.event.name);
+    const [firstError] = Array.from(error);
+    console.log(firstError.status);
+    console.log(firstError.headers);
+    console.log(firstError.request);
+  });
+
+  webhooks.onError((error) => {
     console.log(error.event.name);
     const [firstError] = Array.from(error);
     console.log(firstError.status);

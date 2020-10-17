@@ -1,7 +1,18 @@
 import { WebhookEvents } from "../generated/get-webhook-payload-type-from-event";
 import { webhookNames } from "../generated/webhook-names";
-import { State } from "../types";
+import { State, WebhookEvent, WebhookEventHandlerError } from "../types";
 
+function handleEventHandlers(
+  state: State,
+  webhookName: WebhookEvents,
+  handler: Function
+) {
+  if (!state.hooks[webhookName]) {
+    state.hooks[webhookName] = [];
+  }
+
+  state.hooks[webhookName].push(handler);
+}
 export function receiverOn(
   state: State,
   webhookNameOrNames: WebhookEvents | WebhookEvents[],
@@ -20,9 +31,28 @@ export function receiverOn(
     );
   }
 
-  if (!state.hooks[webhookNameOrNames]) {
-    state.hooks[webhookNameOrNames] = [];
+  if (webhookNameOrNames === "*" || webhookNameOrNames === "error") {
+    const webhookName = webhookNameOrNames === "*" ? "any" : webhookNameOrNames;
+    console.warn(
+      `Using the "${webhookNameOrNames}" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.on${
+        webhookName.charAt(0).toUpperCase() + webhookName.slice(1)
+      }() method instead`
+    );
   }
 
-  state.hooks[webhookNameOrNames].push(handler);
+  handleEventHandlers(state, webhookNameOrNames, handler);
+}
+
+export function receiverOnAny(
+  state: State,
+  handler: (event: WebhookEvent<any>) => any
+) {
+  handleEventHandlers(state, "*", handler);
+}
+
+export function receiverOnError(
+  state: State,
+  handler: (event: WebhookEventHandlerError) => any
+) {
+  handleEventHandlers(state, "error", handler);
 }

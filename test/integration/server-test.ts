@@ -217,7 +217,7 @@ describe("server-test", () => {
     });
     const server = http.createServer(api.middleware);
     const errorHandler = jest.fn();
-    api.on("error", errorHandler);
+    api.onError(errorHandler);
 
     promisify(server.listen.bind(server))(availablePort)
 
@@ -252,7 +252,7 @@ describe("server-test", () => {
     });
     const server = http.createServer(api.middleware);
     const errorHandler = jest.fn();
-    api.on("error", errorHandler);
+    api.onError(errorHandler);
 
     promisify(server.listen.bind(server))(availablePort)
 

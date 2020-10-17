@@ -9,6 +9,7 @@ import {
   State,
   WebhookEvent,
   WebhookError,
+  WebhookEventHandlerError,
   HandlerFunction,
 } from "./types";
 import { IncomingMessage, ServerResponse } from "http";
@@ -22,6 +23,8 @@ class Webhooks<T extends WebhookEvent = WebhookEvent, U = {}> {
     event: E | E[],
     callback: HandlerFunction<E, U>
   ) => void;
+  public onAny: (callback: (event: WebhookEvent<any>) => any) => void;
+  public onError: (callback: (event: WebhookEventHandlerError) => any) => void;
   public removeListener: <E extends WebhookEvents>(
     event: E | E[],
     callback: HandlerFunction<E, U>
@@ -55,6 +58,8 @@ class Webhooks<T extends WebhookEvent = WebhookEvent, U = {}> {
     this.sign = sign.bind(null, options.secret);
     this.verify = verify.bind(null, options.secret);
     this.on = state.eventHandler.on;
+    this.onAny = state.eventHandler.onAny;
+    this.onError = state.eventHandler.onError;
     this.removeListener = state.eventHandler.removeListener;
     this.receive = state.eventHandler.receive;
     this.middleware = middleware.bind(null, state);
