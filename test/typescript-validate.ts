@@ -66,6 +66,9 @@ export default async function () {
   });
 
   sign("randomSecret", {});
+  sign({ secret: "randomSecret" }, {});
+  sign({ secret: "randomSecret", algorithm: "sha1" }, {});
+  sign({ secret: "randomSecret", algorithm: "sha256" }, {});
 
   verify("randomSecret", {}, "randomSignature");
 

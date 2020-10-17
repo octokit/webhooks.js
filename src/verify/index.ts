@@ -2,6 +2,10 @@ import { timingSafeEqual } from "crypto";
 import { Buffer } from "buffer";
 import { sign } from "../sign/index";
 
+const getAlgorithm = (signature: string) => {
+  return signature.startsWith("sha256=") ? "sha256" : "sha1";
+};
+
 export function verify(
   secret?: string,
   eventPayload?: object,
@@ -12,7 +16,10 @@ export function verify(
   }
 
   const signatureBuffer = Buffer.from(signature);
-  const verificationBuffer = Buffer.from(sign(secret, eventPayload));
+  const algorithm = getAlgorithm(signature);
+  const verificationBuffer = Buffer.from(
+    sign({ secret, algorithm }, eventPayload)
+  );
 
   if (signatureBuffer.length !== verificationBuffer.length) {
     return false;
