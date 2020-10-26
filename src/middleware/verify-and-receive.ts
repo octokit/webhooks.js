@@ -9,7 +9,7 @@ export function verifyAndReceive(
 
   if (!matchesSignature) {
     const error = new Error(
-      "signature does not match event payload and secret"
+      "[@octokit/webhooks] signature does not match event payload and secret"
     );
 
     return state.eventHandler.receive(

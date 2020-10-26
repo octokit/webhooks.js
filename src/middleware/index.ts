@@ -4,7 +4,7 @@ import { Options, State } from "../types";
 
 export function createMiddleware(options: Options<any>) {
   if (!options || !options.secret) {
-    throw new Error("options.secret required");
+    throw new Error("[@octokit/webhooks] options.secret required");
   }
 
   const state: State = {

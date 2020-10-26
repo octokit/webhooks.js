@@ -63,12 +63,12 @@ test("request error", (done) => {
   middleware(requestMock, responseMock).then(() => {
     expect(responseMock.statusCode).toBe(500);
     expect(responseMock.end).toHaveBeenCalledWith(
-      expect.stringContaining("Error: oops")
+      expect.stringContaining("Error: [@octokit/webhooks] oops")
     );
     done();
   });
 
-  const error = new Error("oops");
+  const error = new Error("[@octokit/webhooks] oops");
   requestMock.emit("error", error);
   expect.assertions(2);
 });

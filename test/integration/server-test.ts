@@ -290,7 +290,7 @@ describe("server-test", () => {
     const server = http.createServer(api.middleware);
 
     api.on("push", () => {
-      throw new Error("Oops");
+      throw new Error("[@octokit/webhooks] Oops");
     });
 
     promisify(server.listen.bind(server))(availablePort)

@@ -12,7 +12,9 @@ export function verify(
   signature?: string
 ): boolean {
   if (!secret || !eventPayload || !signature) {
-    throw new TypeError("secret, eventPayload & signature required");
+    throw new TypeError(
+      "[@octokit/webhooks] secret, eventPayload & signature required"
+    );
   }
 
   const signatureBuffer = Buffer.from(signature);

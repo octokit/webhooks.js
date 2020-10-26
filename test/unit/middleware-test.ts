@@ -67,7 +67,9 @@ describe("when does a timeout on retrieving the payload", () => {
 
     mockGetMissingHeaders.mockReturnValueOnce([]);
     mockGetPayload.mockResolvedValueOnce(undefined);
-    mockVerifyAndReceive.mockRejectedValueOnce(new Error("random error"));
+    mockVerifyAndReceive.mockRejectedValueOnce(
+      new Error("[@octokit/webhooks] random error")
+    );
 
     const promiseMiddleware = middleware(
       { hooks: {}, path: "/foo" },
@@ -88,7 +90,7 @@ describe("when does a timeout on retrieving the payload", () => {
     expect(setTimeout).toHaveBeenCalledTimes(1);
     expect(responseMock.end).toHaveBeenCalledWith("still processing\n");
     expect(responseMock.end).not.toHaveBeenCalledWith(
-      new Error("random error").toString()
+      new Error("[@octokit/webhooks] random error").toString()
     );
   });
 

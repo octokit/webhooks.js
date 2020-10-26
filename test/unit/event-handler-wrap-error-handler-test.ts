@@ -8,8 +8,8 @@ test("error thrown in error handler", () => {
   simple.mock(console, "log", messages.push.bind(messages));
   expect(() => {
     wrapErrorHandler(() => {
-      throw new Error("oopsydoopsy");
-    }, new Error("oops"));
+      throw new Error("[@octokit/webhooks] oopsydoopsy");
+    }, new Error(" [@octokit/webhooks]oops"));
   }).not.toThrow();
 
   expect(messages.find((message) => /FATAL/.test(message))).toBeTruthy();
@@ -21,9 +21,9 @@ test("error handler returns rejected Error", () => {
 
   const messages: string[] = [];
   simple.mock(console, "log", messages.push.bind(messages));
-  const promise = Promise.reject(new Error("oopsydoopsy"));
+  const promise = Promise.reject(new Error("[@octokit/webhooks] oopsydoopsy"));
   expect(() =>
-    wrapErrorHandler(() => promise, new Error("oops"))
+    wrapErrorHandler(() => promise, new Error("[@octokit/webhooks] oops"))
   ).not.toThrow();
 
   promise.catch(() => {

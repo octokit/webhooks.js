@@ -31,7 +31,7 @@ const { verify } = require('@octokit/webhooks')
 const secret = 'mysecret'
 
 if (!verify(secret, request.payload, request.headers['x-hub-signature'])) {
-  throw new Error('Signature does not match event payload & secret')
+  throw new Error('[@octokit/webhooks] Signature does not match event payload & secret')
 }
 ```
 
