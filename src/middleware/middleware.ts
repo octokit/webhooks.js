@@ -33,7 +33,9 @@ export function middleware(
 
   const missingHeaders = getMissingHeaders(request).join(", ");
   if (missingHeaders) {
-    const error = new Error(`Required headers missing: ${missingHeaders}`);
+    const error = new Error(
+      `[@octokit/webhooks] Required headers missing: ${missingHeaders}`
+    );
 
     return state.eventHandler.receive(error).catch(() => {
       response.statusCode = 400;

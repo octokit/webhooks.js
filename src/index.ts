@@ -45,7 +45,7 @@ class Webhooks<T extends WebhookEvent = WebhookEvent, U = {}> {
 
   constructor(options?: Options<T>) {
     if (!options || !options.secret) {
-      throw new Error("options.secret required");
+      throw new Error("[@octokit/webhooks] options.secret required");
     }
 
     const state: State = {
