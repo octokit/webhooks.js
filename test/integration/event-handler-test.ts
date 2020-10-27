@@ -75,7 +75,7 @@ test("events", (done) => {
       });
 
       eventHandler.on("push", () => {
-        throw new Error("[@octokit/webhooks] oops");
+        throw new Error("oops");
       });
 
       return eventHandler.receive({
@@ -148,11 +148,11 @@ test("multiple errors in same event handler", (done) => {
   const eventHandler = createEventHandler({});
 
   eventHandler.on("push", () => {
-    throw new Error("[@octokit/webhooks] oops");
+    throw new Error("oops");
   });
 
   eventHandler.on("push", () => {
-    throw new Error("[@octokit/webhooks] oops");
+    throw new Error("oops");
   });
 
   eventHandler
