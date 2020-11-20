@@ -695,18 +695,12 @@ export declare module EventPayloads {
     summary: string;
     description: string;
     severity: string;
-    identifiers: Array<
-      WebhookPayloadSecurityAdvisorySecurityAdvisoryIdentifiersItem
-    >;
-    references: Array<
-      WebhookPayloadSecurityAdvisorySecurityAdvisoryReferencesItem
-    >;
+    identifiers: Array<WebhookPayloadSecurityAdvisorySecurityAdvisoryIdentifiersItem>;
+    references: Array<WebhookPayloadSecurityAdvisorySecurityAdvisoryReferencesItem>;
     published_at: string;
     updated_at: string;
     withdrawn_at: null;
-    vulnerabilities: Array<
-      WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItem
-    >;
+    vulnerabilities: Array<WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItem>;
   };
   type WebhookPayloadSecurityAdvisory = {
     action: string;
@@ -1466,12 +1460,8 @@ export declare module EventPayloads {
     merged_at: null;
     merge_commit_sha: string;
     assignee: null;
-    assignees: Array<
-      WebhookPayloadPullRequestReviewCommentPullRequestAssigneesItem
-    >;
-    requested_reviewers: Array<
-      WebhookPayloadPullRequestReviewCommentPullRequestRequestedReviewersItem
-    >;
+    assignees: Array<WebhookPayloadPullRequestReviewCommentPullRequestAssigneesItem>;
+    requested_reviewers: Array<WebhookPayloadPullRequestReviewCommentPullRequestRequestedReviewersItem>;
     requested_teams: Array<any>;
     labels: Array<WebhookPayloadPullRequestReviewCommentPullRequestLabelsItem>;
     milestone: null;
@@ -1972,9 +1962,7 @@ export declare module EventPayloads {
     merge_commit_sha: string;
     assignee: null;
     assignees: Array<WebhookPayloadPullRequestReviewPullRequestAssigneesItem>;
-    requested_reviewers: Array<
-      WebhookPayloadPullRequestReviewPullRequestRequestedReviewersItem
-    >;
+    requested_reviewers: Array<WebhookPayloadPullRequestReviewPullRequestRequestedReviewersItem>;
     requested_teams: Array<any>;
     labels: Array<WebhookPayloadPullRequestReviewPullRequestLabelsItem>;
     milestone: null;
@@ -2537,9 +2525,7 @@ export declare module EventPayloads {
     merge_commit_sha: null | string;
     assignee: WebhookPayloadPullRequestPullRequestAssignee;
     assignees: Array<WebhookPayloadPullRequestPullRequestAssigneesItem>;
-    requested_reviewers: Array<
-      WebhookPayloadPullRequestPullRequestRequestedReviewersItem
-    >;
+    requested_reviewers: Array<WebhookPayloadPullRequestPullRequestRequestedReviewersItem>;
     requested_teams: Array<any>;
     labels: Array<WebhookPayloadPullRequestPullRequestLabelsItem>;
     milestone: WebhookPayloadPullRequestPullRequestMilestone;
@@ -3020,9 +3006,7 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
     metadata: Array<any>;
-    package_files: Array<
-      WebhookPayloadPackagePackagePackageVersionPackageFilesItem
-    >;
+    package_files: Array<WebhookPayloadPackagePackagePackageVersionPackageFilesItem>;
     author: WebhookPayloadPackagePackagePackageVersionAuthor;
     installation_command: string;
   };
@@ -4095,12 +4079,8 @@ export declare module EventPayloads {
     action: string;
     installation: WebhookPayloadInstallationRepositoriesInstallation;
     repository_selection: string;
-    repositories_added: Array<
-      WebhookPayloadInstallationRepositoriesRepositoriesAddedItem
-    >;
-    repositories_removed: Array<
-      WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem
-    >;
+    repositories_added: Array<WebhookPayloadInstallationRepositoriesRepositoriesAddedItem>;
+    repositories_removed: Array<WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem>;
     sender: WebhookPayloadInstallationRepositoriesSender;
   };
   type WebhookPayloadInstallationSender = {
@@ -5385,9 +5365,7 @@ export declare module EventPayloads {
     url: string;
     before: string;
     after: string;
-    pull_requests: Array<
-      WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItem
-    >;
+    pull_requests: Array<WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItem>;
     app: WebhookPayloadCheckRunCheckRunCheckSuiteApp;
     created_at: string;
     updated_at: string;
