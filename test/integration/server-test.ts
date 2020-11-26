@@ -36,8 +36,11 @@ describe("server-test", () => {
     });
     const server = http.createServer(api.middleware);
 
-    promisify(server.listen.bind(server))(availablePort)
+    const promisifiedServer = <(port: number) => Promise<any>>(
+      promisify(server.listen.bind(server))
+    );
 
+    promisifiedServer(availablePort)
       .then(() => {
         return axios.get(`http://localhost:${availablePort}`);
       })
@@ -63,8 +66,11 @@ describe("server-test", () => {
       expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
     });
 
-    promisify(server.listen.bind(server))(availablePort)
+    const promisifiedServer = <(port: number) => Promise<any>>(
+      promisify(server.listen.bind(server))
+    );
 
+    promisifiedServer(availablePort)
       .then(() => {
         return axios.post(
           `http://localhost:${availablePort}`,
@@ -99,8 +105,11 @@ describe("server-test", () => {
       expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
     });
 
-    promisify(server.listen.bind(server))(availablePort)
+    const promisifiedServer = <(port: number) => Promise<any>>(
+      promisify(server.listen.bind(server))
+    );
 
+    promisifiedServer(availablePort)
       .then(() => {
         return axios.post(
           `http://localhost:${availablePort}`,
@@ -134,8 +143,11 @@ describe("server-test", () => {
       expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
     });
 
-    promisify(server.listen.bind(server))(availablePort)
+    const promisifiedServer = <(port: number) => Promise<any>>(
+      promisify(server.listen.bind(server))
+    );
 
+    promisifiedServer(availablePort)
       .then(() => {
         return axios.post(
           `http://localhost:${availablePort}`,
@@ -185,8 +197,11 @@ describe("server-test", () => {
       expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
     });
 
-    promisify(server.listen.bind(server))(availablePort)
+    const promisifiedServer = <(port: number) => Promise<any>>(
+      promisify(server.listen.bind(server))
+    );
 
+    promisifiedServer(availablePort)
       .then(() => {
         return axios.post(
           `http://localhost:${availablePort}`,
@@ -219,8 +234,11 @@ describe("server-test", () => {
     const errorHandler = jest.fn();
     api.onError(errorHandler);
 
-    promisify(server.listen.bind(server))(availablePort)
+    const promisifiedServer = <(port: number) => Promise<any>>(
+      promisify(server.listen.bind(server))
+    );
 
+    promisifiedServer(availablePort)
       .then(() => {
         return axios.post(
           `http://localhost:${availablePort}`,
@@ -254,8 +272,11 @@ describe("server-test", () => {
     const errorHandler = jest.fn();
     api.onError(errorHandler);
 
-    promisify(server.listen.bind(server))(availablePort)
+    const promisifiedServer = <(port: number) => Promise<any>>(
+      promisify(server.listen.bind(server))
+    );
 
+    promisifiedServer(availablePort)
       .then(() => {
         return axios.post(
           `http://localhost:${availablePort}`,
@@ -293,8 +314,11 @@ describe("server-test", () => {
       throw new Error("Oops");
     });
 
-    promisify(server.listen.bind(server))(availablePort)
+    const promisifiedServer = <(port: number) => Promise<any>>(
+      promisify(server.listen.bind(server))
+    );
 
+    promisifiedServer(availablePort)
       .then(() => {
         return axios.post(
           `http://localhost:${availablePort}`,
@@ -337,8 +361,11 @@ describe("server-test", () => {
       });
     });
 
-    promisify(server.listen.bind(server))(availablePort)
+    const promisifiedServer = <(port: number) => Promise<any>>(
+      promisify(server.listen.bind(server))
+    );
 
+    promisifiedServer(availablePort)
       .then(() => {
         return axios.post(
           `http://localhost:${availablePort}`,
