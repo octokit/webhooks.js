@@ -20,7 +20,7 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
           title: "\U0001F6A7 \U0001F916\U0001F4EF Webhooks changed"
-          body: "I found new changes in GitHub's GraphQL Schema \U0001F44B\U0001F916\n\nI can't tell if the changes are fixes, features or breaking, you'll have to figure that out on yourself and adapt the commit messages accordingly to trigger the right release, see [our commit message conventions](https://github.com/octokit/routes/blob/master/CONTRIBUTING.md#merging-the-pull-request--releasing-a-new-version).\n"
+          body: "I found new changes in GitHub's GraphQL Schema \U0001F44B\U0001F916\n\nI can't tell if the changes are fixes, features or breaking, you'll have to figure that out on yourself and adapt the commit messages accordingly to trigger the right release, see [our commit message conventions](https://github.com/octokit/openapi/blob/main/CONTRIBUTING.md#merging-the-pull-request--releasing-a-new-version).\n"
           branch: "${{ github.ref }}"
           author: Octokit Bot <octokitbot@martynus.net>
           commit-message: "WIP: Webhooks changed - please review"
