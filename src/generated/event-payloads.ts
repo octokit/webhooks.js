@@ -192,13 +192,6 @@ export declare module EventPayloads {
     updated_at: string;
     url: string;
   };
-  type PayloadRepositoryLicense = null | {
-    key: string;
-    name: string;
-    node_id: string;
-    spdx_id: string;
-    url: string;
-  };
   type WebhookPayloadWorkflowRunSender = {
     avatar_url: string;
     events_url: string;
@@ -5042,6 +5035,14 @@ export declare module EventPayloads {
     installation?: WebhookPayloadCheckSuiteInstallation;
   };
   type WebhookPayloadCheckRunInstallation = { id: number; node_id: string };
+  type PayloadRepositoryLicense = null | {
+    key: string;
+    name: string;
+    spdx_id: string;
+    url: string;
+    node_id: string;
+  };
+  type WebhookPayloadCheckRunRequestedAction = { identifier: string };
   type WebhookPayloadCheckRunOrganization = {
     login: string;
     id: number;
@@ -5221,25 +5222,25 @@ export declare module EventPayloads {
     base: WebhookPayloadCheckRunCheckRunPullRequestsItemBase;
   };
   type WebhookPayloadCheckRunCheckRunAppPermissions = {
-    administration: string;
+    administration?: string;
     checks: string;
-    contents: string;
-    deployments: string;
-    issues: string;
+    contents?: string;
+    deployments?: string;
+    issues?: string;
     members: string;
     metadata: string;
-    organization_administration: string;
-    organization_hooks: string;
-    organization_plan: string;
-    organization_projects: string;
-    organization_user_blocking: string;
-    pages: string;
+    organization_administration?: string;
+    organization_hooks?: string;
+    organization_plan?: string;
+    organization_projects?: string;
+    organization_user_blocking?: string;
+    pages?: string;
     pull_requests: string;
-    repository_hooks: string;
-    repository_projects: string;
-    statuses: string;
-    team_discussions: string;
-    vulnerability_alerts: string;
+    repository_hooks?: string;
+    repository_projects?: string;
+    statuses?: string;
+    team_discussions?: string;
+    vulnerability_alerts?: string;
   };
   type WebhookPayloadCheckRunCheckRunAppOwner = {
     login: string;
@@ -5272,28 +5273,29 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
     permissions?: WebhookPayloadCheckRunCheckRunAppPermissions;
-    events?: Array<any>;
+    events?: Array<string>;
+    slug?: string;
   };
   type WebhookPayloadCheckRunCheckRunCheckSuiteAppPermissions = {
-    administration: string;
+    administration?: string;
     checks: string;
-    contents: string;
-    deployments: string;
-    issues: string;
+    contents?: string;
+    deployments?: string;
+    issues?: string;
     members: string;
     metadata: string;
-    organization_administration: string;
-    organization_hooks: string;
-    organization_plan: string;
-    organization_projects: string;
-    organization_user_blocking: string;
-    pages: string;
+    organization_administration?: string;
+    organization_hooks?: string;
+    organization_plan?: string;
+    organization_projects?: string;
+    organization_user_blocking?: string;
+    pages?: string;
     pull_requests: string;
-    repository_hooks: string;
-    repository_projects: string;
-    statuses: string;
-    team_discussions: string;
-    vulnerability_alerts: string;
+    repository_hooks?: string;
+    repository_projects?: string;
+    statuses?: string;
+    team_discussions?: string;
+    vulnerability_alerts?: string;
   };
   type WebhookPayloadCheckRunCheckRunCheckSuiteAppOwner = {
     login: string;
@@ -5326,7 +5328,8 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
     permissions?: WebhookPayloadCheckRunCheckRunCheckSuiteAppPermissions;
-    events?: Array<any>;
+    events?: Array<string>;
+    slug?: string;
   };
   type WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemBaseRepo = {
     id: number;
@@ -5401,6 +5404,7 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     sender: WebhookPayloadCheckRunSender;
     organization?: WebhookPayloadCheckRunOrganization;
+    requested_action?: WebhookPayloadCheckRunRequestedAction;
     installation?: WebhookPayloadCheckRunInstallation;
   };
 }
