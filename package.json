@@ -81,7 +81,7 @@
     },
     "globals": {
       "ts-jest": {
-        "tsConfig": {
+        "tsconfig": {
           "esModuleInterop": true
         }
       }
