@@ -11,7 +11,7 @@ const state: State = {
 // Test broken with TypeScript without the ignore
 test("receiver.on with invalid event name", () => {
   simple.mock(console, "warn").callFn(function () {});
-  // @ts-ignore
+  // @ts-expect-error
   receiverOn(state, "foo", noop);
   expect((console.warn as simple.Stub<void>).callCount).toBe(1);
   expect((console.warn as simple.Stub<void>).lastCall.arg).toBe(

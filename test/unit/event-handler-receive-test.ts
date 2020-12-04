@@ -7,20 +7,20 @@ const state: State = {
 };
 
 test("options: none", () => {
-  // @ts-ignore
+  // @ts-expect-error
   expect(() => receive(state)).toThrow();
 });
 
 test("options: name", () => {
   expect(() => {
-    // @ts-ignore
+    // @ts-expect-error
     receive(state, { name: "foo" });
   }).toThrow();
 });
 
 test("options: name, payload", () => {
   expect(() => {
-    // @ts-ignore
+    // @ts-expect-error
     receive(state, { name: "foo", payload: {} });
   }).not.toThrow();
 });

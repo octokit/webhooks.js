@@ -6,22 +6,21 @@ const eventPayload = {
 const secret = "mysecret";
 
 test("sign() without options throws", () => {
-  // @ts-ignore
+  // @ts-expect-error
   expect(() => sign()).toThrow();
 });
 
 test("sign(undefined, eventPayload) without secret throws", () => {
-  // @ts-ignore
+  // @ts-expect-error
   expect(() => sign.bind(null, undefined, eventPayload)()).toThrow();
 });
 
 test("sign(secret) without eventPayload throws", () => {
-  // @ts-ignore
+  // @ts-expect-error
   expect(() => sign.bind(null, secret)()).toThrow();
 });
 
 test("sign({secret, algorithm}) with invalid algorithm throws", () => {
-  // @ts-ignore
   expect(() =>
     sign.bind(null, { secret, algorithm: "sha2" }, eventPayload)()
   ).toThrow();
