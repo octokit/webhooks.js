@@ -177,6 +177,10 @@ export interface EventTypesPayload {
   "repository_vulnerability_alert.create": WebhookEvent<EventPayloads.WebhookPayloadRepositoryVulnerabilityAlert>;
   "repository_vulnerability_alert.dismiss": WebhookEvent<EventPayloads.WebhookPayloadRepositoryVulnerabilityAlert>;
   "repository_vulnerability_alert.resolve": WebhookEvent<EventPayloads.WebhookPayloadRepositoryVulnerabilityAlert>;
+  secret_scanning_alert: WebhookEvent<EventPayloads.WebhookPayloadSecretScanningAlert>;
+  "secret_scanning_alert.created": WebhookEvent<EventPayloads.WebhookPayloadSecretScanningAlert>;
+  "secret_scanning_alert.reopened": WebhookEvent<EventPayloads.WebhookPayloadSecretScanningAlert>;
+  "secret_scanning_alert.resolved": WebhookEvent<EventPayloads.WebhookPayloadSecretScanningAlert>;
   security_advisory: WebhookEvent<EventPayloads.WebhookPayloadSecurityAdvisory>;
   "security_advisory.performed": WebhookEvent<EventPayloads.WebhookPayloadSecurityAdvisory>;
   "security_advisory.published": WebhookEvent<EventPayloads.WebhookPayloadSecurityAdvisory>;
