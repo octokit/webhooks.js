@@ -5,7 +5,12 @@ export function verifyAndReceive(
   state: State,
   event: WebhookEvent & { signature: string }
 ): any {
-  const matchesSignature = verify(state.secret, event.payload, event.signature);
+  // verify will validate that the secret is not undefined
+  const matchesSignature = verify(
+    state.secret!,
+    event.payload,
+    event.signature
+  );
 
   if (!matchesSignature) {
     const error = new Error(

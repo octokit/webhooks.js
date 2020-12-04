@@ -7,9 +7,9 @@ const getAlgorithm = (signature: string) => {
 };
 
 export function verify(
-  secret?: string,
-  eventPayload?: object,
-  signature?: string
+  secret: string,
+  eventPayload: object,
+  signature: string
 ): boolean {
   if (!secret || !eventPayload || !signature) {
     throw new TypeError(
