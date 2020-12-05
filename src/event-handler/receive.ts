@@ -20,8 +20,7 @@ function getHooks(
   hooks.push(state.hooks[eventName]);
   hooks.push(state.hooks["*"]);
 
-  // @ts-ignore
-  return [].concat(...hooks.filter(Boolean));
+  return ([] as Function[]).concat(...hooks.filter(Boolean));
 }
 
 // main handler function

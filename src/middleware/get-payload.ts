@@ -10,7 +10,7 @@ export function getPayload(
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
 
-  // @ts-ignore
+  // @ts-expect-error
   if (request.body) return Promise.resolve(request.body);
 
   return new Promise((resolve, reject) => {

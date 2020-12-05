@@ -22,7 +22,6 @@ export function sign(
           algorithm: options.algorithm || Algorithm.SHA1,
         };
 
-  // @ts-ignore throw friendly error message when required options are missing
   if (!secret || !payload) {
     throw new TypeError("[@octokit/webhooks] secret & payload required");
   }
