@@ -9,18 +9,22 @@ const signatureSHA256 =
   "sha256=4864d2759938a15468b5df9ade20bf161da9b4f737ea61794142f3484236bda3";
 
 test("verify() without options throws", () => {
+  // @ts-expect-error
   expect(() => verify()).toThrow();
 });
 
 test("verify(undefined, eventPayload) without secret throws", () => {
+  // @ts-expect-error
   expect(() => verify.bind(null, undefined, eventPayload)()).toThrow();
 });
 
 test("verify(secret) without eventPayload throws", () => {
+  // @ts-expect-error
   expect(() => verify.bind(null, secret)()).toThrow();
 });
 
 test("verify(secret, eventPayload) without options.signature throws", () => {
+  // @ts-expect-error
   expect(() => verify.bind(null, secret, eventPayload)()).toThrow();
 });
 

@@ -4,7 +4,7 @@ The `verify` method can be used as a standalone method.
 
 ```js
 const { verify } = require('@octokit/webhooks')
-const matchesSignature = verify(secret, eventData, signature)
+const matchesSignature = verify(secret, eventPayload, signature)
 // true or false
 ```
 
@@ -12,7 +12,7 @@ const matchesSignature = verify(secret, eventData, signature)
   <tr>
     <td>
       <code>
-        options.secret
+        secret
       </code>
       <em>(String)</em>
     </td>
@@ -51,6 +51,6 @@ const matchesSignature = verify(secret, eventData, signature)
   </tr>
 </table>
 
-Returns `true` or `false`. Throws error if `secret, ``eventPayload` or `signature` not passed.
+Returns `true` or `false`. Throws error if `secret`, `eventPayload` or `signature` not passed.
 
 Back to [@octokit/webhooks README](..).
