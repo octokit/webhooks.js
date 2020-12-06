@@ -2827,6 +2827,20 @@ export declare module EventPayloads {
     installation?: WebhookPayloadProjectCardInstallation;
     organization?: WebhookPayloadProjectCardOrganization;
   };
+  type WebhookPayloadPingOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
   type WebhookPayloadPingSender = {
     login: string;
     id: number;
@@ -2856,6 +2870,7 @@ export declare module EventPayloads {
     content_type: string;
     url: string;
     insecure_ssl: string;
+    secret?: string;
   };
   type WebhookPayloadPingHook = {
     type: string;
@@ -2867,16 +2882,17 @@ export declare module EventPayloads {
     updated_at: string;
     created_at: string;
     url: string;
-    test_url: string;
+    test_url?: string;
     ping_url: string;
-    last_response: WebhookPayloadPingHookLastResponse;
+    last_response?: WebhookPayloadPingHookLastResponse;
   };
   type WebhookPayloadPing = {
     zen: string;
     hook_id: number;
     hook: WebhookPayloadPingHook;
-    repository: PayloadRepository;
+    repository?: PayloadRepository;
     sender: WebhookPayloadPingSender;
+    organization?: WebhookPayloadPingOrganization;
   };
   type WebhookPayloadPageBuildInstallation = { id: number; node_id: string };
   type WebhookPayloadPageBuildSender = {
