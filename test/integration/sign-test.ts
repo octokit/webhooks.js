@@ -22,7 +22,7 @@ test("sign(secret) without eventPayload throws", () => {
 
 test("sign({secret, algorithm}) with invalid algorithm throws", () => {
   expect(() =>
-    sign.bind(null, { secret, algorithm: "sha2" }, eventPayload)()
+    sign.bind(null, { secret, algorithm: "sha2" as "sha1" }, eventPayload)()
   ).toThrow();
 });
 
