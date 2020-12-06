@@ -7,7 +7,7 @@ export enum Algorithm {
 
 type SignOptions = {
   secret: string;
-  algorithm?: string;
+  algorithm?: Algorithm | "sha1" | "sha256";
 };
 
 export function sign(
