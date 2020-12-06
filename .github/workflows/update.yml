@@ -5,13 +5,13 @@ on:
     types: [octokit/webhooks release]
 
 jobs:
-  test:
+  update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
       - run: npm ci
-      - run: npm install @octokit/webhooks@latest
+      - run: npm install @octokit/webhooks-definitions@latest
       - run: npm run update-known-events
       - run: npm run generate-types
       - name: create pull request
