@@ -70,7 +70,10 @@ class Webhooks<T extends WebhookEvent = WebhookEvent, U = {}> {
 const createWebhooksApi = Webhooks.prototype.constructor;
 
 export { EventPayloads } from "./generated/event-payloads";
-export { WebhookEvents } from "./generated/get-webhook-payload-type-from-event";
+export {
+  EventTypesPayload,
+  WebhookEvents,
+} from "./generated/get-webhook-payload-type-from-event";
 
 export {
   createEventHandler,
