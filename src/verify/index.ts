@@ -8,7 +8,7 @@ const getAlgorithm = (signature: string) => {
 
 export function verify(
   secret: string,
-  eventPayload: object,
+  eventPayload: string | object,
   signature: string
 ): boolean {
   if (!secret || !eventPayload || !signature) {
