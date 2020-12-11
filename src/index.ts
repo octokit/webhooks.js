@@ -18,7 +18,7 @@ import { WebhookEvents } from "./generated/get-webhook-payload-type-from-event";
 // U holds the return value of `transform` function in Options
 class Webhooks<T extends WebhookEvent = WebhookEvent, U = {}> {
   public sign: (payload: string | object) => string;
-  public verify: (eventPayload: object, signature: string) => boolean;
+  public verify: (eventPayload: string | object, signature: string) => boolean;
   public on: <E extends WebhookEvents>(
     event: E | E[],
     callback: HandlerFunction<E, U>
