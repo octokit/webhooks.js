@@ -227,7 +227,7 @@ export declare module EventPayloads {
     url: string;
   };
   type WebhookPayloadWorkflowRun = {
-    action: string;
+    action: "action" | "completed" | "requested";
     organization: WebhookPayloadWorkflowRunOrganization;
     repository: PayloadRepository;
     sender: WebhookPayloadWorkflowRunSender;
@@ -299,7 +299,7 @@ export declare module EventPayloads {
     site_admin: boolean;
   };
   type WebhookPayloadWatch = {
-    action: string;
+    action: "started";
     repository: PayloadRepository;
     sender: WebhookPayloadWatchSender;
     installation?: WebhookPayloadWatchInstallation;
@@ -413,7 +413,12 @@ export declare module EventPayloads {
     permission: string;
   };
   type WebhookPayloadTeam = {
-    action: string;
+    action:
+      | "added_to_repository"
+      | "created"
+      | "deleted"
+      | "edited"
+      | "removed_from_repository";
     team: WebhookPayloadTeamTeam;
     repository?: PayloadRepository;
     organization: WebhookPayloadTeamOrganization;
@@ -561,7 +566,7 @@ export declare module EventPayloads {
     site_admin: boolean;
   };
   type WebhookPayloadStar = {
-    action: string;
+    action: "created" | "deleted";
     starred_at: string | null;
     repository: PayloadRepository;
     sender: WebhookPayloadStarSender;
@@ -657,7 +662,13 @@ export declare module EventPayloads {
     tier: WebhookPayloadSponsorshipSponsorshipTier;
   };
   type WebhookPayloadSponsorship = {
-    action: string;
+    action:
+      | "cancelled"
+      | "created"
+      | "edited"
+      | "pending_cancellation"
+      | "pending_tier_change"
+      | "tier_changed";
     sponsorship: WebhookPayloadSponsorshipSponsorship;
     sender: WebhookPayloadSponsorshipSender;
     changes?: WebhookPayloadSponsorshipChanges;
@@ -696,7 +707,7 @@ export declare module EventPayloads {
     vulnerabilities: Array<WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItem>;
   };
   type WebhookPayloadSecurityAdvisory = {
-    action: string;
+    action: "performed" | "published" | "updated";
     security_advisory: WebhookPayloadSecurityAdvisorySecurityAdvisory;
   };
   type WebhookPayloadSecretScanningAlertSender = {
@@ -741,7 +752,7 @@ export declare module EventPayloads {
     resolved_at: null;
   };
   type WebhookPayloadSecretScanningAlert = {
-    action: string;
+    action: "created" | "reopened" | "resolved";
     alert: WebhookPayloadSecretScanningAlertAlert;
     repository: PayloadRepository;
     organization: WebhookPayloadSecretScanningAlertOrganization;
@@ -815,7 +826,7 @@ export declare module EventPayloads {
     dismissed_at?: string;
   };
   type WebhookPayloadRepositoryVulnerabilityAlert = {
-    action: string;
+    action: "create" | "dismiss" | "resolve";
     alert: WebhookPayloadRepositoryVulnerabilityAlertAlert;
     repository?: PayloadRepository;
     sender?: WebhookPayloadRepositoryVulnerabilityAlertSender;
@@ -897,7 +908,16 @@ export declare module EventPayloads {
     site_admin: boolean;
   };
   type WebhookPayloadRepository = {
-    action: string;
+    action:
+      | "archived"
+      | "created"
+      | "deleted"
+      | "edited"
+      | "privatized"
+      | "publicized"
+      | "renamed"
+      | "transferred"
+      | "unarchived";
     repository: PayloadRepository;
     sender: WebhookPayloadRepositorySender;
     organization?: WebhookPayloadRepositoryOrganization;
@@ -943,7 +963,7 @@ export declare module EventPayloads {
   };
   type WebhookPayloadRepositoryDispatchClientPayload = {};
   type WebhookPayloadRepositoryDispatch = {
-    action: string;
+    action: "on-demand-test";
     branch: string;
     client_payload: WebhookPayloadRepositoryDispatchClientPayload;
     repository: PayloadRepository;
@@ -1013,7 +1033,14 @@ export declare module EventPayloads {
     body: null;
   };
   type WebhookPayloadRelease = {
-    action: string;
+    action:
+      | "created"
+      | "deleted"
+      | "edited"
+      | "prereleased"
+      | "published"
+      | "released"
+      | "unpublished";
     release: WebhookPayloadReleaseRelease;
     repository: PayloadRepository;
     sender: WebhookPayloadReleaseSender;
@@ -1588,7 +1615,7 @@ export declare module EventPayloads {
     _links: WebhookPayloadPullRequestReviewCommentCommentLinks;
   };
   type WebhookPayloadPullRequestReviewComment = {
-    action: string;
+    action: "created" | "deleted" | "edited";
     comment: WebhookPayloadPullRequestReviewCommentComment;
     pull_request: WebhookPayloadPullRequestReviewCommentPullRequest;
     repository: PayloadRepository;
@@ -2074,7 +2101,7 @@ export declare module EventPayloads {
     _links: WebhookPayloadPullRequestReviewReviewLinks;
   };
   type WebhookPayloadPullRequestReview = {
-    action: string;
+    action: "dismissed" | "edited" | "submitted";
     review: WebhookPayloadPullRequestReviewReview;
     pull_request: WebhookPayloadPullRequestReviewPullRequest;
     repository: PayloadRepository;
@@ -2611,7 +2638,22 @@ export declare module EventPayloads {
     changed_files: number;
   };
   type WebhookPayloadPullRequest = {
-    action: string;
+    action:
+      | "assigned"
+      | "closed"
+      | "edited"
+      | "labeled"
+      | "locked"
+      | "merged"
+      | "opened"
+      | "ready_for_review"
+      | "reopened"
+      | "review_request_removed"
+      | "review_requested"
+      | "synchronize"
+      | "unassigned"
+      | "unlabeled"
+      | "unlocked";
     number: number;
     pull_request: WebhookPayloadPullRequestPullRequest;
     repository: PayloadRepository;
@@ -2704,7 +2746,7 @@ export declare module EventPayloads {
     updated_at: string;
   };
   type WebhookPayloadProject = {
-    action: string;
+    action: "closed" | "created" | "deleted" | "edited" | "reopened";
     project: WebhookPayloadProjectProject;
     repository: PayloadRepository;
     sender: WebhookPayloadProjectSender;
@@ -2745,7 +2787,7 @@ export declare module EventPayloads {
     updated_at: string;
   };
   type WebhookPayloadProjectColumn = {
-    action: string;
+    action: "created" | "deleted" | "edited" | "moved";
     project_column: WebhookPayloadProjectColumnProjectColumn;
     repository: PayloadRepository;
     sender: WebhookPayloadProjectColumnSender;
@@ -2837,7 +2879,7 @@ export declare module EventPayloads {
     updated_at: string;
   };
   type WebhookPayloadProjectCard = {
-    action: string;
+    action: "converted" | "created" | "deleted" | "edited" | "moved";
     project_card: WebhookPayloadProjectCardProjectCard;
     repository: PayloadRepository;
     sender: WebhookPayloadProjectCardSender;
@@ -3116,7 +3158,7 @@ export declare module EventPayloads {
     registry: WebhookPayloadPackagePackageRegistry;
   };
   type WebhookPayloadPackage = {
-    action: string;
+    action: "published" | "updated";
     package: WebhookPayloadPackagePackage;
     repository: PayloadRepository;
     sender: WebhookPayloadPackageSender;
@@ -3177,7 +3219,7 @@ export declare module EventPayloads {
     site_admin: boolean;
   };
   type WebhookPayloadOrgBlock = {
-    action: string;
+    action: "blocked" | "unblocked";
     blocked_user: WebhookPayloadOrgBlockBlockedUser;
     organization: WebhookPayloadOrgBlockOrganization;
     sender: WebhookPayloadOrgBlockSender;
@@ -3246,7 +3288,12 @@ export declare module EventPayloads {
     user: WebhookPayloadOrganizationMembershipUser;
   };
   type WebhookPayloadOrganization = {
-    action: string;
+    action:
+      | "deleted"
+      | "member_added"
+      | "member_invited"
+      | "member_removed"
+      | "renamed";
     membership: WebhookPayloadOrganizationMembership;
     organization: WebhookPayloadOrganizationOrganization;
     sender: WebhookPayloadOrganizationSender;
@@ -3312,7 +3359,7 @@ export declare module EventPayloads {
     closed_at: null | string;
   };
   type WebhookPayloadMilestone = {
-    action: string;
+    action: "closed" | "created" | "deleted" | "edited" | "opened";
     milestone: WebhookPayloadMilestoneMilestone;
     repository: PayloadRepository;
     sender: WebhookPayloadMilestoneSender;
@@ -3354,7 +3401,7 @@ export declare module EventPayloads {
     created_at: string;
   };
   type WebhookPayloadMeta = {
-    action: string;
+    action: "deleted";
     hook_id: number;
     hook: WebhookPayloadMetaHook;
     repository: PayloadRepository;
@@ -3429,7 +3476,7 @@ export declare module EventPayloads {
     site_admin: boolean;
   };
   type WebhookPayloadMembership = {
-    action: string;
+    action: "added" | "removed";
     scope: string;
     member: WebhookPayloadMembershipMember;
     sender: WebhookPayloadMembershipSender;
@@ -3483,7 +3530,7 @@ export declare module EventPayloads {
     site_admin: boolean;
   };
   type WebhookPayloadMember = {
-    action: string;
+    action: "added" | "edited" | "removed";
     member: WebhookPayloadMemberMember;
     repository: PayloadRepository;
     sender: WebhookPayloadMemberSender;
@@ -3562,7 +3609,12 @@ export declare module EventPayloads {
     email: string;
   };
   type WebhookPayloadMarketplacePurchase = {
-    action: string;
+    action:
+      | "cancelled"
+      | "changed"
+      | "pending_change"
+      | "pending_change_cancelled"
+      | "purchased";
     effective_date: string;
     sender: WebhookPayloadMarketplacePurchaseSender;
     marketplace_purchase: WebhookPayloadMarketplacePurchaseMarketplacePurchase;
@@ -3600,7 +3652,7 @@ export declare module EventPayloads {
     default: boolean;
   };
   type WebhookPayloadLabel = {
-    action: string;
+    action: "created" | "deleted" | "edited";
     label: WebhookPayloadLabelLabel;
     repository: PayloadRepository;
     sender: WebhookPayloadLabelSender;
@@ -3827,7 +3879,23 @@ export declare module EventPayloads {
     pull_request?: WebhookPayloadIssuesIssuePullRequest;
   };
   type WebhookPayloadIssues = {
-    action: string;
+    action:
+      | "assigned"
+      | "closed"
+      | "deleted"
+      | "demilestoned"
+      | "edited"
+      | "labeled"
+      | "locked"
+      | "milestoned"
+      | "opened"
+      | "pinned"
+      | "reopened"
+      | "transferred"
+      | "unassigned"
+      | "unlabeled"
+      | "unlocked"
+      | "unpinned";
     issue: WebhookPayloadIssuesIssue;
     changes?: WebhookPayloadIssuesChanges;
     repository: PayloadRepository;
@@ -4057,7 +4125,7 @@ export declare module EventPayloads {
     body: string;
   };
   type WebhookPayloadIssueComment = {
-    action: string;
+    action: "created" | "deleted" | "edited";
     issue: WebhookPayloadIssueCommentIssue;
     comment: WebhookPayloadIssueCommentComment;
     repository: PayloadRepository;
@@ -4150,7 +4218,7 @@ export declare module EventPayloads {
     single_file_name: null | string;
   };
   type WebhookPayloadInstallationRepositories = {
-    action: string;
+    action: "added" | "removed";
     installation: WebhookPayloadInstallationRepositoriesInstallation;
     repository_selection: string;
     repositories_added: Array<WebhookPayloadInstallationRepositoriesRepositoriesAddedItem>;
@@ -4235,7 +4303,12 @@ export declare module EventPayloads {
     single_file_name: string | null;
   };
   type WebhookPayloadInstallation = {
-    action: string;
+    action:
+      | "created"
+      | "deleted"
+      | "new_permissions_accepted"
+      | "suspend"
+      | "unsuspend";
     installation: WebhookPayloadInstallationInstallation;
     repositories: Array<WebhookPayloadInstallationRepositoriesItem>;
     sender: WebhookPayloadInstallationSender;
@@ -4296,7 +4369,7 @@ export declare module EventPayloads {
     site_admin: boolean;
   };
   type WebhookPayloadGithubAppAuthorization = {
-    action: string;
+    action: "revoked";
     sender: WebhookPayloadGithubAppAuthorizationSender;
   };
   type WebhookPayloadForkInstallation = { id: number; node_id: string };
@@ -4519,7 +4592,7 @@ export declare module EventPayloads {
     repository_url: string;
   };
   type WebhookPayloadDeploymentStatus = {
-    action: string;
+    action: "created";
     deployment_status: WebhookPayloadDeploymentStatusDeploymentStatus;
     deployment: WebhookPayloadDeploymentStatusDeployment;
     repository: PayloadRepository;
@@ -4586,7 +4659,7 @@ export declare module EventPayloads {
     repository_url: string;
   };
   type WebhookPayloadDeployment = {
-    action: string;
+    action: "created";
     deployment: WebhookPayloadDeploymentDeployment;
     repository: PayloadRepository;
     sender: WebhookPayloadDeploymentSender;
@@ -4622,7 +4695,7 @@ export declare module EventPayloads {
     read_only: boolean;
   };
   type WebhookPayloadDeployKey = {
-    action: string;
+    action: "created" | "deleted";
     key: WebhookPayloadDeployKeyKey;
     repository: PayloadRepository;
     sender: WebhookPayloadDeployKeySender;
@@ -4781,7 +4854,7 @@ export declare module EventPayloads {
     reference: string;
   };
   type WebhookPayloadContentReference = {
-    action: string;
+    action: "created";
     content_reference: WebhookPayloadContentReferenceContentReference;
     repository: PayloadRepository;
     sender: WebhookPayloadContentReferenceSender;
@@ -4878,7 +4951,7 @@ export declare module EventPayloads {
     body: string;
   };
   type WebhookPayloadCommitComment = {
-    action: string;
+    action: "created";
     comment: WebhookPayloadCommitCommentComment;
     repository: PayloadRepository;
     sender: WebhookPayloadCommitCommentSender;
@@ -4932,7 +5005,13 @@ export declare module EventPayloads {
     tool: WebhookPayloadCodeScanningAlertAlertTool;
   };
   type WebhookPayloadCodeScanningAlert = {
-    action: string;
+    action:
+      | "appeared_in_branch"
+      | "closed_by_user"
+      | "created"
+      | "fixed"
+      | "reopened"
+      | "reopened_by_user";
     alert: WebhookPayloadCodeScanningAlertAlert;
     ref: string;
     commit_oid: string;
@@ -5108,7 +5187,7 @@ export declare module EventPayloads {
     head_commit: WebhookPayloadCheckSuiteCheckSuiteHeadCommit;
   };
   type WebhookPayloadCheckSuite = {
-    action: string;
+    action: "completed" | "requested" | "rerequested";
     check_suite: WebhookPayloadCheckSuiteCheckSuite;
     repository: PayloadRepository;
     sender: WebhookPayloadCheckSuiteSender;
@@ -5480,7 +5559,7 @@ export declare module EventPayloads {
     pull_requests: Array<WebhookPayloadCheckRunCheckRunPullRequestsItem>;
   };
   type WebhookPayloadCheckRun = {
-    action: string;
+    action: "completed" | "created" | "requested_action" | "rerequested";
     check_run: WebhookPayloadCheckRunCheckRun;
     repository: PayloadRepository;
     sender: WebhookPayloadCheckRunSender;

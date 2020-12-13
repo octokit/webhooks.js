@@ -40,6 +40,14 @@ webhooks.forEach(({ name, actions, examples }) => {
   const typeName = `WebhookPayload${pascalCase(name)}`;
   tw.add(examples, generatePayloadType(typeName));
 
+  if (tw.keypaths[`${typeName}Action`]) {
+    delete tw.keypaths[`${typeName}Action`].string;
+
+    actions.forEach(
+      (action) => (tw.keypaths[`${typeName}Action`][`"${action}"`] = {})
+    );
+  }
+
   const eventNameTypes = generateEventNameType(name, actions);
   eventNameTypes.forEach((type) => {
     eventPayloadMapping.push([
