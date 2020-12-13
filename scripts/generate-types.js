@@ -69,6 +69,21 @@ const addPayloadWithActions = (name, actions, examples, typeName) => {
       generatePayloadType(`${typeName}${pascalCase(action)}Action`)
     );
 
+    // const typesForThisAction = Object.keys(tw.keypaths).filter((k) =>
+    //   k.startsWith(`${typeName}${pascalCase(action)}Action`)
+    // );
+    //
+    // typesForThisAction.forEach((tName) => {
+    //   const similarTypes = tw.findSimilarTypes(tName);
+    //
+    //   similarTypes.forEach(([theName, similarType]) => {
+    //     tw.keypaths[similarType] = { [theName]: {} };
+    //     // delete tw.keypaths[similarType];
+    //   });
+    // });
+
+    // console.log(typesForThisAction);
+
     // remove the "| string" type, since it can't just any old string
     delete tw.keypaths[`${actionTypeName}Action`].string;
     tw.keypaths[`${actionTypeName}Action`][`"${action}"`] = {};
@@ -125,11 +140,87 @@ generateFile(
   getWebhookPayloadTypeFromEvent
 );
 
-const eventPayloadsContent = `
+// ItemHeadRepo
+tw.add([{ id: 0, url: "string", name: "string" }], {
+  rootTypeName: "ItemHeadRepo",
+});
+
+tw.add([{ ref: "string", sha: "string", repo: "ItemHeadRepo" }], {
+  rootTypeName: "ItemHead",
+});
+
+tw.add([{ id: 0, url: "string", name: "string" }], {
+  rootTypeName: "ItemBaseRepo",
+});
+
+tw.add([{ ref: "string", sha: "string", repo: "ItemBaseRepo" }], {
+  rootTypeName: "ItemBase",
+});
+
+tw.add(
+  [{ url: "string", id: 0, number: 0, head: "ItemHead", base: "ItemBase" }],
+  {
+    rootTypeName: "Item",
+  }
+);
+
+delete tw.keypaths.ItemHeadRepo.string;
+delete tw.keypaths.ItemBaseRepo.string;
+delete tw.keypaths.ItemHead.string;
+delete tw.keypaths.ItemBase.string;
+delete tw.keypaths.Item.string;
+
+console.log(tw.keypaths.ItemHead);
+console.log(tw.keypaths.ItemHeadRepo);
+
+const replaceWithCommonTypePre = (commonTypeName) => [
+  commonTypeName,
+  Object.keys(tw.keypaths)
+    .filter((k) => k.endsWith(commonTypeName) && k !== commonTypeName)
+    .reduce((all, typeName) => {
+      delete tw.keypaths[typeName];
+
+      all.push(typeName);
+
+      return all;
+    }, []),
+];
+
+const replaceWithCommonTypePost = (commonTypeName, typesToReplace) => {
+  typesToReplace.forEach((typeName) => {
+    console.log(typeName);
+    eventPayloadsContent = eventPayloadsContent
+      .split("\n")
+      .filter((line) => !line.trim().startsWith(`type ${typeName} = any`))
+      .join("\n");
+    eventPayloadsContent = eventPayloadsContent.replace(
+      `: ${typeName}`,
+      `: ${commonTypeName}`
+    );
+    eventPayloadsContent = eventPayloadsContent.replace(
+      `<${typeName}>`,
+      `<${commonTypeName}>`
+    );
+  });
+};
+
+const allTypesToReplace = [
+  "ItemHeadRepo",
+  "ItemHead",
+  "ItemBaseRepo",
+  "ItemBase",
+  "Item",
+].map(replaceWithCommonTypePre);
+
+let eventPayloadsContent = `
 ${doNotEditThisFileDisclaimer}
 
 export declare module ${eventPayloadsVariable} {
   ${tw.generate("typescript", { inlined: false })}}
 `;
+
+allTypesToReplace.forEach(([commonTypeName, typesToReplace]) => {
+  replaceWithCommonTypePost(commonTypeName, typesToReplace);
+});
 
 generateFile("src/generated/event-payloads.ts", eventPayloadsContent);
