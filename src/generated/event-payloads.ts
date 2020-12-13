@@ -767,6 +767,20 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  type WebhookPayloadRepositoryVulnerabilityAlertOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
   type WebhookPayloadRepositoryVulnerabilityAlertSender = {
     login: string;
     id: number;
@@ -794,6 +808,8 @@ export declare module EventPayloads {
     external_reference: string;
     external_identifier: string;
     fixed_in: string;
+    ghsa_id?: string;
+    created_at?: string;
     dismisser?: WebhookPayloadRepositoryVulnerabilityAlertAlertDismisser;
     dismiss_reason?: string;
     dismissed_at?: string;
@@ -803,6 +819,7 @@ export declare module EventPayloads {
     alert: WebhookPayloadRepositoryVulnerabilityAlertAlert;
     repository?: PayloadRepository;
     sender?: WebhookPayloadRepositoryVulnerabilityAlertSender;
+    organization?: WebhookPayloadRepositoryVulnerabilityAlertOrganization;
   };
   type WebhookPayloadRepositoryImportSender = {
     login: string;
