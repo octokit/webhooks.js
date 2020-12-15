@@ -192,26 +192,6 @@ export declare module EventPayloads {
     updated_at: string;
     url: string;
   };
-  type WebhookPayloadWorkflowRunSender = {
-    avatar_url: string;
-    events_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    gravatar_id: string;
-    html_url: string;
-    id: number;
-    login: string;
-    node_id: string;
-    organizations_url: string;
-    received_events_url: string;
-    repos_url: string;
-    site_admin: boolean;
-    starred_url: string;
-    subscriptions_url: string;
-    type: string;
-    url: string;
-  };
   type WebhookPayloadWorkflowRunOrganization = {
     avatar_url: string;
     description: string;
@@ -230,29 +210,9 @@ export declare module EventPayloads {
     action: "action" | "completed" | "requested";
     organization: WebhookPayloadWorkflowRunOrganization;
     repository: PayloadRepository;
-    sender: WebhookPayloadWorkflowRunSender;
+    sender: PayloadSender;
     workflow?: WebhookPayloadWorkflowRunWorkflow;
     workflow_run?: WebhookPayloadWorkflowRunWorkflowRun;
-  };
-  type WebhookPayloadWorkflowDispatchSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadWorkflowDispatchOrganization = {
     login: string;
@@ -274,57 +234,17 @@ export declare module EventPayloads {
     ref: string;
     repository: PayloadRepository;
     organization: WebhookPayloadWorkflowDispatchOrganization;
-    sender: WebhookPayloadWorkflowDispatchSender;
+    sender: PayloadSender;
     workflow: string;
   };
   type WebhookPayloadWatchInstallation = { id: number; node_id: string };
-  type WebhookPayloadWatchSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadWatch = {
     action: "started";
     repository: PayloadRepository;
-    sender: WebhookPayloadWatchSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadWatchInstallation;
   };
   type WebhookPayloadTeamAddInstallation = { id: number; node_id: string };
-  type WebhookPayloadTeamAddSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadTeamAddOrganization = {
     login: string;
     id: number;
@@ -356,30 +276,10 @@ export declare module EventPayloads {
     team: WebhookPayloadTeamAddTeam;
     repository: PayloadRepository;
     organization: WebhookPayloadTeamAddOrganization;
-    sender: WebhookPayloadTeamAddSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadTeamAddInstallation;
   };
   type WebhookPayloadTeamChanges = {};
-  type WebhookPayloadTeamSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadTeamOrganization = {
     login: string;
     id: number;
@@ -422,30 +322,10 @@ export declare module EventPayloads {
     team: WebhookPayloadTeamTeam;
     repository?: PayloadRepository;
     organization: WebhookPayloadTeamOrganization;
-    sender: WebhookPayloadTeamSender;
+    sender: PayloadSender;
     changes?: WebhookPayloadTeamChanges;
   };
   type WebhookPayloadStatusInstallation = { id: number; node_id: string };
-  type WebhookPayloadStatusSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadStatusBranchesItemCommit = { sha: string; url: string };
   type WebhookPayloadStatusBranchesItem = {
     name: string;
@@ -542,34 +422,14 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
     repository: PayloadRepository;
-    sender: WebhookPayloadStatusSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadStatusInstallation;
-  };
-  type WebhookPayloadStarSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadStar = {
     action: "created" | "deleted";
     starred_at: string | null;
     repository: PayloadRepository;
-    sender: WebhookPayloadStarSender;
+    sender: PayloadSender;
   };
   type WebhookPayloadSponsorshipChangesTierFrom = {
     node_id: string;
@@ -584,26 +444,6 @@ export declare module EventPayloads {
   };
   type WebhookPayloadSponsorshipChanges = {
     tier: WebhookPayloadSponsorshipChangesTier;
-  };
-  type WebhookPayloadSponsorshipSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadSponsorshipSponsorshipTier = {
     node_id: string;
@@ -670,7 +510,7 @@ export declare module EventPayloads {
       | "pending_tier_change"
       | "tier_changed";
     sponsorship: WebhookPayloadSponsorshipSponsorship;
-    sender: WebhookPayloadSponsorshipSender;
+    sender: PayloadSender;
     changes?: WebhookPayloadSponsorshipChanges;
     effective_date?: string;
   };
@@ -710,26 +550,6 @@ export declare module EventPayloads {
     action: "performed" | "published" | "updated";
     security_advisory: WebhookPayloadSecurityAdvisorySecurityAdvisory;
   };
-  type WebhookPayloadSecretScanningAlertSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadSecretScanningAlertOrganization = {
     login: string;
     id: number;
@@ -756,7 +576,7 @@ export declare module EventPayloads {
     alert: WebhookPayloadSecretScanningAlertAlert;
     repository: PayloadRepository;
     organization: WebhookPayloadSecretScanningAlertOrganization;
-    sender: WebhookPayloadSecretScanningAlertSender;
+    sender: PayloadSender;
   };
   type WebhookPayloadRepositoryVulnerabilityAlertAlertDismisser = {
     login: string;
@@ -792,26 +612,6 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
-  type WebhookPayloadRepositoryVulnerabilityAlertSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadRepositoryVulnerabilityAlertAlert = {
     id: number;
     affected_range: string;
@@ -829,28 +629,8 @@ export declare module EventPayloads {
     action: "create" | "dismiss" | "resolve";
     alert: WebhookPayloadRepositoryVulnerabilityAlertAlert;
     repository?: PayloadRepository;
-    sender?: WebhookPayloadRepositoryVulnerabilityAlertSender;
+    sender?: PayloadSender;
     organization?: WebhookPayloadRepositoryVulnerabilityAlertOrganization;
-  };
-  type WebhookPayloadRepositoryImportSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadRepositoryImportOrganization = {
     login: string;
@@ -870,7 +650,7 @@ export declare module EventPayloads {
     status: string;
     repository: PayloadRepository;
     organization: WebhookPayloadRepositoryImportOrganization;
-    sender: WebhookPayloadRepositoryImportSender;
+    sender: PayloadSender;
   };
   type WebhookPayloadRepositoryInstallation = { id: number; node_id: string };
   type WebhookPayloadRepositoryOrganization = {
@@ -887,26 +667,6 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
-  type WebhookPayloadRepositorySender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadRepository = {
     action:
       | "archived"
@@ -919,33 +679,13 @@ export declare module EventPayloads {
       | "transferred"
       | "unarchived";
     repository: PayloadRepository;
-    sender: WebhookPayloadRepositorySender;
+    sender: PayloadSender;
     organization?: WebhookPayloadRepositoryOrganization;
     installation?: WebhookPayloadRepositoryInstallation;
   };
   type WebhookPayloadRepositoryDispatchInstallation = {
     id: number;
     node_id: string;
-  };
-  type WebhookPayloadRepositoryDispatchSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadRepositoryDispatchOrganization = {
     login: string;
@@ -968,30 +708,10 @@ export declare module EventPayloads {
     client_payload: WebhookPayloadRepositoryDispatchClientPayload;
     repository: PayloadRepository;
     organization: WebhookPayloadRepositoryDispatchOrganization;
-    sender: WebhookPayloadRepositoryDispatchSender;
+    sender: PayloadSender;
     installation: WebhookPayloadRepositoryDispatchInstallation;
   };
   type WebhookPayloadReleaseInstallation = { id: number; node_id: string };
-  type WebhookPayloadReleaseSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadReleaseReleaseAuthor = {
     login: string;
     id: number;
@@ -1043,7 +763,7 @@ export declare module EventPayloads {
       | "unpublished";
     release: WebhookPayloadReleaseRelease;
     repository: PayloadRepository;
-    sender: WebhookPayloadReleaseSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadReleaseInstallation;
   };
   type WebhookPayloadPushOrganization = {
@@ -1078,26 +798,6 @@ export declare module EventPayloads {
     type: string;
   };
   type WebhookPayloadPushInstallation = { id: number; node_id: string };
-  type WebhookPayloadPushSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadPushPusher = { name: string; email: string };
   type WebhookPayloadPush = {
     ref: string;
@@ -1112,7 +812,7 @@ export declare module EventPayloads {
     head_commit: null;
     repository: PayloadRepository;
     pusher: WebhookPayloadPushPusher;
-    sender: WebhookPayloadPushSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadPushInstallation;
     organization?: WebhookPayloadPushOrganization;
   };
@@ -1180,26 +880,6 @@ export declare module EventPayloads {
     site_admin: boolean;
   };
   type WebhookPayloadPullRequestReviewCommentPullRequestAssigneesItem = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
-  type WebhookPayloadPullRequestReviewCommentSender = {
     login: string;
     id: number;
     node_id: string;
@@ -1619,7 +1299,7 @@ export declare module EventPayloads {
     comment: WebhookPayloadPullRequestReviewCommentComment;
     pull_request: WebhookPayloadPullRequestReviewCommentPullRequest;
     repository: PayloadRepository;
-    sender: WebhookPayloadPullRequestReviewCommentSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadPullRequestReviewCommentInstallation;
     organization?: WebhookPayloadPullRequestReviewCommentOrganization;
   };
@@ -1687,26 +1367,6 @@ export declare module EventPayloads {
     site_admin: boolean;
   };
   type WebhookPayloadPullRequestReviewPullRequestAssigneesItem = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
-  type WebhookPayloadPullRequestReviewSender = {
     login: string;
     id: number;
     node_id: string;
@@ -2105,7 +1765,7 @@ export declare module EventPayloads {
     review: WebhookPayloadPullRequestReviewReview;
     pull_request: WebhookPayloadPullRequestReviewPullRequest;
     repository: PayloadRepository;
-    sender: WebhookPayloadPullRequestReviewSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadPullRequestReviewInstallation;
     organization?: WebhookPayloadPullRequestReviewOrganization;
   };
@@ -2256,26 +1916,6 @@ export declare module EventPayloads {
     site_admin: boolean;
   };
   type WebhookPayloadPullRequestPullRequestAssigneesItem = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
-  type WebhookPayloadPullRequestSender = {
     login: string;
     id: number;
     node_id: string;
@@ -2657,59 +2297,19 @@ export declare module EventPayloads {
     number: number;
     pull_request: WebhookPayloadPullRequestPullRequest;
     repository: PayloadRepository;
-    sender: WebhookPayloadPullRequestSender;
+    sender: PayloadSender;
     assignee?: WebhookPayloadPullRequestAssignee;
     installation?: WebhookPayloadPullRequestInstallation;
     organization?: WebhookPayloadPullRequestOrganization;
     label?: WebhookPayloadPullRequestLabel;
   };
   type WebhookPayloadPublicInstallation = { id: number; node_id: string };
-  type WebhookPayloadPublicSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadPublic = {
     repository: PayloadRepository;
-    sender: WebhookPayloadPublicSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadPublicInstallation;
   };
   type WebhookPayloadProjectInstallation = { id: number; node_id: string };
-  type WebhookPayloadProjectSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadProjectProjectCreator = {
     login: string;
     id: number;
@@ -2749,32 +2349,12 @@ export declare module EventPayloads {
     action: "closed" | "created" | "deleted" | "edited" | "reopened";
     project: WebhookPayloadProjectProject;
     repository: PayloadRepository;
-    sender: WebhookPayloadProjectSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadProjectInstallation;
   };
   type WebhookPayloadProjectColumnInstallation = {
     id: number;
     node_id: string;
-  };
-  type WebhookPayloadProjectColumnSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadProjectColumnProjectColumn = {
     url: string;
@@ -2790,7 +2370,7 @@ export declare module EventPayloads {
     action: "created" | "deleted" | "edited" | "moved";
     project_column: WebhookPayloadProjectColumnProjectColumn;
     repository: PayloadRepository;
-    sender: WebhookPayloadProjectColumnSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadProjectColumnInstallation;
   };
   type WebhookPayloadProjectCardOrganization = {
@@ -2825,26 +2405,6 @@ export declare module EventPayloads {
     type: string;
   };
   type WebhookPayloadProjectCardInstallation = { id: number; node_id: string };
-  type WebhookPayloadProjectCardSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadProjectCardProjectCardCreator = {
     login: string;
     id: number;
@@ -2882,7 +2442,7 @@ export declare module EventPayloads {
     action: "converted" | "created" | "deleted" | "edited" | "moved";
     project_card: WebhookPayloadProjectCardProjectCard;
     repository: PayloadRepository;
-    sender: WebhookPayloadProjectCardSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadProjectCardInstallation;
     organization?: WebhookPayloadProjectCardOrganization;
   };
@@ -2899,26 +2459,6 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
-  };
-  type WebhookPayloadPingSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadPingHookLastResponse = {
     code: null;
@@ -2950,30 +2490,10 @@ export declare module EventPayloads {
     hook_id: number;
     hook: WebhookPayloadPingHook;
     repository?: PayloadRepository;
-    sender: WebhookPayloadPingSender;
+    sender: PayloadSender;
     organization?: WebhookPayloadPingOrganization;
   };
   type WebhookPayloadPageBuildInstallation = { id: number; node_id: string };
-  type WebhookPayloadPageBuildSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadPageBuildBuildPusher = {
     login: string;
     id: number;
@@ -3009,28 +2529,8 @@ export declare module EventPayloads {
     id: number;
     build: WebhookPayloadPageBuildBuild;
     repository: PayloadRepository;
-    sender: WebhookPayloadPageBuildSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadPageBuildInstallation;
-  };
-  type WebhookPayloadPackageSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadPackagePackageRegistry = {
     about_url: string;
@@ -3161,29 +2661,9 @@ export declare module EventPayloads {
     action: "published" | "updated";
     package: WebhookPayloadPackagePackage;
     repository: PayloadRepository;
-    sender: WebhookPayloadPackageSender;
+    sender: PayloadSender;
   };
   type WebhookPayloadOrgBlockInstallation = { id: number; node_id: string };
-  type WebhookPayloadOrgBlockSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadOrgBlockOrganization = {
     login: string;
     id: number;
@@ -3222,30 +2702,10 @@ export declare module EventPayloads {
     action: "blocked" | "unblocked";
     blocked_user: WebhookPayloadOrgBlockBlockedUser;
     organization: WebhookPayloadOrgBlockOrganization;
-    sender: WebhookPayloadOrgBlockSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadOrgBlockInstallation;
   };
   type WebhookPayloadOrganizationInstallation = { id: number; node_id: string };
-  type WebhookPayloadOrganizationSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadOrganizationOrganization = {
     login: string;
     id: number;
@@ -3296,30 +2756,10 @@ export declare module EventPayloads {
       | "renamed";
     membership: WebhookPayloadOrganizationMembership;
     organization: WebhookPayloadOrganizationOrganization;
-    sender: WebhookPayloadOrganizationSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadOrganizationInstallation;
   };
   type WebhookPayloadMilestoneInstallation = { id: number; node_id: string };
-  type WebhookPayloadMilestoneSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadMilestoneMilestoneCreator = {
     login: string;
     id: number;
@@ -3362,28 +2802,8 @@ export declare module EventPayloads {
     action: "closed" | "created" | "deleted" | "edited" | "opened";
     milestone: WebhookPayloadMilestoneMilestone;
     repository: PayloadRepository;
-    sender: WebhookPayloadMilestoneSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadMilestoneInstallation;
-  };
-  type WebhookPayloadMetaSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadMetaHookConfig = {
     content_type: string;
@@ -3405,7 +2825,7 @@ export declare module EventPayloads {
     hook_id: number;
     hook: WebhookPayloadMetaHook;
     repository: PayloadRepository;
-    sender: WebhookPayloadMetaSender;
+    sender: PayloadSender;
   };
   type WebhookPayloadMembershipInstallation = { id: number; node_id: string };
   type WebhookPayloadMembershipOrganization = {
@@ -3435,26 +2855,6 @@ export declare module EventPayloads {
     repositories_url: string;
     permission: string;
   };
-  type WebhookPayloadMembershipSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadMembershipMember = {
     login: string;
     id: number;
@@ -3479,7 +2879,7 @@ export declare module EventPayloads {
     action: "added" | "removed";
     scope: string;
     member: WebhookPayloadMembershipMember;
-    sender: WebhookPayloadMembershipSender;
+    sender: PayloadSender;
     team: WebhookPayloadMembershipTeam;
     organization: WebhookPayloadMembershipOrganization;
     installation?: WebhookPayloadMembershipInstallation;
@@ -3489,26 +2889,6 @@ export declare module EventPayloads {
     permission: WebhookPayloadMemberChangesPermission;
   };
   type WebhookPayloadMemberInstallation = { id: number; node_id: string };
-  type WebhookPayloadMemberSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadMemberMember = {
     login: string;
     id: number;
@@ -3533,7 +2913,7 @@ export declare module EventPayloads {
     action: "added" | "edited" | "removed";
     member: WebhookPayloadMemberMember;
     repository: PayloadRepository;
-    sender: WebhookPayloadMemberSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadMemberInstallation;
     changes?: WebhookPayloadMemberChanges;
   };
@@ -3624,26 +3004,6 @@ export declare module EventPayloads {
   type WebhookPayloadLabelChangesColor = { from: string };
   type WebhookPayloadLabelChanges = { color: WebhookPayloadLabelChangesColor };
   type WebhookPayloadLabelInstallation = { id: number; node_id: string };
-  type WebhookPayloadLabelSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadLabelLabel = {
     id: number;
     node_id: string;
@@ -3656,7 +3016,7 @@ export declare module EventPayloads {
     action: "created" | "deleted" | "edited";
     label: WebhookPayloadLabelLabel;
     repository: PayloadRepository;
-    sender: WebhookPayloadLabelSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadLabelInstallation;
     changes?: WebhookPayloadLabelChanges;
   };
@@ -3707,26 +3067,6 @@ export declare module EventPayloads {
   };
   type WebhookPayloadIssuesInstallation = { id: number; node_id: string };
   type WebhookPayloadIssuesAssignee = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
-  type WebhookPayloadIssuesSender = {
     login: string;
     id: number;
     node_id: string;
@@ -3900,7 +3240,7 @@ export declare module EventPayloads {
     issue: WebhookPayloadIssuesIssue;
     changes?: WebhookPayloadIssuesChanges;
     repository: PayloadRepository;
-    sender: WebhookPayloadIssuesSender;
+    sender: PayloadSender;
     assignee?: WebhookPayloadIssuesAssignee;
     installation?: WebhookPayloadIssuesInstallation;
     organization?: WebhookPayloadIssuesOrganization;
@@ -3941,26 +3281,6 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
     type: string;
-  };
-  type WebhookPayloadIssueCommentSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadIssueCommentCommentUser = {
     login: string;
@@ -4130,7 +3450,7 @@ export declare module EventPayloads {
     issue: WebhookPayloadIssueCommentIssue;
     comment: WebhookPayloadIssueCommentComment;
     repository: PayloadRepository;
-    sender: WebhookPayloadIssueCommentSender;
+    sender: PayloadSender;
     organization?: WebhookPayloadIssueCommentOrganization;
     installation?: WebhookPayloadIssueCommentInstallation;
     changes?: WebhookPayloadIssueCommentChanges;
@@ -4140,26 +3460,6 @@ export declare module EventPayloads {
     name: string;
     full_name: string;
     private: boolean;
-  };
-  type WebhookPayloadInstallationRepositoriesSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadInstallationRepositoriesRepositoriesAddedItem = {
     id: number;
@@ -4224,27 +3524,7 @@ export declare module EventPayloads {
     repository_selection: string;
     repositories_added: Array<WebhookPayloadInstallationRepositoriesRepositoriesAddedItem>;
     repositories_removed: Array<WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem>;
-    sender: WebhookPayloadInstallationRepositoriesSender;
-  };
-  type WebhookPayloadInstallationSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
+    sender: PayloadSender;
   };
   type WebhookPayloadInstallationRepositoriesItem = {
     id: number;
@@ -4312,29 +3592,9 @@ export declare module EventPayloads {
       | "unsuspend";
     installation: WebhookPayloadInstallationInstallation;
     repositories: Array<WebhookPayloadInstallationRepositoriesItem>;
-    sender: WebhookPayloadInstallationSender;
+    sender: PayloadSender;
   };
   type WebhookPayloadGollumInstallation = { id: number; node_id: string };
-  type WebhookPayloadGollumSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadGollumPagesItem = {
     page_name: string;
     title: string;
@@ -4346,54 +3606,14 @@ export declare module EventPayloads {
   type WebhookPayloadGollum = {
     pages: Array<WebhookPayloadGollumPagesItem>;
     repository: PayloadRepository;
-    sender: WebhookPayloadGollumSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadGollumInstallation;
-  };
-  type WebhookPayloadGithubAppAuthorizationSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadGithubAppAuthorization = {
     action: "revoked";
-    sender: WebhookPayloadGithubAppAuthorizationSender;
+    sender: PayloadSender;
   };
   type WebhookPayloadForkInstallation = { id: number; node_id: string };
-  type WebhookPayloadForkSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadForkForkeeOwner = {
     login: string;
     id: number;
@@ -4493,32 +3713,12 @@ export declare module EventPayloads {
   type WebhookPayloadFork = {
     forkee: WebhookPayloadForkForkee;
     repository: PayloadRepository;
-    sender: WebhookPayloadForkSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadForkInstallation;
   };
   type WebhookPayloadDeploymentStatusInstallation = {
     id: number;
     node_id: string;
-  };
-  type WebhookPayloadDeploymentStatusSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadDeploymentStatusDeploymentCreator = {
     login: string;
@@ -4597,30 +3797,10 @@ export declare module EventPayloads {
     deployment_status: WebhookPayloadDeploymentStatusDeploymentStatus;
     deployment: WebhookPayloadDeploymentStatusDeployment;
     repository: PayloadRepository;
-    sender: WebhookPayloadDeploymentStatusSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadDeploymentStatusInstallation;
   };
   type WebhookPayloadDeploymentInstallation = { id: number; node_id: string };
-  type WebhookPayloadDeploymentSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadDeploymentDeploymentCreator = {
     login: string;
     id: number;
@@ -4663,28 +3843,8 @@ export declare module EventPayloads {
     action: "created";
     deployment: WebhookPayloadDeploymentDeployment;
     repository: PayloadRepository;
-    sender: WebhookPayloadDeploymentSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadDeploymentInstallation;
-  };
-  type WebhookPayloadDeployKeySender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadDeployKeyKey = {
     id: number;
@@ -4699,7 +3859,7 @@ export declare module EventPayloads {
     action: "created" | "deleted";
     key: WebhookPayloadDeployKeyKey;
     repository: PayloadRepository;
-    sender: WebhookPayloadDeployKeySender;
+    sender: PayloadSender;
   };
   type WebhookPayloadDeleteOrganization = {
     login: string;
@@ -4733,32 +3893,12 @@ export declare module EventPayloads {
     type: string;
   };
   type WebhookPayloadDeleteInstallation = { id: number; node_id: string };
-  type WebhookPayloadDeleteSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadDelete = {
     ref: string;
     ref_type: string;
     pusher_type: string;
     repository: PayloadRepository;
-    sender: WebhookPayloadDeleteSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadDeleteInstallation;
     organization?: WebhookPayloadDeleteOrganization;
   };
@@ -4794,26 +3934,6 @@ export declare module EventPayloads {
     type: string;
   };
   type WebhookPayloadCreateInstallation = { id: number; node_id: string };
-  type WebhookPayloadCreateSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
   type WebhookPayloadCreate = {
     ref: string;
     ref_type: string;
@@ -4821,33 +3941,13 @@ export declare module EventPayloads {
     description: null;
     pusher_type: string;
     repository: PayloadRepository;
-    sender: WebhookPayloadCreateSender;
+    sender: PayloadSender;
     installation?: WebhookPayloadCreateInstallation;
     organization?: WebhookPayloadCreateOrganization;
   };
   type WebhookPayloadContentReferenceInstallation = {
     id: number;
     node_id: string;
-  };
-  type WebhookPayloadContentReferenceSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadContentReferenceContentReference = {
     id: number;
@@ -4858,7 +3958,7 @@ export declare module EventPayloads {
     action: "created";
     content_reference: WebhookPayloadContentReferenceContentReference;
     repository: PayloadRepository;
-    sender: WebhookPayloadContentReferenceSender;
+    sender: PayloadSender;
     installation: WebhookPayloadContentReferenceInstallation;
   };
   type WebhookPayloadCommitCommentInstallation = {
@@ -4895,26 +3995,6 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
     type: string;
-  };
-  type WebhookPayloadCommitCommentSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadCommitCommentCommentUser = {
     login: string;
@@ -4955,7 +4035,7 @@ export declare module EventPayloads {
     action: "created";
     comment: WebhookPayloadCommitCommentComment;
     repository: PayloadRepository;
-    sender: WebhookPayloadCommitCommentSender;
+    sender: PayloadSender;
     organization?: WebhookPayloadCommitCommentOrganization;
     installation?: WebhookPayloadCommitCommentInstallation;
   };
@@ -5051,26 +4131,6 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
     type: string;
-  };
-  type WebhookPayloadCheckSuiteSender = {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
   };
   type WebhookPayloadCheckSuiteCheckSuiteHeadCommitCommitter = {
     name: string;
@@ -5191,7 +4251,7 @@ export declare module EventPayloads {
     action: "completed" | "requested" | "rerequested";
     check_suite: WebhookPayloadCheckSuiteCheckSuite;
     repository: PayloadRepository;
-    sender: WebhookPayloadCheckSuiteSender;
+    sender: PayloadSender;
     organization?: WebhookPayloadCheckSuiteOrganization;
     installation?: WebhookPayloadCheckSuiteInstallation;
   };
@@ -5235,10 +4295,10 @@ export declare module EventPayloads {
     updated_at?: string;
     type?: string;
   };
-  type WebhookPayloadCheckRunSender = {
+  type PayloadSender = {
     login: string;
     id: number;
-    node_id: string;
+    node_id?: string;
     avatar_url: string;
     gravatar_id: string;
     url: string;
@@ -5254,6 +4314,7 @@ export declare module EventPayloads {
     received_events_url: string;
     type: string;
     site_admin: boolean;
+    email?: string;
   };
   type PayloadRepositoryOwner = {
     login: string;
@@ -5563,7 +4624,7 @@ export declare module EventPayloads {
     action: "completed" | "created" | "requested_action" | "rerequested";
     check_run: WebhookPayloadCheckRunCheckRun;
     repository: PayloadRepository;
-    sender: WebhookPayloadCheckRunSender;
+    sender: PayloadSender;
     organization?: WebhookPayloadCheckRunOrganization;
     requested_action?: WebhookPayloadCheckRunRequestedAction;
     installation?: WebhookPayloadCheckRunInstallation;
