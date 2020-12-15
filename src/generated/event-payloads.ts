@@ -3576,6 +3576,7 @@ export declare module EventPayloads {
   type WebhookPayloadMarketplacePurchaseMarketplacePurchaseAccount = {
     type: string;
     id: number;
+    node_id?: string;
     login: string;
     organization_billing_email: string;
   };
