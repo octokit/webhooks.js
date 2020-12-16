@@ -14,16 +14,24 @@ const doNotEditThisFileDisclaimer = `
 // make edits in scripts/generate-types.js`;
 const eventPayloadsVariable = "EventPayloads";
 
-const generatePayloadType = (typeName) => ({
-  rootTypeName: typeName,
-  namedKeyPaths: {
+const generatePayloadType = (typeName) => {
+  const namedKeyPaths = {
     [`${typeName}.repository`]: "PayloadRepository",
     // This prevents a naming colision between the payload of a `installation_repositories` event
     // and the `repositories` attribute of a `installation` event
     "WebhookPayloadInstallation.repositories":
       "WebhookPayloadInstallation_Repositories",
-  },
-});
+  };
+
+  if (typeName !== "WebhookPayloadMarketplacePurchase") {
+    namedKeyPaths[`${typeName}.sender`] = "PayloadSender";
+  }
+
+  return {
+    rootTypeName: typeName,
+    namedKeyPaths,
+  };
+};
 
 const generateEventNameType = (name, actions) => [
   name,
@@ -56,6 +64,17 @@ webhooks.forEach(({ name, actions, examples }) => {
     ]);
   });
 });
+
+tw.add(
+  webhooks.flatMap(({ examples }) =>
+    examples
+      .map((example) => example.sender)
+      .filter((sender) => sender !== undefined)
+  ),
+  {
+    rootTypeName: "PayloadSender",
+  }
+);
 
 const getWebhookPayloadTypeFromEvent = `
 ${doNotEditThisFileDisclaimer}
