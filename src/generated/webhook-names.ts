@@ -127,6 +127,7 @@ export const webhookNames = [
   "pull_request",
   "pull_request.assigned",
   "pull_request.closed",
+  "pull_request.converted_to_draft",
   "pull_request.edited",
   "pull_request.labeled",
   "pull_request.locked",

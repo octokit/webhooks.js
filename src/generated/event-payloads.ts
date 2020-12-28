@@ -2281,6 +2281,7 @@ export declare module EventPayloads {
     action:
       | "assigned"
       | "closed"
+      | "converted_to_draft"
       | "edited"
       | "labeled"
       | "locked"
