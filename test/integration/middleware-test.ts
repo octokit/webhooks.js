@@ -11,6 +11,7 @@ type RequestMock = EventEmitter & {
   method: RequestMethodType;
   headers: { [key: string]: string };
   url: string;
+  setEncoding: jest.Mock<void, string[]>;
 };
 
 const headers = {
@@ -24,7 +25,7 @@ test("Invalid payload", (done) => {
     method: RequestMethodType.POST,
     headers,
     url: "/",
-    setEncoding: function () {},
+    setEncoding: jest.fn(),
   });
 
   const responseMock = {
@@ -38,12 +39,13 @@ test("Invalid payload", (done) => {
     expect(responseMock.end).toHaveBeenCalledWith(
       expect.stringContaining("SyntaxError: Invalid JSON")
     );
+    expect(requestMock.setEncoding).toHaveBeenCalledWith("utf8");
     done();
   });
 
   requestMock.emit("data", Buffer.from("foo"));
   requestMock.emit("end");
-  expect.assertions(2);
+  expect.assertions(3);
 });
 
 test("request error", (done) => {
@@ -51,7 +53,7 @@ test("request error", (done) => {
     method: RequestMethodType.POST,
     headers,
     url: "/",
-    setEncoding: function () {},
+    setEncoding: jest.fn(),
   });
 
   const responseMock = {
@@ -65,10 +67,11 @@ test("request error", (done) => {
     expect(responseMock.end).toHaveBeenCalledWith(
       expect.stringContaining("Error: oops")
     );
+    expect(requestMock.setEncoding).toHaveBeenCalledWith("utf8");
     done();
   });
 
   const error = new Error("oops");
   requestMock.emit("error", error);
-  expect.assertions(2);
+  expect.assertions(3);
 });
