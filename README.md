@@ -447,17 +447,7 @@ The `.onAny()` method belongs to the `event-handler` module which can be used [s
 webhooks.onError(handler);
 ```
 
-If a webhook event handler throws an error or returns a promise that rejects, an error event is triggered. You can subscribe to this event for logging or reporting events. The passed error object has a .event property which has all information on the event:
-
-- `id`: The unique webhook event request id
-- `name`: The name of the event
-- `payload`: The event request payload
-
-```js
-webhooks.onError((error) => {
-  console.log(`Error occured in "${error.event.name} handler: ${error.stack}"`);
-});
-```
+If a webhook event handler throws an error or returns a promise that rejects, an error event is triggered. You can use this handler for logging or reporting events. The passed error object has a .event property which has all information on the event.
 
 Asynchronous `error` event handler are not blocking the `.receive()` method from completing.
 
@@ -473,9 +463,9 @@ Asynchronous `error` event handler are not blocking the `.receive()` method from
     </td>
     <td>
       <strong>Required.</strong>
-      Method to be run each time the event with the passed name is received.
-      the <code>handler</code> function can be an async function, throw an error or
-      return a Promise. The handler is called with an event object: <code>{id, name, payload}</code>.
+      Method to be run each time a webhook event handler throws an error or returns a promise that rejects.
+      The <code>handler</code> function can be an async function,
+      return a Promise. The handler is called with an error object that has a .event property which hass all the information on the event: <code>{id, name, payload}</code>.
     </td>
   </tr>
 </table>
