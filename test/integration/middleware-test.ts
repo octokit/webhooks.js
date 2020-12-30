@@ -20,7 +20,7 @@ const headers = {
   "x-hub-signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
 };
 
-test("Invalid payload", (done) => {
+test("Invalid payload", () => {
   const requestMock: RequestMock = Object.assign(new EventEmitter(), {
     method: RequestMethodType.POST,
     headers,
@@ -34,21 +34,21 @@ test("Invalid payload", (done) => {
   };
 
   const middleware = createMiddleware({ secret: "mysecret" });
-  middleware(requestMock, responseMock).then(() => {
+  const middlewareDone = middleware(requestMock, responseMock).then(() => {
     expect(responseMock.statusCode).toBe(400);
     expect(responseMock.end).toHaveBeenCalledWith(
       expect.stringContaining("SyntaxError: Invalid JSON")
     );
     expect(requestMock.setEncoding).toHaveBeenCalledWith("utf8");
-    done();
   });
 
   requestMock.emit("data", Buffer.from("foo"));
   requestMock.emit("end");
-  expect.assertions(3);
+
+  return middlewareDone;
 });
 
-test("request error", (done) => {
+test("request error", () => {
   const requestMock: RequestMock = Object.assign(new EventEmitter(), {
     method: RequestMethodType.POST,
     headers,
@@ -62,16 +62,15 @@ test("request error", (done) => {
   };
 
   const middleware = createMiddleware({ secret: "mysecret" });
-  middleware(requestMock, responseMock).then(() => {
+  const middlewareDone = middleware(requestMock, responseMock).then(() => {
     expect(responseMock.statusCode).toBe(500);
     expect(responseMock.end).toHaveBeenCalledWith(
       expect.stringContaining("Error: oops")
     );
     expect(requestMock.setEncoding).toHaveBeenCalledWith("utf8");
-    done();
   });
 
   const error = new Error("oops");
   requestMock.emit("error", error);
-  expect.assertions(3);
+  return middlewareDone;
 });
