@@ -1,8 +1,9 @@
 // THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY
-// make edits in scripts/update-known-events.js
+// make edits in scripts/generate-types.ts
 
-export const webhookNames = [
+export const emitterEventNames = [
   "*",
+  "error",
   "check_run",
   "check_run.completed",
   "check_run.created",
@@ -32,7 +33,6 @@ export const webhookNames = [
   "deployment.created",
   "deployment_status",
   "deployment_status.created",
-  "error",
   "fork",
   "github_app_authorization",
   "github_app_authorization.revoked",
@@ -127,10 +127,10 @@ export const webhookNames = [
   "pull_request",
   "pull_request.assigned",
   "pull_request.closed",
+  "pull_request.converted_to_draft",
   "pull_request.edited",
   "pull_request.labeled",
   "pull_request.locked",
-  "pull_request.merged",
   "pull_request.opened",
   "pull_request.ready_for_review",
   "pull_request.reopened",
@@ -204,7 +204,6 @@ export const webhookNames = [
   "watch.started",
   "workflow_dispatch",
   "workflow_run",
-  "workflow_run.action",
   "workflow_run.completed",
   "workflow_run.requested",
 ];

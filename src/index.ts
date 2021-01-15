@@ -1,31 +1,36 @@
+import { IncomingMessage, ServerResponse } from "http";
 import { createEventHandler } from "./event-handler/index";
 import { createMiddleware } from "./middleware/index";
 import { middleware } from "./middleware/middleware";
-import { sign } from "./sign/index";
-import { verify } from "./verify/index";
-import { verifyAndReceive } from "./middleware/verify-and-receive";
 import {
+  verifyAndReceive,
+  WebhookEventName,
+} from "./middleware/verify-and-receive";
+import { sign } from "./sign/index";
+import {
+  EmitterAnyEvent,
+  EmitterEventName,
+  EmitterWebhookEvent,
+  EmitterWebhookEventMap,
+  HandlerFunction,
   Options,
   State,
-  WebhookEvent,
   WebhookError,
   WebhookEventHandlerError,
-  HandlerFunction,
 } from "./types";
-import { IncomingMessage, ServerResponse } from "http";
-import { WebhookEvents } from "./generated/get-webhook-payload-type-from-event";
+import { verify } from "./verify/index";
 
 // U holds the return value of `transform` function in Options
-class Webhooks<T extends WebhookEvent = WebhookEvent, U = {}> {
+class Webhooks<T extends EmitterWebhookEvent = EmitterWebhookEvent, U = {}> {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload: string | object, signature: string) => boolean;
-  public on: <E extends WebhookEvents>(
+  public on: <E extends EmitterEventName>(
     event: E | E[],
     callback: HandlerFunction<E, U>
   ) => void;
-  public onAny: (callback: (event: WebhookEvent<any>) => any) => void;
+  public onAny: (callback: (event: EmitterAnyEvent) => any) => void;
   public onError: (callback: (event: WebhookEventHandlerError) => any) => void;
-  public removeListener: <E extends WebhookEvents>(
+  public removeListener: <E extends EmitterEventName>(
     event: E | E[],
     callback: HandlerFunction<E, U>
   ) => void;
@@ -40,7 +45,7 @@ class Webhooks<T extends WebhookEvent = WebhookEvent, U = {}> {
     next?: (err?: any) => void
   ) => void | Promise<void>;
   public verifyAndReceive: (
-    options: WebhookEvent & { signature: string }
+    options: EmitterWebhookEventMap[WebhookEventName] & { signature: string }
   ) => Promise<void>;
 
   constructor(options?: Options<T>) {
@@ -71,16 +76,18 @@ const createWebhooksApi = Webhooks.prototype.constructor;
 
 export { EventPayloads } from "./generated/event-payloads";
 export {
-  EventTypesPayload,
-  WebhookEvents,
-} from "./generated/get-webhook-payload-type-from-event";
+  EmitterEventMap,
+  EmitterEventName,
+  EmitterEventMap as EventTypesPayload,
+  EmitterEventName as WebhookEvents,
+} from "./types";
 
 export {
   createEventHandler,
   createMiddleware,
   createWebhooksApi,
   Webhooks,
-  WebhookEvent,
+  EmitterWebhookEvent,
   WebhookError,
   sign,
   verify,

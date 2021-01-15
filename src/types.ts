@@ -1,27 +1,58 @@
 import type { RequestError } from "@octokit/request-error";
-import {
-  WebhookEvents,
-  EventTypesPayload,
-} from "./generated/get-webhook-payload-type-from-event";
+import type { Schema } from "@octokit/webhooks-definitions/schema";
+import type { EmitterEventWebhookPayloadMap } from "./generated/get-webhook-payload-type-from-event";
 
-export interface WebhookEvent<T = any> {
+type EmitterEventPayloadMap = { "*": Schema } & EmitterEventWebhookPayloadMap;
+
+export type EmitterWebhookEventMap = {
+  [K in keyof EmitterEventPayloadMap]: BaseWebhookEvent<K>;
+};
+
+export type EmitterWebhookEventName = keyof EmitterWebhookEventMap;
+export type EmitterWebhookEvent = EmitterWebhookEventMap[EmitterWebhookEventName];
+
+/**
+ * A map of all possible emitter events to their event type.
+ * AKA "if the emitter emits x, the handler will be passed y"
+ */
+export type EmitterEventMap = EmitterWebhookEventMap & {
+  error: WebhookEventHandlerError;
+};
+export type EmitterEventName = keyof EmitterEventMap;
+export type EmitterEvent = EmitterEventMap[EmitterEventName];
+
+export type EmitterAnyEvent = EmitterWebhookEventMap["*"];
+
+interface BaseWebhookEvent<
+  TName extends keyof EmitterEventPayloadMap = keyof EmitterEventPayloadMap
+> {
   id: string;
-  name: WebhookEvents;
-  payload: T;
+  name: TName;
+  payload: EmitterEventPayloadMap[TName];
 }
 
-export interface Options<T extends WebhookEvent> {
+export interface Options<T extends EmitterWebhookEvent> {
   path?: string;
   secret?: string;
   transform?: TransformMethod<T>;
 }
 
-type TransformMethod<T extends WebhookEvent, V = T> = (
-  event: WebhookEvent
+type TransformMethod<T extends EmitterWebhookEvent, V = T> = (
+  event: EmitterWebhookEvent
 ) => V | PromiseLike<V>;
 
-export type HandlerFunction<E extends WebhookEvents, U> = (
-  event: EventTypesPayload[E] & U
+type EnsureArray<T> = T extends any[] ? T : [T];
+// type MaybeArray<T> = T | T[];
+
+export type HandlerFunction<
+  TName extends EmitterEventName | EmitterEventName[],
+  TTransformed
+> = (
+  event: EmitterEventMap[Extract<
+    EmitterEventName,
+    EnsureArray<TName>[number]
+  >] &
+    TTransformed
 ) => any;
 
 type Hooks = {
@@ -41,11 +72,12 @@ export type WebhookError = Error &
     /**
      * @deprecated `error.event` is deprecated. Use the `.event` property on the aggregated error instance
      */
-    event: WebhookEvent;
+    event: EmitterWebhookEvent;
   };
 
+// todo: rename to "EmitterErrorEvent"
 export interface WebhookEventHandlerError extends AggregateError<WebhookError> {
-  event: WebhookEvent;
+  event: EmitterWebhookEvent;
 
   /**
    * @deprecated `error.errors` is deprecated. Use `Array.from(error)`. See https://npm.im/aggregate-error

@@ -4,11 +4,11 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import getPort from "get-port";
 import { promisify } from "util";
 import { Webhooks } from "../../src";
-import pushEventPayload from "../fixtures/push-payload.json";
+import { pushEventPayload } from "../fixtures";
 
-const signatureSha1 = "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f";
+const signatureSha1 = "sha1=c171163ec36d7639f1aa9aa8cd0dc26102bfa3fc";
 const signatureSha256 =
-  "sha256=2b49327af77d51c4c23700118b11d15c81d90c3bd57dafbbe32eb50085ce67e0";
+  "sha256=7962cbf5a0aea311ea57976a0f379c40cbf917701c71ef906a4e7f05794ead44";
 
 describe("server-test", () => {
   let availablePort: number;
