@@ -9,6 +9,15 @@ import { WebhookEvents } from "../generated/get-webhook-payload-type-from-event"
 
 const debugWebhooks = debug("webhooks:receiver");
 
+declare module "http" {
+  interface IncomingHttpHeaders {
+    "x-github-event": WebhookEvents;
+    "x-hub-signature": string;
+    "x-hub-signature-256"?: string;
+    "x-github-delivery": string;
+  }
+}
+
 export function middleware(
   state: State,
   request: IncomingMessage,
@@ -43,10 +52,10 @@ export function middleware(
     });
   }
 
-  const eventName = request.headers["x-github-event"] as WebhookEvents;
-  const signatureSHA1 = request.headers["x-hub-signature"] as string;
-  const signatureSHA256 = request.headers["x-hub-signature-256"] as string;
-  const id = request.headers["x-github-delivery"] as string;
+  const eventName = request.headers["x-github-event"];
+  const signatureSHA1 = request.headers["x-hub-signature"];
+  const signatureSHA256 = request.headers["x-hub-signature-256"];
+  const id = request.headers["x-github-delivery"];
 
   debugWebhooks(`${eventName} event received (id: ${id})`);
 
