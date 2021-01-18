@@ -17,7 +17,6 @@
     "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
     "pretest": "npm run -s lint",
     "test": "jest --coverage",
-    "update-known-events": "node scripts/update-known-events.js",
     "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 --esModuleInterop --moduleResolution node test/typescript-validate.ts"
   },
   "prettier": {},
@@ -41,11 +40,9 @@
     "axios": "^0.21.0",
     "get-port": "^5.0.0",
     "jest": "^26.2.2",
-    "pascal-case": "^3.0.0",
     "prettier": "^2.0.1",
     "prettier-plugin-packagejson": "^2.2.9",
     "semantic-release": "^17.0.0",
-    "table-builder": "^2.1.1",
     "ts-jest": "^26.2.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.0.2"
