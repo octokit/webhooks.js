@@ -298,6 +298,8 @@ export declare module EventPayloads {
     pull: boolean;
     push: boolean;
     admin: boolean;
+    triage?: boolean;
+    maintain?: boolean;
   };
   type WebhookPayloadTeamTeam = {
     name: string;
@@ -423,6 +425,7 @@ export declare module EventPayloads {
     updated_at: string;
     repository: PayloadRepository;
     sender: PayloadSender;
+    avatar_url?: string;
     installation?: WebhookPayloadStatusInstallation;
   };
   type WebhookPayloadStar = {
@@ -516,7 +519,7 @@ export declare module EventPayloads {
   };
   type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemFirstPatchedVersion = {
     identifier: string;
-  };
+  } | null;
   type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemPackage = {
     ecosystem: string;
     name: string;
@@ -628,8 +631,8 @@ export declare module EventPayloads {
   type WebhookPayloadRepositoryVulnerabilityAlert = {
     action: "create" | "dismiss" | "resolve";
     alert: WebhookPayloadRepositoryVulnerabilityAlertAlert;
-    repository?: PayloadRepository;
-    sender?: PayloadSender;
+    repository: PayloadRepository;
+    sender: PayloadSender;
     organization?: WebhookPayloadRepositoryVulnerabilityAlertOrganization;
   };
   type WebhookPayloadRepositoryImportOrganization = {
@@ -651,6 +654,39 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     organization: WebhookPayloadRepositoryImportOrganization;
     sender: PayloadSender;
+  };
+  type WebhookPayloadRepositoryChangesOwnerFromUser = {
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
+  };
+  type WebhookPayloadRepositoryChangesOwnerFrom = {
+    user: WebhookPayloadRepositoryChangesOwnerFromUser;
+  };
+  type WebhookPayloadRepositoryChangesOwner = {
+    from: WebhookPayloadRepositoryChangesOwnerFrom;
+  };
+  type WebhookPayloadRepositoryChangesDefaultBranch = { from: string };
+  type WebhookPayloadRepositoryChangesDescription = { from: string };
+  type WebhookPayloadRepositoryChanges = {
+    description?: WebhookPayloadRepositoryChangesDescription;
+    default_branch?: WebhookPayloadRepositoryChangesDefaultBranch;
+    owner?: WebhookPayloadRepositoryChangesOwner;
   };
   type WebhookPayloadRepositoryInstallation = { id: number; node_id: string };
   type WebhookPayloadRepositoryOrganization = {
@@ -682,6 +718,7 @@ export declare module EventPayloads {
     sender: PayloadSender;
     organization?: WebhookPayloadRepositoryOrganization;
     installation?: WebhookPayloadRepositoryInstallation;
+    changes?: WebhookPayloadRepositoryChanges;
   };
   type WebhookPayloadRepositoryDispatchInstallation = {
     id: number;
@@ -779,23 +816,52 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
+  };
+  type WebhookPayloadPushHeadCommitCommitter = {
     name: string;
-    company: null;
-    blog: null;
-    location: null;
-    email: null;
-    twitter_username: null;
-    is_verified: boolean;
-    has_organization_projects: boolean;
-    has_repository_projects: boolean;
-    public_repos: number;
-    public_gists: number;
-    followers: number;
-    following: number;
-    html_url: string;
-    created_at: string;
-    updated_at: string;
-    type: string;
+    email: string;
+    username: string;
+  };
+  type WebhookPayloadPushHeadCommitAuthor = {
+    name: string;
+    email: string;
+    username: string;
+  };
+  type WebhookPayloadPushHeadCommit = null | {
+    id: string;
+    tree_id: string;
+    distinct: boolean;
+    message: string;
+    timestamp: string;
+    url: string;
+    author: WebhookPayloadPushHeadCommitAuthor;
+    committer: WebhookPayloadPushHeadCommitCommitter;
+    added: Array<string>;
+    removed: Array<any>;
+    modified: Array<any>;
+  };
+  type WebhookPayloadPushCommitsItemCommitter = {
+    name: string;
+    email: string;
+    username: string;
+  };
+  type WebhookPayloadPushCommitsItemAuthor = {
+    name: string;
+    email: string;
+    username: string;
+  };
+  type WebhookPayloadPushCommitsItem = {
+    id: string;
+    tree_id: string;
+    distinct: boolean;
+    message: string;
+    timestamp: string;
+    url: string;
+    author: WebhookPayloadPushCommitsItemAuthor;
+    committer: WebhookPayloadPushCommitsItemCommitter;
+    added: Array<string>;
+    removed: Array<any>;
+    modified: Array<any>;
   };
   type WebhookPayloadPushInstallation = { id: number; node_id: string };
   type WebhookPayloadPushPusher = { name: string; email: string };
@@ -808,13 +874,17 @@ export declare module EventPayloads {
     forced: boolean;
     base_ref: null;
     compare: string;
-    commits: Array<any>;
-    head_commit: null;
+    commits: Array<WebhookPayloadPushCommitsItem>;
+    head_commit: WebhookPayloadPushHeadCommit;
     repository: PayloadRepository;
     pusher: WebhookPayloadPushPusher;
     sender: PayloadSender;
     installation?: WebhookPayloadPushInstallation;
     organization?: WebhookPayloadPushOrganization;
+  };
+  type WebhookPayloadPullRequestReviewCommentChangesBody = { from: string };
+  type WebhookPayloadPullRequestReviewCommentChanges = {
+    body: WebhookPayloadPullRequestReviewCommentChangesBody;
   };
   type WebhookPayloadPullRequestReviewCommentOrganization = {
     login: string;
@@ -829,23 +899,6 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
-    name: string;
-    company: null;
-    blog: null;
-    location: null;
-    email: null;
-    twitter_username: null;
-    is_verified: boolean;
-    has_organization_projects: boolean;
-    has_repository_projects: boolean;
-    public_repos: number;
-    public_gists: number;
-    followers: number;
-    following: number;
-    html_url: string;
-    created_at: string;
-    updated_at: string;
-    type: string;
   };
   type WebhookPayloadPullRequestReviewCommentInstallation = {
     id: number;
@@ -858,6 +911,7 @@ export declare module EventPayloads {
     name: string;
     color: string;
     default: boolean;
+    description: string;
   };
   type WebhookPayloadPullRequestReviewCommentPullRequestRequestedReviewersItem = {
     login: string;
@@ -1302,6 +1356,7 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadPullRequestReviewCommentInstallation;
     organization?: WebhookPayloadPullRequestReviewCommentOrganization;
+    changes?: WebhookPayloadPullRequestReviewCommentChanges;
   };
   type WebhookPayloadPullRequestReviewOrganization = {
     login: string;
@@ -1316,23 +1371,6 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
-    name: string;
-    company: null;
-    blog: null;
-    location: null;
-    email: null;
-    twitter_username: null;
-    is_verified: boolean;
-    has_organization_projects: boolean;
-    has_repository_projects: boolean;
-    public_repos: number;
-    public_gists: number;
-    followers: number;
-    following: number;
-    html_url: string;
-    created_at: string;
-    updated_at: string;
-    type: string;
   };
   type WebhookPayloadPullRequestReviewInstallation = {
     id: number;
@@ -1345,6 +1383,7 @@ export declare module EventPayloads {
     name: string;
     color: string;
     default: boolean;
+    description: string;
   };
   type WebhookPayloadPullRequestReviewPullRequestRequestedReviewersItem = {
     login: string;
@@ -1720,6 +1759,8 @@ export declare module EventPayloads {
     base: WebhookPayloadPullRequestReviewPullRequestBase;
     _links: WebhookPayloadPullRequestReviewPullRequestLinks;
     author_association: string;
+    draft?: boolean;
+    active_lock_reason?: null;
   };
   type WebhookPayloadPullRequestReviewReviewLinksPullRequest = { href: string };
   type WebhookPayloadPullRequestReviewReviewLinksHtml = { href: string };
@@ -1776,6 +1817,7 @@ export declare module EventPayloads {
     name: string;
     color: string;
     default: boolean;
+    description: string;
   };
   type WebhookPayloadPullRequestPullRequestMilestoneCreator = {
     login: string;
@@ -1848,23 +1890,6 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
-    name: string;
-    company: null;
-    blog: null;
-    location: null;
-    email: null;
-    twitter_username: null;
-    is_verified: boolean;
-    has_organization_projects: boolean;
-    has_repository_projects: boolean;
-    public_repos: number;
-    public_gists: number;
-    followers: number;
-    following: number;
-    html_url: string;
-    created_at: string;
-    updated_at: string;
-    type: string;
   };
   type WebhookPayloadPullRequestInstallation = { id: number; node_id: string };
   type WebhookPayloadPullRequestAssignee = {
@@ -1894,6 +1919,7 @@ export declare module EventPayloads {
     name: string;
     color: string;
     default: boolean;
+    description: string;
   };
   type WebhookPayloadPullRequestPullRequestRequestedReviewersItem = {
     login: string;
@@ -2276,6 +2302,7 @@ export declare module EventPayloads {
     additions: number;
     deletions: number;
     changed_files: number;
+    active_lock_reason?: null | string;
   };
   type WebhookPayloadPullRequest = {
     action:
@@ -2293,7 +2320,8 @@ export declare module EventPayloads {
       | "synchronize"
       | "unassigned"
       | "unlabeled"
-      | "unlocked";
+      | "unlocked"
+      | "converted_to_draft";
     number: number;
     pull_request: WebhookPayloadPullRequestPullRequest;
     repository: PayloadRepository;
@@ -2386,23 +2414,6 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
-    name: string;
-    company: null;
-    blog: null;
-    location: null;
-    email: null;
-    twitter_username: null;
-    is_verified: boolean;
-    has_organization_projects: boolean;
-    has_repository_projects: boolean;
-    public_repos: number;
-    public_gists: number;
-    followers: number;
-    following: number;
-    html_url: string;
-    created_at: string;
-    updated_at: string;
-    type: string;
   };
   type WebhookPayloadProjectCardInstallation = { id: number; node_id: string };
   type WebhookPayloadProjectCardProjectCardCreator = {
@@ -2437,6 +2448,7 @@ export declare module EventPayloads {
     creator: WebhookPayloadProjectCardProjectCardCreator;
     created_at: string;
     updated_at: string;
+    content_url?: string;
   };
   type WebhookPayloadProjectCard = {
     action: "converted" | "created" | "deleted" | "edited" | "moved";
@@ -2884,9 +2896,9 @@ export declare module EventPayloads {
     organization: WebhookPayloadMembershipOrganization;
     installation?: WebhookPayloadMembershipInstallation;
   };
-  type WebhookPayloadMemberChangesPermission = { from: string };
+  type WebhookPayloadMemberChangesOldPermission = { from: string };
   type WebhookPayloadMemberChanges = {
-    permission: WebhookPayloadMemberChangesPermission;
+    old_permission: WebhookPayloadMemberChangesOldPermission;
   };
   type WebhookPayloadMemberInstallation = { id: number; node_id: string };
   type WebhookPayloadMemberMember = {
@@ -3011,6 +3023,7 @@ export declare module EventPayloads {
     name: string;
     color: string;
     default: boolean;
+    description?: string;
   };
   type WebhookPayloadLabel = {
     action: "created" | "deleted" | "edited";
@@ -3027,6 +3040,7 @@ export declare module EventPayloads {
     name: string;
     color: string;
     default: boolean;
+    description: string;
   };
   type WebhookPayloadIssuesIssuePullRequest = {
     url: string;
@@ -3047,23 +3061,6 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
-    name: string;
-    company: null;
-    blog: null;
-    location: null;
-    email: null;
-    twitter_username: null;
-    is_verified: boolean;
-    has_organization_projects: boolean;
-    has_repository_projects: boolean;
-    public_repos: number;
-    public_gists: number;
-    followers: number;
-    following: number;
-    html_url: string;
-    created_at: string;
-    updated_at: string;
-    type: string;
   };
   type WebhookPayloadIssuesInstallation = { id: number; node_id: string };
   type WebhookPayloadIssuesAssignee = {
@@ -3172,6 +3169,7 @@ export declare module EventPayloads {
     name: string;
     color: string;
     default: boolean;
+    description?: string;
   };
   type WebhookPayloadIssuesIssueUser = {
     login: string;
@@ -3205,10 +3203,10 @@ export declare module EventPayloads {
     number: number;
     title: string;
     user: WebhookPayloadIssuesIssueUser;
-    labels: Array<WebhookPayloadIssuesIssueLabelsItem>;
-    state: string;
-    locked: boolean;
-    assignee: WebhookPayloadIssuesIssueAssignee;
+    labels?: Array<WebhookPayloadIssuesIssueLabelsItem>;
+    state?: string;
+    locked?: boolean;
+    assignee?: WebhookPayloadIssuesIssueAssignee;
     assignees: Array<WebhookPayloadIssuesIssueAssigneesItem>;
     milestone: WebhookPayloadIssuesIssueMilestone;
     comments: number;
@@ -3217,7 +3215,9 @@ export declare module EventPayloads {
     closed_at: null;
     author_association: string;
     body: string;
+    active_lock_reason?: null | string;
     pull_request?: WebhookPayloadIssuesIssuePullRequest;
+    performed_via_github_app?: null;
   };
   type WebhookPayloadIssues = {
     action:
@@ -3264,23 +3264,6 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
-    name: string;
-    company: null;
-    blog: null;
-    location: null;
-    email: null;
-    twitter_username: null;
-    is_verified: boolean;
-    has_organization_projects: boolean;
-    has_repository_projects: boolean;
-    public_repos: number;
-    public_gists: number;
-    followers: number;
-    following: number;
-    html_url: string;
-    created_at: string;
-    updated_at: string;
-    type: string;
   };
   type WebhookPayloadIssueCommentCommentUser = {
     login: string;
@@ -3399,6 +3382,7 @@ export declare module EventPayloads {
     name: string;
     color: string;
     default: boolean;
+    description?: string;
   };
   type WebhookPayloadIssueCommentIssueUser = {
     login: string;
@@ -3444,6 +3428,7 @@ export declare module EventPayloads {
     closed_at: null;
     author_association: string;
     body: string;
+    active_lock_reason?: null;
   };
   type WebhookPayloadIssueComment = {
     action: "created" | "deleted" | "edited";
@@ -3457,6 +3442,7 @@ export declare module EventPayloads {
   };
   type WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem = {
     id: number;
+    node_id: string;
     name: string;
     full_name: string;
     private: boolean;
@@ -3582,6 +3568,11 @@ export declare module EventPayloads {
     created_at: number;
     updated_at: number;
     single_file_name: string | null;
+    app_slug?: string;
+    has_multiple_single_files?: boolean;
+    single_file_paths?: Array<any>;
+    suspended_by?: null;
+    suspended_at?: null;
   };
   type WebhookPayloadInstallation = {
     action:
@@ -3874,23 +3865,6 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
-    name: string;
-    company: null;
-    blog: null;
-    location: null;
-    email: null;
-    twitter_username: null;
-    is_verified: boolean;
-    has_organization_projects: boolean;
-    has_repository_projects: boolean;
-    public_repos: number;
-    public_gists: number;
-    followers: number;
-    following: number;
-    html_url: string;
-    created_at: string;
-    updated_at: string;
-    type: string;
   };
   type WebhookPayloadDeleteInstallation = { id: number; node_id: string };
   type WebhookPayloadDelete = {
@@ -3915,30 +3889,13 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
-    name: string;
-    company: null;
-    blog: null;
-    location: null;
-    email: null;
-    twitter_username: null;
-    is_verified: boolean;
-    has_organization_projects: boolean;
-    has_repository_projects: boolean;
-    public_repos: number;
-    public_gists: number;
-    followers: number;
-    following: number;
-    html_url: string;
-    created_at: string;
-    updated_at: string;
-    type: string;
   };
   type WebhookPayloadCreateInstallation = { id: number; node_id: string };
   type WebhookPayloadCreate = {
     ref: string;
     ref_type: string;
     master_branch: string;
-    description: null;
+    description: null | string;
     pusher_type: string;
     repository: PayloadRepository;
     sender: PayloadSender;
@@ -3978,23 +3935,6 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
-    name: string;
-    company: null;
-    blog: null;
-    location: null;
-    email: null;
-    twitter_username: null;
-    is_verified: boolean;
-    has_organization_projects: boolean;
-    has_repository_projects: boolean;
-    public_repos: number;
-    public_gists: number;
-    followers: number;
-    following: number;
-    html_url: string;
-    created_at: string;
-    updated_at: string;
-    type: string;
   };
   type WebhookPayloadCommitCommentCommentUser = {
     login: string;
@@ -4022,9 +3962,9 @@ export declare module EventPayloads {
     id: number;
     node_id: string;
     user: WebhookPayloadCommitCommentCommentUser;
-    position: null;
-    line: null;
-    path: null;
+    position: null | number;
+    line: null | number;
+    path: null | string;
     commit_id: string;
     created_at: string;
     updated_at: string;
@@ -4114,23 +4054,6 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
-    name: string;
-    company: null;
-    blog: null;
-    location: null;
-    email: null;
-    twitter_username: null;
-    is_verified: boolean;
-    has_organization_projects: boolean;
-    has_repository_projects: boolean;
-    public_repos: number;
-    public_gists: number;
-    followers: number;
-    following: number;
-    html_url: string;
-    created_at: string;
-    updated_at: string;
-    type: string;
   };
   type WebhookPayloadCheckSuiteCheckSuiteHeadCommitCommitter = {
     name: string;
@@ -4277,23 +4200,6 @@ export declare module EventPayloads {
     public_members_url: string;
     avatar_url: string;
     description: string;
-    name?: string;
-    company?: null;
-    blog?: null;
-    location?: null;
-    email?: null;
-    twitter_username?: null;
-    is_verified?: boolean;
-    has_organization_projects?: boolean;
-    has_repository_projects?: boolean;
-    public_repos?: number;
-    public_gists?: number;
-    followers?: number;
-    following?: number;
-    html_url?: string;
-    created_at?: string;
-    updated_at?: string;
-    type?: string;
   };
   type PayloadSender = {
     login: string;

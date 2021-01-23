@@ -143,6 +143,7 @@ export interface EventTypesPayload {
   "pull_request.unassigned": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
   "pull_request.unlabeled": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
   "pull_request.unlocked": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
+  "pull_request.converted_to_draft": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
   pull_request_review: WebhookEvent<EventPayloads.WebhookPayloadPullRequestReview>;
   "pull_request_review.dismissed": WebhookEvent<EventPayloads.WebhookPayloadPullRequestReview>;
   "pull_request_review.edited": WebhookEvent<EventPayloads.WebhookPayloadPullRequestReview>;
