@@ -1,13 +1,47 @@
 {
   "name": "@octokit/webhooks",
   "version": "0.0.0-development",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "GitHub webhook events toolset for Node.js",
   "keywords": [],
-  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octokit/webhooks.js.git"
+  },
   "license": "MIT",
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "scripts": {
+    "build": "pika build",
+    "coverage": "jest --coverage && open coverage/lcov-report/index.html",
+    "generate-types": "node scripts/generate-types.js",
+    "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
+    "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
+    "pretest": "npm run -s lint",
+    "test": "jest --coverage",
+    "update-known-events": "node scripts/update-known-events.js",
+    "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 --esModuleInterop --moduleResolution node test/typescript-validate.ts"
+  },
+  "prettier": {},
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+      }
+    },
+    "globals": {
+      "ts-jest": {
+        "tsconfig": {
+          "esModuleInterop": true
+        }
+      }
+    },
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": null,
+    "testRegex": "test/.*/.*.ts"
+  },
   "dependencies": {
     "@octokit/request-error": "^2.0.2",
     "aggregate-error": "^3.1.0",
@@ -34,20 +68,8 @@
     "ts-jest": "^26.2.0",
     "typescript": "^4.0.2"
   },
-  "scripts": {
-    "build": "pika build",
-    "coverage": "jest --coverage && open coverage/lcov-report/index.html",
-    "update-known-events": "node scripts/update-known-events.js",
-    "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
-    "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
-    "pretest": "npm run -s lint",
-    "test": "jest --coverage",
-    "generate-types": "node scripts/generate-types.js",
-    "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 --esModuleInterop --moduleResolution node test/typescript-validate.ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/octokit/webhooks.js.git"
+  "publishConfig": {
+    "access": "public"
   },
   "@pika/pack": {
     "pipeline": [
@@ -58,27 +80,6 @@
         "@pika/plugin-build-node"
       ]
     ]
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "testMatch": null,
-    "testRegex": "test/.*/.*.ts",
-    "coverageThreshold": {
-      "global": {
-        "statements": 100,
-        "branches": 100,
-        "functions": 100,
-        "lines": 100
-      }
-    },
-    "globals": {
-      "ts-jest": {
-        "tsconfig": {
-          "esModuleInterop": true
-        }
-      }
-    }
   },
   "release": {
     "plugins": [
