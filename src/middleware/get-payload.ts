@@ -4,13 +4,18 @@ import AggregateError from "aggregate-error";
 import { IncomingMessage } from "http";
 import { EventTypesPayload } from "../generated/get-webhook-payload-type-from-event";
 
+declare module "http" {
+  interface IncomingMessage {
+    body?: EventTypesPayload;
+  }
+}
+
 export function getPayload(
   request: IncomingMessage
 ): Promise<EventTypesPayload> {
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
 
-  // @ts-expect-error
   if (request.body) return Promise.resolve(request.body);
 
   return new Promise((resolve, reject) => {

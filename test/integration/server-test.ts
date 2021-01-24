@@ -182,7 +182,6 @@ describe("server-test", () => {
     const server = http.createServer((req, res) => {
       req.once("data", (chunk) => dataChunks.push(chunk));
       req.once("end", () => {
-        // @ts-expect-error
         req.body = JSON.parse(Buffer.concat(dataChunks).toString());
         api.middleware(req, res);
 
