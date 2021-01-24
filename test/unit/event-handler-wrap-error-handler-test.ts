@@ -1,33 +1,30 @@
-import simple from "simple-mock";
 import { wrapErrorHandler } from "../../src/event-handler/wrap-error-handler";
+
+const noop = () => {};
 
 test("error thrown in error handler", () => {
   expect.assertions(2);
 
-  const messages: string[] = [];
-  simple.mock(console, "log", messages.push.bind(messages));
+  const consoleLogSpy = jest.spyOn(console, "log").mockImplementation(noop);
   expect(() => {
     wrapErrorHandler(() => {
       throw new Error("oopsydoopsy");
     }, new Error("oops"));
   }).not.toThrow();
 
-  expect(messages.find((message) => /FATAL/.test(message))).toBeTruthy();
-  simple.restore();
+  expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringMatching(/FATAL/));
 });
 
 test("error handler returns rejected Error", () => {
   expect.assertions(2);
 
-  const messages: string[] = [];
-  simple.mock(console, "log", messages.push.bind(messages));
+  const consoleLogSpy = jest.spyOn(console, "log").mockImplementation(noop);
   const promise = Promise.reject(new Error("oopsydoopsy"));
   expect(() =>
     wrapErrorHandler(() => promise, new Error("oops"))
   ).not.toThrow();
 
   promise.catch(() => {
-    expect(messages.find((message) => /FATAL/.test(message))).toBeTruthy();
-    simple.restore();
+    expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringMatching(/FATAL/));
   });
 });
