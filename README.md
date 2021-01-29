@@ -491,7 +491,7 @@ webhooks.removeListener(eventNames, handler);
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. One of <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads">GitHub’s supported event names</a>.
+      Name of the event. One of <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads">GitHub’s supported event names</a>, or '*' for the <code>onAny()</code> method or 'error' for the <code>onError()</code> method.
     </td>
   </tr>
   <tr>
