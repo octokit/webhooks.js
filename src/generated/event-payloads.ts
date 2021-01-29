@@ -803,20 +803,6 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadReleaseInstallation;
   };
-  type WebhookPayloadPushOrganization = {
-    login: string;
-    id: number;
-    node_id: string;
-    url: string;
-    repos_url: string;
-    events_url: string;
-    hooks_url: string;
-    issues_url: string;
-    members_url: string;
-    public_members_url: string;
-    avatar_url: string;
-    description: string;
-  };
   type WebhookPayloadPushHeadCommitCommitter = {
     name: string;
     email: string;
@@ -864,6 +850,20 @@ export declare module EventPayloads {
     modified: Array<any>;
   };
   type WebhookPayloadPushInstallation = { id: number; node_id: string };
+  type WebhookPayloadPushOrganization = {
+    login: string;
+    id: number;
+    node_id: string;
+    url: string;
+    repos_url: string;
+    events_url: string;
+    hooks_url: string;
+    issues_url: string;
+    members_url: string;
+    public_members_url: string;
+    avatar_url: string;
+    description: string;
+  };
   type WebhookPayloadPushPusher = { name: string; email: string };
   type WebhookPayloadPush = {
     ref: string;
@@ -879,8 +879,12 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     pusher: WebhookPayloadPushPusher;
     sender: PayloadSender;
-    installation?: WebhookPayloadPushInstallation;
     organization?: WebhookPayloadPushOrganization;
+    installation?: WebhookPayloadPushInstallation;
+  };
+  type WebhookPayloadPullRequestReviewCommentChangesBody = { from: string };
+  type WebhookPayloadPullRequestReviewCommentChanges = {
+    body: WebhookPayloadPullRequestReviewCommentChangesBody;
   };
   type WebhookPayloadPullRequestReviewCommentChangesBody = { from: string };
   type WebhookPayloadPullRequestReviewCommentChanges = {
@@ -4072,25 +4076,29 @@ export declare module EventPayloads {
     committer: WebhookPayloadCheckSuiteCheckSuiteHeadCommitCommitter;
   };
   type WebhookPayloadCheckSuiteCheckSuiteAppPermissions = {
-    administration: string;
+    administration?: string;
     checks: string;
     contents: string;
     deployments: string;
     issues: string;
-    members: string;
+    members?: string;
     metadata: string;
-    organization_administration: string;
-    organization_hooks: string;
-    organization_plan: string;
-    organization_projects: string;
-    organization_user_blocking: string;
+    organization_administration?: string;
+    organization_hooks?: string;
+    organization_plan?: string;
+    organization_projects?: string;
+    organization_user_blocking?: string;
     pages: string;
     pull_requests: string;
     repository_hooks: string;
     repository_projects: string;
     statuses: string;
-    team_discussions: string;
+    team_discussions?: string;
     vulnerability_alerts: string;
+    actions?: string;
+    organization_packages?: string;
+    packages?: string;
+    security_events?: string;
   };
   type WebhookPayloadCheckSuiteCheckSuiteAppOwner = {
     login: string;
@@ -4124,6 +4132,7 @@ export declare module EventPayloads {
     updated_at: string;
     permissions: WebhookPayloadCheckSuiteCheckSuiteAppPermissions;
     events: Array<any>;
+    slug?: string;
   };
   type WebhookPayloadCheckSuiteCheckSuitePullRequestsItemBaseRepo = {
     id: number;
@@ -4320,6 +4329,7 @@ export declare module EventPayloads {
     default_branch: string;
     stargazers?: number;
     master_branch?: string;
+    organization?: string;
     permissions?: PayloadRepositoryPermissions;
   };
   type WebhookPayloadCheckRunCheckRunPullRequestsItemBaseRepo = {
