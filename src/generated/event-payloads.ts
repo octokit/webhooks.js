@@ -886,10 +886,6 @@ export declare module EventPayloads {
   type WebhookPayloadPullRequestReviewCommentChanges = {
     body: WebhookPayloadPullRequestReviewCommentChangesBody;
   };
-  type WebhookPayloadPullRequestReviewCommentChangesBody = { from: string };
-  type WebhookPayloadPullRequestReviewCommentChanges = {
-    body: WebhookPayloadPullRequestReviewCommentChangesBody;
-  };
   type WebhookPayloadPullRequestReviewCommentOrganization = {
     login: string;
     id: number;
@@ -3300,6 +3296,7 @@ export declare module EventPayloads {
     updated_at: string;
     author_association: string;
     body: string;
+    performed_via_github_app?: null;
   };
   type WebhookPayloadIssueCommentIssueMilestoneCreator = {
     login: string;
@@ -3338,7 +3335,7 @@ export declare module EventPayloads {
     updated_at: string;
     due_on: string;
     closed_at: string;
-  };
+  } | null;
   type WebhookPayloadIssueCommentIssueAssigneesItem = {
     login: string;
     id: number;
@@ -3378,7 +3375,7 @@ export declare module EventPayloads {
     received_events_url: string;
     type: string;
     site_admin: boolean;
-  };
+  } | null;
   type WebhookPayloadIssueCommentIssueLabelsItem = {
     id: number;
     node_id: string;
@@ -3433,6 +3430,7 @@ export declare module EventPayloads {
     author_association: string;
     body: string;
     active_lock_reason?: null;
+    performed_via_github_app?: null;
   };
   type WebhookPayloadIssueComment = {
     action: "created" | "deleted" | "edited";
