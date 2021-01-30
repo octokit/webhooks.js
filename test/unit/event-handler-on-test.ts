@@ -1,4 +1,3 @@
-import simple from "simple-mock";
 import { receiverOn } from "../../src/event-handler/on";
 import { State } from "../../src/types";
 
@@ -8,33 +7,39 @@ const state: State = {
   hooks: {},
 };
 
+beforeEach(() => jest.resetAllMocks());
+
 // Test broken with TypeScript without the ignore
 test("receiver.on with invalid event name", () => {
-  simple.mock(console, "warn").callFn(function () {});
+  const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(noop);
+
   // @ts-expect-error
   receiverOn(state, "foo", noop);
-  expect((console.warn as simple.Stub<void>).callCount).toBe(1);
-  expect((console.warn as simple.Stub<void>).lastCall.arg).toBe(
+
+  expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
+  expect(consoleWarnSpy).toHaveBeenLastCalledWith(
     '"foo" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)'
   );
-
-  simple.restore();
 });
 
 test("receiver.on with event name of '*' logs deprecation notice", () => {
-  simple.mock(console, "warn").callFn(function () {});
+  const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(noop);
+
   receiverOn(state, "*", noop);
-  expect((console.warn as simple.Stub<void>).callCount).toBe(1);
-  expect((console.warn as simple.Stub<void>).lastCall.arg).toBe(
+
+  expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
+  expect(consoleWarnSpy).toHaveBeenLastCalledWith(
     'Using the "*" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.onAny() method instead'
   );
 });
 
 test("receiver.on with event name of 'error' logs deprecation notice", () => {
-  simple.mock(console, "warn").callFn(function () {});
+  const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(noop);
+
   receiverOn(state, "error", noop);
-  expect((console.warn as simple.Stub<void>).callCount).toBe(1);
-  expect((console.warn as simple.Stub<void>).lastCall.arg).toBe(
+
+  expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
+  expect(consoleWarnSpy).toHaveBeenLastCalledWith(
     'Using the "error" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.onError() method instead'
   );
 });
