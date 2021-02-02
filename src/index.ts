@@ -21,18 +21,21 @@ import {
 import { verify } from "./verify/index";
 
 // U holds the return value of `transform` function in Options
-class Webhooks<T extends EmitterWebhookEvent = EmitterWebhookEvent, U = {}> {
+class Webhooks<
+  E extends EmitterWebhookEvent = EmitterWebhookEvent,
+  TTransformed = unknown
+> {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload: string | object, signature: string) => boolean;
   public on: <E extends EmitterEventName>(
     event: E | E[],
-    callback: HandlerFunction<E, U>
+    callback: HandlerFunction<E, TTransformed>
   ) => void;
   public onAny: (callback: (event: EmitterAnyEvent) => any) => void;
   public onError: (callback: (event: WebhookEventHandlerError) => any) => void;
   public removeListener: <E extends EmitterEventName>(
     event: E | E[],
-    callback: HandlerFunction<E, U>
+    callback: HandlerFunction<E, TTransformed>
   ) => void;
   public receive: (options: {
     id: string;
@@ -48,7 +51,7 @@ class Webhooks<T extends EmitterWebhookEvent = EmitterWebhookEvent, U = {}> {
     options: EmitterWebhookEventMap[WebhookEventName] & { signature: string }
   ) => Promise<void>;
 
-  constructor(options?: Options<T>) {
+  constructor(options?: Options<E>) {
     if (!options || !options.secret) {
       throw new Error("[@octokit/webhooks] options.secret required");
     }
