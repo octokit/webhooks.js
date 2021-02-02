@@ -77,6 +77,8 @@
     "extends": [
       "github>octokit/.github"
     ],
-    "ignoreDeps": ["@octokit/webhooks-definitions"]
+    "ignoreDeps": [
+      "@octokit/webhooks-definitions"
+    ]
   }
 }
