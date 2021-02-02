@@ -129,6 +129,8 @@ export interface EventTypesPayload {
   public: WebhookEvent<EventPayloads.WebhookPayloadPublic>;
   pull_request: WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
   "pull_request.assigned": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
+  "pull_request.auto_merge_disabled": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
+  "pull_request.auto_merge_enabled": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
   "pull_request.closed": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
   "pull_request.converted_to_draft": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
   "pull_request.edited": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;

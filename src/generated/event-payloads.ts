@@ -2327,6 +2327,8 @@ export declare module EventPayloads {
   type WebhookPayloadPullRequest = {
     action:
       | "assigned"
+      | "auto_merge_disabled"
+      | "auto_merge_enabled"
       | "closed"
       | "converted_to_draft"
       | "edited"
