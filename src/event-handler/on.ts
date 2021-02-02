@@ -1,10 +1,14 @@
-import { WebhookEvents } from "../generated/get-webhook-payload-type-from-event";
-import { webhookNames } from "../generated/webhook-names";
-import { State, WebhookEvent, WebhookEventHandlerError } from "../types";
+import { emitterEventNames } from "../generated/webhook-names";
+import {
+  EmitterAnyEvent,
+  EmitterEventName,
+  State,
+  WebhookEventHandlerError,
+} from "../types";
 
 function handleEventHandlers(
   state: State,
-  webhookName: WebhookEvents,
+  webhookName: EmitterEventName,
   handler: Function
 ) {
   if (!state.hooks[webhookName]) {
@@ -15,7 +19,7 @@ function handleEventHandlers(
 }
 export function receiverOn(
   state: State,
-  webhookNameOrNames: WebhookEvents | WebhookEvents[],
+  webhookNameOrNames: EmitterEventName | EmitterEventName[],
   handler: Function
 ) {
   if (Array.isArray(webhookNameOrNames)) {
@@ -25,7 +29,7 @@ export function receiverOn(
     return;
   }
 
-  if (webhookNames.indexOf(webhookNameOrNames) === -1) {
+  if (emitterEventNames.indexOf(webhookNameOrNames) === -1) {
     console.warn(
       `"${webhookNameOrNames}" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)`
     );
@@ -45,7 +49,7 @@ export function receiverOn(
 
 export function receiverOnAny(
   state: State,
-  handler: (event: WebhookEvent<any>) => any
+  handler: (event: EmitterAnyEvent) => any
 ) {
   handleEventHandlers(state, "*", handler);
 }

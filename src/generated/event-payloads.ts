@@ -1,7 +1,8 @@
 // THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY
-// make edits in scripts/generate-types.js
+// this file is deprecated - new types come from @octokit/webhooks-definitions/schema
 
-export declare module EventPayloads {
+export /** @deprecated */ declare module EventPayloads {
+  /** @deprecated */
   type WebhookPayloadWorkflowRunWorkflowRunRepositoryOwner = {
     avatar_url: string;
     events_url: string;
@@ -22,6 +23,7 @@ export declare module EventPayloads {
     type: string;
     url: string;
   };
+  /** @deprecated */
   type WebhookPayloadWorkflowRunWorkflowRunRepository = {
     archive_url: string;
     assignees_url: string;
@@ -70,6 +72,7 @@ export declare module EventPayloads {
     trees_url: string;
     url: string;
   };
+  /** @deprecated */
   type WebhookPayloadWorkflowRunWorkflowRunHeadRepositoryOwner = {
     avatar_url: string;
     events_url: string;
@@ -90,6 +93,7 @@ export declare module EventPayloads {
     type: string;
     url: string;
   };
+  /** @deprecated */
   type WebhookPayloadWorkflowRunWorkflowRunHeadRepository = {
     archive_url: string;
     assignees_url: string;
@@ -138,14 +142,17 @@ export declare module EventPayloads {
     trees_url: string;
     url: string;
   };
+  /** @deprecated */
   type WebhookPayloadWorkflowRunWorkflowRunHeadCommitCommitter = {
     email: string;
     name: string;
   };
+  /** @deprecated */
   type WebhookPayloadWorkflowRunWorkflowRunHeadCommitAuthor = {
     email: string;
     name: string;
   };
+  /** @deprecated */
   type WebhookPayloadWorkflowRunWorkflowRunHeadCommit = {
     author: WebhookPayloadWorkflowRunWorkflowRunHeadCommitAuthor;
     committer: WebhookPayloadWorkflowRunWorkflowRunHeadCommitCommitter;
@@ -154,6 +161,7 @@ export declare module EventPayloads {
     timestamp: string;
     tree_id: string;
   };
+  /** @deprecated */
   type WebhookPayloadWorkflowRunWorkflowRun = {
     artifacts_url: string;
     cancel_url: string;
@@ -180,6 +188,7 @@ export declare module EventPayloads {
     workflow_id: number;
     workflow_url: string;
   };
+  /** @deprecated */
   type WebhookPayloadWorkflowRunWorkflow = {
     badge_url: string;
     created_at: string;
@@ -192,6 +201,7 @@ export declare module EventPayloads {
     updated_at: string;
     url: string;
   };
+  /** @deprecated */
   type WebhookPayloadWorkflowRunOrganization = {
     avatar_url: string;
     description: string;
@@ -206,6 +216,7 @@ export declare module EventPayloads {
     repos_url: string;
     url: string;
   };
+  /** @deprecated */
   type WebhookPayloadWorkflowRun = {
     action: "action" | "completed" | "requested";
     organization: WebhookPayloadWorkflowRunOrganization;
@@ -214,6 +225,7 @@ export declare module EventPayloads {
     workflow?: WebhookPayloadWorkflowRunWorkflow;
     workflow_run?: WebhookPayloadWorkflowRunWorkflowRun;
   };
+  /** @deprecated */
   type WebhookPayloadWorkflowDispatchOrganization = {
     login: string;
     id: number;
@@ -228,7 +240,9 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadWorkflowDispatchInputs = {};
+  /** @deprecated */
   type WebhookPayloadWorkflowDispatch = {
     inputs: WebhookPayloadWorkflowDispatchInputs;
     ref: string;
@@ -237,14 +251,18 @@ export declare module EventPayloads {
     sender: PayloadSender;
     workflow: string;
   };
+  /** @deprecated */
   type WebhookPayloadWatchInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadWatch = {
     action: "started";
     repository: PayloadRepository;
     sender: PayloadSender;
     installation?: WebhookPayloadWatchInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadTeamAddInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadTeamAddOrganization = {
     login: string;
     id: number;
@@ -259,6 +277,7 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadTeamAddTeam = {
     name: string;
     id: number;
@@ -272,6 +291,7 @@ export declare module EventPayloads {
     repositories_url: string;
     permission: string;
   };
+  /** @deprecated */
   type WebhookPayloadTeamAdd = {
     team: WebhookPayloadTeamAddTeam;
     repository: PayloadRepository;
@@ -279,7 +299,9 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadTeamAddInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadTeamChanges = {};
+  /** @deprecated */
   type WebhookPayloadTeamOrganization = {
     login: string;
     id: number;
@@ -294,11 +316,13 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type PayloadRepositoryPermissions = {
     pull: boolean;
     push: boolean;
     admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadTeamTeam = {
     name: string;
     id: number;
@@ -312,6 +336,7 @@ export declare module EventPayloads {
     repositories_url: string;
     permission: string;
   };
+  /** @deprecated */
   type WebhookPayloadTeam = {
     action:
       | "added_to_repository"
@@ -325,13 +350,17 @@ export declare module EventPayloads {
     sender: PayloadSender;
     changes?: WebhookPayloadTeamChanges;
   };
+  /** @deprecated */
   type WebhookPayloadStatusInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadStatusBranchesItemCommit = { sha: string; url: string };
+  /** @deprecated */
   type WebhookPayloadStatusBranchesItem = {
     name: string;
     commit: WebhookPayloadStatusBranchesItemCommit;
     protected: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadStatusCommitCommitter = {
     login: string;
     id: number;
@@ -352,6 +381,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadStatusCommitAuthor = {
     login: string;
     id: number;
@@ -372,23 +402,28 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadStatusCommitCommitVerification = {
     verified: boolean;
     reason: string;
     signature: string;
     payload: string;
   };
+  /** @deprecated */
   type WebhookPayloadStatusCommitCommitTree = { sha: string; url: string };
+  /** @deprecated */
   type WebhookPayloadStatusCommitCommitCommitter = {
     name: string;
     email: string;
     date: string;
   };
+  /** @deprecated */
   type WebhookPayloadStatusCommitCommitAuthor = {
     name: string;
     email: string;
     date: string;
   };
+  /** @deprecated */
   type WebhookPayloadStatusCommitCommit = {
     author: WebhookPayloadStatusCommitCommitAuthor;
     committer: WebhookPayloadStatusCommitCommitCommitter;
@@ -398,6 +433,7 @@ export declare module EventPayloads {
     comment_count: number;
     verification: WebhookPayloadStatusCommitCommitVerification;
   };
+  /** @deprecated */
   type WebhookPayloadStatusCommit = {
     sha: string;
     node_id: string;
@@ -409,6 +445,7 @@ export declare module EventPayloads {
     committer: WebhookPayloadStatusCommitCommitter;
     parents: Array<any>;
   };
+  /** @deprecated */
   type WebhookPayloadStatus = {
     id: number;
     sha: string;
@@ -425,12 +462,14 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadStatusInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadStar = {
     action: "created" | "deleted";
     starred_at: string | null;
     repository: PayloadRepository;
     sender: PayloadSender;
   };
+  /** @deprecated */
   type WebhookPayloadSponsorshipChangesTierFrom = {
     node_id: string;
     created_at: string;
@@ -439,12 +478,15 @@ export declare module EventPayloads {
     monthly_price_in_dollars: number;
     name: string;
   };
+  /** @deprecated */
   type WebhookPayloadSponsorshipChangesTier = {
     from: WebhookPayloadSponsorshipChangesTierFrom;
   };
+  /** @deprecated */
   type WebhookPayloadSponsorshipChanges = {
     tier: WebhookPayloadSponsorshipChangesTier;
   };
+  /** @deprecated */
   type WebhookPayloadSponsorshipSponsorshipTier = {
     node_id: string;
     created_at: string;
@@ -453,6 +495,7 @@ export declare module EventPayloads {
     monthly_price_in_dollars: number;
     name: string;
   };
+  /** @deprecated */
   type WebhookPayloadSponsorshipSponsorshipSponsor = {
     login: string;
     id: number;
@@ -473,6 +516,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadSponsorshipSponsorshipSponsorable = {
     login: string;
     id: number;
@@ -493,6 +537,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadSponsorshipSponsorship = {
     node_id: string;
     created_at: string;
@@ -501,6 +546,7 @@ export declare module EventPayloads {
     privacy_level: string;
     tier: WebhookPayloadSponsorshipSponsorshipTier;
   };
+  /** @deprecated */
   type WebhookPayloadSponsorship = {
     action:
       | "cancelled"
@@ -514,26 +560,32 @@ export declare module EventPayloads {
     changes?: WebhookPayloadSponsorshipChanges;
     effective_date?: string;
   };
+  /** @deprecated */
   type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemFirstPatchedVersion = {
     identifier: string;
   };
+  /** @deprecated */
   type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemPackage = {
     ecosystem: string;
     name: string;
   };
+  /** @deprecated */
   type WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItem = {
     package: WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemPackage;
     severity: string;
     vulnerable_version_range: string;
     first_patched_version: WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItemFirstPatchedVersion;
   };
+  /** @deprecated */
   type WebhookPayloadSecurityAdvisorySecurityAdvisoryReferencesItem = {
     url: string;
   };
+  /** @deprecated */
   type WebhookPayloadSecurityAdvisorySecurityAdvisoryIdentifiersItem = {
     value: string;
     type: string;
   };
+  /** @deprecated */
   type WebhookPayloadSecurityAdvisorySecurityAdvisory = {
     ghsa_id: string;
     summary: string;
@@ -546,10 +598,12 @@ export declare module EventPayloads {
     withdrawn_at: null;
     vulnerabilities: Array<WebhookPayloadSecurityAdvisorySecurityAdvisoryVulnerabilitiesItem>;
   };
+  /** @deprecated */
   type WebhookPayloadSecurityAdvisory = {
     action: "performed" | "published" | "updated";
     security_advisory: WebhookPayloadSecurityAdvisorySecurityAdvisory;
   };
+  /** @deprecated */
   type WebhookPayloadSecretScanningAlertOrganization = {
     login: string;
     id: number;
@@ -564,6 +618,7 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadSecretScanningAlertAlert = {
     number: number;
     secret_type: string;
@@ -571,6 +626,7 @@ export declare module EventPayloads {
     resolved_by: null;
     resolved_at: null;
   };
+  /** @deprecated */
   type WebhookPayloadSecretScanningAlert = {
     action: "created" | "reopened" | "resolved";
     alert: WebhookPayloadSecretScanningAlertAlert;
@@ -578,6 +634,7 @@ export declare module EventPayloads {
     organization: WebhookPayloadSecretScanningAlertOrganization;
     sender: PayloadSender;
   };
+  /** @deprecated */
   type WebhookPayloadRepositoryVulnerabilityAlertAlertDismisser = {
     login: string;
     id: number;
@@ -598,6 +655,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadRepositoryVulnerabilityAlertOrganization = {
     login: string;
     id: number;
@@ -612,6 +670,7 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadRepositoryVulnerabilityAlertAlert = {
     id: number;
     affected_range: string;
@@ -625,6 +684,7 @@ export declare module EventPayloads {
     dismiss_reason?: string;
     dismissed_at?: string;
   };
+  /** @deprecated */
   type WebhookPayloadRepositoryVulnerabilityAlert = {
     action: "create" | "dismiss" | "resolve";
     alert: WebhookPayloadRepositoryVulnerabilityAlertAlert;
@@ -632,6 +692,7 @@ export declare module EventPayloads {
     sender?: PayloadSender;
     organization?: WebhookPayloadRepositoryVulnerabilityAlertOrganization;
   };
+  /** @deprecated */
   type WebhookPayloadRepositoryImportOrganization = {
     login: string;
     id: number;
@@ -646,13 +707,16 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadRepositoryImport = {
     status: string;
     repository: PayloadRepository;
     organization: WebhookPayloadRepositoryImportOrganization;
     sender: PayloadSender;
   };
+  /** @deprecated */
   type WebhookPayloadRepositoryInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadRepositoryOrganization = {
     login: string;
     id: number;
@@ -667,6 +731,7 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadRepository = {
     action:
       | "archived"
@@ -683,10 +748,12 @@ export declare module EventPayloads {
     organization?: WebhookPayloadRepositoryOrganization;
     installation?: WebhookPayloadRepositoryInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadRepositoryDispatchInstallation = {
     id: number;
     node_id: string;
   };
+  /** @deprecated */
   type WebhookPayloadRepositoryDispatchOrganization = {
     login: string;
     id: number;
@@ -701,7 +768,9 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadRepositoryDispatchClientPayload = {};
+  /** @deprecated */
   type WebhookPayloadRepositoryDispatch = {
     action: "on-demand-test";
     branch: string;
@@ -711,7 +780,9 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation: WebhookPayloadRepositoryDispatchInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadReleaseInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadReleaseReleaseAuthor = {
     login: string;
     id: number;
@@ -732,6 +803,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadReleaseRelease = {
     url: string;
     assets_url: string;
@@ -752,6 +824,7 @@ export declare module EventPayloads {
     zipball_url: string;
     body: null;
   };
+  /** @deprecated */
   type WebhookPayloadRelease = {
     action:
       | "created"
@@ -766,6 +839,7 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadReleaseInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadPushOrganization = {
     login: string;
     id: number;
@@ -797,8 +871,11 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  /** @deprecated */
   type WebhookPayloadPushInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadPushPusher = { name: string; email: string };
+  /** @deprecated */
   type WebhookPayloadPush = {
     ref: string;
     before: string;
@@ -816,6 +893,7 @@ export declare module EventPayloads {
     installation?: WebhookPayloadPushInstallation;
     organization?: WebhookPayloadPushOrganization;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentOrganization = {
     login: string;
     id: number;
@@ -847,10 +925,12 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentInstallation = {
     id: number;
     node_id: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestLabelsItem = {
     id: number;
     node_id: string;
@@ -859,6 +939,7 @@ export declare module EventPayloads {
     color: string;
     default: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestRequestedReviewersItem = {
     login: string;
     id: number;
@@ -879,6 +960,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestAssigneesItem = {
     login: string;
     id: number;
@@ -899,30 +981,39 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestLinksStatuses = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestLinksCommits = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestLinksReviewComment = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestLinksReviewComments = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestLinksComments = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestLinksIssue = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestLinksHtml = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestLinksSelf = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestLinks = {
     self: WebhookPayloadPullRequestReviewCommentPullRequestLinksSelf;
     html: WebhookPayloadPullRequestReviewCommentPullRequestLinksHtml;
@@ -933,6 +1024,7 @@ export declare module EventPayloads {
     commits: WebhookPayloadPullRequestReviewCommentPullRequestLinksCommits;
     statuses: WebhookPayloadPullRequestReviewCommentPullRequestLinksStatuses;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestBaseRepoOwner = {
     login: string;
     id: number;
@@ -953,6 +1045,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestBaseRepo = {
     id: number;
     node_id: string;
@@ -1032,6 +1125,7 @@ export declare module EventPayloads {
     allow_rebase_merge?: boolean;
     delete_branch_on_merge?: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestBaseUser = {
     login: string;
     id: number;
@@ -1052,6 +1146,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestBase = {
     label: string;
     ref: string;
@@ -1059,6 +1154,7 @@ export declare module EventPayloads {
     user: WebhookPayloadPullRequestReviewCommentPullRequestBaseUser;
     repo: WebhookPayloadPullRequestReviewCommentPullRequestBaseRepo;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestHeadRepoOwner = {
     login: string;
     id: number;
@@ -1079,6 +1175,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestHeadRepo = {
     id: number;
     node_id: string;
@@ -1158,6 +1255,7 @@ export declare module EventPayloads {
     allow_rebase_merge?: boolean;
     delete_branch_on_merge?: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestHeadUser = {
     login: string;
     id: number;
@@ -1178,6 +1276,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestHead = {
     label: string;
     ref: string;
@@ -1185,6 +1284,7 @@ export declare module EventPayloads {
     user: WebhookPayloadPullRequestReviewCommentPullRequestHeadUser;
     repo: WebhookPayloadPullRequestReviewCommentPullRequestHeadRepo;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequestUser = {
     login: string;
     id: number;
@@ -1205,6 +1305,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentPullRequest = {
     url: string;
     id: number;
@@ -1240,20 +1341,25 @@ export declare module EventPayloads {
     _links: WebhookPayloadPullRequestReviewCommentPullRequestLinks;
     author_association: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentCommentLinksPullRequest = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentCommentLinksHtml = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentCommentLinksSelf = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentCommentLinks = {
     self: WebhookPayloadPullRequestReviewCommentCommentLinksSelf;
     html: WebhookPayloadPullRequestReviewCommentCommentLinksHtml;
     pull_request: WebhookPayloadPullRequestReviewCommentCommentLinksPullRequest;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentCommentUser = {
     login: string;
     id: number;
@@ -1274,6 +1380,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewCommentComment = {
     url: string;
     pull_request_review_id: number;
@@ -1294,6 +1401,7 @@ export declare module EventPayloads {
     author_association: string;
     _links: WebhookPayloadPullRequestReviewCommentCommentLinks;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewComment = {
     action: "created" | "deleted" | "edited";
     comment: WebhookPayloadPullRequestReviewCommentComment;
@@ -1303,6 +1411,7 @@ export declare module EventPayloads {
     installation?: WebhookPayloadPullRequestReviewCommentInstallation;
     organization?: WebhookPayloadPullRequestReviewCommentOrganization;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewOrganization = {
     login: string;
     id: number;
@@ -1334,10 +1443,12 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewInstallation = {
     id: number;
     node_id: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestLabelsItem = {
     id: number;
     node_id: string;
@@ -1346,6 +1457,7 @@ export declare module EventPayloads {
     color: string;
     default: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestRequestedReviewersItem = {
     login: string;
     id: number;
@@ -1366,6 +1478,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestAssigneesItem = {
     login: string;
     id: number;
@@ -1386,24 +1499,33 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestLinksStatuses = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestLinksCommits = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestLinksReviewComment = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestLinksReviewComments = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestLinksComments = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestLinksIssue = { href: string };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestLinksHtml = { href: string };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestLinksSelf = { href: string };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestLinks = {
     self: WebhookPayloadPullRequestReviewPullRequestLinksSelf;
     html: WebhookPayloadPullRequestReviewPullRequestLinksHtml;
@@ -1414,6 +1536,7 @@ export declare module EventPayloads {
     commits: WebhookPayloadPullRequestReviewPullRequestLinksCommits;
     statuses: WebhookPayloadPullRequestReviewPullRequestLinksStatuses;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestBaseRepoOwner = {
     login: string;
     id: number;
@@ -1434,6 +1557,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestBaseRepo = {
     id: number;
     node_id: string;
@@ -1513,6 +1637,7 @@ export declare module EventPayloads {
     allow_rebase_merge?: boolean;
     delete_branch_on_merge?: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestBaseUser = {
     login: string;
     id: number;
@@ -1533,6 +1658,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestBase = {
     label: string;
     ref: string;
@@ -1540,6 +1666,7 @@ export declare module EventPayloads {
     user: WebhookPayloadPullRequestReviewPullRequestBaseUser;
     repo: WebhookPayloadPullRequestReviewPullRequestBaseRepo;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestHeadRepoOwner = {
     login: string;
     id: number;
@@ -1560,6 +1687,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestHeadRepo = {
     id: number;
     node_id: string;
@@ -1639,6 +1767,7 @@ export declare module EventPayloads {
     allow_rebase_merge?: boolean;
     delete_branch_on_merge?: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestHeadUser = {
     login: string;
     id: number;
@@ -1659,6 +1788,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestHead = {
     label: string;
     ref: string;
@@ -1666,6 +1796,7 @@ export declare module EventPayloads {
     user: WebhookPayloadPullRequestReviewPullRequestHeadUser;
     repo: WebhookPayloadPullRequestReviewPullRequestHeadRepo;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequestUser = {
     login: string;
     id: number;
@@ -1686,6 +1817,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewPullRequest = {
     url: string;
     id: number;
@@ -1721,12 +1853,16 @@ export declare module EventPayloads {
     _links: WebhookPayloadPullRequestReviewPullRequestLinks;
     author_association: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewReviewLinksPullRequest = { href: string };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewReviewLinksHtml = { href: string };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewReviewLinks = {
     html: WebhookPayloadPullRequestReviewReviewLinksHtml;
     pull_request: WebhookPayloadPullRequestReviewReviewLinksPullRequest;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewReviewUser = {
     login: string;
     id: number;
@@ -1747,6 +1883,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReviewReview = {
     id: number;
     node_id: string;
@@ -1760,6 +1897,7 @@ export declare module EventPayloads {
     author_association: string;
     _links: WebhookPayloadPullRequestReviewReviewLinks;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestReview = {
     action: "dismissed" | "edited" | "submitted";
     review: WebhookPayloadPullRequestReviewReview;
@@ -1769,6 +1907,7 @@ export declare module EventPayloads {
     installation?: WebhookPayloadPullRequestReviewInstallation;
     organization?: WebhookPayloadPullRequestReviewOrganization;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestLabel = {
     id: number;
     node_id: string;
@@ -1777,6 +1916,7 @@ export declare module EventPayloads {
     color: string;
     default: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestMilestoneCreator = {
     login: string;
     id: number;
@@ -1835,6 +1975,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestOrganization = {
     login: string;
     id: number;
@@ -1866,7 +2007,9 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadPullRequestAssignee = {
     login: string;
     id: number;
@@ -1887,6 +2030,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestLabelsItem = {
     id: number;
     node_id: string;
@@ -1895,6 +2039,7 @@ export declare module EventPayloads {
     color: string;
     default: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestRequestedReviewersItem = {
     login: string;
     id: number;
@@ -1915,6 +2060,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestAssigneesItem = {
     login: string;
     id: number;
@@ -1935,18 +2081,27 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestLinksStatuses = { href: string };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestLinksCommits = { href: string };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestLinksReviewComment = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestLinksReviewComments = {
     href: string;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestLinksComments = { href: string };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestLinksIssue = { href: string };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestLinksHtml = { href: string };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestLinksSelf = { href: string };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestLinks = {
     self: WebhookPayloadPullRequestPullRequestLinksSelf;
     html: WebhookPayloadPullRequestPullRequestLinksHtml;
@@ -1957,6 +2112,7 @@ export declare module EventPayloads {
     commits: WebhookPayloadPullRequestPullRequestLinksCommits;
     statuses: WebhookPayloadPullRequestPullRequestLinksStatuses;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestBaseRepoOwner = {
     login: string;
     id: number;
@@ -1977,6 +2133,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestBaseRepo = {
     id: number;
     node_id: string;
@@ -2056,6 +2213,7 @@ export declare module EventPayloads {
     allow_rebase_merge?: boolean;
     delete_branch_on_merge?: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestBaseUser = {
     login: string;
     id: number;
@@ -2076,6 +2234,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestBase = {
     label: string;
     ref: string;
@@ -2083,6 +2242,7 @@ export declare module EventPayloads {
     user: WebhookPayloadPullRequestPullRequestBaseUser;
     repo: WebhookPayloadPullRequestPullRequestBaseRepo;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestHeadRepoOwner = {
     login: string;
     id: number;
@@ -2103,6 +2263,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestHeadRepo = {
     id: number;
     node_id: string;
@@ -2182,6 +2343,7 @@ export declare module EventPayloads {
     allow_rebase_merge?: boolean;
     delete_branch_on_merge?: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestHeadUser = {
     login: string;
     id: number;
@@ -2202,6 +2364,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestHead = {
     label: string;
     ref: string;
@@ -2209,6 +2372,7 @@ export declare module EventPayloads {
     user: WebhookPayloadPullRequestPullRequestHeadUser;
     repo: WebhookPayloadPullRequestPullRequestHeadRepo;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequestUser = {
     login: string;
     id: number;
@@ -2229,6 +2393,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequestPullRequest = {
     url: string;
     id: number;
@@ -2277,6 +2442,7 @@ export declare module EventPayloads {
     deletions: number;
     changed_files: number;
   };
+  /** @deprecated */
   type WebhookPayloadPullRequest = {
     action:
       | "assigned"
@@ -2303,13 +2469,17 @@ export declare module EventPayloads {
     organization?: WebhookPayloadPullRequestOrganization;
     label?: WebhookPayloadPullRequestLabel;
   };
+  /** @deprecated */
   type WebhookPayloadPublicInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadPublic = {
     repository: PayloadRepository;
     sender: PayloadSender;
     installation?: WebhookPayloadPublicInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadProjectInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadProjectProjectCreator = {
     login: string;
     id: number;
@@ -2330,6 +2500,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadProjectProject = {
     owner_url: string;
     url: string;
@@ -2345,6 +2516,7 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
   };
+  /** @deprecated */
   type WebhookPayloadProject = {
     action: "closed" | "created" | "deleted" | "edited" | "reopened";
     project: WebhookPayloadProjectProject;
@@ -2352,10 +2524,12 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadProjectInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadProjectColumnInstallation = {
     id: number;
     node_id: string;
   };
+  /** @deprecated */
   type WebhookPayloadProjectColumnProjectColumn = {
     url: string;
     project_url: string;
@@ -2366,6 +2540,7 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
   };
+  /** @deprecated */
   type WebhookPayloadProjectColumn = {
     action: "created" | "deleted" | "edited" | "moved";
     project_column: WebhookPayloadProjectColumnProjectColumn;
@@ -2373,6 +2548,7 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadProjectColumnInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadProjectCardOrganization = {
     login: string;
     id: number;
@@ -2404,7 +2580,9 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  /** @deprecated */
   type WebhookPayloadProjectCardInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadProjectCardProjectCardCreator = {
     login: string;
     id: number;
@@ -2425,6 +2603,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadProjectCardProjectCard = {
     url: string;
     project_url: string;
@@ -2438,6 +2617,7 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
   };
+  /** @deprecated */
   type WebhookPayloadProjectCard = {
     action: "converted" | "created" | "deleted" | "edited" | "moved";
     project_card: WebhookPayloadProjectCardProjectCard;
@@ -2446,6 +2626,7 @@ export declare module EventPayloads {
     installation?: WebhookPayloadProjectCardInstallation;
     organization?: WebhookPayloadProjectCardOrganization;
   };
+  /** @deprecated */
   type WebhookPayloadPingOrganization = {
     login: string;
     id: number;
@@ -2460,17 +2641,20 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadPingHookLastResponse = {
     code: null;
     status: string;
     message: null;
   };
+  /** @deprecated */
   type WebhookPayloadPingHookConfig = {
     content_type: string;
     url: string;
     insecure_ssl: string;
     secret?: string;
   };
+  /** @deprecated */
   type WebhookPayloadPingHook = {
     type: string;
     id: number;
@@ -2485,6 +2669,7 @@ export declare module EventPayloads {
     ping_url: string;
     last_response?: WebhookPayloadPingHookLastResponse;
   };
+  /** @deprecated */
   type WebhookPayloadPing = {
     zen: string;
     hook_id: number;
@@ -2493,7 +2678,9 @@ export declare module EventPayloads {
     sender: PayloadSender;
     organization?: WebhookPayloadPingOrganization;
   };
+  /** @deprecated */
   type WebhookPayloadPageBuildInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadPageBuildBuildPusher = {
     login: string;
     id: number;
@@ -2514,7 +2701,9 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPageBuildBuildError = { message: null };
+  /** @deprecated */
   type WebhookPayloadPageBuildBuild = {
     url: string;
     status: string;
@@ -2525,6 +2714,7 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
   };
+  /** @deprecated */
   type WebhookPayloadPageBuild = {
     id: number;
     build: WebhookPayloadPageBuildBuild;
@@ -2532,6 +2722,7 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadPageBuildInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadPackagePackageRegistry = {
     about_url: string;
     name: string;
@@ -2539,6 +2730,7 @@ export declare module EventPayloads {
     url: string;
     vendor: string;
   };
+  /** @deprecated */
   type WebhookPayloadPackagePackagePackageVersionAuthor = {
     login: string;
     id: number;
@@ -2559,6 +2751,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPackagePackagePackageVersionPackageFilesItem = {
     download_url: string;
     id: number;
@@ -2572,6 +2765,7 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
   };
+  /** @deprecated */
   type WebhookPayloadPackagePackagePackageVersionReleaseAuthor = {
     login: string;
     id: number;
@@ -2592,6 +2786,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPackagePackagePackageVersionRelease = {
     url: string;
     html_url: string;
@@ -2605,6 +2800,7 @@ export declare module EventPayloads {
     created_at: string;
     published_at: string;
   };
+  /** @deprecated */
   type WebhookPayloadPackagePackagePackageVersion = {
     id: number;
     version: string;
@@ -2626,6 +2822,7 @@ export declare module EventPayloads {
     author: WebhookPayloadPackagePackagePackageVersionAuthor;
     installation_command: string;
   };
+  /** @deprecated */
   type WebhookPayloadPackagePackageOwner = {
     login: string;
     id: number;
@@ -2646,6 +2843,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadPackagePackage = {
     id: number;
     name: string;
@@ -2657,13 +2855,16 @@ export declare module EventPayloads {
     package_version: WebhookPayloadPackagePackagePackageVersion;
     registry: WebhookPayloadPackagePackageRegistry;
   };
+  /** @deprecated */
   type WebhookPayloadPackage = {
     action: "published" | "updated";
     package: WebhookPayloadPackagePackage;
     repository: PayloadRepository;
     sender: PayloadSender;
   };
+  /** @deprecated */
   type WebhookPayloadOrgBlockInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadOrgBlockOrganization = {
     login: string;
     id: number;
@@ -2678,6 +2879,7 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadOrgBlockBlockedUser = {
     login: string;
     id: number;
@@ -2698,6 +2900,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadOrgBlock = {
     action: "blocked" | "unblocked";
     blocked_user: WebhookPayloadOrgBlockBlockedUser;
@@ -2705,7 +2908,9 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadOrgBlockInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadOrganizationInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadOrganizationOrganization = {
     login: string;
     id: number;
@@ -2720,6 +2925,7 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadOrganizationMembershipUser = {
     login: string;
     id: number;
@@ -2740,6 +2946,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadOrganizationMembership = {
     url: string;
     state: string;
@@ -2747,6 +2954,7 @@ export declare module EventPayloads {
     organization_url: string;
     user: WebhookPayloadOrganizationMembershipUser;
   };
+  /** @deprecated */
   type WebhookPayloadOrganization = {
     action:
       | "deleted"
@@ -2759,7 +2967,9 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadOrganizationInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadMilestoneInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadMilestoneMilestoneCreator = {
     login: string;
     id: number;
@@ -2780,6 +2990,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadMilestoneMilestone = {
     url: string;
     html_url: string;
@@ -2798,6 +3009,7 @@ export declare module EventPayloads {
     due_on: string;
     closed_at: null | string;
   };
+  /** @deprecated */
   type WebhookPayloadMilestone = {
     action: "closed" | "created" | "deleted" | "edited" | "opened";
     milestone: WebhookPayloadMilestoneMilestone;
@@ -2805,11 +3017,13 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadMilestoneInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadMetaHookConfig = {
     content_type: string;
     insecure_ssl: string;
     url: string;
   };
+  /** @deprecated */
   type WebhookPayloadMetaHook = {
     type: string;
     id: number;
@@ -2820,6 +3034,7 @@ export declare module EventPayloads {
     updated_at: string;
     created_at: string;
   };
+  /** @deprecated */
   type WebhookPayloadMeta = {
     action: "deleted";
     hook_id: number;
@@ -2827,7 +3042,9 @@ export declare module EventPayloads {
     repository: PayloadRepository;
     sender: PayloadSender;
   };
+  /** @deprecated */
   type WebhookPayloadMembershipInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadMembershipOrganization = {
     login: string;
     id: number;
@@ -2842,6 +3059,7 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadMembershipTeam = {
     name: string;
     id: number;
@@ -2855,6 +3073,7 @@ export declare module EventPayloads {
     repositories_url: string;
     permission: string;
   };
+  /** @deprecated */
   type WebhookPayloadMembershipMember = {
     login: string;
     id: number;
@@ -2875,6 +3094,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadMembership = {
     action: "added" | "removed";
     scope: string;
@@ -2884,11 +3104,15 @@ export declare module EventPayloads {
     organization: WebhookPayloadMembershipOrganization;
     installation?: WebhookPayloadMembershipInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadMemberChangesPermission = { from: string };
+  /** @deprecated */
   type WebhookPayloadMemberChanges = {
     permission: WebhookPayloadMemberChangesPermission;
   };
+  /** @deprecated */
   type WebhookPayloadMemberInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadMemberMember = {
     login: string;
     id: number;
@@ -2909,6 +3133,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadMember = {
     action: "added" | "edited" | "removed";
     member: WebhookPayloadMemberMember;
@@ -2917,6 +3142,7 @@ export declare module EventPayloads {
     installation?: WebhookPayloadMemberInstallation;
     changes?: WebhookPayloadMemberChanges;
   };
+  /** @deprecated */
   type WebhookPayloadMarketplacePurchasePreviousMarketplacePurchasePlan = {
     id: number;
     name: string;
@@ -2928,12 +3154,14 @@ export declare module EventPayloads {
     unit_name: string;
     bullets: Array<string>;
   };
+  /** @deprecated */
   type WebhookPayloadMarketplacePurchasePreviousMarketplacePurchaseAccount = {
     type: string;
     id: number;
     login: string;
     organization_billing_email: string;
   };
+  /** @deprecated */
   type WebhookPayloadMarketplacePurchasePreviousMarketplacePurchase = {
     account: WebhookPayloadMarketplacePurchasePreviousMarketplacePurchaseAccount;
     billing_cycle: string;
@@ -2942,6 +3170,7 @@ export declare module EventPayloads {
     unit_count: number;
     plan: WebhookPayloadMarketplacePurchasePreviousMarketplacePurchasePlan;
   };
+  /** @deprecated */
   type WebhookPayloadMarketplacePurchaseMarketplacePurchasePlan = {
     id: number;
     name: string;
@@ -2953,6 +3182,7 @@ export declare module EventPayloads {
     unit_name: string | null;
     bullets: Array<string>;
   };
+  /** @deprecated */
   type WebhookPayloadMarketplacePurchaseMarketplacePurchaseAccount = {
     type: string;
     id: number;
@@ -2960,6 +3190,7 @@ export declare module EventPayloads {
     login: string;
     organization_billing_email: string;
   };
+  /** @deprecated */
   type WebhookPayloadMarketplacePurchaseMarketplacePurchase = {
     account: WebhookPayloadMarketplacePurchaseMarketplacePurchaseAccount;
     billing_cycle: string;
@@ -2969,6 +3200,7 @@ export declare module EventPayloads {
     next_billing_date: string;
     plan: WebhookPayloadMarketplacePurchaseMarketplacePurchasePlan;
   };
+  /** @deprecated */
   type WebhookPayloadMarketplacePurchaseSender = {
     login: string;
     id: number;
@@ -2989,6 +3221,7 @@ export declare module EventPayloads {
     site_admin: boolean;
     email: string;
   };
+  /** @deprecated */
   type WebhookPayloadMarketplacePurchase = {
     action:
       | "cancelled"
@@ -3001,9 +3234,13 @@ export declare module EventPayloads {
     marketplace_purchase: WebhookPayloadMarketplacePurchaseMarketplacePurchase;
     previous_marketplace_purchase?: WebhookPayloadMarketplacePurchasePreviousMarketplacePurchase;
   };
+  /** @deprecated */
   type WebhookPayloadLabelChangesColor = { from: string };
+  /** @deprecated */
   type WebhookPayloadLabelChanges = { color: WebhookPayloadLabelChangesColor };
+  /** @deprecated */
   type WebhookPayloadLabelInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadLabelLabel = {
     id: number;
     node_id: string;
@@ -3012,6 +3249,7 @@ export declare module EventPayloads {
     color: string;
     default: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadLabel = {
     action: "created" | "deleted" | "edited";
     label: WebhookPayloadLabelLabel;
@@ -3020,6 +3258,7 @@ export declare module EventPayloads {
     installation?: WebhookPayloadLabelInstallation;
     changes?: WebhookPayloadLabelChanges;
   };
+  /** @deprecated */
   type WebhookPayloadIssuesLabel = {
     id: number;
     node_id: string;
@@ -3028,12 +3267,14 @@ export declare module EventPayloads {
     color: string;
     default: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadIssuesIssuePullRequest = {
     url: string;
     html_url: string;
     diff_url: string;
     patch_url: string;
   };
+  /** @deprecated */
   type WebhookPayloadIssuesOrganization = {
     login: string;
     id: number;
@@ -3065,7 +3306,9 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  /** @deprecated */
   type WebhookPayloadIssuesInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadIssuesAssignee = {
     login: string;
     id: number;
@@ -3086,7 +3329,9 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadIssuesChanges = {};
+  /** @deprecated */
   type WebhookPayloadIssuesIssueMilestoneCreator = {
     login: string;
     id: number;
@@ -3107,6 +3352,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadIssuesIssueMilestone = {
     url: string;
     html_url: string;
@@ -3125,6 +3371,7 @@ export declare module EventPayloads {
     due_on: string;
     closed_at: string;
   } | null;
+  /** @deprecated */
   type WebhookPayloadIssuesIssueAssigneesItem = {
     login: string;
     id: number;
@@ -3145,6 +3392,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadIssuesIssueAssignee = {
     login: string;
     id: number;
@@ -3165,6 +3413,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   } | null;
+  /** @deprecated */
   type WebhookPayloadIssuesIssueLabelsItem = {
     id: number;
     node_id: string;
@@ -3173,6 +3422,7 @@ export declare module EventPayloads {
     color: string;
     default: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadIssuesIssueUser = {
     login: string;
     id: number;
@@ -3193,6 +3443,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadIssuesIssue = {
     url: string;
     repository_url: string;
@@ -3219,6 +3470,7 @@ export declare module EventPayloads {
     body: string;
     pull_request?: WebhookPayloadIssuesIssuePullRequest;
   };
+  /** @deprecated */
   type WebhookPayloadIssues = {
     action:
       | "assigned"
@@ -3246,11 +3498,15 @@ export declare module EventPayloads {
     organization?: WebhookPayloadIssuesOrganization;
     label?: WebhookPayloadIssuesLabel;
   };
+  /** @deprecated */
   type WebhookPayloadIssueCommentChangesBody = { from: string };
+  /** @deprecated */
   type WebhookPayloadIssueCommentChanges = {
     body: WebhookPayloadIssueCommentChangesBody;
   };
+  /** @deprecated */
   type WebhookPayloadIssueCommentInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadIssueCommentOrganization = {
     login: string;
     id: number;
@@ -3282,6 +3538,7 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  /** @deprecated */
   type WebhookPayloadIssueCommentCommentUser = {
     login: string;
     id: number;
@@ -3302,6 +3559,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadIssueCommentComment = {
     url: string;
     html_url: string;
@@ -3314,6 +3572,7 @@ export declare module EventPayloads {
     author_association: string;
     body: string;
   };
+  /** @deprecated */
   type WebhookPayloadIssueCommentIssueMilestoneCreator = {
     login: string;
     id: number;
@@ -3334,6 +3593,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadIssueCommentIssueMilestone = {
     url: string;
     html_url: string;
@@ -3352,6 +3612,7 @@ export declare module EventPayloads {
     due_on: string;
     closed_at: string;
   };
+  /** @deprecated */
   type WebhookPayloadIssueCommentIssueAssigneesItem = {
     login: string;
     id: number;
@@ -3372,6 +3633,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadIssueCommentIssueAssignee = {
     login: string;
     id: number;
@@ -3392,6 +3654,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadIssueCommentIssueLabelsItem = {
     id: number;
     node_id: string;
@@ -3400,6 +3663,7 @@ export declare module EventPayloads {
     color: string;
     default: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadIssueCommentIssueUser = {
     login: string;
     id: number;
@@ -3420,6 +3684,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadIssueCommentIssue = {
     url: string;
     repository_url: string;
@@ -3445,6 +3710,7 @@ export declare module EventPayloads {
     author_association: string;
     body: string;
   };
+  /** @deprecated */
   type WebhookPayloadIssueComment = {
     action: "created" | "deleted" | "edited";
     issue: WebhookPayloadIssueCommentIssue;
@@ -3455,12 +3721,14 @@ export declare module EventPayloads {
     installation?: WebhookPayloadIssueCommentInstallation;
     changes?: WebhookPayloadIssueCommentChanges;
   };
+  /** @deprecated */
   type WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem = {
     id: number;
     name: string;
     full_name: string;
     private: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadInstallationRepositoriesRepositoriesAddedItem = {
     id: number;
     node_id: string;
@@ -3468,6 +3736,7 @@ export declare module EventPayloads {
     full_name: string;
     private: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadInstallationRepositoriesInstallationPermissions = {
     administration?: string;
     statuses?: string;
@@ -3482,6 +3751,7 @@ export declare module EventPayloads {
     metadata: string;
     vulnerability_alerts?: string;
   };
+  /** @deprecated */
   type WebhookPayloadInstallationRepositoriesInstallationAccount = {
     login: string;
     id: number;
@@ -3502,6 +3772,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadInstallationRepositoriesInstallation = {
     id: number;
     account: WebhookPayloadInstallationRepositoriesInstallationAccount;
@@ -3518,6 +3789,7 @@ export declare module EventPayloads {
     updated_at: number;
     single_file_name: null | string;
   };
+  /** @deprecated */
   type WebhookPayloadInstallationRepositories = {
     action: "added" | "removed";
     installation: WebhookPayloadInstallationRepositoriesInstallation;
@@ -3526,6 +3798,7 @@ export declare module EventPayloads {
     repositories_removed: Array<WebhookPayloadInstallationRepositoriesRepositoriesRemovedItem>;
     sender: PayloadSender;
   };
+  /** @deprecated */
   type WebhookPayloadInstallationRepositoriesItem = {
     id: number;
     node_id: string;
@@ -3533,6 +3806,7 @@ export declare module EventPayloads {
     full_name: string;
     private: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadInstallationInstallationPermissions = {
     metadata: string;
     contents: string;
@@ -3547,6 +3821,7 @@ export declare module EventPayloads {
     statuses?: string;
     vulnerability_alerts?: string;
   };
+  /** @deprecated */
   type WebhookPayloadInstallationInstallationAccount = {
     login: string;
     id: number;
@@ -3567,6 +3842,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadInstallationInstallation = {
     id: number;
     account: WebhookPayloadInstallationInstallationAccount;
@@ -3583,6 +3859,7 @@ export declare module EventPayloads {
     updated_at: number;
     single_file_name: string | null;
   };
+  /** @deprecated */
   type WebhookPayloadInstallation = {
     action:
       | "created"
@@ -3594,7 +3871,9 @@ export declare module EventPayloads {
     repositories: Array<WebhookPayloadInstallationRepositoriesItem>;
     sender: PayloadSender;
   };
+  /** @deprecated */
   type WebhookPayloadGollumInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadGollumPagesItem = {
     page_name: string;
     title: string;
@@ -3603,17 +3882,21 @@ export declare module EventPayloads {
     sha: string;
     html_url: string;
   };
+  /** @deprecated */
   type WebhookPayloadGollum = {
     pages: Array<WebhookPayloadGollumPagesItem>;
     repository: PayloadRepository;
     sender: PayloadSender;
     installation?: WebhookPayloadGollumInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadGithubAppAuthorization = {
     action: "revoked";
     sender: PayloadSender;
   };
+  /** @deprecated */
   type WebhookPayloadForkInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadForkForkeeOwner = {
     login: string;
     id: number;
@@ -3634,6 +3917,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadForkForkee = {
     id: number;
     node_id: string;
@@ -3710,16 +3994,19 @@ export declare module EventPayloads {
     default_branch: string;
     public: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadFork = {
     forkee: WebhookPayloadForkForkee;
     repository: PayloadRepository;
     sender: PayloadSender;
     installation?: WebhookPayloadForkInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadDeploymentStatusInstallation = {
     id: number;
     node_id: string;
   };
+  /** @deprecated */
   type WebhookPayloadDeploymentStatusDeploymentCreator = {
     login: string;
     id: number;
@@ -3740,7 +4027,9 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadDeploymentStatusDeploymentPayload = {};
+  /** @deprecated */
   type WebhookPayloadDeploymentStatusDeployment = {
     url: string;
     id: number;
@@ -3758,6 +4047,7 @@ export declare module EventPayloads {
     statuses_url: string;
     repository_url: string;
   };
+  /** @deprecated */
   type WebhookPayloadDeploymentStatusDeploymentStatusCreator = {
     login: string;
     id: number;
@@ -3778,6 +4068,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadDeploymentStatusDeploymentStatus = {
     url: string;
     id: number;
@@ -3792,6 +4083,7 @@ export declare module EventPayloads {
     deployment_url: string;
     repository_url: string;
   };
+  /** @deprecated */
   type WebhookPayloadDeploymentStatus = {
     action: "created";
     deployment_status: WebhookPayloadDeploymentStatusDeploymentStatus;
@@ -3800,7 +4092,9 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadDeploymentStatusInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadDeploymentInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadDeploymentDeploymentCreator = {
     login: string;
     id: number;
@@ -3821,7 +4115,9 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadDeploymentDeploymentPayload = {};
+  /** @deprecated */
   type WebhookPayloadDeploymentDeployment = {
     url: string;
     id: number;
@@ -3839,6 +4135,7 @@ export declare module EventPayloads {
     statuses_url: string;
     repository_url: string;
   };
+  /** @deprecated */
   type WebhookPayloadDeployment = {
     action: "created";
     deployment: WebhookPayloadDeploymentDeployment;
@@ -3846,6 +4143,7 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation?: WebhookPayloadDeploymentInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadDeployKeyKey = {
     id: number;
     key: string;
@@ -3855,12 +4153,14 @@ export declare module EventPayloads {
     created_at: string;
     read_only: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadDeployKey = {
     action: "created" | "deleted";
     key: WebhookPayloadDeployKeyKey;
     repository: PayloadRepository;
     sender: PayloadSender;
   };
+  /** @deprecated */
   type WebhookPayloadDeleteOrganization = {
     login: string;
     id: number;
@@ -3892,7 +4192,9 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  /** @deprecated */
   type WebhookPayloadDeleteInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadDelete = {
     ref: string;
     ref_type: string;
@@ -3902,6 +4204,7 @@ export declare module EventPayloads {
     installation?: WebhookPayloadDeleteInstallation;
     organization?: WebhookPayloadDeleteOrganization;
   };
+  /** @deprecated */
   type WebhookPayloadCreateOrganization = {
     login: string;
     id: number;
@@ -3933,7 +4236,9 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  /** @deprecated */
   type WebhookPayloadCreateInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadCreate = {
     ref: string;
     ref_type: string;
@@ -3945,15 +4250,18 @@ export declare module EventPayloads {
     installation?: WebhookPayloadCreateInstallation;
     organization?: WebhookPayloadCreateOrganization;
   };
+  /** @deprecated */
   type WebhookPayloadContentReferenceInstallation = {
     id: number;
     node_id: string;
   };
+  /** @deprecated */
   type WebhookPayloadContentReferenceContentReference = {
     id: number;
     node_id: string;
     reference: string;
   };
+  /** @deprecated */
   type WebhookPayloadContentReference = {
     action: "created";
     content_reference: WebhookPayloadContentReferenceContentReference;
@@ -3961,10 +4269,12 @@ export declare module EventPayloads {
     sender: PayloadSender;
     installation: WebhookPayloadContentReferenceInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadCommitCommentInstallation = {
     id: number;
     node_id: string;
   };
+  /** @deprecated */
   type WebhookPayloadCommitCommentOrganization = {
     login: string;
     id: number;
@@ -3996,6 +4306,7 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  /** @deprecated */
   type WebhookPayloadCommitCommentCommentUser = {
     login: string;
     id: number;
@@ -4016,6 +4327,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadCommitCommentComment = {
     url: string;
     html_url: string;
@@ -4031,6 +4343,7 @@ export declare module EventPayloads {
     author_association: string;
     body: string;
   };
+  /** @deprecated */
   type WebhookPayloadCommitComment = {
     action: "created";
     comment: WebhookPayloadCommitCommentComment;
@@ -4039,10 +4352,12 @@ export declare module EventPayloads {
     organization?: WebhookPayloadCommitCommentOrganization;
     installation?: WebhookPayloadCommitCommentInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadCodeScanningAlertInstallation = {
     id: number;
     node_id: string;
   };
+  /** @deprecated */
   type WebhookPayloadCodeScanningAlertOrganization = {
     login: string;
     id: number;
@@ -4057,21 +4372,25 @@ export declare module EventPayloads {
     avatar_url: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadCodeScanningAlertAlertTool = {
     name: string;
     version: null;
   };
+  /** @deprecated */
   type WebhookPayloadCodeScanningAlertAlertRule = {
     id: string;
     severity: string;
     description: string;
   };
+  /** @deprecated */
   type WebhookPayloadCodeScanningAlertAlertInstancesItem = {
     ref: string;
     analysis_key: string;
     environment: string;
     state: string;
   };
+  /** @deprecated */
   type WebhookPayloadCodeScanningAlertAlert = {
     number: number;
     created_at: string;
@@ -4085,6 +4404,7 @@ export declare module EventPayloads {
     rule: WebhookPayloadCodeScanningAlertAlertRule;
     tool: WebhookPayloadCodeScanningAlertAlertTool;
   };
+  /** @deprecated */
   type WebhookPayloadCodeScanningAlert = {
     action:
       | "appeared_in_branch"
@@ -4100,7 +4420,9 @@ export declare module EventPayloads {
     organization: WebhookPayloadCodeScanningAlertOrganization;
     installation?: WebhookPayloadCodeScanningAlertInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteInstallation = { id: number; node_id: string };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteOrganization = {
     login: string;
     id: number;
@@ -4132,14 +4454,17 @@ export declare module EventPayloads {
     updated_at: string;
     type: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteCheckSuiteHeadCommitCommitter = {
     name: string;
     email: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteCheckSuiteHeadCommitAuthor = {
     name: string;
     email: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteCheckSuiteHeadCommit = {
     id: string;
     tree_id: string;
@@ -4148,6 +4473,7 @@ export declare module EventPayloads {
     author: WebhookPayloadCheckSuiteCheckSuiteHeadCommitAuthor;
     committer: WebhookPayloadCheckSuiteCheckSuiteHeadCommitCommitter;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteCheckSuiteAppPermissions = {
     administration: string;
     checks: string;
@@ -4169,6 +4495,7 @@ export declare module EventPayloads {
     team_discussions: string;
     vulnerability_alerts: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteCheckSuiteAppOwner = {
     login: string;
     id: number;
@@ -4189,6 +4516,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteCheckSuiteApp = {
     id: number;
     node_id: string;
@@ -4202,26 +4530,31 @@ export declare module EventPayloads {
     permissions: WebhookPayloadCheckSuiteCheckSuiteAppPermissions;
     events: Array<any>;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteCheckSuitePullRequestsItemBaseRepo = {
     id: number;
     url: string;
     name: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteCheckSuitePullRequestsItemBase = {
     ref: string;
     sha: string;
     repo: WebhookPayloadCheckSuiteCheckSuitePullRequestsItemBaseRepo;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteCheckSuitePullRequestsItemHeadRepo = {
     id: number;
     url: string;
     name: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteCheckSuitePullRequestsItemHead = {
     ref: string;
     sha: string;
     repo: WebhookPayloadCheckSuiteCheckSuitePullRequestsItemHeadRepo;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteCheckSuitePullRequestsItem = {
     url: string;
     id: number;
@@ -4229,6 +4562,7 @@ export declare module EventPayloads {
     head: WebhookPayloadCheckSuiteCheckSuitePullRequestsItemHead;
     base: WebhookPayloadCheckSuiteCheckSuitePullRequestsItemBase;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuiteCheckSuite = {
     id: number;
     node_id: string;
@@ -4247,6 +4581,7 @@ export declare module EventPayloads {
     check_runs_url: string;
     head_commit: WebhookPayloadCheckSuiteCheckSuiteHeadCommit;
   };
+  /** @deprecated */
   type WebhookPayloadCheckSuite = {
     action: "completed" | "requested" | "rerequested";
     check_suite: WebhookPayloadCheckSuiteCheckSuite;
@@ -4255,6 +4590,7 @@ export declare module EventPayloads {
     organization?: WebhookPayloadCheckSuiteOrganization;
     installation?: WebhookPayloadCheckSuiteInstallation;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunInstallation = { id: number; node_id: string };
   type PayloadRepositoryLicense = null | {
     key: string;
@@ -4263,7 +4599,9 @@ export declare module EventPayloads {
     url: string;
     node_id: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunRequestedAction = { identifier: string };
+  /** @deprecated */
   type WebhookPayloadCheckRunOrganization = {
     login: string;
     id: number;
@@ -4295,6 +4633,7 @@ export declare module EventPayloads {
     updated_at?: string;
     type?: string;
   };
+  /** @deprecated */
   type PayloadSender = {
     login: string;
     id: number;
@@ -4316,6 +4655,7 @@ export declare module EventPayloads {
     site_admin: boolean;
     email?: string;
   };
+  /** @deprecated */
   type PayloadRepositoryOwner = {
     login: string;
     id: number;
@@ -4338,6 +4678,7 @@ export declare module EventPayloads {
     name?: string;
     email?: string;
   };
+  /** @deprecated */
   type PayloadRepository = {
     id: number;
     node_id: string;
@@ -4416,26 +4757,31 @@ export declare module EventPayloads {
     master_branch?: string;
     permissions?: PayloadRepositoryPermissions;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunPullRequestsItemBaseRepo = {
     id: number;
     url: string;
     name: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunPullRequestsItemBase = {
     ref: string;
     sha: string;
     repo: WebhookPayloadCheckRunCheckRunPullRequestsItemBaseRepo;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunPullRequestsItemHeadRepo = {
     id: number;
     url: string;
     name: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunPullRequestsItemHead = {
     ref: string;
     sha: string;
     repo: WebhookPayloadCheckRunCheckRunPullRequestsItemHeadRepo;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunPullRequestsItem = {
     url: string;
     id: number;
@@ -4443,6 +4789,7 @@ export declare module EventPayloads {
     head: WebhookPayloadCheckRunCheckRunPullRequestsItemHead;
     base: WebhookPayloadCheckRunCheckRunPullRequestsItemBase;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunAppPermissions = {
     administration?: string;
     checks: string;
@@ -4464,6 +4811,7 @@ export declare module EventPayloads {
     team_discussions?: string;
     vulnerability_alerts?: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunAppOwner = {
     login: string;
     id: number;
@@ -4484,6 +4832,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunApp = {
     id: number;
     node_id: string;
@@ -4498,6 +4847,7 @@ export declare module EventPayloads {
     events?: Array<string>;
     slug?: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunCheckSuiteAppPermissions = {
     administration?: string;
     checks: string;
@@ -4519,6 +4869,7 @@ export declare module EventPayloads {
     team_discussions?: string;
     vulnerability_alerts?: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunCheckSuiteAppOwner = {
     login: string;
     id: number;
@@ -4539,6 +4890,7 @@ export declare module EventPayloads {
     type: string;
     site_admin: boolean;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunCheckSuiteApp = {
     id: number;
     node_id: string;
@@ -4553,26 +4905,31 @@ export declare module EventPayloads {
     events?: Array<string>;
     slug?: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemBaseRepo = {
     id: number;
     url: string;
     name: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemBase = {
     ref: string;
     sha: string;
     repo: WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemBaseRepo;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemHeadRepo = {
     id: number;
     url: string;
     name: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemHead = {
     ref: string;
     sha: string;
     repo: WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemHeadRepo;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItem = {
     url: string;
     id: number;
@@ -4580,6 +4937,7 @@ export declare module EventPayloads {
     head: WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemHead;
     base: WebhookPayloadCheckRunCheckRunCheckSuitePullRequestsItemBase;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunCheckSuite = {
     id: number;
     node_id?: string;
@@ -4595,6 +4953,7 @@ export declare module EventPayloads {
     created_at: string;
     updated_at: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRunOutput = {
     title: null | string;
     summary: null | string;
@@ -4602,6 +4961,7 @@ export declare module EventPayloads {
     annotations_count: number;
     annotations_url: string;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRunCheckRun = {
     id: number;
     node_id?: string;
@@ -4620,6 +4980,7 @@ export declare module EventPayloads {
     app: WebhookPayloadCheckRunCheckRunApp;
     pull_requests: Array<WebhookPayloadCheckRunCheckRunPullRequestsItem>;
   };
+  /** @deprecated */
   type WebhookPayloadCheckRun = {
     action: "completed" | "created" | "requested_action" | "rerequested";
     check_run: WebhookPayloadCheckRunCheckRun;

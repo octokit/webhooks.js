@@ -1,18 +1,15 @@
+import { WebhookEvent } from "@octokit/webhooks-definitions/schema";
 // @ts-ignore to address #245
 import AggregateError from "aggregate-error";
-
 import { IncomingMessage } from "http";
-import { EventTypesPayload } from "../generated/get-webhook-payload-type-from-event";
 
 declare module "http" {
   interface IncomingMessage {
-    body?: EventTypesPayload;
+    body?: WebhookEvent;
   }
 }
 
-export function getPayload(
-  request: IncomingMessage
-): Promise<EventTypesPayload> {
+export function getPayload(request: IncomingMessage): Promise<WebhookEvent> {
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
 

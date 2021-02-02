@@ -1,8 +1,8 @@
-import { State } from "../types";
+import { EmitterEventName, State } from "../types";
 
 export function removeListener(
   state: State,
-  webhookNameOrNames: string | string[],
+  webhookNameOrNames: EmitterEventName | EmitterEventName[],
   handler: Function
 ) {
   if (Array.isArray(webhookNameOrNames)) {

@@ -1,3 +1,4 @@
+import { EventPayloadMap } from "@octokit/webhooks-definitions/schema";
 import { isntWebhook } from "./isnt-webhook";
 import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
@@ -5,7 +6,8 @@ import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
 import { State, WebhookEventHandlerError } from "../types";
-import { WebhookEvents } from "../generated/get-webhook-payload-type-from-event";
+
+export type WebhookEventName = keyof EventPayloadMap;
 
 const debugWebhooks = debug("webhooks:receiver");
 
@@ -43,7 +45,7 @@ export function middleware(
     });
   }
 
-  const eventName = request.headers["x-github-event"] as WebhookEvents;
+  const eventName = request.headers["x-github-event"] as WebhookEventName;
   const signatureSHA1 = request.headers["x-hub-signature"] as string;
   const signatureSHA256 = request.headers["x-hub-signature-256"] as string;
   const id = request.headers["x-github-delivery"] as string;
@@ -60,11 +62,11 @@ export function middleware(
   }, 9000).unref();
 
   return getPayload(request)
-    .then((payload: any) => {
+    .then((payload) => {
       return verifyAndReceive(state, {
         id: id,
-        name: eventName,
-        payload,
+        name: eventName as any,
+        payload: payload as any,
         signature: signatureSHA256 || signatureSHA1,
       });
     })
