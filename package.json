@@ -76,6 +76,9 @@
   "renovate": {
     "extends": [
       "github>octokit/.github"
+    ],
+    "ignoreDeps": [
+      "@octokit/webhooks-definitions"
     ]
   }
 }
