@@ -103,7 +103,12 @@ export default async function () {
     secret: "bleh",
   });
 
-  createEventHandler({ secret: "bleh" });
+  const eventHandler = createEventHandler({ secret: "bleh" });
+  console.log(eventHandler.on);
+  console.log(eventHandler.onAny);
+  console.log(eventHandler.onError);
+  console.log(eventHandler.removeListener);
+  console.log(eventHandler.receive);
 
   createMiddleware({
     secret: "mysecret",
