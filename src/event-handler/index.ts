@@ -1,3 +1,12 @@
+import type {
+  EmitterAnyEvent,
+  EmitterEventName,
+  EmitterWebhookEvent,
+  HandlerFunction,
+  Options,
+  State,
+  WebhookEventHandlerError,
+} from "../types";
 import {
   receiverOn as on,
   receiverOnAny as onAny,
@@ -5,9 +14,22 @@ import {
 } from "./on";
 import { receiverHandle as receive } from "./receive";
 import { removeListener } from "./remove-listener";
-import { Options, State } from "../types";
 
-export function createEventHandler(options: Options<any>) {
+interface EventHandler<TTransformed = unknown> {
+  on<E extends EmitterEventName>(
+    event: E | E[],
+    callback: HandlerFunction<E, TTransformed>
+  ): void;
+  onAny(handler: (event: EmitterAnyEvent) => any): void;
+  onError(handler: (event: WebhookEventHandlerError) => any): void;
+  removeListener<E extends EmitterEventName>(
+    event: E | E[],
+    callback: HandlerFunction<E, TTransformed>
+  ): void;
+  receive(event: EmitterWebhookEvent): Promise<void>;
+}
+
+export function createEventHandler(options: Options<any>): EventHandler {
   const state: State = {
     hooks: {},
   };
