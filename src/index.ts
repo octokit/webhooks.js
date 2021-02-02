@@ -37,11 +37,7 @@ class Webhooks<
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
   ) => void;
-  public receive: (options: {
-    id: string;
-    name: string;
-    payload: any;
-  }) => Promise<void>;
+  public receive: (event: EmitterWebhookEvent) => Promise<void>;
   public middleware: (
     request: IncomingMessage,
     response: ServerResponse,
