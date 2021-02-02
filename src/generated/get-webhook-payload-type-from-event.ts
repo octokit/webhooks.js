@@ -1,215 +1,412 @@
 // THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY
-// make edits in scripts/generate-types.js
+// make edits in scripts/generate-types.ts
 
-import { EventPayloads } from "./event-payloads";
-import { WebhookEvent, WebhookEventHandlerError } from "../types";
+import {
+  CheckRunEvent,
+  CheckRunCompletedEvent,
+  CheckRunCreatedEvent,
+  CheckRunRequestedActionEvent,
+  CheckRunRerequestedEvent,
+  CheckSuiteEvent,
+  CheckSuiteCompletedEvent,
+  CheckSuiteRequestedEvent,
+  CheckSuiteRerequestedEvent,
+  CodeScanningAlertEvent,
+  CodeScanningAlertAppearedInBranchEvent,
+  CodeScanningAlertClosedByUserEvent,
+  CodeScanningAlertCreatedEvent,
+  CodeScanningAlertFixedEvent,
+  CodeScanningAlertReopenedEvent,
+  CodeScanningAlertReopenedByUserEvent,
+  CommitCommentEvent,
+  CommitCommentCreatedEvent,
+  ContentReferenceEvent,
+  ContentReferenceCreatedEvent,
+  CreateEvent,
+  DeleteEvent,
+  DeployKeyEvent,
+  DeployKeyCreatedEvent,
+  DeployKeyDeletedEvent,
+  DeploymentEvent,
+  DeploymentCreatedEvent,
+  DeploymentStatusEvent,
+  DeploymentStatusCreatedEvent,
+  ForkEvent,
+  GithubAppAuthorizationEvent,
+  GithubAppAuthorizationRevokedEvent,
+  GollumEvent,
+  InstallationEvent,
+  InstallationCreatedEvent,
+  InstallationDeletedEvent,
+  InstallationNewPermissionsAcceptedEvent,
+  InstallationSuspendEvent,
+  InstallationUnsuspendEvent,
+  InstallationRepositoriesEvent,
+  InstallationRepositoriesAddedEvent,
+  InstallationRepositoriesRemovedEvent,
+  IssueCommentEvent,
+  IssueCommentCreatedEvent,
+  IssueCommentDeletedEvent,
+  IssueCommentEditedEvent,
+  IssuesEvent,
+  IssuesAssignedEvent,
+  IssuesClosedEvent,
+  IssuesDeletedEvent,
+  IssuesDemilestonedEvent,
+  IssuesEditedEvent,
+  IssuesLabeledEvent,
+  IssuesLockedEvent,
+  IssuesMilestonedEvent,
+  IssuesOpenedEvent,
+  IssuesPinnedEvent,
+  IssuesReopenedEvent,
+  IssuesTransferredEvent,
+  IssuesUnassignedEvent,
+  IssuesUnlabeledEvent,
+  IssuesUnlockedEvent,
+  IssuesUnpinnedEvent,
+  LabelEvent,
+  LabelCreatedEvent,
+  LabelDeletedEvent,
+  LabelEditedEvent,
+  MarketplacePurchaseEvent,
+  MarketplacePurchaseCancelledEvent,
+  MarketplacePurchaseChangedEvent,
+  MarketplacePurchasePendingChangeEvent,
+  MarketplacePurchasePendingChangeCancelledEvent,
+  MarketplacePurchasePurchasedEvent,
+  MemberEvent,
+  MemberAddedEvent,
+  MemberEditedEvent,
+  MemberRemovedEvent,
+  MembershipEvent,
+  MembershipAddedEvent,
+  MembershipRemovedEvent,
+  MetaEvent,
+  MetaDeletedEvent,
+  MilestoneEvent,
+  MilestoneClosedEvent,
+  MilestoneCreatedEvent,
+  MilestoneDeletedEvent,
+  MilestoneEditedEvent,
+  MilestoneOpenedEvent,
+  OrgBlockEvent,
+  OrgBlockBlockedEvent,
+  OrgBlockUnblockedEvent,
+  OrganizationEvent,
+  OrganizationDeletedEvent,
+  OrganizationMemberAddedEvent,
+  OrganizationMemberInvitedEvent,
+  OrganizationMemberRemovedEvent,
+  OrganizationRenamedEvent,
+  PackageEvent,
+  PackagePublishedEvent,
+  PackageUpdatedEvent,
+  PageBuildEvent,
+  PingEvent,
+  ProjectEvent,
+  ProjectClosedEvent,
+  ProjectCreatedEvent,
+  ProjectDeletedEvent,
+  ProjectEditedEvent,
+  ProjectReopenedEvent,
+  ProjectCardEvent,
+  ProjectCardConvertedEvent,
+  ProjectCardCreatedEvent,
+  ProjectCardDeletedEvent,
+  ProjectCardEditedEvent,
+  ProjectCardMovedEvent,
+  ProjectColumnEvent,
+  ProjectColumnCreatedEvent,
+  ProjectColumnDeletedEvent,
+  ProjectColumnEditedEvent,
+  ProjectColumnMovedEvent,
+  PublicEvent,
+  PullRequestEvent,
+  PullRequestAssignedEvent,
+  PullRequestClosedEvent,
+  PullRequestConvertedToDraftEvent,
+  PullRequestEditedEvent,
+  PullRequestLabeledEvent,
+  PullRequestLockedEvent,
+  PullRequestOpenedEvent,
+  PullRequestReadyForReviewEvent,
+  PullRequestReopenedEvent,
+  PullRequestReviewRequestRemovedEvent,
+  PullRequestReviewRequestedEvent,
+  PullRequestSynchronizeEvent,
+  PullRequestUnassignedEvent,
+  PullRequestUnlabeledEvent,
+  PullRequestUnlockedEvent,
+  PullRequestReviewEvent,
+  PullRequestReviewDismissedEvent,
+  PullRequestReviewEditedEvent,
+  PullRequestReviewSubmittedEvent,
+  PullRequestReviewCommentEvent,
+  PullRequestReviewCommentCreatedEvent,
+  PullRequestReviewCommentDeletedEvent,
+  PullRequestReviewCommentEditedEvent,
+  PushEvent,
+  ReleaseEvent,
+  ReleaseCreatedEvent,
+  ReleaseDeletedEvent,
+  ReleaseEditedEvent,
+  ReleasePrereleasedEvent,
+  ReleasePublishedEvent,
+  ReleaseReleasedEvent,
+  ReleaseUnpublishedEvent,
+  RepositoryEvent,
+  RepositoryArchivedEvent,
+  RepositoryCreatedEvent,
+  RepositoryDeletedEvent,
+  RepositoryEditedEvent,
+  RepositoryPrivatizedEvent,
+  RepositoryPublicizedEvent,
+  RepositoryRenamedEvent,
+  RepositoryTransferredEvent,
+  RepositoryUnarchivedEvent,
+  RepositoryDispatchEvent,
+  RepositoryDispatchOnDemandTestEvent,
+  RepositoryImportEvent,
+  RepositoryVulnerabilityAlertEvent,
+  RepositoryVulnerabilityAlertCreateEvent,
+  RepositoryVulnerabilityAlertDismissEvent,
+  RepositoryVulnerabilityAlertResolveEvent,
+  SecretScanningAlertEvent,
+  SecretScanningAlertCreatedEvent,
+  SecretScanningAlertReopenedEvent,
+  SecretScanningAlertResolvedEvent,
+  SecurityAdvisoryEvent,
+  SecurityAdvisoryPerformedEvent,
+  SecurityAdvisoryPublishedEvent,
+  SecurityAdvisoryUpdatedEvent,
+  SponsorshipEvent,
+  SponsorshipCancelledEvent,
+  SponsorshipCreatedEvent,
+  SponsorshipEditedEvent,
+  SponsorshipPendingCancellationEvent,
+  SponsorshipPendingTierChangeEvent,
+  SponsorshipTierChangedEvent,
+  StarEvent,
+  StarCreatedEvent,
+  StarDeletedEvent,
+  StatusEvent,
+  TeamEvent,
+  TeamAddedToRepositoryEvent,
+  TeamCreatedEvent,
+  TeamDeletedEvent,
+  TeamEditedEvent,
+  TeamRemovedFromRepositoryEvent,
+  TeamAddEvent,
+  WatchEvent,
+  WatchStartedEvent,
+  WorkflowDispatchEvent,
+  WorkflowRunEvent,
+  WorkflowRunCompletedEvent,
+  WorkflowRunRequestedEvent,
+} from "@octokit/webhooks-definitions/schema";
 
-export interface EventTypesPayload {
-  error: WebhookEventHandlerError;
-  "*": WebhookEvent<any>;
-  check_run: WebhookEvent<EventPayloads.WebhookPayloadCheckRun>;
-  "check_run.completed": WebhookEvent<EventPayloads.WebhookPayloadCheckRun>;
-  "check_run.created": WebhookEvent<EventPayloads.WebhookPayloadCheckRun>;
-  "check_run.requested_action": WebhookEvent<EventPayloads.WebhookPayloadCheckRun>;
-  "check_run.rerequested": WebhookEvent<EventPayloads.WebhookPayloadCheckRun>;
-  check_suite: WebhookEvent<EventPayloads.WebhookPayloadCheckSuite>;
-  "check_suite.completed": WebhookEvent<EventPayloads.WebhookPayloadCheckSuite>;
-  "check_suite.requested": WebhookEvent<EventPayloads.WebhookPayloadCheckSuite>;
-  "check_suite.rerequested": WebhookEvent<EventPayloads.WebhookPayloadCheckSuite>;
-  code_scanning_alert: WebhookEvent<EventPayloads.WebhookPayloadCodeScanningAlert>;
-  "code_scanning_alert.appeared_in_branch": WebhookEvent<EventPayloads.WebhookPayloadCodeScanningAlert>;
-  "code_scanning_alert.closed_by_user": WebhookEvent<EventPayloads.WebhookPayloadCodeScanningAlert>;
-  "code_scanning_alert.created": WebhookEvent<EventPayloads.WebhookPayloadCodeScanningAlert>;
-  "code_scanning_alert.fixed": WebhookEvent<EventPayloads.WebhookPayloadCodeScanningAlert>;
-  "code_scanning_alert.reopened": WebhookEvent<EventPayloads.WebhookPayloadCodeScanningAlert>;
-  "code_scanning_alert.reopened_by_user": WebhookEvent<EventPayloads.WebhookPayloadCodeScanningAlert>;
-  commit_comment: WebhookEvent<EventPayloads.WebhookPayloadCommitComment>;
-  "commit_comment.created": WebhookEvent<EventPayloads.WebhookPayloadCommitComment>;
-  content_reference: WebhookEvent<EventPayloads.WebhookPayloadContentReference>;
-  "content_reference.created": WebhookEvent<EventPayloads.WebhookPayloadContentReference>;
-  create: WebhookEvent<EventPayloads.WebhookPayloadCreate>;
-  delete: WebhookEvent<EventPayloads.WebhookPayloadDelete>;
-  deploy_key: WebhookEvent<EventPayloads.WebhookPayloadDeployKey>;
-  "deploy_key.created": WebhookEvent<EventPayloads.WebhookPayloadDeployKey>;
-  "deploy_key.deleted": WebhookEvent<EventPayloads.WebhookPayloadDeployKey>;
-  deployment: WebhookEvent<EventPayloads.WebhookPayloadDeployment>;
-  "deployment.created": WebhookEvent<EventPayloads.WebhookPayloadDeployment>;
-  deployment_status: WebhookEvent<EventPayloads.WebhookPayloadDeploymentStatus>;
-  "deployment_status.created": WebhookEvent<EventPayloads.WebhookPayloadDeploymentStatus>;
-  fork: WebhookEvent<EventPayloads.WebhookPayloadFork>;
-  github_app_authorization: WebhookEvent<EventPayloads.WebhookPayloadGithubAppAuthorization>;
-  "github_app_authorization.revoked": WebhookEvent<EventPayloads.WebhookPayloadGithubAppAuthorization>;
-  gollum: WebhookEvent<EventPayloads.WebhookPayloadGollum>;
-  installation: WebhookEvent<EventPayloads.WebhookPayloadInstallation>;
-  "installation.created": WebhookEvent<EventPayloads.WebhookPayloadInstallation>;
-  "installation.deleted": WebhookEvent<EventPayloads.WebhookPayloadInstallation>;
-  "installation.new_permissions_accepted": WebhookEvent<EventPayloads.WebhookPayloadInstallation>;
-  "installation.suspend": WebhookEvent<EventPayloads.WebhookPayloadInstallation>;
-  "installation.unsuspend": WebhookEvent<EventPayloads.WebhookPayloadInstallation>;
-  installation_repositories: WebhookEvent<EventPayloads.WebhookPayloadInstallationRepositories>;
-  "installation_repositories.added": WebhookEvent<EventPayloads.WebhookPayloadInstallationRepositories>;
-  "installation_repositories.removed": WebhookEvent<EventPayloads.WebhookPayloadInstallationRepositories>;
-  issue_comment: WebhookEvent<EventPayloads.WebhookPayloadIssueComment>;
-  "issue_comment.created": WebhookEvent<EventPayloads.WebhookPayloadIssueComment>;
-  "issue_comment.deleted": WebhookEvent<EventPayloads.WebhookPayloadIssueComment>;
-  "issue_comment.edited": WebhookEvent<EventPayloads.WebhookPayloadIssueComment>;
-  issues: WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.assigned": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.closed": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.deleted": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.demilestoned": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.edited": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.labeled": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.locked": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.milestoned": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.opened": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.pinned": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.reopened": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.transferred": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.unassigned": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.unlabeled": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.unlocked": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  "issues.unpinned": WebhookEvent<EventPayloads.WebhookPayloadIssues>;
-  label: WebhookEvent<EventPayloads.WebhookPayloadLabel>;
-  "label.created": WebhookEvent<EventPayloads.WebhookPayloadLabel>;
-  "label.deleted": WebhookEvent<EventPayloads.WebhookPayloadLabel>;
-  "label.edited": WebhookEvent<EventPayloads.WebhookPayloadLabel>;
-  marketplace_purchase: WebhookEvent<EventPayloads.WebhookPayloadMarketplacePurchase>;
-  "marketplace_purchase.cancelled": WebhookEvent<EventPayloads.WebhookPayloadMarketplacePurchase>;
-  "marketplace_purchase.changed": WebhookEvent<EventPayloads.WebhookPayloadMarketplacePurchase>;
-  "marketplace_purchase.pending_change": WebhookEvent<EventPayloads.WebhookPayloadMarketplacePurchase>;
-  "marketplace_purchase.pending_change_cancelled": WebhookEvent<EventPayloads.WebhookPayloadMarketplacePurchase>;
-  "marketplace_purchase.purchased": WebhookEvent<EventPayloads.WebhookPayloadMarketplacePurchase>;
-  member: WebhookEvent<EventPayloads.WebhookPayloadMember>;
-  "member.added": WebhookEvent<EventPayloads.WebhookPayloadMember>;
-  "member.edited": WebhookEvent<EventPayloads.WebhookPayloadMember>;
-  "member.removed": WebhookEvent<EventPayloads.WebhookPayloadMember>;
-  membership: WebhookEvent<EventPayloads.WebhookPayloadMembership>;
-  "membership.added": WebhookEvent<EventPayloads.WebhookPayloadMembership>;
-  "membership.removed": WebhookEvent<EventPayloads.WebhookPayloadMembership>;
-  meta: WebhookEvent<EventPayloads.WebhookPayloadMeta>;
-  "meta.deleted": WebhookEvent<EventPayloads.WebhookPayloadMeta>;
-  milestone: WebhookEvent<EventPayloads.WebhookPayloadMilestone>;
-  "milestone.closed": WebhookEvent<EventPayloads.WebhookPayloadMilestone>;
-  "milestone.created": WebhookEvent<EventPayloads.WebhookPayloadMilestone>;
-  "milestone.deleted": WebhookEvent<EventPayloads.WebhookPayloadMilestone>;
-  "milestone.edited": WebhookEvent<EventPayloads.WebhookPayloadMilestone>;
-  "milestone.opened": WebhookEvent<EventPayloads.WebhookPayloadMilestone>;
-  organization: WebhookEvent<EventPayloads.WebhookPayloadOrganization>;
-  "organization.deleted": WebhookEvent<EventPayloads.WebhookPayloadOrganization>;
-  "organization.member_added": WebhookEvent<EventPayloads.WebhookPayloadOrganization>;
-  "organization.member_invited": WebhookEvent<EventPayloads.WebhookPayloadOrganization>;
-  "organization.member_removed": WebhookEvent<EventPayloads.WebhookPayloadOrganization>;
-  "organization.renamed": WebhookEvent<EventPayloads.WebhookPayloadOrganization>;
-  org_block: WebhookEvent<EventPayloads.WebhookPayloadOrgBlock>;
-  "org_block.blocked": WebhookEvent<EventPayloads.WebhookPayloadOrgBlock>;
-  "org_block.unblocked": WebhookEvent<EventPayloads.WebhookPayloadOrgBlock>;
-  package: WebhookEvent<EventPayloads.WebhookPayloadPackage>;
-  "package.published": WebhookEvent<EventPayloads.WebhookPayloadPackage>;
-  "package.updated": WebhookEvent<EventPayloads.WebhookPayloadPackage>;
-  page_build: WebhookEvent<EventPayloads.WebhookPayloadPageBuild>;
-  ping: WebhookEvent<EventPayloads.WebhookPayloadPing>;
-  project_card: WebhookEvent<EventPayloads.WebhookPayloadProjectCard>;
-  "project_card.converted": WebhookEvent<EventPayloads.WebhookPayloadProjectCard>;
-  "project_card.created": WebhookEvent<EventPayloads.WebhookPayloadProjectCard>;
-  "project_card.deleted": WebhookEvent<EventPayloads.WebhookPayloadProjectCard>;
-  "project_card.edited": WebhookEvent<EventPayloads.WebhookPayloadProjectCard>;
-  "project_card.moved": WebhookEvent<EventPayloads.WebhookPayloadProjectCard>;
-  project_column: WebhookEvent<EventPayloads.WebhookPayloadProjectColumn>;
-  "project_column.created": WebhookEvent<EventPayloads.WebhookPayloadProjectColumn>;
-  "project_column.deleted": WebhookEvent<EventPayloads.WebhookPayloadProjectColumn>;
-  "project_column.edited": WebhookEvent<EventPayloads.WebhookPayloadProjectColumn>;
-  "project_column.moved": WebhookEvent<EventPayloads.WebhookPayloadProjectColumn>;
-  project: WebhookEvent<EventPayloads.WebhookPayloadProject>;
-  "project.closed": WebhookEvent<EventPayloads.WebhookPayloadProject>;
-  "project.created": WebhookEvent<EventPayloads.WebhookPayloadProject>;
-  "project.deleted": WebhookEvent<EventPayloads.WebhookPayloadProject>;
-  "project.edited": WebhookEvent<EventPayloads.WebhookPayloadProject>;
-  "project.reopened": WebhookEvent<EventPayloads.WebhookPayloadProject>;
-  public: WebhookEvent<EventPayloads.WebhookPayloadPublic>;
-  pull_request: WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.assigned": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.closed": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.edited": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.labeled": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.locked": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.merged": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.opened": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.ready_for_review": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.reopened": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.review_request_removed": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.review_requested": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.synchronize": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.unassigned": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.unlabeled": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  "pull_request.unlocked": WebhookEvent<EventPayloads.WebhookPayloadPullRequest>;
-  pull_request_review: WebhookEvent<EventPayloads.WebhookPayloadPullRequestReview>;
-  "pull_request_review.dismissed": WebhookEvent<EventPayloads.WebhookPayloadPullRequestReview>;
-  "pull_request_review.edited": WebhookEvent<EventPayloads.WebhookPayloadPullRequestReview>;
-  "pull_request_review.submitted": WebhookEvent<EventPayloads.WebhookPayloadPullRequestReview>;
-  pull_request_review_comment: WebhookEvent<EventPayloads.WebhookPayloadPullRequestReviewComment>;
-  "pull_request_review_comment.created": WebhookEvent<EventPayloads.WebhookPayloadPullRequestReviewComment>;
-  "pull_request_review_comment.deleted": WebhookEvent<EventPayloads.WebhookPayloadPullRequestReviewComment>;
-  "pull_request_review_comment.edited": WebhookEvent<EventPayloads.WebhookPayloadPullRequestReviewComment>;
-  push: WebhookEvent<EventPayloads.WebhookPayloadPush>;
-  release: WebhookEvent<EventPayloads.WebhookPayloadRelease>;
-  "release.created": WebhookEvent<EventPayloads.WebhookPayloadRelease>;
-  "release.deleted": WebhookEvent<EventPayloads.WebhookPayloadRelease>;
-  "release.edited": WebhookEvent<EventPayloads.WebhookPayloadRelease>;
-  "release.prereleased": WebhookEvent<EventPayloads.WebhookPayloadRelease>;
-  "release.published": WebhookEvent<EventPayloads.WebhookPayloadRelease>;
-  "release.released": WebhookEvent<EventPayloads.WebhookPayloadRelease>;
-  "release.unpublished": WebhookEvent<EventPayloads.WebhookPayloadRelease>;
-  repository_dispatch: WebhookEvent<EventPayloads.WebhookPayloadRepositoryDispatch>;
-  "repository_dispatch.on-demand-test": WebhookEvent<EventPayloads.WebhookPayloadRepositoryDispatch>;
-  repository: WebhookEvent<EventPayloads.WebhookPayloadRepository>;
-  "repository.archived": WebhookEvent<EventPayloads.WebhookPayloadRepository>;
-  "repository.created": WebhookEvent<EventPayloads.WebhookPayloadRepository>;
-  "repository.deleted": WebhookEvent<EventPayloads.WebhookPayloadRepository>;
-  "repository.edited": WebhookEvent<EventPayloads.WebhookPayloadRepository>;
-  "repository.privatized": WebhookEvent<EventPayloads.WebhookPayloadRepository>;
-  "repository.publicized": WebhookEvent<EventPayloads.WebhookPayloadRepository>;
-  "repository.renamed": WebhookEvent<EventPayloads.WebhookPayloadRepository>;
-  "repository.transferred": WebhookEvent<EventPayloads.WebhookPayloadRepository>;
-  "repository.unarchived": WebhookEvent<EventPayloads.WebhookPayloadRepository>;
-  repository_import: WebhookEvent<EventPayloads.WebhookPayloadRepositoryImport>;
-  repository_vulnerability_alert: WebhookEvent<EventPayloads.WebhookPayloadRepositoryVulnerabilityAlert>;
-  "repository_vulnerability_alert.create": WebhookEvent<EventPayloads.WebhookPayloadRepositoryVulnerabilityAlert>;
-  "repository_vulnerability_alert.dismiss": WebhookEvent<EventPayloads.WebhookPayloadRepositoryVulnerabilityAlert>;
-  "repository_vulnerability_alert.resolve": WebhookEvent<EventPayloads.WebhookPayloadRepositoryVulnerabilityAlert>;
-  secret_scanning_alert: WebhookEvent<EventPayloads.WebhookPayloadSecretScanningAlert>;
-  "secret_scanning_alert.created": WebhookEvent<EventPayloads.WebhookPayloadSecretScanningAlert>;
-  "secret_scanning_alert.reopened": WebhookEvent<EventPayloads.WebhookPayloadSecretScanningAlert>;
-  "secret_scanning_alert.resolved": WebhookEvent<EventPayloads.WebhookPayloadSecretScanningAlert>;
-  security_advisory: WebhookEvent<EventPayloads.WebhookPayloadSecurityAdvisory>;
-  "security_advisory.performed": WebhookEvent<EventPayloads.WebhookPayloadSecurityAdvisory>;
-  "security_advisory.published": WebhookEvent<EventPayloads.WebhookPayloadSecurityAdvisory>;
-  "security_advisory.updated": WebhookEvent<EventPayloads.WebhookPayloadSecurityAdvisory>;
-  sponsorship: WebhookEvent<EventPayloads.WebhookPayloadSponsorship>;
-  "sponsorship.cancelled": WebhookEvent<EventPayloads.WebhookPayloadSponsorship>;
-  "sponsorship.created": WebhookEvent<EventPayloads.WebhookPayloadSponsorship>;
-  "sponsorship.edited": WebhookEvent<EventPayloads.WebhookPayloadSponsorship>;
-  "sponsorship.pending_cancellation": WebhookEvent<EventPayloads.WebhookPayloadSponsorship>;
-  "sponsorship.pending_tier_change": WebhookEvent<EventPayloads.WebhookPayloadSponsorship>;
-  "sponsorship.tier_changed": WebhookEvent<EventPayloads.WebhookPayloadSponsorship>;
-  star: WebhookEvent<EventPayloads.WebhookPayloadStar>;
-  "star.created": WebhookEvent<EventPayloads.WebhookPayloadStar>;
-  "star.deleted": WebhookEvent<EventPayloads.WebhookPayloadStar>;
-  status: WebhookEvent<EventPayloads.WebhookPayloadStatus>;
-  team: WebhookEvent<EventPayloads.WebhookPayloadTeam>;
-  "team.added_to_repository": WebhookEvent<EventPayloads.WebhookPayloadTeam>;
-  "team.created": WebhookEvent<EventPayloads.WebhookPayloadTeam>;
-  "team.deleted": WebhookEvent<EventPayloads.WebhookPayloadTeam>;
-  "team.edited": WebhookEvent<EventPayloads.WebhookPayloadTeam>;
-  "team.removed_from_repository": WebhookEvent<EventPayloads.WebhookPayloadTeam>;
-  team_add: WebhookEvent<EventPayloads.WebhookPayloadTeamAdd>;
-  watch: WebhookEvent<EventPayloads.WebhookPayloadWatch>;
-  "watch.started": WebhookEvent<EventPayloads.WebhookPayloadWatch>;
-  workflow_dispatch: WebhookEvent<EventPayloads.WebhookPayloadWorkflowDispatch>;
-  workflow_run: WebhookEvent<EventPayloads.WebhookPayloadWorkflowRun>;
-  "workflow_run.action": WebhookEvent<EventPayloads.WebhookPayloadWorkflowRun>;
-  "workflow_run.completed": WebhookEvent<EventPayloads.WebhookPayloadWorkflowRun>;
-  "workflow_run.requested": WebhookEvent<EventPayloads.WebhookPayloadWorkflowRun>;
+export interface EmitterEventWebhookPayloadMap {
+  check_run: CheckRunEvent;
+  "check_run.completed": CheckRunCompletedEvent;
+  "check_run.created": CheckRunCreatedEvent;
+  "check_run.requested_action": CheckRunRequestedActionEvent;
+  "check_run.rerequested": CheckRunRerequestedEvent;
+  check_suite: CheckSuiteEvent;
+  "check_suite.completed": CheckSuiteCompletedEvent;
+  "check_suite.requested": CheckSuiteRequestedEvent;
+  "check_suite.rerequested": CheckSuiteRerequestedEvent;
+  code_scanning_alert: CodeScanningAlertEvent;
+  "code_scanning_alert.appeared_in_branch": CodeScanningAlertAppearedInBranchEvent;
+  "code_scanning_alert.closed_by_user": CodeScanningAlertClosedByUserEvent;
+  "code_scanning_alert.created": CodeScanningAlertCreatedEvent;
+  "code_scanning_alert.fixed": CodeScanningAlertFixedEvent;
+  "code_scanning_alert.reopened": CodeScanningAlertReopenedEvent;
+  "code_scanning_alert.reopened_by_user": CodeScanningAlertReopenedByUserEvent;
+  commit_comment: CommitCommentEvent;
+  "commit_comment.created": CommitCommentCreatedEvent;
+  content_reference: ContentReferenceEvent;
+  "content_reference.created": ContentReferenceCreatedEvent;
+  create: CreateEvent;
+  delete: DeleteEvent;
+  deploy_key: DeployKeyEvent;
+  "deploy_key.created": DeployKeyCreatedEvent;
+  "deploy_key.deleted": DeployKeyDeletedEvent;
+  deployment: DeploymentEvent;
+  "deployment.created": DeploymentCreatedEvent;
+  deployment_status: DeploymentStatusEvent;
+  "deployment_status.created": DeploymentStatusCreatedEvent;
+  fork: ForkEvent;
+  github_app_authorization: GithubAppAuthorizationEvent;
+  "github_app_authorization.revoked": GithubAppAuthorizationRevokedEvent;
+  gollum: GollumEvent;
+  installation: InstallationEvent;
+  "installation.created": InstallationCreatedEvent;
+  "installation.deleted": InstallationDeletedEvent;
+  "installation.new_permissions_accepted": InstallationNewPermissionsAcceptedEvent;
+  "installation.suspend": InstallationSuspendEvent;
+  "installation.unsuspend": InstallationUnsuspendEvent;
+  installation_repositories: InstallationRepositoriesEvent;
+  "installation_repositories.added": InstallationRepositoriesAddedEvent;
+  "installation_repositories.removed": InstallationRepositoriesRemovedEvent;
+  issue_comment: IssueCommentEvent;
+  "issue_comment.created": IssueCommentCreatedEvent;
+  "issue_comment.deleted": IssueCommentDeletedEvent;
+  "issue_comment.edited": IssueCommentEditedEvent;
+  issues: IssuesEvent;
+  "issues.assigned": IssuesAssignedEvent;
+  "issues.closed": IssuesClosedEvent;
+  "issues.deleted": IssuesDeletedEvent;
+  "issues.demilestoned": IssuesDemilestonedEvent;
+  "issues.edited": IssuesEditedEvent;
+  "issues.labeled": IssuesLabeledEvent;
+  "issues.locked": IssuesLockedEvent;
+  "issues.milestoned": IssuesMilestonedEvent;
+  "issues.opened": IssuesOpenedEvent;
+  "issues.pinned": IssuesPinnedEvent;
+  "issues.reopened": IssuesReopenedEvent;
+  "issues.transferred": IssuesTransferredEvent;
+  "issues.unassigned": IssuesUnassignedEvent;
+  "issues.unlabeled": IssuesUnlabeledEvent;
+  "issues.unlocked": IssuesUnlockedEvent;
+  "issues.unpinned": IssuesUnpinnedEvent;
+  label: LabelEvent;
+  "label.created": LabelCreatedEvent;
+  "label.deleted": LabelDeletedEvent;
+  "label.edited": LabelEditedEvent;
+  marketplace_purchase: MarketplacePurchaseEvent;
+  "marketplace_purchase.cancelled": MarketplacePurchaseCancelledEvent;
+  "marketplace_purchase.changed": MarketplacePurchaseChangedEvent;
+  "marketplace_purchase.pending_change": MarketplacePurchasePendingChangeEvent;
+  "marketplace_purchase.pending_change_cancelled": MarketplacePurchasePendingChangeCancelledEvent;
+  "marketplace_purchase.purchased": MarketplacePurchasePurchasedEvent;
+  member: MemberEvent;
+  "member.added": MemberAddedEvent;
+  "member.edited": MemberEditedEvent;
+  "member.removed": MemberRemovedEvent;
+  membership: MembershipEvent;
+  "membership.added": MembershipAddedEvent;
+  "membership.removed": MembershipRemovedEvent;
+  meta: MetaEvent;
+  "meta.deleted": MetaDeletedEvent;
+  milestone: MilestoneEvent;
+  "milestone.closed": MilestoneClosedEvent;
+  "milestone.created": MilestoneCreatedEvent;
+  "milestone.deleted": MilestoneDeletedEvent;
+  "milestone.edited": MilestoneEditedEvent;
+  "milestone.opened": MilestoneOpenedEvent;
+  org_block: OrgBlockEvent;
+  "org_block.blocked": OrgBlockBlockedEvent;
+  "org_block.unblocked": OrgBlockUnblockedEvent;
+  organization: OrganizationEvent;
+  "organization.deleted": OrganizationDeletedEvent;
+  "organization.member_added": OrganizationMemberAddedEvent;
+  "organization.member_invited": OrganizationMemberInvitedEvent;
+  "organization.member_removed": OrganizationMemberRemovedEvent;
+  "organization.renamed": OrganizationRenamedEvent;
+  package: PackageEvent;
+  "package.published": PackagePublishedEvent;
+  "package.updated": PackageUpdatedEvent;
+  page_build: PageBuildEvent;
+  ping: PingEvent;
+  project: ProjectEvent;
+  "project.closed": ProjectClosedEvent;
+  "project.created": ProjectCreatedEvent;
+  "project.deleted": ProjectDeletedEvent;
+  "project.edited": ProjectEditedEvent;
+  "project.reopened": ProjectReopenedEvent;
+  project_card: ProjectCardEvent;
+  "project_card.converted": ProjectCardConvertedEvent;
+  "project_card.created": ProjectCardCreatedEvent;
+  "project_card.deleted": ProjectCardDeletedEvent;
+  "project_card.edited": ProjectCardEditedEvent;
+  "project_card.moved": ProjectCardMovedEvent;
+  project_column: ProjectColumnEvent;
+  "project_column.created": ProjectColumnCreatedEvent;
+  "project_column.deleted": ProjectColumnDeletedEvent;
+  "project_column.edited": ProjectColumnEditedEvent;
+  "project_column.moved": ProjectColumnMovedEvent;
+  public: PublicEvent;
+  pull_request: PullRequestEvent;
+  "pull_request.assigned": PullRequestAssignedEvent;
+  "pull_request.closed": PullRequestClosedEvent;
+  "pull_request.converted_to_draft": PullRequestConvertedToDraftEvent;
+  "pull_request.edited": PullRequestEditedEvent;
+  "pull_request.labeled": PullRequestLabeledEvent;
+  "pull_request.locked": PullRequestLockedEvent;
+  "pull_request.opened": PullRequestOpenedEvent;
+  "pull_request.ready_for_review": PullRequestReadyForReviewEvent;
+  "pull_request.reopened": PullRequestReopenedEvent;
+  "pull_request.review_request_removed": PullRequestReviewRequestRemovedEvent;
+  "pull_request.review_requested": PullRequestReviewRequestedEvent;
+  "pull_request.synchronize": PullRequestSynchronizeEvent;
+  "pull_request.unassigned": PullRequestUnassignedEvent;
+  "pull_request.unlabeled": PullRequestUnlabeledEvent;
+  "pull_request.unlocked": PullRequestUnlockedEvent;
+  pull_request_review: PullRequestReviewEvent;
+  "pull_request_review.dismissed": PullRequestReviewDismissedEvent;
+  "pull_request_review.edited": PullRequestReviewEditedEvent;
+  "pull_request_review.submitted": PullRequestReviewSubmittedEvent;
+  pull_request_review_comment: PullRequestReviewCommentEvent;
+  "pull_request_review_comment.created": PullRequestReviewCommentCreatedEvent;
+  "pull_request_review_comment.deleted": PullRequestReviewCommentDeletedEvent;
+  "pull_request_review_comment.edited": PullRequestReviewCommentEditedEvent;
+  push: PushEvent;
+  release: ReleaseEvent;
+  "release.created": ReleaseCreatedEvent;
+  "release.deleted": ReleaseDeletedEvent;
+  "release.edited": ReleaseEditedEvent;
+  "release.prereleased": ReleasePrereleasedEvent;
+  "release.published": ReleasePublishedEvent;
+  "release.released": ReleaseReleasedEvent;
+  "release.unpublished": ReleaseUnpublishedEvent;
+  repository: RepositoryEvent;
+  "repository.archived": RepositoryArchivedEvent;
+  "repository.created": RepositoryCreatedEvent;
+  "repository.deleted": RepositoryDeletedEvent;
+  "repository.edited": RepositoryEditedEvent;
+  "repository.privatized": RepositoryPrivatizedEvent;
+  "repository.publicized": RepositoryPublicizedEvent;
+  "repository.renamed": RepositoryRenamedEvent;
+  "repository.transferred": RepositoryTransferredEvent;
+  "repository.unarchived": RepositoryUnarchivedEvent;
+  repository_dispatch: RepositoryDispatchEvent;
+  "repository_dispatch.on-demand-test": RepositoryDispatchOnDemandTestEvent;
+  repository_import: RepositoryImportEvent;
+  repository_vulnerability_alert: RepositoryVulnerabilityAlertEvent;
+  "repository_vulnerability_alert.create": RepositoryVulnerabilityAlertCreateEvent;
+  "repository_vulnerability_alert.dismiss": RepositoryVulnerabilityAlertDismissEvent;
+  "repository_vulnerability_alert.resolve": RepositoryVulnerabilityAlertResolveEvent;
+  secret_scanning_alert: SecretScanningAlertEvent;
+  "secret_scanning_alert.created": SecretScanningAlertCreatedEvent;
+  "secret_scanning_alert.reopened": SecretScanningAlertReopenedEvent;
+  "secret_scanning_alert.resolved": SecretScanningAlertResolvedEvent;
+  security_advisory: SecurityAdvisoryEvent;
+  "security_advisory.performed": SecurityAdvisoryPerformedEvent;
+  "security_advisory.published": SecurityAdvisoryPublishedEvent;
+  "security_advisory.updated": SecurityAdvisoryUpdatedEvent;
+  sponsorship: SponsorshipEvent;
+  "sponsorship.cancelled": SponsorshipCancelledEvent;
+  "sponsorship.created": SponsorshipCreatedEvent;
+  "sponsorship.edited": SponsorshipEditedEvent;
+  "sponsorship.pending_cancellation": SponsorshipPendingCancellationEvent;
+  "sponsorship.pending_tier_change": SponsorshipPendingTierChangeEvent;
+  "sponsorship.tier_changed": SponsorshipTierChangedEvent;
+  star: StarEvent;
+  "star.created": StarCreatedEvent;
+  "star.deleted": StarDeletedEvent;
+  status: StatusEvent;
+  team: TeamEvent;
+  "team.added_to_repository": TeamAddedToRepositoryEvent;
+  "team.created": TeamCreatedEvent;
+  "team.deleted": TeamDeletedEvent;
+  "team.edited": TeamEditedEvent;
+  "team.removed_from_repository": TeamRemovedFromRepositoryEvent;
+  team_add: TeamAddEvent;
+  watch: WatchEvent;
+  "watch.started": WatchStartedEvent;
+  workflow_dispatch: WorkflowDispatchEvent;
+  workflow_run: WorkflowRunEvent;
+  "workflow_run.completed": WorkflowRunCompletedEvent;
+  "workflow_run.requested": WorkflowRunRequestedEvent;
 }
-
-export type WebhookEvents = keyof EventTypesPayload;

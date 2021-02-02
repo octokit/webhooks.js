@@ -1,9 +1,12 @@
+import { EventPayloadMap } from "@octokit/webhooks-definitions/schema";
 import { verify } from "../verify/index";
-import { State, WebhookEvent } from "../types";
+import { State, EmitterWebhookEventMap } from "../types";
+
+export type WebhookEventName = keyof EventPayloadMap;
 
 export function verifyAndReceive(
   state: State,
-  event: WebhookEvent & { signature: string }
+  event: EmitterWebhookEventMap[WebhookEventName] & { signature: string }
 ): any {
   // verify will validate that the secret is not undefined
   const matchesSignature = verify(

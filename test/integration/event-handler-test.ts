@@ -1,7 +1,6 @@
 import { createEventHandler } from "../../src/event-handler";
-import pushEventPayload from "../fixtures/push-payload.json";
-import installationCreatedPayload from "../fixtures/installation-created-payload.json";
-import { WebhookEvent, WebhookEventHandlerError } from "../../src/types";
+import { EmitterWebhookEvent, WebhookEventHandlerError } from "../../src/types";
+import { installationCreatedPayload, pushEventPayload } from "../fixtures";
 
 test("events", (done) => {
   const eventHandler = createEventHandler({});
@@ -27,7 +26,7 @@ test("events", (done) => {
   function hook6() {
     hooksCalled.push("installation.created");
   }
-  function hook7(event: WebhookEvent) {
+  function hook7(event: EmitterWebhookEvent) {
     hooksCalled.push(`* (${event.name})`);
   }
 
@@ -41,6 +40,8 @@ test("events", (done) => {
 
   eventHandler.removeListener("push", hook3);
   eventHandler.removeListener(["push"], hook4);
+  // @ts-expect-error TS2345:
+  //  Argument of type '"unknown"' is not assignable to parameter of type ...
   eventHandler.removeListener("unknown", () => {});
 
   eventHandler
@@ -110,7 +111,7 @@ test("options.transform", (done) => {
     },
   });
 
-  eventHandler.on("push", (event: WebhookEvent) => {
+  eventHandler.on("push", (event: EmitterWebhookEvent) => {
     expect(event).toBe("funky");
 
     done();
@@ -130,7 +131,7 @@ test("async options.transform", (done) => {
     },
   });
 
-  eventHandler.on("push", (event: WebhookEvent) => {
+  eventHandler.on("push", (event: EmitterWebhookEvent) => {
     expect(event).toBe("funky");
     done();
   });

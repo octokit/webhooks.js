@@ -6,33 +6,78 @@ import {
   sign,
   verify,
   EventPayloads,
-  WebhookEvent,
+  EmitterWebhookEvent,
   WebhookError,
   WebhookEvents,
 } from "../src/index";
 import { createServer } from "http";
+import { HandlerFunction, EmitterWebhookEventName } from "../src/types";
 
 // ************************************************************
 // THIS CODE IS NOT EXECUTED. IT IS FOR TYPECHECKING ONLY
 // ************************************************************
 
-const myWebhook: WebhookEvent<{ foo: string }> = {
-  id: "123",
-  name: "check_run",
-  payload: {
-    foo: "bar",
-  },
+const fn = (webhookEvent: EmitterWebhookEvent) => {
+  if (webhookEvent.name === "*") {
+    if (
+      "action" in webhookEvent.payload &&
+      webhookEvent.payload.action === "completed"
+    ) {
+      console.log(webhookEvent.payload.sender);
+    }
+  }
+  if (webhookEvent.name === "check_run.completed") {
+    console.log(webhookEvent.payload.action);
+  }
+
+  if (webhookEvent.name === "*") {
+    // @ts-expect-error TS2339:
+    //  Property 'action' does not exist on type 'Schema'.
+    //    Property 'action' does not exist on type 'CreateEvent'.
+    console.log(webhookEvent.payload.action);
+  }
 };
+
+declare const on: <E extends EmitterWebhookEventName>(
+  name: E | E[],
+  callback: HandlerFunction<E, unknown>
+) => void;
+
+on(["check_run.completed", "code_scanning_alert.fixed"], (event) => {
+  if (event.payload.action === "fixed") {
+    console.log("an alert was fixed!");
+  }
+
+  if (event.payload.action === "completed") {
+    console.log("a run was completed!");
+  }
+});
+
+on("code_scanning_alert.fixed", (event) => {
+  if (event.payload.action === "fixed") {
+    console.log("an alert was fixed!");
+  }
+
+  // @ts-expect-error TS2367:
+  //  This condition will always return 'false' since the types '"fixed"' and '"completed"' have no overlap.
+  if (event.payload.action === "completed") {
+    console.log("a run was completed!");
+  }
+
+  fn(event);
+});
 
 const myEventName: WebhookEvents = "check_run.completed";
 
-const myEvenTPayload: EventPayloads.WebhookPayloadCheckRunCheckRunOutput = {
+const myEventPayload: EventPayloads.WebhookPayloadCheckRunCheckRunOutput = {
   annotations_count: 0,
   annotations_url: "",
   summary: "",
   text: "",
   title: "",
 };
+
+console.log(myEventName, myEventPayload);
 
 export default async function () {
   // Check empty constructor
@@ -44,7 +89,7 @@ export default async function () {
   });
 
   // Check all supported options
-  const webhooks = new Webhooks<WebhookEvent, { foo: string }>({
+  const webhooks = new Webhooks<EmitterWebhookEvent, { foo: string }>({
     secret: "bleh",
     path: "/webhooks",
     transform: (event) => {
@@ -74,13 +119,13 @@ export default async function () {
 
   // This is deprecated usage
   webhooks.on("*", ({ id, name, payload }) => {
-    console.log(name, "event received");
+    console.log(name, "event received", id);
     const sig = webhooks.sign(payload);
     webhooks.verify(payload, sig);
   });
 
   webhooks.onAny(({ id, name, payload }) => {
-    console.log(name, "event received");
+    console.log(name, "event received", id);
     const sig = webhooks.sign(payload);
     webhooks.verify(payload, sig);
   });
@@ -132,6 +177,13 @@ export default async function () {
   webhooks.on("issues", (event) => {
     // foo is set by options.transform
     console.log(event.foo);
+  });
+
+  // @ts-expect-error TS2345:
+  //  Argument of type '"does_not_exist"' is not assignable to parameter of type ...
+  webhooks.on("does_not_exist", (what) => {
+    // this works because we pass a transform that adds foo to all events
+    console.log(what.foo);
   });
 
   // This is deprecated usage
