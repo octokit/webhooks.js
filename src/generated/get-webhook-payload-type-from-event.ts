@@ -124,6 +124,8 @@ import {
   PublicEvent,
   PullRequestEvent,
   PullRequestAssignedEvent,
+  PullRequestAutoMergeDisabledEvent,
+  PullRequestAutoMergeEnabledEvent,
   PullRequestClosedEvent,
   PullRequestConvertedToDraftEvent,
   PullRequestEditedEvent,
@@ -329,6 +331,8 @@ export interface EmitterEventWebhookPayloadMap {
   public: PublicEvent;
   pull_request: PullRequestEvent;
   "pull_request.assigned": PullRequestAssignedEvent;
+  "pull_request.auto_merge_disabled": PullRequestAutoMergeDisabledEvent;
+  "pull_request.auto_merge_enabled": PullRequestAutoMergeEnabledEvent;
   "pull_request.closed": PullRequestClosedEvent;
   "pull_request.converted_to_draft": PullRequestConvertedToDraftEvent;
   "pull_request.edited": PullRequestEditedEvent;
