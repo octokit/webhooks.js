@@ -1,8 +1,6 @@
 // @ts-ignore to address #245
 import AggregateError from "aggregate-error";
-import { EmitterEventWebhookPayloadMap } from "../generated/get-webhook-payload-type-from-event";
 import {
-  EmitterEventName,
   EmitterWebhookEvent,
   State,
   WebhookError,
@@ -10,15 +8,10 @@ import {
 } from "../types";
 import { wrapErrorHandler } from "./wrap-error-handler";
 
-type EventAction = Extract<
-  EmitterEventWebhookPayloadMap[keyof EmitterEventWebhookPayloadMap],
-  { action: string }
->["action"];
-
 function getHooks(
   state: State,
-  eventPayloadAction: EventAction | null,
-  eventName: EmitterEventName
+  eventPayloadAction: unknown,
+  eventName: string
 ): Function[] {
   const hooks = [state.hooks[eventName], state.hooks["*"]];
 
@@ -30,7 +23,14 @@ function getHooks(
 }
 
 // main handler function
-export function receiverHandle(state: State, event: EmitterWebhookEvent) {
+export function receiverHandle(
+  state: State,
+  event: {
+    id: string | undefined;
+    name: string | undefined;
+    payload: unknown;
+  }
+) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {
@@ -54,7 +54,9 @@ export function receiverHandle(state: State, event: EmitterWebhookEvent) {
   // flatten arrays of event listeners and remove undefined values
   const hooks = getHooks(
     state,
-    "action" in event.payload ? event.payload.action : null,
+    typeof event.payload === "object" && "action" in event.payload!
+      ? (event.payload as { action: unknown }).action
+      : null,
     event.name
   );
 
@@ -64,7 +66,7 @@ export function receiverHandle(state: State, event: EmitterWebhookEvent) {
 
   const errors: WebhookError[] = [];
   const promises = hooks.map((handler: Function) => {
-    let promise = Promise.resolve(event);
+    let promise = Promise.resolve(event as EmitterWebhookEvent);
 
     if (state.transform) {
       promise = promise.then(state.transform);
