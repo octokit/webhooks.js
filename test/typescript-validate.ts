@@ -26,8 +26,10 @@ const fn = (webhookEvent: EmitterWebhookEvent) => {
       console.log(webhookEvent.payload.sender);
     }
   }
+  // @ts-expect-error TS2367:
+  //  This condition will always return 'false' since the types '"*" | "check_run" | ... many more ... | "workflow_run"' and '"check_run.completed"' have no overlap.
   if (webhookEvent.name === "check_run.completed") {
-    console.log(webhookEvent.payload.action);
+    //
   }
 
   if (webhookEvent.name === "*") {
@@ -167,6 +169,28 @@ export default async function () {
       console.log(payload.label.name);
     } else {
       console.log(payload.comment.body);
+    }
+  });
+
+  webhooks.on(["check_run.completed", "code_scanning_alert.fixed"], (event) => {
+    if (event.name === "check_run") {
+      console.log(`a run was ${event.payload.action}!`);
+
+      if (event.payload.action === "completed") {
+        console.log("it was the completed action, obviously!");
+      }
+
+      // @ts-expect-error TS2367:
+      //  This condition will always return 'false' since the types '"completed"' and '"created"' have no overlap.
+      if (event.payload.action === "created") {
+        //
+      }
+    }
+
+    // @ts-expect-error TS2367:
+    //  This condition will always return 'false' since the types '"check_run" | "code_scanning_alert"' and '"repository"' have no overlap.
+    if (event.name === "repository") {
+      //
     }
   });
 

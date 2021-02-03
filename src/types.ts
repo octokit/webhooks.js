@@ -23,11 +23,17 @@ export type EmitterEvent = EmitterEventMap[EmitterEventName];
 
 export type EmitterAnyEvent = EmitterWebhookEventMap["*"];
 
+export type ToWebhookEvent<
+  TEmitterEvent extends string
+> = TEmitterEvent extends `${infer TWebhookEvent}.${string}`
+  ? TWebhookEvent
+  : TEmitterEvent;
+
 interface BaseWebhookEvent<
   TName extends keyof EmitterEventPayloadMap = keyof EmitterEventPayloadMap
 > {
   id: string;
-  name: TName;
+  name: ToWebhookEvent<TName>;
   payload: EmitterEventPayloadMap[TName];
 }
 
