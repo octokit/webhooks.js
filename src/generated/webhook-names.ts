@@ -126,6 +126,8 @@ export const emitterEventNames = [
   "public",
   "pull_request",
   "pull_request.assigned",
+  "pull_request.auto_merge_disabled",
+  "pull_request.auto_merge_enabled",
   "pull_request.closed",
   "pull_request.converted_to_draft",
   "pull_request.edited",
