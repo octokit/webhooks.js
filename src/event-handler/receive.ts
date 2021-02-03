@@ -26,8 +26,8 @@ function getHooks(
 export function receiverHandle(
   state: State,
   event: {
-    id: string | undefined;
-    name: string | undefined;
+    id: string;
+    name: string;
     payload: unknown;
   }
 ) {

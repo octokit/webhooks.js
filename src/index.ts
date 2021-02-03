@@ -38,8 +38,8 @@ class Webhooks<
     callback: HandlerFunction<E, TTransformed>
   ) => void;
   public receive: (options: {
-    id: string | undefined;
-    name: string | undefined;
+    id: string;
+    name: string;
     payload: unknown;
   }) => Promise<void>;
   public middleware: (
