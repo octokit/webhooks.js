@@ -1,6 +1,6 @@
 import {
   removeListener,
-  removeListeners,
+  removeAllListeners,
 } from "../../src/event-handler/remove-listener";
 import { State } from "../../src/types";
 
@@ -39,7 +39,7 @@ test("remove-listener: multiple listeners", () => {
   expect(state).toStrictEqual({ hooks: { push: [], ping: [ping] } });
 });
 
-test("remove-listeners: single event", () => {
+test("remove-all-listeners: single event", () => {
   const push = () => {};
 
   const state: State = {
@@ -48,11 +48,11 @@ test("remove-listeners: single event", () => {
     },
   };
 
-  expect(() => removeListeners(state, "push")).not.toThrow();
+  expect(() => removeAllListeners(state, "push")).not.toThrow();
   expect(state).toStrictEqual({ hooks: { push: [] } });
 });
 
-test("remove-listeners: multiple events", () => {
+test("remove-all-listeners: multiple events", () => {
   const push = () => {};
   const status = () => {};
 
@@ -63,14 +63,14 @@ test("remove-listeners: multiple events", () => {
     },
   };
 
-  expect(() => removeListeners(state, ["push", "status"])).not.toThrow();
+  expect(() => removeAllListeners(state, ["push", "status"])).not.toThrow();
   expect(state).toStrictEqual({ hooks: { push: [], status: [] } });
 });
 
-test("remove-listeners: event with no listeners", () => {
+test("remove-all-listeners: event with no listeners", () => {
   const state: State = {
     hooks: {},
   };
 
-  expect(() => removeListeners(state, "push")).not.toThrow();
+  expect(() => removeAllListeners(state, "push")).not.toThrow();
 });

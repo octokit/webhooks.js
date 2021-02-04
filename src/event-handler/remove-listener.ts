@@ -26,13 +26,13 @@ export function removeListener(
   }
 }
 
-export function removeListeners(
+export function removeAllListeners(
   state: State,
   webhookNameOrNames: EmitterEventName | EmitterEventName[]
 ) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>
-      removeListeners(state, webhookName)
+      removeAllListeners(state, webhookName)
     );
     return;
   }

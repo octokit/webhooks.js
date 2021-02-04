@@ -13,7 +13,7 @@ import {
   receiverOnError as onError,
 } from "./on";
 import { receiverHandle as receive } from "./receive";
-import { removeListener, removeListeners } from "./remove-listener";
+import { removeListener, removeAllListeners } from "./remove-listener";
 
 interface EventHandler<TTransformed = unknown> {
   on<E extends EmitterEventName>(
@@ -26,7 +26,7 @@ interface EventHandler<TTransformed = unknown> {
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
   ): void;
-  removeListeners<E extends EmitterEventName>(event: E | E[]): void;
+  removeAllListeners<E extends EmitterEventName>(event: E | E[]): void;
   receive(event: EmitterWebhookEvent): Promise<void>;
 }
 
@@ -44,7 +44,7 @@ export function createEventHandler(options: Options<any>): EventHandler {
     onAny: onAny.bind(null, state),
     onError: onError.bind(null, state),
     removeListener: removeListener.bind(null, state),
-    removeListeners: removeListeners.bind(null, state),
+    removeAllListeners: removeAllListeners.bind(null, state),
     receive: receive.bind(null, state),
   };
 }
