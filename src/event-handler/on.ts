@@ -1,6 +1,6 @@
 import { emitterEventNames } from "../generated/webhook-names";
 import {
-  EmitterAnyEvent,
+  EmitterWebhookEvent,
   EmitterEventName,
   State,
   WebhookEventHandlerError,
@@ -49,7 +49,7 @@ export function receiverOn(
 
 export function receiverOnAny(
   state: State,
-  handler: (event: EmitterAnyEvent) => any
+  handler: (event: EmitterWebhookEvent) => any
 ) {
   handleEventHandlers(state, "*", handler);
 }

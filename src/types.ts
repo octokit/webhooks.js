@@ -31,8 +31,6 @@ export type EmitterEventMap = EmitterWebhookEventMap & {
 };
 export { EmitterEventName };
 
-export type EmitterAnyEvent = EmitterWebhookEventMap["*"];
-
 interface BaseWebhookEvent<TName extends keyof EmitterEventPayloadMap> {
   id: string;
   name: TName;
