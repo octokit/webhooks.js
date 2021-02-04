@@ -209,3 +209,4 @@ export const emitterEventNames = [
   "workflow_run.completed",
   "workflow_run.requested",
 ] as const;
+export type EmitterEventName = typeof emitterEventNames[number];

@@ -183,6 +183,7 @@ const run = () => {
     '"error",',
     ...properties.map(([key]) => `"${key}",`),
     "] as const;",
+    "export type EmitterEventName = typeof emitterEventNames[number];",
   ]);
 
   updateReadme(properties.map(([key]) => key));

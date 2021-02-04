@@ -3,19 +3,20 @@ import type {
   EventPayloadMap,
   Schema,
 } from "@octokit/webhooks-definitions/schema";
-import type { emitterEventNames } from "./generated/webhook-names";
+import type { EmitterEventName } from "./generated/webhook-names";
 
 type EmitterEventPayloadMap = { "*": Schema } & EventPayloadMap;
 
+type WithAction<
+  TEmitterEvent
+> = TEmitterEvent extends `${infer TWebhookEvent}.${infer TAction}`
+  ? BaseWebhookEvent<Extract<TWebhookEvent, keyof EmitterEventPayloadMap>> & {
+      payload: { action: TAction };
+    }
+  : BaseWebhookEvent<Extract<TEmitterEvent, keyof EmitterEventPayloadMap>>;
+
 export type EmitterWebhookEventMap = {
-  [K in Exclude<
-    typeof emitterEventNames[number],
-    "error"
-  >]: K extends `${infer TWebhookEvent}.${infer TAction}`
-    ? BaseWebhookEvent<Extract<TWebhookEvent, keyof EmitterEventPayloadMap>> & {
-        payload: { action: TAction };
-      }
-    : BaseWebhookEvent<Extract<K, keyof EmitterEventPayloadMap>>;
+  [K in Exclude<EmitterEventName, "error">]: WithAction<K>;
 };
 
 export type EmitterWebhookEventName = keyof EmitterWebhookEventMap;
@@ -28,8 +29,7 @@ export type EmitterWebhookEvent = EmitterWebhookEventMap[EmitterWebhookEventName
 export type EmitterEventMap = EmitterWebhookEventMap & {
   error: WebhookEventHandlerError;
 };
-export type EmitterEventName = keyof EmitterEventMap;
-export type EmitterEvent = EmitterEventMap[EmitterEventName];
+export { EmitterEventName };
 
 export type EmitterAnyEvent = EmitterWebhookEventMap["*"];
 
