@@ -91,7 +91,7 @@ export default async function () {
   });
 
   // Check all supported options
-  const webhooks = new Webhooks<EmitterWebhookEvent, { foo: string }>({
+  const webhooks = new Webhooks({
     secret: "bleh",
     path: "/webhooks",
     transform: (event) => {
