@@ -37,7 +37,9 @@ class Webhooks<
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
   ) => void;
-  public removeAllListeners: <E extends EmitterEventName>(event: E | E[]) => void;
+  public removeAllListeners: <E extends EmitterEventName>(
+    event: E | E[]
+  ) => void;
   public receive: (event: EmitterWebhookEvent) => Promise<void>;
   public middleware: (
     request: IncomingMessage,
