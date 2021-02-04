@@ -8,7 +8,6 @@ import {
 } from "./middleware/verify-and-receive";
 import { sign } from "./sign/index";
 import {
-  EmitterAnyEvent,
   EmitterEventName,
   EmitterWebhookEvent,
   EmitterWebhookEventMap,
@@ -31,7 +30,7 @@ class Webhooks<
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
   ) => void;
-  public onAny: (callback: (event: EmitterAnyEvent) => any) => void;
+  public onAny: (callback: (event: EmitterWebhookEvent) => any) => void;
   public onError: (callback: (event: WebhookEventHandlerError) => any) => void;
   public removeListener: <E extends EmitterEventName>(
     event: E | E[],
