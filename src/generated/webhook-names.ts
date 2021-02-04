@@ -208,4 +208,4 @@ export const emitterEventNames = [
   "workflow_run",
   "workflow_run.completed",
   "workflow_run.requested",
-];
+] as const;

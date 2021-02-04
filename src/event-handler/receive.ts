@@ -1,6 +1,5 @@
 // @ts-ignore to address #245
 import AggregateError from "aggregate-error";
-import { EmitterEventWebhookPayloadMap } from "../generated/get-webhook-payload-type-from-event";
 import {
   EmitterEventName,
   EmitterWebhookEvent,
@@ -11,8 +10,8 @@ import {
 import { wrapErrorHandler } from "./wrap-error-handler";
 
 type EventAction = Extract<
-  EmitterEventWebhookPayloadMap[keyof EmitterEventWebhookPayloadMap],
-  { action: string }
+  EmitterWebhookEvent["payload"],
+  { action: any }
 >["action"];
 
 function getHooks(

@@ -172,22 +172,8 @@ const updateReadme = (properties: string[]) => {
 };
 
 const run = () => {
-  const [imports, properties] = getImportsAndProperties();
+  const [, properties] = getImportsAndProperties();
 
-  const lines: string[] = [
-    "// THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY",
-    "// make edits in scripts/generate-types.ts",
-    "",
-    "import {",
-    ...imports.map((str) => `  ${str},`),
-    '} from "@octokit/webhooks-definitions/schema";',
-    "",
-    "export interface EmitterEventWebhookPayloadMap {",
-    ...properties.map(([key, value]) => `"${key}": ${value}`),
-    "}",
-  ];
-
-  generateTypeScriptFile("get-webhook-payload-type-from-event", lines);
   generateTypeScriptFile("webhook-names", [
     "// THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY",
     "// make edits in scripts/generate-types.ts",
@@ -196,7 +182,7 @@ const run = () => {
     '"*",',
     '"error",',
     ...properties.map(([key]) => `"${key}",`),
-    "];",
+    "] as const;",
   ]);
 
   updateReadme(properties.map(([key]) => key));

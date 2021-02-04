@@ -1,11 +1,21 @@
 import type { RequestError } from "@octokit/request-error";
-import type { Schema } from "@octokit/webhooks-definitions/schema";
-import type { EmitterEventWebhookPayloadMap } from "./generated/get-webhook-payload-type-from-event";
+import type {
+  EventPayloadMap,
+  Schema,
+} from "@octokit/webhooks-definitions/schema";
+import type { emitterEventNames } from "./generated/webhook-names";
 
-type EmitterEventPayloadMap = { "*": Schema } & EmitterEventWebhookPayloadMap;
+type EmitterEventPayloadMap = { "*": Schema } & EventPayloadMap;
 
 export type EmitterWebhookEventMap = {
-  [K in keyof EmitterEventPayloadMap]: BaseWebhookEvent<K>;
+  [K in Exclude<
+    typeof emitterEventNames[number],
+    "error"
+  >]: K extends `${infer TWebhookEvent}.${infer TAction}`
+    ? BaseWebhookEvent<Extract<TWebhookEvent, keyof EmitterEventPayloadMap>> & {
+        payload: { action: TAction };
+      }
+    : BaseWebhookEvent<Extract<K, keyof EmitterEventPayloadMap>>;
 };
 
 export type EmitterWebhookEventName = keyof EmitterWebhookEventMap;
@@ -23,17 +33,9 @@ export type EmitterEvent = EmitterEventMap[EmitterEventName];
 
 export type EmitterAnyEvent = EmitterWebhookEventMap["*"];
 
-export type ToWebhookEvent<
-  TEmitterEvent extends string
-> = TEmitterEvent extends `${infer TWebhookEvent}.${string}`
-  ? TWebhookEvent
-  : TEmitterEvent;
-
-interface BaseWebhookEvent<
-  TName extends keyof EmitterEventPayloadMap = keyof EmitterEventPayloadMap
-> {
+interface BaseWebhookEvent<TName extends keyof EmitterEventPayloadMap> {
   id: string;
-  name: ToWebhookEvent<TName>;
+  name: TName;
   payload: EmitterEventPayloadMap[TName];
 }
 
