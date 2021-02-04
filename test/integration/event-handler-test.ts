@@ -40,9 +40,14 @@ test("events", (done) => {
 
   eventHandler.removeListener("push", hook3);
   eventHandler.removeListener(["push"], hook4);
+  eventHandler.removeListeners("push");
+  eventHandler.removeListeners(["push"]);
   // @ts-expect-error TS2345:
   //  Argument of type '"unknown"' is not assignable to parameter of type ...
   eventHandler.removeListener("unknown", () => {});
+  // @ts-expect-error TS2345:
+  //  Argument of type '"unknown"' is not assignable to parameter of type ...
+  eventHandler.removeListeners("unknown");
 
   eventHandler
     .receive({
