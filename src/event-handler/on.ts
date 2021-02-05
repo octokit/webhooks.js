@@ -1,14 +1,14 @@
 import { emitterEventNames } from "../generated/webhook-names";
 import {
-  EmitterEventName,
   EmitterWebhookEvent,
+  EmitterWebhookEventName,
   State,
   WebhookEventHandlerError,
 } from "../types";
 
 function handleEventHandlers(
   state: State,
-  webhookName: EmitterEventName | "error" | "*",
+  webhookName: EmitterWebhookEventName | "error" | "*",
   handler: Function
 ) {
   if (!state.hooks[webhookName]) {
@@ -19,7 +19,7 @@ function handleEventHandlers(
 }
 export function receiverOn(
   state: State,
-  webhookNameOrNames: EmitterEventName | EmitterEventName[],
+  webhookNameOrNames: EmitterWebhookEventName | EmitterWebhookEventName[],
   handler: Function
 ) {
   if (Array.isArray(webhookNameOrNames)) {

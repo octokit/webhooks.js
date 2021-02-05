@@ -5,10 +5,8 @@ import {
   createWebhooksApi,
   sign,
   verify,
-  EventPayloads,
   EmitterWebhookEvent,
   WebhookError,
-  WebhookEvents,
 } from "../src/index";
 import { createServer } from "http";
 import { HandlerFunction, EmitterWebhookEventName } from "../src/types";
@@ -51,20 +49,14 @@ on("code_scanning_alert.fixed", (event) => {
     console.log("a run was completed!");
   }
 
+  // @ts-expect-error TS2367:
+  //  This condition will always return 'false' since the types '"fixed"' and '"completed"' have no overlap.
+  if (event.payload.action === "random-string") {
+    console.log("a run was completed!");
+  }
+
   fn(event);
 });
-
-const myEventName: WebhookEvents = "check_run.completed";
-
-const myEventPayload: EventPayloads.WebhookPayloadCheckRunCheckRunOutput = {
-  annotations_count: 0,
-  annotations_url: "",
-  summary: "",
-  text: "",
-  title: "",
-};
-
-console.log(myEventName, myEventPayload);
 
 export default async function () {
   // Check empty constructor
@@ -76,7 +68,7 @@ export default async function () {
   });
 
   // Check all supported options
-  const webhooks = new Webhooks<EmitterWebhookEvent, { foo: string }>({
+  const webhooks = new Webhooks({
     secret: "bleh",
     path: "/webhooks",
     transform: (event) => {

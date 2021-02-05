@@ -1,4 +1,4 @@
-import { EventPayloadMap } from "@octokit/webhooks-definitions/schema";
+import { WebhookEventName } from "@octokit/webhooks-definitions/schema";
 import { isntWebhook } from "./isnt-webhook";
 import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
@@ -6,8 +6,6 @@ import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
 import { State, WebhookEventHandlerError } from "../types";
-
-export type WebhookEventName = keyof EventPayloadMap;
 
 const debugWebhooks = debug("webhooks:receiver");
 

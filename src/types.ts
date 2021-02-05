@@ -1,41 +1,34 @@
 import type { RequestError } from "@octokit/request-error";
 import type { EmitterEventWebhookPayloadMap } from "./generated/get-webhook-payload-type-from-event";
 
-type EmitterEventPayloadMap = EmitterEventWebhookPayloadMap;
-
 export type EmitterWebhookEventMap = {
-  [K in keyof EmitterEventPayloadMap]: BaseWebhookEvent<K>;
+  [K in keyof EmitterEventWebhookPayloadMap]: BaseWebhookEvent<K>;
 };
 
 export type EmitterWebhookEventName = keyof EmitterWebhookEventMap;
 export type EmitterWebhookEvent = EmitterWebhookEventMap[EmitterWebhookEventName];
 
-/**
- * A map of all possible emitter events to their event type.
- * AKA "if the emitter emits x, the handler will be passed y"
- */
-export type EmitterEventMap = EmitterWebhookEventMap;
-export type EmitterEventName = keyof EmitterEventMap;
-export type EmitterEvent = EmitterEventMap[EmitterEventName];
-
-export type ToWebhookEvent<
+type ToWebhookEvent<
   TEmitterEvent extends string
 > = TEmitterEvent extends `${infer TWebhookEvent}.${string}`
   ? TWebhookEvent
   : TEmitterEvent;
 
 interface BaseWebhookEvent<
-  TName extends keyof EmitterEventPayloadMap = keyof EmitterEventPayloadMap
+  TName extends EmitterWebhookEventName = EmitterWebhookEventName
 > {
   id: string;
   name: ToWebhookEvent<TName>;
-  payload: EmitterEventPayloadMap[TName];
+  payload: EmitterEventWebhookPayloadMap[TName];
 }
 
-export interface Options<T extends EmitterWebhookEvent> {
+export interface Options<
+  T extends EmitterWebhookEvent,
+  TTransformed = unknown
+> {
   path?: string;
   secret?: string;
-  transform?: TransformMethod<T>;
+  transform?: TransformMethod<T, TTransformed>;
 }
 
 type TransformMethod<T extends EmitterWebhookEvent, V = T> = (
@@ -46,11 +39,11 @@ type EnsureArray<T> = T extends any[] ? T : [T];
 // type MaybeArray<T> = T | T[];
 
 export type HandlerFunction<
-  TName extends EmitterEventName | EmitterEventName[],
+  TName extends EmitterWebhookEventName | EmitterWebhookEventName[],
   TTransformed
 > = (
-  event: EmitterEventMap[Extract<
-    EmitterEventName,
+  event: EmitterWebhookEventMap[Extract<
+    EmitterWebhookEventName,
     EnsureArray<TName>[number]
   >] &
     TTransformed

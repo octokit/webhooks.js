@@ -1,6 +1,6 @@
 import type {
-  EmitterEventName,
   EmitterWebhookEvent,
+  EmitterWebhookEventName,
   HandlerFunction,
   Options,
   State,
@@ -15,13 +15,13 @@ import { receiverHandle as receive } from "./receive";
 import { removeListener } from "./remove-listener";
 
 interface EventHandler<TTransformed = unknown> {
-  on<E extends EmitterEventName>(
+  on<E extends EmitterWebhookEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
   ): void;
   onAny(handler: (event: EmitterWebhookEvent) => any): void;
   onError(handler: (event: WebhookEventHandlerError) => any): void;
-  removeListener<E extends EmitterEventName>(
+  removeListener<E extends EmitterWebhookEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
   ): void;

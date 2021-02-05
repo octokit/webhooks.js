@@ -1,16 +1,14 @@
+import type { WebhookEventName } from "@octokit/webhooks-definitions/schema";
 import { IncomingMessage, ServerResponse } from "http";
 import { createEventHandler } from "./event-handler/index";
 import { createMiddleware } from "./middleware/index";
 import { middleware } from "./middleware/middleware";
-import {
-  verifyAndReceive,
-  WebhookEventName,
-} from "./middleware/verify-and-receive";
+import { verifyAndReceive } from "./middleware/verify-and-receive";
 import { sign } from "./sign/index";
 import {
-  EmitterEventName,
   EmitterWebhookEvent,
   EmitterWebhookEventMap,
+  EmitterWebhookEventName,
   HandlerFunction,
   Options,
   State,
@@ -26,13 +24,13 @@ class Webhooks<
 > {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload: string | object, signature: string) => boolean;
-  public on: <E extends EmitterEventName>(
+  public on: <E extends EmitterWebhookEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
   ) => void;
   public onAny: (callback: (event: EmitterWebhookEvent) => any) => void;
   public onError: (callback: (event: WebhookEventHandlerError) => any) => void;
-  public removeListener: <E extends EmitterEventName>(
+  public removeListener: <E extends EmitterWebhookEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
   ) => void;
@@ -46,7 +44,7 @@ class Webhooks<
     options: EmitterWebhookEventMap[WebhookEventName] & { signature: string }
   ) => Promise<void>;
 
-  constructor(options?: Options<E>) {
+  constructor(options?: Options<E, TTransformed>) {
     if (!options || !options.secret) {
       throw new Error("[@octokit/webhooks] options.secret required");
     }
@@ -71,13 +69,6 @@ class Webhooks<
 }
 
 const createWebhooksApi = Webhooks.prototype.constructor;
-
-export {
-  EmitterEventMap,
-  EmitterEventName,
-  EmitterEventMap as EventTypesPayload,
-  EmitterEventName as WebhookEvents,
-} from "./types";
 
 export {
   createEventHandler,

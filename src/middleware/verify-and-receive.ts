@@ -1,8 +1,6 @@
-import { EventPayloadMap } from "@octokit/webhooks-definitions/schema";
+import { WebhookEventName } from "@octokit/webhooks-definitions/schema";
+import { EmitterWebhookEventMap, State } from "../types";
 import { verify } from "../verify/index";
-import { State, EmitterWebhookEventMap } from "../types";
-
-export type WebhookEventName = keyof EventPayloadMap;
 
 export function verifyAndReceive(
   state: State,
