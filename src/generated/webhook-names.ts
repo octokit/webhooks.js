@@ -2,7 +2,6 @@
 // make edits in scripts/generate-types.ts
 
 export const emitterEventNames = [
-  "*",
   "check_run",
   "check_run.completed",
   "check_run.created",

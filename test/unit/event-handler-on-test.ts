@@ -21,14 +21,3 @@ test("receiver.on with invalid event name", () => {
     '"foo" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)'
   );
 });
-
-test("receiver.on with event name of '*' logs deprecation notice", () => {
-  const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(noop);
-
-  receiverOn(state, "*", noop);
-
-  expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
-  expect(consoleWarnSpy).toHaveBeenLastCalledWith(
-    'Using the "*" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.onAny() method instead'
-  );
-});

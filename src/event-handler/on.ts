@@ -1,14 +1,14 @@
 import { emitterEventNames } from "../generated/webhook-names";
 import {
-  EmitterAnyEvent,
   EmitterEventName,
+  EmitterWebhookEvent,
   State,
   WebhookEventHandlerError,
 } from "../types";
 
 function handleEventHandlers(
   state: State,
-  webhookName: EmitterEventName | "error",
+  webhookName: EmitterEventName | "error" | "*",
   handler: Function
 ) {
   if (!state.hooks[webhookName]) {
@@ -35,18 +35,12 @@ export function receiverOn(
     );
   }
 
-  if (webhookNameOrNames === "*") {
-    console.warn(
-      `Using the "${webhookNameOrNames}" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.onAny() method instead`
-    );
-  }
-
   handleEventHandlers(state, webhookNameOrNames, handler);
 }
 
 export function receiverOnAny(
   state: State,
-  handler: (event: EmitterAnyEvent) => any
+  handler: (event: EmitterWebhookEvent) => any
 ) {
   handleEventHandlers(state, "*", handler);
 }

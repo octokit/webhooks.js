@@ -18,25 +18,10 @@ import { HandlerFunction, EmitterWebhookEventName } from "../src/types";
 // ************************************************************
 
 const fn = (webhookEvent: EmitterWebhookEvent) => {
-  if (webhookEvent.name === "*") {
-    if (
-      "action" in webhookEvent.payload &&
-      webhookEvent.payload.action === "completed"
-    ) {
-      console.log(webhookEvent.payload.sender);
-    }
-  }
   // @ts-expect-error TS2367:
-  //  This condition will always return 'false' since the types '"*" | "check_run" | ... many more ... | "workflow_run"' and '"check_run.completed"' have no overlap.
+  //  This condition will always return 'false' since the types '"check_run" | ... many more ... | "workflow_run"' and '"check_run.completed"' have no overlap.
   if (webhookEvent.name === "check_run.completed") {
     //
-  }
-
-  if (webhookEvent.name === "*") {
-    // @ts-expect-error TS2339:
-    //  Property 'action' does not exist on type 'Schema'.
-    //    Property 'action' does not exist on type 'CreateEvent'.
-    console.log(webhookEvent.payload.action);
   }
 };
 
@@ -118,13 +103,6 @@ export default async function () {
   sign({ secret: "randomSecret", algorithm: "sha256" }, {});
 
   verify("randomSecret", {}, "randomSignature");
-
-  // This is deprecated usage
-  webhooks.on("*", ({ id, name, payload }) => {
-    console.log(name, "event received", id);
-    const sig = webhooks.sign(payload);
-    webhooks.verify(payload, sig);
-  });
 
   webhooks.onAny(({ id, name, payload }) => {
     console.log(name, "event received", id);

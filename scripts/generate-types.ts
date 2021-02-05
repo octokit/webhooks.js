@@ -126,9 +126,8 @@ const asLink = (event: string): string => {
 const updateReadme = (properties: string[]) => {
   const headers = "| Event | Actions |";
 
-  const events = properties
-    .filter((property) => property !== "*")
-    .reduce<Record<string, string[]>>((events, property) => {
+  const events = properties.reduce<Record<string, string[]>>(
+    (events, property) => {
       console.log(property);
       const [event, action] = property.split(".");
 
@@ -139,7 +138,9 @@ const updateReadme = (properties: string[]) => {
       }
 
       return events;
-    }, {});
+    },
+    {}
+  );
 
   const rows = Object.entries(events).map(
     ([event, actions]) =>
@@ -193,7 +194,6 @@ const run = () => {
     "// make edits in scripts/generate-types.ts",
     "",
     "export const emitterEventNames = [",
-    '"*",',
     ...properties.map(([key]) => `"${key}",`),
     "];",
   ]);
