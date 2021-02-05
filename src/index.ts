@@ -72,7 +72,6 @@ class Webhooks<
 
 const createWebhooksApi = Webhooks.prototype.constructor;
 
-export { EventPayloads } from "./generated/event-payloads";
 export {
   EmitterEventMap,
   EmitterEventName,
