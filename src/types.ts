@@ -37,10 +37,10 @@ interface BaseWebhookEvent<
   payload: EmitterEventPayloadMap[TName];
 }
 
-export interface Options<T extends EmitterWebhookEvent> {
+export interface Options<T extends EmitterWebhookEvent, TTransformed> {
   path?: string;
   secret?: string;
-  transform?: TransformMethod<T>;
+  transform?: TransformMethod<T, TTransformed>;
 }
 
 type TransformMethod<T extends EmitterWebhookEvent, V = T> = (
@@ -65,7 +65,8 @@ type Hooks = {
   [key: string]: Function[];
 };
 
-export interface State extends Options<any> {
+export interface State<TTransformed = unknown>
+  extends Options<any, TTransformed> {
   eventHandler?: any;
   hooks: Hooks;
 }
