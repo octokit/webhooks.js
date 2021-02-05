@@ -2,6 +2,7 @@ import type { RequestError } from "@octokit/request-error";
 import type {
   EventPayloadMap,
   Schema,
+  WebhookEventName,
 } from "@octokit/webhooks-definitions/schema";
 import type { EmitterEventName } from "./generated/webhook-names";
 
@@ -20,7 +21,7 @@ export type EmitterWebhookEventMap = {
 };
 
 export type EmitterWebhookEventName = keyof EmitterWebhookEventMap;
-export type EmitterWebhookEvent = EmitterWebhookEventMap[EmitterWebhookEventName];
+export type EmitterWebhookEvent = EmitterWebhookEventMap[WebhookEventName];
 
 /**
  * A map of all possible emitter events to their event type.
