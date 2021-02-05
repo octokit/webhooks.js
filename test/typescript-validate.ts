@@ -11,7 +11,7 @@ import {
   WebhookEvents,
 } from "../src/index";
 import { createServer } from "http";
-import { HandlerFunction, EmitterWebhookEventName } from "../src/types";
+import { HandlerFunction, EmitterEventName } from "../src/types";
 
 // ************************************************************
 // THIS CODE IS NOT EXECUTED. IT IS FOR TYPECHECKING ONLY
@@ -25,7 +25,7 @@ const fn = (webhookEvent: EmitterWebhookEvent) => {
   }
 };
 
-declare const on: <E extends EmitterWebhookEventName>(
+declare const on: <E extends EmitterEventName>(
   name: E | E[],
   callback: HandlerFunction<E, unknown>
 ) => void;

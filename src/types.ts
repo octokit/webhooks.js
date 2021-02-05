@@ -6,31 +6,21 @@ import type {
 } from "@octokit/webhooks-definitions/schema";
 import type { EmitterEventName } from "./generated/webhook-names";
 
+export { EmitterEventName };
+
 type EmitterEventPayloadMap = { "*": Schema } & EventPayloadMap;
 
-type WithAction<
-  TEmitterEvent
+export type EmitterWebhookEvent<
+  TEmitterEvent = WebhookEventName
 > = TEmitterEvent extends `${infer TWebhookEvent}.${infer TAction}`
   ? BaseWebhookEvent<Extract<TWebhookEvent, keyof EmitterEventPayloadMap>> & {
       payload: { action: TAction };
     }
   : BaseWebhookEvent<Extract<TEmitterEvent, keyof EmitterEventPayloadMap>>;
 
-export type EmitterWebhookEventMap = {
-  [K in Exclude<EmitterEventName, "error">]: WithAction<K>;
-};
-
-export type EmitterWebhookEventName = keyof EmitterWebhookEventMap;
-export type EmitterWebhookEvent = EmitterWebhookEventMap[WebhookEventName];
-
-/**
- * A map of all possible emitter events to their event type.
- * AKA "if the emitter emits x, the handler will be passed y"
- */
-export type EmitterEventMap = EmitterWebhookEventMap & {
-  error: WebhookEventHandlerError;
-};
-export { EmitterEventName };
+type EmitterEvent<TEmitterEvent> = TEmitterEvent extends "error"
+  ? WebhookEventHandlerError
+  : EmitterWebhookEvent<TEmitterEvent>;
 
 interface BaseWebhookEvent<TName extends keyof EmitterEventPayloadMap> {
   id: string;
@@ -54,13 +44,7 @@ type EnsureArray<T> = T extends any[] ? T : [T];
 export type HandlerFunction<
   TName extends EmitterEventName | EmitterEventName[],
   TTransformed
-> = (
-  event: EmitterEventMap[Extract<
-    EmitterEventName,
-    EnsureArray<TName>[number]
-  >] &
-    TTransformed
-) => any;
+> = (event: EmitterEvent<EnsureArray<TName>[number]> & TTransformed) => any;
 
 type Hooks = {
   [key: string]: Function[];
