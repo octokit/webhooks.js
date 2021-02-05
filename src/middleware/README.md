@@ -16,6 +16,6 @@ require('http').createServer(middleware).listen(3000)
 
 ## API
 
-The `middleware` API implements [`.on()`](../#webhookson) and [`.removeListener()`](../#webhooksremovelistener).
+The `middleware` API implements [`.on()`](../../README.md#webhookson) and [`.removeListener()`](../../README.md#webhooksremovelistener).
 
-Back to [@octokit/webhooks README](..).
+Back to [@octokit/webhooks README](../../README.md).
