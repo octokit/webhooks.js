@@ -465,7 +465,7 @@ Asynchronous `error` event handler are not blocking the `.receive()` method from
       <strong>Required.</strong>
       Method to be run each time a webhook event handler throws an error or returns a promise that rejects.
       The <code>handler</code> function can be an async function,
-      return a Promise. The handler is called with an error object that has a .event property which hass all the information on the event: <code>{id, name, payload}</code>.
+      return a Promise. The handler is called with an error object that has a .event property which has all the information on the event: <code>{id, name, payload}</code>.
     </td>
   </tr>
 </table>

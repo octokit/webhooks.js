@@ -19,7 +19,7 @@ export function middleware(
     // the next callback is set when used as an express middleware. That allows
     // it to define custom routes like /my/custom/page while the webhooks are
     // expected to be sent to the / root path. Otherwise the root path would
-    // match all requests and would make it impossible to define custom rooutes
+    // match all requests and would make it impossible to define custom routes
     if (next) {
       next();
       return;

@@ -64,12 +64,12 @@ export default async function () {
 
   // Check that all options are optional except for secret
   new Webhooks({
-    secret: "bleh",
+    secret: "blah",
   });
 
   // Check all supported options
   const webhooks = new Webhooks({
-    secret: "bleh",
+    secret: "blah",
     path: "/webhooks",
     transform: (event) => {
       console.log(event.payload);
@@ -77,12 +77,12 @@ export default async function () {
     },
   });
 
-  // Check named expors of new API work
+  // Check named exports of new API work
   createWebhooksApi({
-    secret: "bleh",
+    secret: "blah",
   });
 
-  createEventHandler({ secret: "bleh" });
+  createEventHandler({ secret: "blah" });
 
   createMiddleware({
     secret: "mysecret",

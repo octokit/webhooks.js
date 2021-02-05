@@ -32,7 +32,7 @@ describe("when does a timeout on retrieving the payload", () => {
     jest.useFakeTimers();
   });
 
-  test("successfully, does NOT respone.end(ok)", async () => {
+  test("successfully, does NOT response.end(ok)", async () => {
     const responseMock = ({ end: jest.fn() } as unknown) as ServerResponse;
     const next = jest.fn();
 
@@ -61,7 +61,7 @@ describe("when does a timeout on retrieving the payload", () => {
     expect(responseMock.end).not.toHaveBeenCalledWith("ok\n");
   });
 
-  test("failing, does NOT respone.end(ok)", async () => {
+  test("failing, does NOT response.end(ok)", async () => {
     const responseMock = ({ end: jest.fn() } as unknown) as ServerResponse;
     const next = jest.fn();
 
