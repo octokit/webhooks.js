@@ -209,7 +209,6 @@ export function webhookErrorTest(error: WebhookError) {
 // ************************************************************
 
 export function webhookErrorTestDeprecated(error: WebhookError) {
-  const { event, request } = error;
-  console.log(event);
+  const { request } = error;
   console.log(request);
 }

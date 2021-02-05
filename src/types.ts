@@ -68,22 +68,11 @@ export interface State extends Options<any> {
 /**
  * Error object with optional poperties coming from `octokit.request` errors
  */
-export type WebhookError = Error &
-  Partial<RequestError> & {
-    /**
-     * @deprecated `error.event` is deprecated. Use the `.event` property on the aggregated error instance
-     */
-    event: EmitterWebhookEvent;
-  };
+export type WebhookError = Error & Partial<RequestError>;
 
 // todo: rename to "EmitterErrorEvent"
 export interface WebhookEventHandlerError extends AggregateError<WebhookError> {
   event: EmitterWebhookEvent;
-
-  /**
-   * @deprecated `error.errors` is deprecated. Use `Array.from(error)`. See https://npm.im/aggregate-error
-   */
-  errors: WebhookError[];
 }
 
 /**
