@@ -2,15 +2,11 @@ import { IncomingMessage, ServerResponse } from "http";
 import { createEventHandler } from "./event-handler/index";
 import { createMiddleware } from "./middleware/index";
 import { middleware } from "./middleware/middleware";
-import {
-  verifyAndReceive,
-  WebhookEventName,
-} from "./middleware/verify-and-receive";
+import { verifyAndReceive } from "./middleware/verify-and-receive";
 import { sign } from "./sign/index";
 import {
   EmitterEventName,
   EmitterWebhookEvent,
-  EmitterWebhookEventMap,
   HandlerFunction,
   Options,
   State,
@@ -43,7 +39,7 @@ class Webhooks<
     next?: (err?: any) => void
   ) => void | Promise<void>;
   public verifyAndReceive: (
-    options: EmitterWebhookEventMap[WebhookEventName] & { signature: string }
+    options: EmitterWebhookEvent & { signature: string }
   ) => Promise<void>;
 
   constructor(options?: Options<E>) {
