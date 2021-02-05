@@ -3,7 +3,6 @@
 
 export const emitterEventNames = [
   "*",
-  "error",
   "check_run",
   "check_run.completed",
   "check_run.created",

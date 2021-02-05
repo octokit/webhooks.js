@@ -8,7 +8,7 @@ import {
 
 function handleEventHandlers(
   state: State,
-  webhookName: EmitterEventName,
+  webhookName: EmitterEventName | "error",
   handler: Function
 ) {
   if (!state.hooks[webhookName]) {
@@ -35,12 +35,9 @@ export function receiverOn(
     );
   }
 
-  if (webhookNameOrNames === "*" || webhookNameOrNames === "error") {
-    const webhookName = webhookNameOrNames === "*" ? "any" : webhookNameOrNames;
+  if (webhookNameOrNames === "*") {
     console.warn(
-      `Using the "${webhookNameOrNames}" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.on${
-        webhookName.charAt(0).toUpperCase() + webhookName.slice(1)
-      }() method instead`
+      `Using the "${webhookNameOrNames}" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.onAny() method instead`
     );
   }
 

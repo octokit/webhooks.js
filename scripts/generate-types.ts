@@ -127,7 +127,7 @@ const updateReadme = (properties: string[]) => {
   const headers = "| Event | Actions |";
 
   const events = properties
-    .filter((property) => property !== "*" && property !== "error")
+    .filter((property) => property !== "*")
     .reduce<Record<string, string[]>>((events, property) => {
       console.log(property);
       const [event, action] = property.split(".");
@@ -194,7 +194,6 @@ const run = () => {
     "",
     "export const emitterEventNames = [",
     '"*",',
-    '"error",',
     ...properties.map(([key]) => `"${key}",`),
     "];",
   ]);

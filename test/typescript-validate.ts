@@ -210,15 +210,6 @@ export default async function () {
     console.log(what.foo);
   });
 
-  // This is deprecated usage
-  webhooks.on("error", (error) => {
-    console.log(error.event.name);
-    const [firstError] = Array.from(error);
-    console.log(firstError.status);
-    console.log(firstError.headers);
-    console.log(firstError.request);
-  });
-
   webhooks.onError((error) => {
     console.log(error.event.name);
     const [firstError] = Array.from(error);

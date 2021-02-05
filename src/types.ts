@@ -15,9 +15,7 @@ export type EmitterWebhookEvent = EmitterWebhookEventMap[EmitterWebhookEventName
  * A map of all possible emitter events to their event type.
  * AKA "if the emitter emits x, the handler will be passed y"
  */
-export type EmitterEventMap = EmitterWebhookEventMap & {
-  error: WebhookEventHandlerError;
-};
+export type EmitterEventMap = EmitterWebhookEventMap;
 export type EmitterEventName = keyof EmitterEventMap;
 export type EmitterEvent = EmitterEventMap[EmitterEventName];
 

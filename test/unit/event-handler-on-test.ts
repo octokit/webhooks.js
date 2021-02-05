@@ -32,14 +32,3 @@ test("receiver.on with event name of '*' logs deprecation notice", () => {
     'Using the "*" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.onAny() method instead'
   );
 });
-
-test("receiver.on with event name of 'error' logs deprecation notice", () => {
-  const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(noop);
-
-  receiverOn(state, "error", noop);
-
-  expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
-  expect(consoleWarnSpy).toHaveBeenLastCalledWith(
-    'Using the "error" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.onError() method instead'
-  );
-});
