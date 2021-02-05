@@ -195,12 +195,3 @@ export function webhookErrorTest(error: WebhookError) {
   const { request } = error;
   console.log(request);
 }
-
-// ************************************************************
-// DEPRECATIONS RETRO-COMPATIBILITY
-// ************************************************************
-
-export function webhookErrorTestDeprecated(error: WebhookError) {
-  const { request } = error;
-  console.log(request);
-}
