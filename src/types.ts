@@ -1,25 +1,23 @@
-import type { RequestError } from "@octokit/request-error";
-import type { EmitterEventWebhookPayloadMap } from "./generated/get-webhook-payload-type-from-event";
+import { RequestError } from "@octokit/request-error";
+import type {
+  WebhookEventMap,
+  WebhookEventName,
+} from "@octokit/webhooks-definitions/schema";
+import type { emitterEventNames } from "./generated/webhook-names";
 
-export type EmitterWebhookEventMap = {
-  [K in keyof EmitterEventWebhookPayloadMap]: BaseWebhookEvent<K>;
-};
+export type EmitterWebhookEventName = typeof emitterEventNames[number];
+export type EmitterWebhookEvent<
+  TEmitterEvent extends EmitterWebhookEventName = EmitterWebhookEventName
+> = TEmitterEvent extends `${infer TWebhookEvent}.${infer TAction}`
+  ? BaseWebhookEvent<Extract<TWebhookEvent, WebhookEventName>> & {
+      payload: { action: TAction };
+    }
+  : BaseWebhookEvent<Extract<TEmitterEvent, WebhookEventName>>;
 
-export type EmitterWebhookEventName = keyof EmitterWebhookEventMap;
-export type EmitterWebhookEvent = EmitterWebhookEventMap[EmitterWebhookEventName];
-
-type ToWebhookEvent<
-  TEmitterEvent extends string
-> = TEmitterEvent extends `${infer TWebhookEvent}.${string}`
-  ? TWebhookEvent
-  : TEmitterEvent;
-
-interface BaseWebhookEvent<
-  TName extends EmitterWebhookEventName = EmitterWebhookEventName
-> {
+interface BaseWebhookEvent<TName extends WebhookEventName> {
   id: string;
-  name: ToWebhookEvent<TName>;
-  payload: EmitterEventWebhookPayloadMap[TName];
+  name: TName;
+  payload: WebhookEventMap[TName];
 }
 
 export interface Options<
@@ -36,17 +34,12 @@ type TransformMethod<T extends EmitterWebhookEvent, V = T> = (
 ) => V | PromiseLike<V>;
 
 type EnsureArray<T> = T extends any[] ? T : [T];
-// type MaybeArray<T> = T | T[];
 
 export type HandlerFunction<
   TName extends EmitterWebhookEventName | EmitterWebhookEventName[],
   TTransformed
 > = (
-  event: EmitterWebhookEventMap[Extract<
-    EmitterWebhookEventName,
-    EnsureArray<TName>[number]
-  >] &
-    TTransformed
+  event: EmitterWebhookEvent<EnsureArray<TName>[number]> & TTransformed
 ) => any;
 
 type Hooks = {
