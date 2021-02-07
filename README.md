@@ -646,23 +646,21 @@ If there are actions for a webhook, events are emitted for both, the webhook nam
 
 ## TypeScript
 
-`@octokit/webhooks` exports 3 types that can be used independent from the code.
+The types for the webhook payloads are sourced from `@octokit/webhooks-definitions`,
+which can be used by themselves.
+
+In addition to these types, `@octokit/webhooks` exports 2 types specific to itself:
 
 Note that changes to the exported types are not considered breaking changes, as the changes will not impact production code, but only fail locally or during CI at build time.
 
-### `WebhookEvent`
+### `EmitterWebhookEventName`
 
-The `WebhookEvent` type is an object with the properties `id`, `name`, and `payload`. `name` must be one of the known event names. The type for `payload` be set using an optional type parameter, e.g. `WebhookEvent<MyPayloadType>`
+A union of all possible events supported by the event emitter.
 
-### `EventNames`
+### `EmitterWebhookEvent`
 
-The `EventNames` type is a module containing types for all known event names and event/action combinations. For example, `EventNames.CheckRunEvent` is a string enum for `"check_run" | "check_run.completed" | "check_run.created" | "check_run.requested_action" | "check_run.rerequested"`.
-
-`EventNames.All` is an enum of all event/action combinations. `EventNames.StringNames` is an enum for the known event names only.
-
-### `EventPayloads`
-
-The `EventPayloads` type exports payload types for all known evens. For example `EventPayloads.WebhookPayloadCheckRun` exports the payload type for the `check_run` event.
+The object that is emitted by `@octokit/webhooks` as an event; made up of an `id`, `name`, and `payload` properties.
+An optional generic parameter can be passed to narrow the type of the `payload` property to be based on the `name` of the event.
 
 ## License
 
