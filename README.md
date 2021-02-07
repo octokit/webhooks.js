@@ -22,9 +22,8 @@
   - [webhooks.middleware()](#webhooksmiddleware)
   - [Webhook events](#webhook-events)
 - [TypeScript](#typescript)
-  - [`WebhookEvent`](#webhookevent)
-  - [`EventNames`](#eventnames)
-  - [`EventPayloads`](#eventpayloads)
+  - [`EmitterWebhookEventName`](#emitterwebhookeventname)
+  - [`EmitterWebhookEvent`](#emitterwebhookevent)
 - [License](#license)
 
 <!-- tocstop -->
