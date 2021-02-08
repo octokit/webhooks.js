@@ -5,38 +5,34 @@ import type {
 } from "@octokit/webhooks-definitions/schema";
 import type { emitterEventNames } from "./generated/webhook-names";
 
-export type EmitterWebhookEventName = typeof emitterEventNames[number];
-export type EmitterWebhookEvent<
-  TEmitterEvent extends EmitterWebhookEventName = EmitterWebhookEventName
+export type EmitterEventName = typeof emitterEventNames[number];
+export type EmitterEvent<
+  TEmitterEvent extends EmitterEventName = EmitterEventName
 > = TEmitterEvent extends `${infer TWebhookEvent}.${infer TAction}`
-  ? BaseWebhookEvent<Extract<TWebhookEvent, WebhookEventName>> & {
+  ? BaseEmitterEvent<Extract<TWebhookEvent, WebhookEventName>> & {
       payload: { action: TAction };
     }
-  : BaseWebhookEvent<Extract<TEmitterEvent, WebhookEventName>>;
+  : BaseEmitterEvent<Extract<TEmitterEvent, WebhookEventName>>;
 
-interface BaseWebhookEvent<TName extends WebhookEventName> {
+interface BaseEmitterEvent<TName extends WebhookEventName> {
   id: string;
   name: TName;
   payload: WebhookEventMap[TName];
 }
 
-export interface Options<
-  T extends EmitterWebhookEvent,
-  TTransformed = unknown
-> {
+export interface Options<T extends EmitterEvent, TTransformed = unknown> {
   path?: string;
   secret?: string;
   transform?: TransformMethod<T, TTransformed>;
 }
 
-type TransformMethod<T extends EmitterWebhookEvent, V = T> = (
-  event: EmitterWebhookEvent
+type TransformMethod<T extends EmitterEvent, V = T> = (
+  event: EmitterEvent
 ) => V | PromiseLike<V>;
 
-export type HandlerFunction<
-  TName extends EmitterWebhookEventName,
-  TTransformed
-> = (event: EmitterWebhookEvent<TName> & TTransformed) => any;
+export type HandlerFunction<TName extends EmitterEventName, TTransformed> = (
+  event: EmitterEvent<TName> & TTransformed
+) => any;
 
 type Hooks = {
   [key: string]: Function[];
@@ -54,7 +50,7 @@ export type WebhookError = Error & Partial<RequestError>;
 
 // todo: rename to "EmitterErrorEvent"
 export interface WebhookEventHandlerError extends AggregateError<WebhookError> {
-  event: EmitterWebhookEvent;
+  event: EmitterEvent;
 }
 
 /**

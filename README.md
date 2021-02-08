@@ -22,8 +22,8 @@
   - [webhooks.middleware()](#webhooksmiddleware)
   - [Webhook events](#webhook-events)
 - [TypeScript](#typescript)
-  - [`EmitterWebhookEventName`](#emitterwebhookeventname)
-  - [`EmitterWebhookEvent`](#emitterwebhookevent)
+  - [`EmitterEventName`](#emittereventname)
+  - [`EmitterEvent`](#emitterevent)
 - [License](#license)
 
 <!-- tocstop -->
@@ -652,11 +652,11 @@ In addition to these types, `@octokit/webhooks` exports 2 types specific to itse
 
 Note that changes to the exported types are not considered breaking changes, as the changes will not impact production code, but only fail locally or during CI at build time.
 
-### `EmitterWebhookEventName`
+### `EmitterEventName`
 
 A union of all possible events supported by the event emitter.
 
-### `EmitterWebhookEvent`
+### `EmitterEvent`
 
 The object that is emitted by `@octokit/webhooks` as an event; made up of an `id`, `name`, and `payload` properties.
 An optional generic parameter can be passed to narrow the type of the `payload` property to be based on the `name` of the event.

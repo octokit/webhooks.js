@@ -1,9 +1,9 @@
-import { EmitterWebhookEvent, State } from "../types";
+import { EmitterEvent, State } from "../types";
 import { verify } from "../verify/index";
 
 export function verifyAndReceive(
   state: State,
-  event: EmitterWebhookEvent & { signature: string }
+  event: EmitterEvent & { signature: string }
 ): any {
   // verify will validate that the secret is not undefined
   const matchesSignature = verify(

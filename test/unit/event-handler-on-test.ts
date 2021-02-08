@@ -1,5 +1,5 @@
 import { receiverOn } from "../../src/event-handler/on";
-import { EmitterWebhookEventName, State } from "../../src/types";
+import { EmitterEventName, State } from "../../src/types";
 
 function noop() {}
 
@@ -23,16 +23,14 @@ test("receiver.on with invalid event name", () => {
 });
 
 test("receiver.on with event name of '*' throws an error", () => {
-  expect(() =>
-    receiverOn(state, "*" as EmitterWebhookEventName, noop)
-  ).toThrowError(
+  expect(() => receiverOn(state, "*" as EmitterEventName, noop)).toThrowError(
     'Using the "*" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.onAny() method instead'
   );
 });
 
 test("receiver.on with event name of 'error' throws an error", () => {
   expect(() =>
-    receiverOn(state, "error" as EmitterWebhookEventName, noop)
+    receiverOn(state, "error" as EmitterEventName, noop)
   ).toThrowError(
     'Using the "error" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.onError() method instead'
   );

@@ -5,8 +5,8 @@ import { middleware } from "./middleware/middleware";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
 import { sign } from "./sign/index";
 import {
-  EmitterWebhookEvent,
-  EmitterWebhookEventName,
+  EmitterEvent,
+  EmitterEventName,
   HandlerFunction,
   Options,
   State,
@@ -16,30 +16,27 @@ import {
 import { verify } from "./verify/index";
 
 // U holds the return value of `transform` function in Options
-class Webhooks<
-  E extends EmitterWebhookEvent = EmitterWebhookEvent,
-  TTransformed = unknown
-> {
+class Webhooks<E extends EmitterEvent = EmitterEvent, TTransformed = unknown> {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload: string | object, signature: string) => boolean;
-  public on: <E extends EmitterWebhookEventName>(
+  public on: <E extends EmitterEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
   ) => void;
-  public onAny: (callback: (event: EmitterWebhookEvent) => any) => void;
+  public onAny: (callback: (event: EmitterEvent) => any) => void;
   public onError: (callback: (event: WebhookEventHandlerError) => any) => void;
-  public removeListener: <E extends EmitterWebhookEventName>(
+  public removeListener: <E extends EmitterEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
   ) => void;
-  public receive: (event: EmitterWebhookEvent) => Promise<void>;
+  public receive: (event: EmitterEvent) => Promise<void>;
   public middleware: (
     request: IncomingMessage,
     response: ServerResponse,
     next?: (err?: any) => void
   ) => void | Promise<void>;
   public verifyAndReceive: (
-    options: EmitterWebhookEvent & { signature: string }
+    options: EmitterEvent & { signature: string }
   ) => Promise<void>;
 
   constructor(options?: Options<E, TTransformed>) {
@@ -73,7 +70,7 @@ export {
   createMiddleware,
   createWebhooksApi,
   Webhooks,
-  EmitterWebhookEvent,
+  EmitterEvent,
   WebhookError,
   sign,
   verify,

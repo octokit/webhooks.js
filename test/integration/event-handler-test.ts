@@ -1,5 +1,5 @@
 import { createEventHandler } from "../../src/event-handler";
-import { EmitterWebhookEvent, WebhookEventHandlerError } from "../../src/types";
+import { EmitterEvent, WebhookEventHandlerError } from "../../src/types";
 import { installationCreatedPayload, pushEventPayload } from "../fixtures";
 
 test("events", async () => {
@@ -26,7 +26,7 @@ test("events", async () => {
   function hook6() {
     hooksCalled.push("installation.created");
   }
-  function hook7(event: EmitterWebhookEvent) {
+  function hook7(event: EmitterEvent) {
     hooksCalled.push(`* (${event.name})`);
   }
 
@@ -135,7 +135,7 @@ test("options.transform", (done) => {
     },
   });
 
-  eventHandler.on("push", (event: EmitterWebhookEvent) => {
+  eventHandler.on("push", (event: EmitterEvent) => {
     expect(event).toBe("funky");
 
     done();
@@ -155,7 +155,7 @@ test("async options.transform", (done) => {
     },
   });
 
-  eventHandler.on("push", (event: EmitterWebhookEvent) => {
+  eventHandler.on("push", (event: EmitterEvent) => {
     expect(event).toBe("funky");
     done();
   });

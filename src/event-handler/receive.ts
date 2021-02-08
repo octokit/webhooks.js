@@ -1,8 +1,8 @@
 // @ts-ignore to address #245
 import AggregateError from "aggregate-error";
 import type {
-  EmitterWebhookEvent,
-  EmitterWebhookEventName,
+  EmitterEvent,
+  EmitterEventName,
   State,
   WebhookError,
   WebhookEventHandlerError,
@@ -10,14 +10,14 @@ import type {
 import { wrapErrorHandler } from "./wrap-error-handler";
 
 type EventAction = Extract<
-  EmitterWebhookEvent["payload"],
+  EmitterEvent["payload"],
   { action: string }
 >["action"];
 
 function getHooks(
   state: State,
   eventPayloadAction: EventAction | null,
-  eventName: EmitterWebhookEventName
+  eventName: EmitterEventName
 ): Function[] {
   const hooks = [state.hooks[eventName], state.hooks["*"]];
 
@@ -29,7 +29,7 @@ function getHooks(
 }
 
 // main handler function
-export function receiverHandle(state: State, event: EmitterWebhookEvent) {
+export function receiverHandle(state: State, event: EmitterEvent) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {
