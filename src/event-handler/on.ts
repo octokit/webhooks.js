@@ -1,14 +1,14 @@
 import { emitterEventNames } from "../generated/webhook-names";
 import {
-  EmitterAnyEvent,
-  EmitterEventName,
+  EmitterWebhookEvent,
+  EmitterWebhookEventName,
   State,
   WebhookEventHandlerError,
 } from "../types";
 
 function handleEventHandlers(
   state: State,
-  webhookName: EmitterEventName,
+  webhookName: EmitterWebhookEventName | "error" | "*",
   handler: Function
 ) {
   if (!state.hooks[webhookName]) {
@@ -19,7 +19,7 @@ function handleEventHandlers(
 }
 export function receiverOn(
   state: State,
-  webhookNameOrNames: EmitterEventName | EmitterEventName[],
+  webhookNameOrNames: EmitterWebhookEventName | EmitterWebhookEventName[],
   handler: Function
 ) {
   if (Array.isArray(webhookNameOrNames)) {
@@ -29,18 +29,20 @@ export function receiverOn(
     return;
   }
 
+  if (["*", "error"].includes(webhookNameOrNames)) {
+    const webhookName =
+      (webhookNameOrNames as string) === "*" ? "any" : webhookNameOrNames;
+
+    const message = `Using the "${webhookNameOrNames}" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.on${
+      webhookName.charAt(0).toUpperCase() + webhookName.slice(1)
+    }() method instead`;
+
+    throw new Error(message);
+  }
+
   if (emitterEventNames.indexOf(webhookNameOrNames) === -1) {
     console.warn(
       `"${webhookNameOrNames}" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)`
-    );
-  }
-
-  if (webhookNameOrNames === "*" || webhookNameOrNames === "error") {
-    const webhookName = webhookNameOrNames === "*" ? "any" : webhookNameOrNames;
-    console.warn(
-      `Using the "${webhookNameOrNames}" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.on${
-        webhookName.charAt(0).toUpperCase() + webhookName.slice(1)
-      }() method instead`
     );
   }
 
@@ -49,7 +51,7 @@ export function receiverOn(
 
 export function receiverOnAny(
   state: State,
-  handler: (event: EmitterAnyEvent) => any
+  handler: (event: EmitterWebhookEvent) => any
 ) {
   handleEventHandlers(state, "*", handler);
 }

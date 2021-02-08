@@ -5,10 +5,8 @@ import {
   createWebhooksApi,
   sign,
   verify,
-  EventPayloads,
   EmitterWebhookEvent,
   WebhookError,
-  WebhookEvents,
 } from "../src/index";
 import { createServer } from "http";
 import { HandlerFunction, EmitterWebhookEventName } from "../src/types";
@@ -18,25 +16,10 @@ import { HandlerFunction, EmitterWebhookEventName } from "../src/types";
 // ************************************************************
 
 const fn = (webhookEvent: EmitterWebhookEvent) => {
-  if (webhookEvent.name === "*") {
-    if (
-      "action" in webhookEvent.payload &&
-      webhookEvent.payload.action === "completed"
-    ) {
-      console.log(webhookEvent.payload.sender);
-    }
-  }
   // @ts-expect-error TS2367:
-  //  This condition will always return 'false' since the types '"*" | "check_run" | ... many more ... | "workflow_run"' and '"check_run.completed"' have no overlap.
+  //  This condition will always return 'false' since the types '"check_run" | ... many more ... | "workflow_run"' and '"check_run.completed"' have no overlap.
   if (webhookEvent.name === "check_run.completed") {
     //
-  }
-
-  if (webhookEvent.name === "*") {
-    // @ts-expect-error TS2339:
-    //  Property 'action' does not exist on type 'Schema'.
-    //    Property 'action' does not exist on type 'CreateEvent'.
-    console.log(webhookEvent.payload.action);
   }
 };
 
@@ -66,20 +49,14 @@ on("code_scanning_alert.fixed", (event) => {
     console.log("a run was completed!");
   }
 
+  // @ts-expect-error TS2367:
+  //  This condition will always return 'false' since the types '"fixed"' and '"completed"' have no overlap.
+  if (event.payload.action === "random-string") {
+    console.log("a run was completed!");
+  }
+
   fn(event);
 });
-
-const myEventName: WebhookEvents = "check_run.completed";
-
-const myEventPayload: EventPayloads.WebhookPayloadCheckRunCheckRunOutput = {
-  annotations_count: 0,
-  annotations_url: "",
-  summary: "",
-  text: "",
-  title: "",
-};
-
-console.log(myEventName, myEventPayload);
 
 export default async function () {
   // Check empty constructor
@@ -87,12 +64,12 @@ export default async function () {
 
   // Check that all options are optional except for secret
   new Webhooks({
-    secret: "bleh",
+    secret: "blah",
   });
 
   // Check all supported options
-  const webhooks = new Webhooks<EmitterWebhookEvent, { foo: string }>({
-    secret: "bleh",
+  const webhooks = new Webhooks({
+    secret: "blah",
     path: "/webhooks",
     transform: (event) => {
       console.log(event.payload);
@@ -100,12 +77,12 @@ export default async function () {
     },
   });
 
-  // Check named expors of new API work
+  // Check named exports of new API work
   createWebhooksApi({
-    secret: "bleh",
+    secret: "blah",
   });
 
-  createEventHandler({ secret: "bleh" });
+  createEventHandler({ secret: "blah" });
 
   createMiddleware({
     secret: "mysecret",
@@ -118,13 +95,6 @@ export default async function () {
   sign({ secret: "randomSecret", algorithm: "sha256" }, {});
 
   verify("randomSecret", {}, "randomSignature");
-
-  // This is deprecated usage
-  webhooks.on("*", ({ id, name, payload }) => {
-    console.log(name, "event received", id);
-    const sig = webhooks.sign(payload);
-    webhooks.verify(payload, sig);
-  });
 
   webhooks.onAny(({ id, name, payload }) => {
     console.log(name, "event received", id);
@@ -210,15 +180,6 @@ export default async function () {
     console.log(what.foo);
   });
 
-  // This is deprecated usage
-  webhooks.on("error", (error) => {
-    console.log(error.event.name);
-    const [firstError] = Array.from(error);
-    console.log(firstError.status);
-    console.log(firstError.headers);
-    console.log(firstError.request);
-  });
-
   webhooks.onError((error) => {
     console.log(error.event.name);
     const [firstError] = Array.from(error);
@@ -232,15 +193,5 @@ export default async function () {
 
 export function webhookErrorTest(error: WebhookError) {
   const { request } = error;
-  console.log(request);
-}
-
-// ************************************************************
-// DEPRECATIONS RETRO-COMPATIBILITY
-// ************************************************************
-
-export function webhookErrorTestDeprecated(error: WebhookError) {
-  const { event, request } = error;
-  console.log(event);
   console.log(request);
 }
