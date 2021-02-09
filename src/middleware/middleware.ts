@@ -5,7 +5,7 @@ import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
 import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
-import { State, WebhookEventHandlerError } from "../types";
+import { State, EmitterError } from "../types";
 
 const debugWebhooks = debug("webhooks:receiver");
 
@@ -77,7 +77,7 @@ export function middleware(
       response.end("ok\n");
     })
 
-    .catch((error: WebhookEventHandlerError) => {
+    .catch((error: EmitterError) => {
       clearTimeout(timeout);
 
       if (didTimeout) return;

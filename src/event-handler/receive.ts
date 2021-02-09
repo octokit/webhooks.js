@@ -5,7 +5,7 @@ import type {
   EmitterEventName,
   State,
   WebhookError,
-  WebhookEventHandlerError,
+  EmitterError,
 } from "../types";
 import { wrapErrorHandler } from "./wrap-error-handler";
 
@@ -83,7 +83,7 @@ export function receiverHandle(state: State, event: EmitterEvent) {
       return;
     }
 
-    const error = new AggregateError(errors) as WebhookEventHandlerError;
+    const error = new AggregateError(errors) as EmitterError;
     Object.assign(error, {
       event,
       errors,

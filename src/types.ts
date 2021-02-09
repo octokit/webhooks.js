@@ -48,8 +48,7 @@ export interface State extends Options<any> {
  */
 export type WebhookError = Error & Partial<RequestError>;
 
-// todo: rename to "EmitterErrorEvent"
-export interface WebhookEventHandlerError extends AggregateError<WebhookError> {
+export interface EmitterError extends AggregateError<WebhookError> {
   event: EmitterEvent;
 }
 

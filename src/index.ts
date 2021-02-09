@@ -11,7 +11,7 @@ import {
   Options,
   State,
   WebhookError,
-  WebhookEventHandlerError,
+  EmitterError,
 } from "./types";
 import { verify } from "./verify/index";
 
@@ -24,7 +24,7 @@ class Webhooks<E extends EmitterEvent = EmitterEvent, TTransformed = unknown> {
     callback: HandlerFunction<E, TTransformed>
   ) => void;
   public onAny: (callback: (event: EmitterEvent) => any) => void;
-  public onError: (callback: (event: WebhookEventHandlerError) => any) => void;
+  public onError: (callback: (event: EmitterError) => any) => void;
   public removeListener: <E extends EmitterEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>

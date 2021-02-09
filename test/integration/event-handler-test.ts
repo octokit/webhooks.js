@@ -1,5 +1,5 @@
 import { createEventHandler } from "../../src/event-handler";
-import { EmitterEvent, WebhookEventHandlerError } from "../../src/types";
+import { EmitterEvent, EmitterError } from "../../src/types";
 import { installationCreatedPayload, pushEventPayload } from "../fixtures";
 
 test("events", async () => {
@@ -105,7 +105,7 @@ describe("when a handler throws an error", () => {
     });
 
     return new Promise<void>(async (resolve) => {
-      eventHandler.onError((error: WebhookEventHandlerError) => {
+      eventHandler.onError((error: EmitterError) => {
         expect(error.event.payload).toBeTruthy();
         expect(error.message).toMatch(/oops/);
 

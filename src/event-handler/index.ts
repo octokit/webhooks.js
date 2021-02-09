@@ -4,7 +4,7 @@ import type {
   HandlerFunction,
   Options,
   State,
-  WebhookEventHandlerError,
+  EmitterError,
 } from "../types";
 import {
   receiverOn as on,
@@ -20,7 +20,7 @@ interface EventHandler<TTransformed = unknown> {
     callback: HandlerFunction<E, TTransformed>
   ): void;
   onAny(handler: (event: EmitterEvent) => any): void;
-  onError(handler: (event: WebhookEventHandlerError) => any): void;
+  onError(handler: (event: EmitterError) => any): void;
   removeListener<E extends EmitterEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
