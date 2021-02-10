@@ -32,8 +32,8 @@ export function createEventHandler(options: Options<any>): EventHandler {
   const state: State = {
     hooks: {},
     log: {
-      debug: () => {},
-      info: () => {},
+      debug: /* istanbul ignore next: unused */ () => {},
+      info: /* istanbul ignore next: unused */ () => {},
       warn: console.warn.bind(console),
       error: console.error.bind(console),
       ...options.log,

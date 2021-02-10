@@ -14,7 +14,7 @@ export function createMiddleware(options: Options<any>) {
     hooks: {},
     log: {
       debug: () => {},
-      info: () => {},
+      info: /* istanbul ignore next: unused */ () => {},
       warn: console.warn.bind(console),
       error: console.error.bind(console),
       ...options.log,
