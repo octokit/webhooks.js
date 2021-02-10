@@ -24,7 +24,7 @@ const fn = (webhookEvent: EmitterWebhookEvent) => {
 };
 
 declare const on: <E extends EmitterWebhookEventName>(
-  name: E | E[],
+  name: E | readonly E[],
   callback: HandlerFunction<E, unknown>
 ) => void;
 

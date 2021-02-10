@@ -16,13 +16,13 @@ import { removeListener } from "./remove-listener";
 
 interface EventHandler<TTransformed = unknown> {
   on<E extends EmitterWebhookEventName>(
-    event: E | E[],
+    event: E | readonly E[],
     callback: HandlerFunction<E, TTransformed>
   ): void;
   onAny(handler: (event: EmitterWebhookEvent) => any): void;
   onError(handler: (event: WebhookEventHandlerError) => any): void;
   removeListener<E extends EmitterWebhookEventName>(
-    event: E | E[],
+    event: E | readonly E[],
     callback: HandlerFunction<E, TTransformed>
   ): void;
   receive(event: EmitterWebhookEvent): Promise<void>;

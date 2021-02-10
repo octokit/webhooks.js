@@ -23,13 +23,13 @@ class Webhooks<
   public sign: (payload: string | object) => string;
   public verify: (eventPayload: string | object, signature: string) => boolean;
   public on: <E extends EmitterWebhookEventName>(
-    event: E | E[],
+    event: E | readonly E[],
     callback: HandlerFunction<E, TTransformed>
   ) => void;
   public onAny: (callback: (event: EmitterWebhookEvent) => any) => void;
   public onError: (callback: (event: WebhookEventHandlerError) => any) => void;
   public removeListener: <E extends EmitterWebhookEventName>(
-    event: E | E[],
+    event: E | readonly E[],
     callback: HandlerFunction<E, TTransformed>
   ) => void;
   public receive: (event: EmitterWebhookEvent) => Promise<void>;

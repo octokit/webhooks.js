@@ -2,10 +2,16 @@ import { EmitterWebhookEventName, State } from "../types";
 
 export function removeListener(
   state: State,
-  webhookNameOrNames: EmitterWebhookEventName | EmitterWebhookEventName[],
+  webhookNameOrNames:
+    | EmitterWebhookEventName
+    | readonly EmitterWebhookEventName[],
   handler: Function
 ) {
-  if (Array.isArray(webhookNameOrNames)) {
+  if (
+    (Array.isArray as (arg: any) => arg is readonly unknown[])(
+      webhookNameOrNames
+    )
+  ) {
     webhookNameOrNames.forEach((webhookName) =>
       removeListener(state, webhookName, handler)
     );

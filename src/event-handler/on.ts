@@ -19,10 +19,16 @@ function handleEventHandlers(
 }
 export function receiverOn(
   state: State,
-  webhookNameOrNames: EmitterWebhookEventName | EmitterWebhookEventName[],
+  webhookNameOrNames:
+    | EmitterWebhookEventName
+    | readonly EmitterWebhookEventName[],
   handler: Function
 ) {
-  if (Array.isArray(webhookNameOrNames)) {
+  if (
+    (Array.isArray as (arg: any) => arg is readonly unknown[])(
+      webhookNameOrNames
+    )
+  ) {
     webhookNameOrNames.forEach((webhookName) =>
       receiverOn(state, webhookName, handler)
     );
