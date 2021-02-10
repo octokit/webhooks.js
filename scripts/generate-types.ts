@@ -14,11 +14,6 @@ interface Schema extends JSONSchema7 {
 
 const schema = require("@octokit/webhooks-definitions/schema.json") as Schema;
 
-const titleCase = (str: string) => `${str[0].toUpperCase()}${str.substring(1)}`;
-
-const guessAtInterfaceName = (str: string) =>
-  str.split(/[$_-]/u).map(titleCase).join("");
-
 const guessAtEventName = (name: string) => {
   const [, eventName] = /^(.+)[$_-]event/u.exec(name) ?? [];
 
@@ -42,33 +37,14 @@ const getDefinitionName = (ref: string): string => {
 };
 
 type NameAndActions = [name: string, actions: string[]];
-type Property = [key: string, value: string];
-type ImportsAndProperties = [imports: string[], properties: Property[]];
 
 const buildEventProperties = ([
   eventName,
   actions,
-]: NameAndActions): ImportsAndProperties => {
-  const interfaceName = guessAtInterfaceName(eventName);
-  const importsAndProperties: ImportsAndProperties = [
-    [interfaceName],
-    [[guessAtEventName(eventName), interfaceName]],
-  ];
-
-  if (actions.length) {
-    actions.forEach((actionName) => {
-      const actionInterfaceName = guessAtInterfaceName(`${actionName}_event`);
-
-      importsAndProperties[0].push(actionInterfaceName);
-      importsAndProperties[1].push([
-        guessAtActionName(actionName),
-        actionInterfaceName,
-      ]);
-    });
-  }
-
-  return importsAndProperties;
-};
+]: NameAndActions): string[] => [
+  guessAtEventName(eventName),
+  ...actions.map(guessAtActionName),
+];
 
 const isJSONSchemaWithRef = (
   object: JSONSchema7Definition
@@ -90,17 +66,10 @@ const listEvents = () => {
   });
 };
 
-const getImportsAndProperties = (): ImportsAndProperties => {
-  const importsAndProperties = listEvents().map(buildEventProperties);
-
-  return importsAndProperties.reduce<ImportsAndProperties>(
-    (allImportsAndProperties, [imports, properties]) => {
-      return [
-        allImportsAndProperties[0].concat(imports),
-        allImportsAndProperties[1].concat(properties),
-      ];
-    },
-    [[], []]
+const getEmitterEvents = (): string[] => {
+  return listEvents().reduce<string[]>(
+    (properties, event) => properties.concat(buildEventProperties(event)),
+    []
   );
 };
 
@@ -126,9 +95,8 @@ const asLink = (event: string): string => {
 const updateReadme = (properties: string[]) => {
   const headers = "| Event | Actions |";
 
-  const events = properties
-    .filter((property) => property !== "*" && property !== "error")
-    .reduce<Record<string, string[]>>((events, property) => {
+  const events = properties.reduce<Record<string, string[]>>(
+    (events, property) => {
       console.log(property);
       const [event, action] = property.split(".");
 
@@ -139,7 +107,9 @@ const updateReadme = (properties: string[]) => {
       }
 
       return events;
-    }, {});
+    },
+    {}
+  );
 
   const rows = Object.entries(events).map(
     ([event, actions]) =>
@@ -172,34 +142,18 @@ const updateReadme = (properties: string[]) => {
 };
 
 const run = () => {
-  const [imports, properties] = getImportsAndProperties();
+  const emitterEvents = getEmitterEvents();
 
-  const lines: string[] = [
-    "// THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY",
-    "// make edits in scripts/generate-types.ts",
-    "",
-    "import {",
-    ...imports.map((str) => `  ${str},`),
-    '} from "@octokit/webhooks-definitions/schema";',
-    "",
-    "export interface EmitterEventWebhookPayloadMap {",
-    ...properties.map(([key, value]) => `"${key}": ${value}`),
-    "}",
-  ];
-
-  generateTypeScriptFile("get-webhook-payload-type-from-event", lines);
   generateTypeScriptFile("webhook-names", [
     "// THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY",
     "// make edits in scripts/generate-types.ts",
     "",
     "export const emitterEventNames = [",
-    '"*",',
-    '"error",',
-    ...properties.map(([key]) => `"${key}",`),
-    "];",
+    ...emitterEvents.map((key) => `"${key}",`),
+    "] as const;",
   ]);
 
-  updateReadme(properties.map(([key]) => key));
+  updateReadme(emitterEvents);
 };
 
 run();

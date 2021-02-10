@@ -1,9 +1,8 @@
 // @ts-ignore to address #245
 import AggregateError from "aggregate-error";
-import { EmitterEventWebhookPayloadMap } from "../generated/get-webhook-payload-type-from-event";
-import {
-  EmitterEventName,
+import type {
   EmitterWebhookEvent,
+  EmitterWebhookEventName,
   State,
   WebhookError,
   WebhookEventHandlerError,
@@ -11,14 +10,14 @@ import {
 import { wrapErrorHandler } from "./wrap-error-handler";
 
 type EventAction = Extract<
-  EmitterEventWebhookPayloadMap[keyof EmitterEventWebhookPayloadMap],
+  EmitterWebhookEvent["payload"],
   { action: string }
 >["action"];
 
 function getHooks(
   state: State,
   eventPayloadAction: EventAction | null,
-  eventName: EmitterEventName
+  eventName: EmitterWebhookEventName
 ): Function[] {
   const hooks = [state.hooks[eventName], state.hooks["*"]];
 
@@ -67,6 +66,7 @@ export function receiverHandle(state: State, event: EmitterWebhookEvent) {
     let promise = Promise.resolve(event);
 
     if (state.transform) {
+      // @ts-expect-error
       promise = promise.then(state.transform);
     }
 
