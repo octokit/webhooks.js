@@ -5,6 +5,7 @@ function noop() {}
 
 const state: State = {
   hooks: {},
+  log: console,
 };
 
 beforeEach(() => jest.resetAllMocks());

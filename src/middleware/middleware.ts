@@ -26,6 +26,7 @@ export function middleware(
     }
 
     debugWebhooks(`ignored: ${request.method} ${request.url}`);
+    state.log.debug(`ignored: ${request.method} ${request.url}`);
     response.statusCode = 404;
     response.end("Not found");
     return;
@@ -49,6 +50,7 @@ export function middleware(
   const id = request.headers["x-github-delivery"] as string;
 
   debugWebhooks(`${eventName} event received (id: ${id})`);
+  state.log.debug(`${eventName} event received (id: ${id})`);
 
   // GitHub will abort the request if it does not receive a response within 10s
   // See https://github.com/octokit/webhooks.js/issues/185

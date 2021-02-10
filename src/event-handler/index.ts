@@ -31,6 +31,13 @@ interface EventHandler<TTransformed = unknown> {
 export function createEventHandler(options: Options<any>): EventHandler {
   const state: State = {
     hooks: {},
+    log: {
+      debug: () => {},
+      info: () => {},
+      warn: console.warn.bind(console),
+      error: console.error.bind(console),
+      ...options.log,
+    },
   };
 
   if (options && options.transform) {

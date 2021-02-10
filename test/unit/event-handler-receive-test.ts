@@ -4,6 +4,7 @@ import { State } from "../../src/types";
 const state: State = {
   secret: "mysecret",
   hooks: {},
+  log: console,
 };
 
 test("options: none", () => {

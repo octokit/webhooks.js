@@ -52,6 +52,13 @@ class Webhooks<
       path: options.path || "/",
       secret: options.secret,
       hooks: {},
+      log: {
+        debug: () => {},
+        info: () => {},
+        warn: console.warn.bind(console),
+        error: console.error.bind(console),
+        ...options.log,
+      },
     };
 
     this.sign = sign.bind(null, options.secret);

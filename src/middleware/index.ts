@@ -12,6 +12,13 @@ export function createMiddleware(options: Options<any>) {
     path: options.path || "/",
     secret: options.secret,
     hooks: {},
+    log: {
+      debug: () => {},
+      info: () => {},
+      warn: console.warn.bind(console),
+      error: console.error.bind(console),
+      ...options.log,
+    },
   };
 
   const api: any = middleware.bind(null, state);
