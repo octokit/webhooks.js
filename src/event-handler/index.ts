@@ -2,6 +2,7 @@ import type {
   EmitterWebhookEvent,
   EmitterWebhookEventName,
   HandlerFunction,
+  Logger,
   Options,
   State,
   WebhookEventHandlerError,
@@ -31,13 +32,7 @@ interface EventHandler<TTransformed = unknown> {
 export function createEventHandler(options: Options<any>): EventHandler {
   const state: State = {
     hooks: {},
-    log: {
-      debug: /* istanbul ignore next: unused */ () => {},
-      info: /* istanbul ignore next: unused */ () => {},
-      warn: console.warn.bind(console),
-      error: console.error.bind(console),
-      ...options.log,
-    },
+    log: createLogger(options.log),
   };
 
   if (options && options.transform) {
@@ -50,5 +45,15 @@ export function createEventHandler(options: Options<any>): EventHandler {
     onError: onError.bind(null, state),
     removeListener: removeListener.bind(null, state),
     receive: receive.bind(null, state),
+  };
+}
+
+export function createLogger(logger?: Partial<Logger>) {
+  return {
+    debug: () => {},
+    info: /* istanbul ignore next: unused */ () => {},
+    warn: console.warn.bind(console),
+    error: console.error.bind(console),
+    ...logger,
   };
 }

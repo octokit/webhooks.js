@@ -1,5 +1,5 @@
 import { debug } from "debug";
-import { createEventHandler } from "../event-handler/index";
+import { createEventHandler, createLogger } from "../event-handler/index";
 import { middleware } from "./middleware";
 import { Options, State } from "../types";
 
@@ -13,13 +13,7 @@ export function createMiddleware(options: Options<any>) {
     path: options.path || "/",
     secret: options.secret,
     hooks: {},
-    log: {
-      debug: options.log ? () => {} : debug("webhooks:receiver"),
-      info: /* istanbul ignore next: unused */ () => {},
-      warn: console.warn.bind(console),
-      error: console.error.bind(console),
-      ...options.log,
-    },
+    log: createLogger(options.log || { debug: debug("webhooks:receiver") }),
   };
 
   const api: any = middleware.bind(null, state);
