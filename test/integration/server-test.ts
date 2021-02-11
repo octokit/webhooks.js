@@ -23,6 +23,7 @@ describe("server-test", () => {
 
   test("initialised without options", (t) => {
     try {
+      // @ts-expect-error
       new Webhooks();
       t.fail("should throw error");
     } catch (error) {
