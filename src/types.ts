@@ -20,19 +20,14 @@ interface BaseWebhookEvent<TName extends WebhookEventName> {
   payload: WebhookEventMap[TName];
 }
 
-export interface Options<
-  T extends EmitterWebhookEvent,
-  TTransformed = unknown
-> {
+export interface Options<TTransformed = unknown> {
   path?: string;
   secret?: string;
-  transform?: TransformMethod<T, TTransformed>;
+  transform?: TransformMethod<TTransformed>;
   log?: Partial<Logger>;
 }
 
-type TransformMethod<T extends EmitterWebhookEvent, V = T> = (
-  event: EmitterWebhookEvent
-) => V | PromiseLike<V>;
+type TransformMethod<T> = (event: EmitterWebhookEvent) => T | PromiseLike<T>;
 
 export type HandlerFunction<
   TName extends EmitterWebhookEventName,
