@@ -24,6 +24,7 @@ export interface Options<TTransformed = unknown> {
   path?: string;
   secret?: string;
   transform?: TransformMethod<TTransformed>;
+  log?: Partial<Logger>;
 }
 
 type TransformMethod<T> = (event: EmitterWebhookEvent) => T | PromiseLike<T>;
@@ -37,9 +38,17 @@ type Hooks = {
   [key: string]: Function[];
 };
 
+export interface Logger {
+  debug: (message: string) => unknown;
+  info: (message: string) => unknown;
+  warn: (message: string) => unknown;
+  error: (message: string) => unknown;
+}
+
 export interface State extends Options<any> {
   eventHandler?: any;
   hooks: Hooks;
+  log: Logger;
 }
 
 /**

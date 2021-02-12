@@ -41,7 +41,7 @@ export function receiverOn(
   }
 
   if (emitterEventNames.indexOf(webhookNameOrNames) === -1) {
-    console.warn(
+    state.log.warn(
       `"${webhookNameOrNames}" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)`
     );
   }

@@ -8,10 +8,11 @@ test("remove-listener: single listener", () => {
     hooks: {
       push: [push],
     },
+    log: console,
   };
 
   expect(() => removeListener(state, "push", push)).not.toThrow();
-  expect(state).toStrictEqual({ hooks: { push: [] } });
+  expect(state).toStrictEqual({ hooks: { push: [] }, log: console });
 });
 
 test("remove-listener: multiple listeners", () => {
@@ -26,6 +27,7 @@ test("remove-listener: multiple listeners", () => {
       push: [push1, push2, push3],
       ping: [ping],
     },
+    log: console,
   };
 
   expect(() => {
@@ -33,5 +35,8 @@ test("remove-listener: multiple listeners", () => {
     removeListener(state, "push", push2);
     removeListener(state, "push", push3);
   }).not.toThrow();
-  expect(state).toStrictEqual({ hooks: { push: [], ping: [ping] } });
+  expect(state).toStrictEqual({
+    hooks: { push: [], ping: [ping] },
+    log: console,
+  });
 });

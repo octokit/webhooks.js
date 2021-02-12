@@ -3,11 +3,8 @@ import { isntWebhook } from "./isnt-webhook";
 import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
-import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
 import { State, WebhookEventHandlerError } from "../types";
-
-const debugWebhooks = debug("webhooks:receiver");
 
 export function middleware(
   state: State,
@@ -25,7 +22,7 @@ export function middleware(
       return;
     }
 
-    debugWebhooks(`ignored: ${request.method} ${request.url}`);
+    state.log.debug(`ignored: ${request.method} ${request.url}`);
     response.statusCode = 404;
     response.end("Not found");
     return;
@@ -48,7 +45,7 @@ export function middleware(
   const signatureSHA256 = request.headers["x-hub-signature-256"] as string;
   const id = request.headers["x-github-delivery"] as string;
 
-  debugWebhooks(`${eventName} event received (id: ${id})`);
+  state.log.debug(`${eventName} event received (id: ${id})`);
 
   // GitHub will abort the request if it does not receive a response within 10s
   // See https://github.com/octokit/webhooks.js/issues/185
