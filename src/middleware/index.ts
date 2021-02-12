@@ -2,7 +2,7 @@ import { createEventHandler } from "../event-handler/index";
 import { middleware } from "./middleware";
 import { Options, State } from "../types";
 
-export function createMiddleware(options: Options<any>) {
+export function createMiddleware(options: Options) {
   if (!options || !options.secret) {
     throw new Error("[@octokit/webhooks] options.secret required");
   }
