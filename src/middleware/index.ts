@@ -1,5 +1,6 @@
 import { debug } from "debug";
-import { createEventHandler, createLogger } from "../event-handler/index";
+import { createLogger } from "../createLogger";
+import { createEventHandler } from "../event-handler/index";
 import { middleware } from "./middleware";
 import { Options, State } from "../types";
 

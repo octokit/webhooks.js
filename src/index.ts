@@ -1,5 +1,6 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { createEventHandler, createLogger } from "./event-handler/index";
+import { createLogger } from "./createLogger";
+import { createEventHandler } from "./event-handler/index";
 import { createMiddleware } from "./middleware/index";
 import { middleware } from "./middleware/middleware";
 import { verifyAndReceive } from "./middleware/verify-and-receive";

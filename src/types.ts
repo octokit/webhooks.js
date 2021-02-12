@@ -3,6 +3,7 @@ import type {
   WebhookEventMap,
   WebhookEventName,
 } from "@octokit/webhooks-definitions/schema";
+import { Logger } from "./createLogger";
 import type { emitterEventNames } from "./generated/webhook-names";
 
 export type EmitterWebhookEventName = typeof emitterEventNames[number];
@@ -37,13 +38,6 @@ export type HandlerFunction<
 type Hooks = {
   [key: string]: Function[];
 };
-
-export interface Logger {
-  debug: (message: string) => unknown;
-  info: (message: string) => unknown;
-  warn: (message: string) => unknown;
-  error: (message: string) => unknown;
-}
 
 export interface State extends Options<any> {
   eventHandler?: any;
