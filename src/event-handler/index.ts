@@ -1,8 +1,8 @@
+import { createLogger } from "../createLogger";
 import type {
   EmitterWebhookEvent,
   EmitterWebhookEventName,
   HandlerFunction,
-  Logger,
   Options,
   State,
   WebhookEventHandlerError,
@@ -47,15 +47,5 @@ export function createEventHandler<TTransformed>(
     onError: onError.bind(null, state),
     removeListener: removeListener.bind(null, state),
     receive: receive.bind(null, state),
-  };
-}
-
-export function createLogger(logger?: Partial<Logger>) {
-  return {
-    debug: () => {},
-    info: /* istanbul ignore next: unused */ () => {},
-    warn: console.warn.bind(console),
-    error: console.error.bind(console),
-    ...logger,
   };
 }
