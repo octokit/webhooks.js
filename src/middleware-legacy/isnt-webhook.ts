@@ -14,12 +14,8 @@ export function isntWebhook(
   // We must match the configured path to allow custom POST routes which include
   // the webhook route. For example if the webhook route is / then it would be
   // impossible to define a `POST /my/custom/app` route as the `POST /`.
-  if (
+  return (
     typeof request.url !== "string" ||
     request.url.split("?")[0] !== options.path
-  ) {
-    return true;
-  }
-
-  return false;
+  );
 }

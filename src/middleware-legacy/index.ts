@@ -5,7 +5,7 @@ import { middleware } from "./middleware";
 import { Options, State } from "../types";
 
 export function createMiddleware(options: Options & { secret: string }) {
-  if (!options || !options.secret) {
+  if (!options?.secret) {
     throw new Error("[@octokit/webhooks] options.secret required");
   }
 
