@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { createEventHandler } from "./event-handler/index";
+import { createEventHandler, createLogger } from "./event-handler/index";
 import { createMiddleware } from "./middleware/index";
 import { middleware } from "./middleware/middleware";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
@@ -52,6 +52,7 @@ class Webhooks<
       path: options.path || "/",
       secret: options.secret,
       hooks: {},
+      log: createLogger(options.log),
     };
 
     this.sign = sign.bind(null, options.secret);

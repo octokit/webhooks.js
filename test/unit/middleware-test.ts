@@ -1,16 +1,19 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { middleware } from "../../src/middleware/middleware";
-import { getMissingHeaders } from "../../src/middleware/get-missing-headers";
 import { getPayload } from "../../src/middleware/get-payload";
 import { verifyAndReceive } from "../../src/middleware/verify-and-receive";
 
-jest.mock("../../src/middleware/get-missing-headers");
 jest.mock("../../src/middleware/get-payload");
 jest.mock("../../src/middleware/verify-and-receive");
 
-const mockGetMissingHeaders = getMissingHeaders as jest.Mock;
 const mockGetPayload = getPayload as jest.Mock;
 const mockVerifyAndReceive = verifyAndReceive as jest.Mock;
+
+const headers = {
+  "x-github-delivery": "123e4567-e89b-12d3-a456-426655440000",
+  "x-github-event": "push",
+  "x-hub-signature": "sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f",
+};
 
 test("next() callback", () => {
   const next = jest.fn();
@@ -18,6 +21,7 @@ test("next() callback", () => {
   middleware(
     {
       hooks: {},
+      log: console,
     },
     { method: "POST", url: "/foo" } as IncomingMessage,
     {} as ServerResponse,
@@ -33,20 +37,20 @@ describe("when does a timeout on retrieving the payload", () => {
   });
 
   test("successfully, does NOT response.end(ok)", async () => {
+    const consoleDebugSpy = jest.spyOn(console, "debug").mockImplementation();
     const responseMock = ({ end: jest.fn() } as unknown) as ServerResponse;
     const next = jest.fn();
 
-    mockGetMissingHeaders.mockReturnValueOnce([]);
     mockGetPayload.mockResolvedValueOnce(undefined);
     mockVerifyAndReceive.mockResolvedValueOnce(undefined);
 
     const promiseMiddleware = middleware(
-      { hooks: {}, path: "/foo" },
-      {
+      { hooks: {}, path: "/foo", log: console },
+      ({
         method: "POST",
         url: "/foo",
-        headers: {},
-      } as IncomingMessage,
+        headers,
+      } as unknown) as IncomingMessage,
       responseMock,
       next
     );
@@ -56,26 +60,30 @@ describe("when does a timeout on retrieving the payload", () => {
     await promiseMiddleware;
 
     expect(next).not.toHaveBeenCalled();
+    expect(consoleDebugSpy).toHaveBeenCalledTimes(1);
+    expect(consoleDebugSpy).toHaveBeenLastCalledWith(
+      "push event received (id: 123e4567-e89b-12d3-a456-426655440000)"
+    );
     expect(setTimeout).toHaveBeenCalledTimes(1);
     expect(responseMock.end).toHaveBeenCalledWith("still processing\n");
     expect(responseMock.end).not.toHaveBeenCalledWith("ok\n");
   });
 
   test("failing, does NOT response.end(ok)", async () => {
+    const consoleDebugSpy = jest.spyOn(console, "debug").mockImplementation();
     const responseMock = ({ end: jest.fn() } as unknown) as ServerResponse;
     const next = jest.fn();
 
-    mockGetMissingHeaders.mockReturnValueOnce([]);
     mockGetPayload.mockResolvedValueOnce(undefined);
     mockVerifyAndReceive.mockRejectedValueOnce(new Error("random error"));
 
     const promiseMiddleware = middleware(
-      { hooks: {}, path: "/foo" },
-      {
+      { hooks: {}, path: "/foo", log: console },
+      ({
         method: "POST",
         url: "/foo",
-        headers: {},
-      } as IncomingMessage,
+        headers,
+      } as unknown) as IncomingMessage,
       responseMock,
       next
     );
@@ -85,6 +93,10 @@ describe("when does a timeout on retrieving the payload", () => {
     await promiseMiddleware;
 
     expect(next).not.toHaveBeenCalled();
+    expect(consoleDebugSpy).toHaveBeenCalledTimes(1);
+    expect(consoleDebugSpy).toHaveBeenLastCalledWith(
+      "push event received (id: 123e4567-e89b-12d3-a456-426655440000)"
+    );
     expect(setTimeout).toHaveBeenCalledTimes(1);
     expect(responseMock.end).toHaveBeenCalledWith("still processing\n");
     expect(responseMock.end).not.toHaveBeenCalledWith(

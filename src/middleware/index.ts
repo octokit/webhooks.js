@@ -1,4 +1,5 @@
-import { createEventHandler } from "../event-handler/index";
+import { debug } from "debug";
+import { createEventHandler, createLogger } from "../event-handler/index";
 import { middleware } from "./middleware";
 import { Options, State } from "../types";
 
@@ -12,6 +13,7 @@ export function createMiddleware(options: Options<any>) {
     path: options.path || "/",
     secret: options.secret,
     hooks: {},
+    log: createLogger(options.log || { debug: debug("webhooks:receiver") }),
   };
 
   const api: any = middleware.bind(null, state);
