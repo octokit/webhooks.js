@@ -20,6 +20,7 @@ test("next() callback", () => {
 
   middleware(
     {
+      secret: "mysecret",
       hooks: {},
       log: console,
     },
@@ -45,7 +46,7 @@ describe("when does a timeout on retrieving the payload", () => {
     mockVerifyAndReceive.mockResolvedValueOnce(undefined);
 
     const promiseMiddleware = middleware(
-      { hooks: {}, path: "/foo", log: console },
+      { secret: "mysecret", hooks: {}, path: "/foo", log: console },
       ({
         method: "POST",
         url: "/foo",
@@ -78,7 +79,7 @@ describe("when does a timeout on retrieving the payload", () => {
     mockVerifyAndReceive.mockRejectedValueOnce(new Error("random error"));
 
     const promiseMiddleware = middleware(
-      { hooks: {}, path: "/foo", log: console },
+      { secret: "mysecret", hooks: {}, path: "/foo", log: console },
       ({
         method: "POST",
         url: "/foo",
