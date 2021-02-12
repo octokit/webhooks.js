@@ -33,7 +33,7 @@ test("Invalid payload", () => {
     statusCode: 0,
   };
 
-  const middleware = createMiddleware({ secret: "mysecret" });
+  const middleware = createMiddleware({ secret: "mysecret", log: {} });
   const middlewareDone = middleware(requestMock, responseMock).then(() => {
     expect(responseMock.statusCode).toBe(400);
     expect(responseMock.end).toHaveBeenCalledWith(
@@ -61,7 +61,7 @@ test("request error", () => {
     statusCode: 0,
   };
 
-  const middleware = createMiddleware({ secret: "mysecret" });
+  const middleware = createMiddleware({ secret: "mysecret", log: {} });
   const middlewareDone = middleware(requestMock, responseMock).then(() => {
     expect(responseMock.statusCode).toBe(500);
     expect(responseMock.end).toHaveBeenCalledWith(

@@ -37,6 +37,6 @@ if (!verify(secret, request.payload, request.headers['x-hub-signature'])) {
 
 ## API
 
-The `event-handler` API implements [`.receive()`](../#webhooksreceive), [`.on()`](../#webhookson) and [`.removeListener()`](../#webhooksremovelistener).
+The `event-handler` API implements [`.receive()`](../../README.md#webhooksreceive), [`.on()`](../../README.md#webhookson) and [`.removeListener()`](../../README.md#webhooksremovelistener).
 
-Back to [@octokit/webhooks README](..).
+Back to [@octokit/webhooks README](../../README.md).

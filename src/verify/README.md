@@ -53,4 +53,4 @@ const matchesSignature = verify(secret, eventPayload, signature)
 
 Returns `true` or `false`. Throws error if `secret`, `eventPayload` or `signature` not passed.
 
-Back to [@octokit/webhooks README](..).
+Back to [@octokit/webhooks README](../../README.md).

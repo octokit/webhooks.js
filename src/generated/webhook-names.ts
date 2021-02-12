@@ -2,8 +2,6 @@
 // make edits in scripts/generate-types.ts
 
 export const emitterEventNames = [
-  "*",
-  "error",
   "check_run",
   "check_run.completed",
   "check_run.created",
@@ -208,4 +206,4 @@ export const emitterEventNames = [
   "workflow_run",
   "workflow_run.completed",
   "workflow_run.requested",
-];
+] as const;

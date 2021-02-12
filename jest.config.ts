@@ -18,6 +18,7 @@ const config: Config.InitialOptions = {
     },
   },
   preset: "ts-jest",
+  restoreMocks: true,
   testEnvironment: "node",
   testRegex: /test\/.*\/.*.test.ts/u.source,
 };
