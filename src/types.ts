@@ -33,14 +33,10 @@ type TransformMethod<T extends EmitterWebhookEvent, V = T> = (
   event: EmitterWebhookEvent
 ) => V | PromiseLike<V>;
 
-type EnsureArray<T> = T extends any[] ? T : [T];
-
 export type HandlerFunction<
-  TName extends EmitterWebhookEventName | EmitterWebhookEventName[],
+  TName extends EmitterWebhookEventName,
   TTransformed
-> = (
-  event: EmitterWebhookEvent<EnsureArray<TName>[number]> & TTransformed
-) => any;
+> = (event: EmitterWebhookEvent<TName> & TTransformed) => any;
 
 type Hooks = {
   [key: string]: Function[];
