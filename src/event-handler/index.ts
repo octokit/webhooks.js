@@ -37,7 +37,7 @@ export function createEventHandler<TTransformed>(
     log: createLogger(options && options.log),
   };
 
-  if (options && options.transform) {
+  if (options?.transform) {
     state.transform = options.transform;
   }
 

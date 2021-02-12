@@ -42,7 +42,7 @@ export function receiverHandle(state: State, event: EmitterWebhookEvent) {
     return Promise.reject(error);
   }
 
-  if (!event || !event.name) {
+  if (!event?.name) {
     throw new AggregateError(["Event name not passed"]);
   }
 
