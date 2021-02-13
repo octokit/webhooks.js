@@ -30,11 +30,11 @@ interface EventHandler<TTransformed> {
 }
 
 export function createEventHandler<TTransformed>(
-  options: Options<TTransformed>
+  options?: Options<TTransformed>
 ): EventHandler<TTransformed> {
   const state: State = {
     hooks: {},
-    log: createLogger(options.log),
+    log: createLogger(options && options.log),
   };
 
   if (options && options.transform) {
