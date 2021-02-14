@@ -1,15 +1,15 @@
 import { debug } from "debug";
 import { createLogger } from "../createLogger";
-import { createEventHandler } from "../event-handler/index";
+import { createEventHandler, EventHandler } from "../event-handler/index";
 import { middleware } from "./middleware";
-import { Options } from "../types";
+import { Options, State } from "../types";
 
 export function createMiddleware(options: Options) {
   if (!options || !options.secret) {
     throw new Error("[@octokit/webhooks] options.secret required");
   }
 
-  const state = {
+  const state: State & { eventHandler: EventHandler } = {
     eventHandler: createEventHandler(options),
     path: options.path || "/",
     secret: options.secret,

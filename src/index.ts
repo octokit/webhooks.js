@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { createLogger } from "./createLogger";
-import { createEventHandler } from "./event-handler/index";
+import { createEventHandler, EventHandler } from "./event-handler/index";
 import { createMiddleware } from "./middleware/index";
 import { middleware } from "./middleware/middleware";
 import { verifyAndReceive } from "./middleware/verify-and-receive";
@@ -10,6 +10,7 @@ import {
   EmitterWebhookEventName,
   HandlerFunction,
   Options,
+  State,
   WebhookError,
   WebhookEventHandlerError,
 } from "./types";
@@ -44,7 +45,7 @@ class Webhooks<TTransformed> {
       throw new Error("[@octokit/webhooks] options.secret required");
     }
 
-    const state = {
+    const state: State & { eventHandler: EventHandler<TTransformed> } = {
       eventHandler: createEventHandler(options),
       path: options.path || "/",
       secret: options.secret,
