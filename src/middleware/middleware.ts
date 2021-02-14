@@ -1,4 +1,5 @@
 import { WebhookEventName } from "@octokit/webhooks-definitions/schema";
+import { EventHandler } from "../event-handler";
 import { isntWebhook } from "./isnt-webhook";
 import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
@@ -7,7 +8,7 @@ import { IncomingMessage, ServerResponse } from "http";
 import { State, WebhookEventHandlerError } from "../types";
 
 export function middleware(
-  state: State,
+  state: State & { eventHandler: EventHandler },
   request: IncomingMessage,
   response: ServerResponse,
   next?: Function

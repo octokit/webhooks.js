@@ -15,7 +15,7 @@ import {
 import { receiverHandle as receive } from "./receive";
 import { removeListener } from "./remove-listener";
 
-interface EventHandler<TTransformed> {
+export interface EventHandler<TTransformed = unknown> {
   on<E extends EmitterWebhookEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
@@ -26,7 +26,7 @@ interface EventHandler<TTransformed> {
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
   ): void;
-  receive(event: EmitterWebhookEvent): Promise<void>;
+  receive(event: EmitterWebhookEvent | Error): Promise<void>;
 }
 
 export function createEventHandler<TTransformed>(

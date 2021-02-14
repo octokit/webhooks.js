@@ -4,6 +4,7 @@ import type {
   WebhookEventName,
 } from "@octokit/webhooks-definitions/schema";
 import { Logger } from "./createLogger";
+import { EventHandler } from "./event-handler";
 import type { emitterEventNames } from "./generated/webhook-names";
 
 export type EmitterWebhookEventName = typeof emitterEventNames[number];
@@ -40,7 +41,7 @@ type Hooks = {
 };
 
 export interface State extends Options<any> {
-  eventHandler?: any;
+  eventHandler?: EventHandler;
   hooks: Hooks;
   log: Logger;
 }

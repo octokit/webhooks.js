@@ -1,8 +1,9 @@
+import { EventHandler } from "../event-handler";
 import { EmitterWebhookEvent, State } from "../types";
 import { verify } from "../verify/index";
 
 export function verifyAndReceive(
-  state: State,
+  state: State & { eventHandler: EventHandler },
   event: EmitterWebhookEvent & { signature: string }
 ): any {
   // verify will validate that the secret is not undefined
@@ -26,5 +27,5 @@ export function verifyAndReceive(
     id: event.id,
     name: event.name,
     payload: event.payload,
-  });
+  } as EmitterWebhookEvent);
 }

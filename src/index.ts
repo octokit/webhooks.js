@@ -10,7 +10,6 @@ import {
   EmitterWebhookEventName,
   HandlerFunction,
   Options,
-  State,
   WebhookError,
   WebhookEventHandlerError,
 } from "./types";
@@ -45,7 +44,7 @@ class Webhooks<TTransformed> {
       throw new Error("[@octokit/webhooks] options.secret required");
     }
 
-    const state: State = {
+    const state = {
       eventHandler: createEventHandler(options),
       path: options.path || "/",
       secret: options.secret,
