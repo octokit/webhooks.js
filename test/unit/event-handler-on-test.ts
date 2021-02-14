@@ -25,14 +25,14 @@ test("receiver.on with invalid event name", () => {
 
 test("receiver.on with event name of '*' throws an error", () => {
   // @ts-expect-error
-  expect(() => receiverOn(state, "*", noop)).toThrowError(
+  expect(() => receiverOn(state, "*", noop)).toThrow(
     'Using the "*" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.onAny() method instead'
   );
 });
 
 test("receiver.on with event name of 'error' throws an error", () => {
   // @ts-expect-error
-  expect(() => receiverOn(state, "error", noop)).toThrowError(
+  expect(() => receiverOn(state, "error", noop)).toThrow(
     'Using the "error" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.onError() method instead'
   );
 });
