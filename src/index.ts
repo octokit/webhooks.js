@@ -1,4 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
+import { createLogger } from "./createLogger";
 import { createEventHandler } from "./event-handler/index";
 import { createMiddleware } from "./middleware/index";
 import { middleware } from "./middleware/middleware";
@@ -16,10 +17,7 @@ import {
 import { verify } from "./verify/index";
 
 // U holds the return value of `transform` function in Options
-class Webhooks<
-  E extends EmitterWebhookEvent = EmitterWebhookEvent,
-  TTransformed = unknown
-> {
+class Webhooks<TTransformed> {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload: string | object, signature: string) => boolean;
   public on: <E extends EmitterWebhookEventName>(
@@ -42,7 +40,7 @@ class Webhooks<
     options: EmitterWebhookEvent & { signature: string }
   ) => Promise<void>;
 
-  constructor(options?: Options<E, TTransformed>) {
+  constructor(options: Options<TTransformed>) {
     if (!options || !options.secret) {
       throw new Error("[@octokit/webhooks] options.secret required");
     }
@@ -52,6 +50,7 @@ class Webhooks<
       path: options.path || "/",
       secret: options.secret,
       hooks: {},
+      log: createLogger(options.log),
     };
 
     this.sign = sign.bind(null, options.secret);

@@ -1,3 +1,4 @@
+import { createLogger } from "../createLogger";
 import type {
   EmitterWebhookEvent,
   EmitterWebhookEventName,
@@ -14,7 +15,7 @@ import {
 import { receiverHandle as receive } from "./receive";
 import { removeListener } from "./remove-listener";
 
-interface EventHandler<TTransformed = unknown> {
+interface EventHandler<TTransformed> {
   on<E extends EmitterWebhookEventName>(
     event: E | readonly E[],
     callback: HandlerFunction<E, TTransformed>
@@ -28,9 +29,12 @@ interface EventHandler<TTransformed = unknown> {
   receive(event: EmitterWebhookEvent): Promise<void>;
 }
 
-export function createEventHandler(options: Options<any>): EventHandler {
+export function createEventHandler<TTransformed>(
+  options?: Options<TTransformed>
+): EventHandler<TTransformed> {
   const state: State = {
     hooks: {},
+    log: createLogger(options && options.log),
   };
 
   if (options && options.transform) {

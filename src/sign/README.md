@@ -53,4 +53,4 @@ const signature = sign({ secret, algorithm }, eventPayload)
 
 Returns a `signature` string. Throws error if required arguments are not passed.
 
-Back to [@octokit/webhooks README](..).
+Back to [@octokit/webhooks README](../../README.md).

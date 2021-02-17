@@ -66,7 +66,6 @@ export function receiverHandle(state: State, event: EmitterWebhookEvent) {
     let promise = Promise.resolve(event);
 
     if (state.transform) {
-      // @ts-expect-error
       promise = promise.then(state.transform);
     }
 

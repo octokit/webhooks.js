@@ -59,7 +59,8 @@ on("code_scanning_alert.fixed", (event) => {
 });
 
 export default async function () {
-  // Check empty constructor
+  // @ts-expect-error TS2554:
+  //  Expected 1 arguments, but got 0.
   new Webhooks();
 
   // Check that all options are optional except for secret
