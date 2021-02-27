@@ -74,6 +74,7 @@ export {
   Webhooks,
   EmitterWebhookEvent,
   WebhookError,
+  HandlerFunction,
   sign,
   verify,
 };
