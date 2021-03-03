@@ -135,7 +135,7 @@ test("options.transform", (done) => {
     },
   });
 
-  eventHandler.on("push", (event: EmitterWebhookEvent) => {
+  eventHandler.on("push", (event: string) => {
     expect(event).toBe("funky");
 
     done();
@@ -155,7 +155,7 @@ test("async options.transform", (done) => {
     },
   });
 
-  eventHandler.on("push", (event: EmitterWebhookEvent) => {
+  eventHandler.on("push", (event: string) => {
     expect(event).toBe("funky");
     done();
   });

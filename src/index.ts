@@ -17,18 +17,18 @@ import {
 import { verify } from "./verify/index";
 
 // U holds the return value of `transform` function in Options
-class Webhooks<TTransformed> {
+class Webhooks<T extends Options> {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload: string | object, signature: string) => boolean;
   public on: <E extends EmitterWebhookEventName>(
     event: E | E[],
-    callback: HandlerFunction<E, TTransformed>
+    callback: HandlerFunction<E, T["transform"]>
   ) => void;
   public onAny: (callback: (event: EmitterWebhookEvent) => any) => void;
   public onError: (callback: (event: WebhookEventHandlerError) => any) => void;
   public removeListener: <E extends EmitterWebhookEventName>(
     event: E | E[],
-    callback: HandlerFunction<E, TTransformed>
+    callback: HandlerFunction<E, T["transform"]>
   ) => void;
   public receive: (event: EmitterWebhookEvent) => Promise<void>;
   public middleware: (
@@ -40,7 +40,7 @@ class Webhooks<TTransformed> {
     options: EmitterWebhookEvent & { signature: string }
   ) => Promise<void>;
 
-  constructor(options: Options<TTransformed>) {
+  constructor(options: T) {
     if (!options || !options.secret) {
       throw new Error("[@octokit/webhooks] options.secret required");
     }
