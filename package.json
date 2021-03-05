@@ -3,10 +3,7 @@
   "version": "0.0.0-development",
   "description": "GitHub webhook events toolset for Node.js",
   "keywords": [],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/octokit/webhooks.js.git"
-  },
+  "repository": "github:octokit/webhooks.js",
   "license": "MIT",
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "scripts": {
