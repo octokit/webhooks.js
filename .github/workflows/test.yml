@@ -24,6 +24,22 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: npm ci
       - run: npm test
+  typescript_matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        typescript:
+          - 4.1
+          - 4.2
+    name: TypeScript ${{matrix.typescript}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: npm ci
+      - run: npm i typescript@${{matrix.typescript}}
+      - run: npm test
 
   # separate job to set as required in branch protection,
   # as the above change each time the Node versions change
