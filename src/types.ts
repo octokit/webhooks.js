@@ -30,13 +30,8 @@ export interface Options<TTransformed = unknown> {
 
 type TransformMethod<T> = (event: EmitterWebhookEvent) => T | PromiseLike<T>;
 
-export type HandlerFunction<
-  TName extends EmitterWebhookEventName,
-  TTransform
-> = (
-  event: TTransform extends TransformMethod<infer T>
-    ? T
-    : EmitterWebhookEvent<TName>
+export type HandlerFunction<TName extends EmitterWebhookEventName> = (
+  event: EmitterWebhookEvent<TName>
 ) => any;
 
 type Hooks = {
