@@ -135,7 +135,7 @@ test("options.transform", (done) => {
     },
   });
 
-  eventHandler.on("push", (event) => {
+  eventHandler.on("push", (event: string) => {
     expect(event).toBe("funky");
 
     done();
