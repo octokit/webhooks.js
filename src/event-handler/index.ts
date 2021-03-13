@@ -15,7 +15,7 @@ import {
 import { receiverHandle as receive } from "./receive";
 import { removeListener } from "./remove-listener";
 
-interface EventHandler<T extends Options<EmitterWebhookEventName, any>> {
+interface EventHandler<T extends Options<EmitterWebhookEventName>> {
   on<E extends EmitterWebhookEventName>(
     event: E | E[],
     callback: HandlerFunction<E, T["transform"]>
@@ -29,9 +29,9 @@ interface EventHandler<T extends Options<EmitterWebhookEventName, any>> {
   receive(event: EmitterWebhookEvent): Promise<void>;
 }
 
-export function createEventHandler<
-  T extends Options<EmitterWebhookEventName, any>
->(options?: T): EventHandler<T> {
+export function createEventHandler<T extends Options<EmitterWebhookEventName>>(
+  options?: T
+): EventHandler<T> {
   const state: State = {
     hooks: {},
     log: createLogger(options && options.log),

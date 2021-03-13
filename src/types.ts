@@ -22,8 +22,8 @@ interface BaseWebhookEvent<TName extends WebhookEventName> {
 }
 
 export interface Options<
-  E extends EmitterWebhookEventName,
-  TTransformed extends EmitterWebhookEvent<E>
+  E extends EmitterWebhookEventName = any,
+  TTransformed extends EmitterWebhookEvent<E> = any
 > {
   path?: string;
   secret?: string;
