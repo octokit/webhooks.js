@@ -8,7 +8,7 @@ name: Test
       - opened
       - synchronize
 jobs:
-  test_matrix:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,9 +27,9 @@ jobs:
 
   # separate job to set as required in branch protection,
   # as the above change each time the Node versions change
-  test:
+  validate-types:
     runs-on: ubuntu-latest
-    needs: test_matrix
+    needs: test
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
