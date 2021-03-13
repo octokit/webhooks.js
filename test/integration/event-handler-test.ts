@@ -135,11 +135,7 @@ test("options.transform", (done) => {
     },
   });
 
-  // Argument of type '(event: string) => void' is not assignable to parameter of type 'HandlerFunction<"push">'.
-  // Types of parameters 'event' and 'event' are incompatible.
-  //   Type 'BaseWebhookEvent<"push">' is not assignable to type 'string'.ts(2345)
-  // @ts-expect-error
-  eventHandler.on("push", (event: string) => {
+  eventHandler.on("push", (event) => {
     expect(event).toBe("funky");
 
     done();
@@ -159,10 +155,6 @@ test("async options.transform", (done) => {
     },
   });
 
-  // Argument of type '(event: string) => void' is not assignable to parameter of type 'HandlerFunction<"push">'.
-  // Types of parameters 'event' and 'event' are incompatible.
-  //   Type 'BaseWebhookEvent<"push">' is not assignable to type 'string'.ts(2345)
-  // @ts-expect-error
   eventHandler.on("push", (event: string) => {
     expect(event).toBe("funky");
     done();
