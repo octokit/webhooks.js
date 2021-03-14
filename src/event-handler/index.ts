@@ -15,23 +15,23 @@ import {
 import { receiverHandle as receive } from "./receive";
 import { removeListener } from "./remove-listener";
 
-interface EventHandler<T extends Options> {
+interface EventHandler<TTransformed> {
   on<E extends EmitterWebhookEventName>(
     event: E | E[],
-    callback: HandlerFunction<E, T["transform"]>
+    callback: HandlerFunction<E, TTransformed>
   ): void;
   onAny(handler: (event: EmitterWebhookEvent) => any): void;
   onError(handler: (event: WebhookEventHandlerError) => any): void;
   removeListener<E extends EmitterWebhookEventName>(
     event: E | E[],
-    callback: HandlerFunction<E, T["transform"]>
+    callback: HandlerFunction<E, TTransformed>
   ): void;
   receive(event: EmitterWebhookEvent): Promise<void>;
 }
 
-export function createEventHandler<T extends Options>(
-  options?: T
-): EventHandler<T> {
+export function createEventHandler<TTransformed>(
+  options: Options<TTransformed>
+): EventHandler<TTransformed> {
   const state: State = {
     hooks: {},
     log: createLogger(options && options.log),
