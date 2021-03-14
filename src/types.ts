@@ -32,12 +32,8 @@ type TransformMethod<T> = (event: EmitterWebhookEvent) => T | PromiseLike<T>;
 
 export type HandlerFunction<
   TName extends EmitterWebhookEventName,
-  TTransform
-> = (
-  event: TTransform extends TransformMethod<infer T>
-    ? T
-    : EmitterWebhookEvent<TName>
-) => any;
+  TTransformed
+> = (event: EmitterWebhookEvent<TName> & TTransformed) => any;
 
 type Hooks = {
   [key: string]: Function[];

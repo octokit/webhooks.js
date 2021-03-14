@@ -72,6 +72,10 @@ export default async function () {
   const webhooks = new Webhooks({
     secret: "blah",
     path: "/webhooks",
+    transform: (event) => {
+      console.log(event.payload);
+      return Object.assign(event, { foo: "bar" });
+    },
   });
 
   // Check named exports of new API work
@@ -163,17 +167,6 @@ export default async function () {
 
   webhooks.on("issues", (event) => {
     console.log(event.payload.issue);
-  });
-}
-
-{
-  const webhooks = new Webhooks({
-    secret: "blah",
-    path: "/webhooks",
-    transform: (event) => {
-      console.log(event.payload);
-      return Object.assign(event, { foo: "bar" });
-    },
   });
 
   webhooks.on("issues", (event) => {
