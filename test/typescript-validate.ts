@@ -166,6 +166,7 @@ export default async function () {
   });
 
   webhooks.on("issues", (event) => {
+    // ⚠️ This test is for assuring 'transform' method is preserving event.payload
     console.log(event.payload.issue);
   });
 
