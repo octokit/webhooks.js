@@ -1,15 +1,10 @@
-import { EventPayloadMap } from "@octokit/webhooks-definitions/schema";
+import { WebhookEventName } from "@octokit/webhooks-definitions/schema";
 import { isntWebhook } from "./isnt-webhook";
 import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
 import { verifyAndReceive } from "./verify-and-receive";
-import { debug } from "debug";
 import { IncomingMessage, ServerResponse } from "http";
 import { State, WebhookEventHandlerError } from "../types";
-
-export type WebhookEventName = keyof EventPayloadMap;
-
-const debugWebhooks = debug("webhooks:receiver");
 
 export function middleware(
   state: State,
@@ -21,13 +16,13 @@ export function middleware(
     // the next callback is set when used as an express middleware. That allows
     // it to define custom routes like /my/custom/page while the webhooks are
     // expected to be sent to the / root path. Otherwise the root path would
-    // match all requests and would make it impossible to define custom rooutes
+    // match all requests and would make it impossible to define custom routes
     if (next) {
       next();
       return;
     }
 
-    debugWebhooks(`ignored: ${request.method} ${request.url}`);
+    state.log.debug(`ignored: ${request.method} ${request.url}`);
     response.statusCode = 404;
     response.end("Not found");
     return;
@@ -50,7 +45,7 @@ export function middleware(
   const signatureSHA256 = request.headers["x-hub-signature-256"] as string;
   const id = request.headers["x-github-delivery"] as string;
 
-  debugWebhooks(`${eventName} event received (id: ${id})`);
+  state.log.debug(`${eventName} event received (id: ${id})`);
 
   // GitHub will abort the request if it does not receive a response within 10s
   // See https://github.com/octokit/webhooks.js/issues/185

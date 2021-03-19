@@ -2,7 +2,7 @@ import { createEventHandler } from "../../src/event-handler";
 import { EmitterWebhookEvent, WebhookEventHandlerError } from "../../src/types";
 import { installationCreatedPayload, pushEventPayload } from "../fixtures";
 
-test("events", (done) => {
+test("events", async () => {
   const eventHandler = createEventHandler({});
 
   const hooksCalled: string[] = [];
@@ -44,49 +44,45 @@ test("events", (done) => {
   //  Argument of type '"unknown"' is not assignable to parameter of type ...
   eventHandler.removeListener("unknown", () => {});
 
-  eventHandler
-    .receive({
-      id: "123",
-      name: "push",
-      payload: pushEventPayload,
-    })
+  await eventHandler.receive({
+    id: "123",
+    name: "push",
+    payload: pushEventPayload,
+  });
 
-    .then(() => {
-      return eventHandler.receive({
-        id: "456",
-        name: "installation",
-        payload: installationCreatedPayload,
-      });
-    })
+  await eventHandler.receive({
+    id: "456",
+    name: "installation",
+    payload: installationCreatedPayload,
+  });
 
-    .then(() => {
-      expect(hooksCalled).toStrictEqual([
-        "hook2",
-        "* (push)",
-        "hook1",
-        "installation.created",
-        "installation",
-        "* (installation)",
-      ]);
+  expect(hooksCalled).toMatchInlineSnapshot(`
+    Array [
+      "hook2",
+      "* (push)",
+      "hook1",
+      "installation.created",
+      "installation",
+      "* (installation)",
+    ]
+  `);
+});
 
-      eventHandler.onError((error: WebhookEventHandlerError) => {
-        expect(error.event.payload).toBeTruthy();
-        // t.pass("error event triggered");
-        expect(error.message).toMatch(/oops/);
-      });
+describe("when a handler throws an error", () => {
+  it("throws an aggregated error", async () => {
+    const eventHandler = createEventHandler({});
 
-      eventHandler.on("push", () => {
-        throw new Error("oops");
-      });
+    eventHandler.on("push", () => {
+      throw new Error("oops");
+    });
 
-      return eventHandler.receive({
+    try {
+      await eventHandler.receive({
         id: "123",
         name: "push",
         payload: pushEventPayload,
       });
-    })
-
-    .catch((error) => {
+    } catch (error) {
       expect(error.message).toMatch(/oops/);
 
       const errors = Array.from(error);
@@ -95,10 +91,38 @@ test("events", (done) => {
       expect((Array.from(error) as { message: string }[])[0].message).toBe(
         "oops"
       );
-    })
 
-    .catch((e) => expect(e instanceof Error).toBeTruthy())
-    .finally(done);
+      expect(error instanceof Error).toBeTruthy();
+    }
+  });
+
+  it("calls any registered error handlers", async () => {
+    expect.assertions(2);
+    const eventHandler = createEventHandler({});
+
+    eventHandler.on("push", () => {
+      throw new Error("oops");
+    });
+
+    return new Promise<void>(async (resolve) => {
+      eventHandler.onError((error: WebhookEventHandlerError) => {
+        expect(error.event.payload).toBeTruthy();
+        expect(error.message).toMatch(/oops/);
+
+        resolve();
+      });
+
+      try {
+        await eventHandler.receive({
+          id: "123",
+          name: "push",
+          payload: pushEventPayload,
+        });
+      } catch {
+        // ignore any errors
+      }
+    });
+  });
 });
 
 test("options.transform", (done) => {
@@ -143,7 +167,7 @@ test("async options.transform", (done) => {
   });
 });
 
-test("multiple errors in same event handler", (done) => {
+test("multiple errors in same event handler", async () => {
   expect.assertions(2);
 
   const eventHandler = createEventHandler({});
@@ -156,18 +180,16 @@ test("multiple errors in same event handler", (done) => {
     throw new Error("oops");
   });
 
-  eventHandler
-    .receive({
+  try {
+    await eventHandler.receive({
       id: "123",
       name: "push",
       payload: pushEventPayload,
-    })
+    });
+  } catch (error) {
+    expect(error.message).toMatch("oops");
+    expect(Array.from(error).length).toBe(2);
 
-    .catch((error) => {
-      expect(error.message).toMatch("oops");
-      expect(Array.from(error).length).toBe(2);
-    })
-
-    .catch((e) => expect(e instanceof Error).toBeTruthy())
-    .finally(done);
+    expect(error instanceof Error);
+  }
 });

@@ -22,12 +22,13 @@ test("sign(secret) without eventPayload throws", () => {
 
 test("sign({secret, algorithm}) with invalid algorithm throws", () => {
   expect(() =>
-    sign.bind(null, { secret, algorithm: "sha2" as "sha1" }, eventPayload)()
+    // @ts-expect-error
+    sign.bind(null, { secret, algorithm: "sha2" }, eventPayload)()
   ).toThrow();
 });
 
 describe("with eventPayload as object", () => {
-  describe("resturns expected sha1 signature", () => {
+  describe("returns expected sha1 signature", () => {
     test("sign(secret, eventPayload)", () => {
       const signature = sign(secret, eventPayload);
       expect(signature).toBe("sha1=d03207e4b030cf234e3447bac4d93add4c6643d8");
@@ -44,7 +45,7 @@ describe("with eventPayload as object", () => {
     });
   });
 
-  describe("resturns expected sha256 signature", () => {
+  describe("returns expected sha256 signature", () => {
     test("sign({secret, algorithm}, eventPayload)", () => {
       const signature = sign({ secret, algorithm: "sha256" }, eventPayload);
       expect(signature).toBe(
@@ -55,7 +56,7 @@ describe("with eventPayload as object", () => {
 });
 
 describe("with eventPayload as string", () => {
-  describe("resturns expected sha1 signature", () => {
+  describe("returns expected sha1 signature", () => {
     test("sign(secret, eventPayload)", () => {
       const signature = sign(secret, JSON.stringify(eventPayload));
       expect(signature).toBe("sha1=d03207e4b030cf234e3447bac4d93add4c6643d8");

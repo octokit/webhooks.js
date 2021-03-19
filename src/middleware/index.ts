@@ -1,8 +1,10 @@
+import { debug } from "debug";
+import { createLogger } from "../createLogger";
 import { createEventHandler } from "../event-handler/index";
 import { middleware } from "./middleware";
 import { Options, State } from "../types";
 
-export function createMiddleware(options: Options<any>) {
+export function createMiddleware(options: Options) {
   if (!options || !options.secret) {
     throw new Error("[@octokit/webhooks] options.secret required");
   }
@@ -12,6 +14,7 @@ export function createMiddleware(options: Options<any>) {
     path: options.path || "/",
     secret: options.secret,
     hooks: {},
+    log: createLogger(options.log || { debug: debug("webhooks:receiver") }),
   };
 
   const api: any = middleware.bind(null, state);

@@ -5,6 +5,7 @@ function noop() {}
 
 const state: State = {
   hooks: {},
+  log: console,
 };
 
 beforeEach(() => jest.resetAllMocks());
@@ -22,24 +23,16 @@ test("receiver.on with invalid event name", () => {
   );
 });
 
-test("receiver.on with event name of '*' logs deprecation notice", () => {
-  const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(noop);
-
-  receiverOn(state, "*", noop);
-
-  expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
-  expect(consoleWarnSpy).toHaveBeenLastCalledWith(
-    'Using the "*" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.onAny() method instead'
+test("receiver.on with event name of '*' throws an error", () => {
+  // @ts-expect-error
+  expect(() => receiverOn(state, "*", noop)).toThrow(
+    'Using the "*" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.onAny() method instead'
   );
 });
 
-test("receiver.on with event name of 'error' logs deprecation notice", () => {
-  const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(noop);
-
-  receiverOn(state, "error", noop);
-
-  expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
-  expect(consoleWarnSpy).toHaveBeenLastCalledWith(
-    'Using the "error" event with the regular Webhooks.on() function is deprecated. Please use the Webhooks.onError() method instead'
+test("receiver.on with event name of 'error' throws an error", () => {
+  // @ts-expect-error
+  expect(() => receiverOn(state, "error", noop)).toThrow(
+    'Using the "error" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.onError() method instead'
   );
 });
