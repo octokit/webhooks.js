@@ -19,7 +19,7 @@
   "prettier": {},
   "dependencies": {
     "@octokit/request-error": "^2.0.2",
-    "@octokit/webhooks-definitions": "3.62.6",
+    "@octokit/webhooks-definitions": "3.63.1",
     "aggregate-error": "^3.1.0",
     "debug": "^4.0.0"
   },
