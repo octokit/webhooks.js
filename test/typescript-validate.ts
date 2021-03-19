@@ -118,6 +118,15 @@ export default async function () {
     }
   );
 
+  webhooks.on(["milestone"], (event) => {
+    if (event.payload.action === "closed") {
+      // @ts-expect-error TS2367:
+      //  This condition will always return 'false' since the types '"closed"' and '"open"' have no overlap.
+      if (event.payload.milestone.state === "open") {
+        //
+      }
+    }
+  });
   webhooks.on(["check_run.completed", "check_run.created"], () => {});
   webhooks.on("check_run.created", ({ name, payload }) => {
     console.log(payload.check_run.conclusion, name);
