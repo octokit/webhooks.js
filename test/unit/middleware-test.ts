@@ -1,10 +1,10 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { middleware } from "../../src/middleware/middleware";
-import { getPayload } from "../../src/middleware/get-payload";
-import { verifyAndReceive } from "../../src/middleware/verify-and-receive";
+import { middleware } from "../../src/middleware-legacy/middleware";
+import { getPayload } from "../../src/middleware-legacy/get-payload";
+import { verifyAndReceive } from "../../src/middleware-legacy/verify-and-receive";
 
-jest.mock("../../src/middleware/get-payload");
-jest.mock("../../src/middleware/verify-and-receive");
+jest.mock("../../src/middleware-legacy/get-payload");
+jest.mock("../../src/middleware-legacy/verify-and-receive");
 
 const mockGetPayload = getPayload as jest.Mock;
 const mockVerifyAndReceive = verifyAndReceive as jest.Mock;

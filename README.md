@@ -577,7 +577,7 @@ webhooks.middleware(request, response[, next])
 
 Returns a `requestListener` (or _middleware_) method which can be directly passed to [`http.createServer()`](https://nodejs.org/docs/latest/api/http.html#http_http_createserver_requestlistener), <a href="http://expressjs.com/">Express</a> and other compatible Node.js server frameworks.
 
-Can also be used [standalone](src/middleware/).
+Can also be used [standalone](src/middleware-legacy/).
 
 ### Webhook events
 

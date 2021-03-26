@@ -1,9 +1,9 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { createLogger } from "./createLogger";
 import { createEventHandler } from "./event-handler/index";
-import { createMiddleware } from "./middleware/index";
-import { middleware } from "./middleware/middleware";
-import { verifyAndReceive } from "./middleware/verify-and-receive";
+import { createMiddleware } from "./middleware-legacy/index";
+import { middleware } from "./middleware-legacy/middleware";
+import { verifyAndReceive } from "./middleware-legacy/verify-and-receive";
 import { sign } from "./sign/index";
 import {
   EmitterWebhookEvent,
