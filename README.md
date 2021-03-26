@@ -19,7 +19,7 @@
   - [webhooks.onAny()](#webhooksonany)
   - [webhooks.onError()](#webhooksonerror)
   - [webhooks.removeListener()](#webhooksremovelistener)
-  - [webhooks.middleware()](#webhooksmiddleware)
+  - [createNodeMiddleware()](#createnodemiddleware)
   - [Webhook events](#webhook-events)
 - [TypeScript](#typescript)
   - [`EmitterWebhookEventName`](#emitterwebhookeventname)
@@ -42,7 +42,7 @@ Note that while setting a secret is optional on GitHub, it is required to be set
 
 ```js
 // install with: npm install @octokit/webhooks
-const { Webhooks } = require("@octokit/webhooks");
+const { Webhooks, createNodeMiddleware } = require("@octokit/webhooks");
 const webhooks = new Webhooks({
   secret: "mysecret",
 });
@@ -51,8 +51,8 @@ webhooks.onAny(({ id, name, payload }) => {
   console.log(name, "event received");
 });
 
-require("http").createServer(webhooks.middleware).listen(3000);
-// can now receive webhook events at port 3000
+require("http").createServer(createNodeMiddleware(webhooks)).listen(3000);
+// can now receive webhook events at /api/github/webhooks
 ```
 
 ## Local development
@@ -99,7 +99,7 @@ source.onmessage = (event) => {
 ### Constructor
 
 ```js
-new Webhooks({secret[, path, transform]})
+new Webhooks({ secret /*, transform */ });
 ```
 
 <table width="100%">
@@ -113,18 +113,6 @@ new Webhooks({secret[, path, transform]})
     <td>
       <strong>Required.</strong>
       Secret as configured in GitHub Settings.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        path
-      </code>
-      <em>(String)</em>
-    </td>
-    <td>
-      Only relevant for <a href="#webhooksmiddleware"><code>webhooks.middleware</code></a>.
-      Custom path to match requests against. Defaults to <code>/</code>.
     </td>
   </tr>
   <tr>
@@ -525,59 +513,74 @@ webhooks.removeListener(eventNames, handler);
 
 The `.removeListener()` method belongs to the `event-handler` module which can be used [standalone](src/event-handler/).
 
-### webhooks.middleware()
+### createNodeMiddleware()
 
 ```js
-webhooks.middleware(request, response[, next])
+const { createServer } = require("http");
+const { Webhooks, createNodeMiddleware } = require("@octokit/webhooks");
+
+const webhooks = new Webhooks({
+  secret: "mysecret",
+});
+
+const middleware = createNodeMiddleware(webhooks, { path: "/" });
+
+createServer(middleware).listen(3000);
+// can now receive user authorization callbacks at POST /
 ```
 
 <table width="100%">
-  <tr>
-    <td>
-      <code>
-        request
-      </code>
-      <em>
-        Object
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      A Node.js <a href="https://nodejs.org/docs/latest/api/http.html#http_class_http_clientrequest">http.ClientRequest</a>.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        response
-      </code>
-      <em>
-        Object
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      A Node.js <a href="https://nodejs.org/docs/latest/api/http.html#http_class_http_serverresponse">http.ServerResponse</a>.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        next
-      </code>
-      <em>
-        Function
-      </em>
-    </td>
-    <td>
-      Optional function which invokes the next middleware, as used by <a href="https://github.com/senchalabs/connect">Connect</a> and <a href="http://expressjs.com/">Express</a>.
-    </td>
-  </tr>
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>webhooks</code>
+        <em>
+          Webhooks instance
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>path</code>
+        <em>
+          string
+        </em>
+      </td>
+      <td>
+        Custom path to match requests against. Defaults to <code>/api/github/webhooks</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>onUnhandledRequest</code>
+        <em>
+          function
+        </em>
+      </td>
+      <td>
+
+Defaults to
+
+```js
+function onUnhandledRequest(request, response) {
+  response.writeHead(400, {
+    "content-type": "application/json",
+  });
+  response.end(
+    JSON.stringify({
+      error: error.message,
+    })
+  );
+}
+```
+
+  </td>
+    </tr>
+  <tbody>
 </table>
-
-Returns a `requestListener` (or _middleware_) method which can be directly passed to [`http.createServer()`](https://nodejs.org/docs/latest/api/http.html#http_http_createserver_requestlistener), <a href="http://expressjs.com/">Express</a> and other compatible Node.js server frameworks.
-
-Can also be used [standalone](src/middleware-legacy/).
 
 ### Webhook events
 
