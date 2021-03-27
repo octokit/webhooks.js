@@ -16,6 +16,8 @@ import {
 } from "./types";
 import { verify } from "./verify/index";
 
+export { createNodeMiddleware } from "./middleware/node/index";
+
 // U holds the return value of `transform` function in Options
 class Webhooks<TTransformed = unknown> {
   public sign: (payload: string | object) => string;
