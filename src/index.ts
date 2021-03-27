@@ -65,7 +65,13 @@ class Webhooks<TTransformed> {
   }
 }
 
-const createWebhooksApi = Webhooks.prototype.constructor;
+/** @deprecated `createWebhooksApi()` is deprecated and will be removed in a future release of `@octokit/webhooks`, please use the `Webhooks` class instead */
+const createWebhooksApi = <TTransformed>(options: Options<TTransformed>) => {
+  console.error(
+    "[@octokit/webhooks] `createWebhooksApi()` is deprecated and will be removed in a future release of `@octokit/webhooks`, please use the `Webhooks` class instead"
+  );
+  return new Webhooks<TTransformed>(options);
+};
 
 export {
   createEventHandler,
