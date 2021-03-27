@@ -7,6 +7,6 @@ describe("Deprecated methods", () => {
     expect(spy).toBeCalledWith(
       "[@octokit/webhooks] `createWebhooksApi()` is deprecated and will be removed in a future release of `@octokit/webhooks`, please use the `Webhooks` class instead"
     );
-    spy.mockClear()
+    spy.mockClear();
   });
 });
