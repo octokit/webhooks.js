@@ -2,7 +2,6 @@ import {
   Webhooks,
   createEventHandler,
   createMiddleware,
-  createWebhooksApi,
   sign,
   verify,
   EmitterWebhookEvent,
@@ -76,11 +75,6 @@ export default async function () {
       console.log(event.payload);
       return Object.assign(event, { foo: "bar" });
     },
-  });
-
-  // Check named exports of new API work
-  createWebhooksApi({
-    secret: "blah",
   });
 
   createEventHandler({ secret: "blah" });
