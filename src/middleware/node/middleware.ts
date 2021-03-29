@@ -3,14 +3,14 @@ import { IncomingMessage, ServerResponse } from "http";
 import { WebhookEventName } from "@octokit/webhooks-definitions/schema";
 
 import { Webhooks } from "../../index";
-import { EmitterWebhookEvent, WebhookEventHandlerError } from "../../types";
+import { WebhookEventHandlerError } from "../../types";
 import { MiddlewareOptions } from "./types";
 import { onUnhandledRequestDefault } from "./on-unhandled-request-default";
 import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
 
 export function middleware(
-  webhooks: Webhooks<EmitterWebhookEvent>,
+  webhooks: Webhooks,
   options: Required<MiddlewareOptions>,
   request: IncomingMessage,
   response: ServerResponse,
@@ -75,9 +75,6 @@ export function middleware(
 
     .catch((error: WebhookEventHandlerError) => {
       clearTimeout(timeout);
-
-      console.log(`error`);
-      console.log(error);
 
       if (didTimeout) return;
 
