@@ -46,10 +46,10 @@ describe("createNodeMiddleware(webhooks)", () => {
   });
 
   test("request.body already parsed (e.g. Lambda)", async () => {
-    expect.assertions(2);
+    expect.assertions(3);
 
     const webhooks = new Webhooks<EmitterWebhookEvent>({
-      secret: "mysecret",
+      secret: "mySecret",
     });
     const dataChunks: any[] = [];
     const middleware = createNodeMiddleware(webhooks);
