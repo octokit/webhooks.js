@@ -9,7 +9,7 @@ import { onUnhandledRequestDefault } from "./on-unhandled-request-default";
 import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
 
-export function middleware(
+export async function middleware(
   webhooks: Webhooks,
   options: Required<MiddlewareOptions>,
   request: IncomingMessage,
@@ -55,31 +55,27 @@ export function middleware(
     response.end("still processing\n");
   }, 9000).unref();
 
-  return getPayload(request)
-    .then((payload) => {
-      return webhooks.verifyAndReceive({
-        id: id,
-        name: eventName as any,
-        payload: payload as any,
-        signature: signatureSHA256,
-      });
-    })
+  try {
+    const payload = await getPayload(request);
 
-    .then(() => {
-      clearTimeout(timeout);
-
-      if (didTimeout) return;
-
-      response.end("ok\n");
-    })
-
-    .catch((error: WebhookEventHandlerError) => {
-      clearTimeout(timeout);
-
-      if (didTimeout) return;
-
-      const statusCode = Array.from(error)[0].status;
-      response.statusCode = statusCode || 500;
-      response.end(error.toString());
+    await webhooks.verifyAndReceive({
+      id: id,
+      name: eventName as any,
+      payload: payload as any,
+      signature: signatureSHA256,
     });
+    clearTimeout(timeout);
+
+    if (didTimeout) return;
+
+    response.end("ok\n");
+  } catch (error) {
+    clearTimeout(timeout);
+
+    if (didTimeout) return;
+
+    const statusCode = Array.from(error as WebhookEventHandlerError)[0].status;
+    response.statusCode = statusCode || 500;
+    response.end(error.toString());
+  }
 }
