@@ -1,7 +1,9 @@
 import { createServer } from "http";
 
 import fetch from "node-fetch";
-import express from "express";
+
+// import without types
+const express = require("express");
 
 import { Webhooks, createNodeMiddleware, sign } from "../../src";
 import { pushEventPayload } from "../fixtures";
@@ -293,11 +295,12 @@ describe("createNodeMiddleware(webhooks)", () => {
     });
 
     app.post("/test", createNodeMiddleware(webhooks));
-    app.all("*", (...[, response]) => response.status(404).send("Dafuq"));
+    app.all("*", (_request: any, response: any) =>
+      response.status(404).send("Dafuq")
+    );
 
     const server = app.listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
     const { port } = server.address();
 
     const response = await fetch(`http://localhost:${port}/test`, {
