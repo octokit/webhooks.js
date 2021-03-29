@@ -40,7 +40,7 @@ describe("createNodeMiddleware(webhooks)", () => {
     );
 
     expect(response.status).toEqual(200);
-    expect(await response.text()).toEqual("ok\n");
+    await expect(await response.text()).toEqual("ok\n");
 
     server.close();
   });
