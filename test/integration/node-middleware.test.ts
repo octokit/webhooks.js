@@ -1,9 +1,9 @@
 import { createServer } from "http";
 
 import fetch from "node-fetch";
+import express from "express";
 
 import { Webhooks, createNodeMiddleware, sign } from "../../src";
-import { EmitterWebhookEvent } from "../../src/types";
 import { pushEventPayload } from "../fixtures";
 
 const signatureSha256 = sign(
@@ -12,10 +12,10 @@ const signatureSha256 = sign(
 );
 
 describe("createNodeMiddleware(webhooks)", () => {
-  it("README example", async () => {
+  test("README example", async () => {
     expect.assertions(3);
 
-    const webhooks = new Webhooks<EmitterWebhookEvent>({
+    const webhooks = new Webhooks({
       secret: "mySecret",
     });
 
@@ -50,7 +50,7 @@ describe("createNodeMiddleware(webhooks)", () => {
   test("request.body already parsed (e.g. Lambda)", async () => {
     expect.assertions(3);
 
-    const webhooks = new Webhooks<EmitterWebhookEvent>({
+    const webhooks = new Webhooks({
       secret: "mySecret",
     });
     const dataChunks: any[] = [];
@@ -86,6 +86,232 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     expect(response.status).toEqual(200);
     expect(await response.text()).toEqual("ok\n");
+
+    server.close();
+  });
+
+  test("Handles invalid JSON", async () => {
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    const server = createServer(createNodeMiddleware(webhooks)).listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "POST",
+        headers: {
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": signatureSha256,
+        },
+        body: "invalid",
+      }
+    );
+
+    expect(response.status).toEqual(400);
+
+    await expect(response.text()).resolves.toMatch(/SyntaxError: Invalid JSON/);
+
+    server.close();
+  });
+
+  test("Handles non POST request", async () => {
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    const server = createServer(createNodeMiddleware(webhooks)).listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "PUT",
+        headers: {
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": signatureSha256,
+        },
+        body: "invalid",
+      }
+    );
+
+    expect(response.status).toEqual(404);
+
+    await expect(response.text()).resolves.toMatch(
+      /Unknown route: PUT \/api\/github\/webhooks/
+    );
+
+    server.close();
+  });
+
+  test("Handles missing headers", async () => {
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    const server = createServer(createNodeMiddleware(webhooks)).listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "POST",
+        headers: {
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          // "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": signatureSha256,
+        },
+        body: "invalid",
+      }
+    );
+
+    expect(response.status).toEqual(400);
+
+    await expect(response.text()).resolves.toMatch(
+      /Required headers missing: x-github-event/
+    );
+
+    server.close();
+  });
+
+  test("Handles non-request errors", async () => {
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    webhooks.on("push", () => {
+      throw new Error("boom");
+    });
+
+    const server = createServer(createNodeMiddleware(webhooks)).listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "POST",
+        headers: {
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": signatureSha256,
+        },
+        body: JSON.stringify(pushEventPayload),
+      }
+    );
+
+    await expect(response.text()).resolves.toMatch(/boom/);
+    expect(response.status).toEqual(500);
+
+    server.close();
+  });
+
+  test("Handles timeout", async () => {
+    jest.useFakeTimers();
+
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    webhooks.on("push", async () => {
+      jest.advanceTimersByTime(10000);
+      server.close();
+    });
+
+    const server = createServer(createNodeMiddleware(webhooks)).listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "POST",
+        headers: {
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": signatureSha256,
+        },
+        body: JSON.stringify(pushEventPayload),
+      }
+    );
+
+    await expect(response.text()).resolves.toMatch(/still processing/);
+    expect(response.status).toEqual(202);
+  });
+
+  test("Handles timeout with error", async () => {
+    jest.useFakeTimers();
+
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    webhooks.on("push", async () => {
+      jest.advanceTimersByTime(10000);
+      server.close();
+      throw new Error("oops");
+    });
+
+    const server = createServer(createNodeMiddleware(webhooks)).listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "POST",
+        headers: {
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": signatureSha256,
+        },
+        body: JSON.stringify(pushEventPayload),
+      }
+    );
+
+    await expect(response.text()).resolves.toMatch(/still processing/);
+    expect(response.status).toEqual(202);
+  });
+
+  test("express middleware 404", async () => {
+    const app = express();
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    app.post("/test", createNodeMiddleware(webhooks));
+    app.all("*", (...[, response]) => response.status(404).send("Dafuq"));
+
+    const server = app.listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+
+    const response = await fetch(`http://localhost:${port}/test`, {
+      method: "POST",
+      headers: {
+        "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+        "X-GitHub-Event": "push",
+        "X-Hub-Signature-256": signatureSha256,
+      },
+      body: JSON.stringify(pushEventPayload),
+    });
+
+    await expect(response.text()).resolves.toBe("ok\n");
+    expect(response.status).toEqual(200);
 
     server.close();
   });
