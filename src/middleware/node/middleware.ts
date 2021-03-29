@@ -18,12 +18,9 @@ export async function middleware(
 ) {
   const { pathname } = new URL(request.url as string, "http://localhost");
 
-  if (request.method !== "POST" || pathname !== options.path) {
-    if (next) {
-      next();
-      return;
-    }
-
+  const isUnknownRoute = request.method !== "POST" || pathname !== options.path;
+  const isExpressMiddleware = typeof next === "function";
+  if (!isExpressMiddleware && isUnknownRoute) {
     return onUnhandledRequestDefault(request, response);
   }
 

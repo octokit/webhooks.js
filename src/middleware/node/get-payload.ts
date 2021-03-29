@@ -19,6 +19,8 @@ export function getPayload(request: IncomingMessage): Promise<WebhookEvent> {
     let data = "";
 
     request.setEncoding("utf8");
+
+    // istanbul ignore next
     request.on("error", (error) => reject(new AggregateError([error])));
     request.on("data", (chunk) => (data += chunk));
     request.on("end", () => {
