@@ -17,7 +17,7 @@ import {
 import { verify } from "./verify/index";
 
 // U holds the return value of `transform` function in Options
-class Webhooks<TTransformed> {
+class Webhooks<TTransformed = unknown> {
   public sign: (payload: string | object) => string;
   public verify: (eventPayload: string | object, signature: string) => boolean;
   public on: <E extends EmitterWebhookEventName>(
