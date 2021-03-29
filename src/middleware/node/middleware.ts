@@ -21,6 +21,7 @@ export async function middleware(
   const isUnknownRoute = request.method !== "POST" || pathname !== options.path;
   const isExpressMiddleware = typeof next === "function";
   if (!isExpressMiddleware && isUnknownRoute) {
+    options.log.debug(`not found: ${request.method} ${request.url}`);
     return onUnhandledRequestDefault(request, response);
   }
 
@@ -42,6 +43,8 @@ export async function middleware(
   const eventName = request.headers["x-github-event"] as WebhookEventName;
   const signatureSHA256 = request.headers["x-hub-signature-256"] as string;
   const id = request.headers["x-github-delivery"] as string;
+
+  options.log.debug(`${eventName} event received (id: ${id})`);
 
   // GitHub will abort the request if it does not receive a response within 10s
   // See https://github.com/octokit/webhooks.js/issues/185
