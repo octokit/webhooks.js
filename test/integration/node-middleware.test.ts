@@ -13,6 +13,8 @@ const signatureSha256 = sign(
 
 describe("createNodeMiddleware(webhooks)", () => {
   it("README example", async () => {
+    expect.assertions(3);
+
     const webhooks = new Webhooks<EmitterWebhookEvent>({
       secret: "mySecret",
     });
