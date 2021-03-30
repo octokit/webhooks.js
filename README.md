@@ -19,7 +19,7 @@
   - [webhooks.onAny()](#webhooksonany)
   - [webhooks.onError()](#webhooksonerror)
   - [webhooks.removeListener()](#webhooksremovelistener)
-  - [webhooks.middleware()](#webhooksmiddleware)
+  - [createNodeMiddleware()](#createnodemiddleware)
   - [Webhook events](#webhook-events)
 - [TypeScript](#typescript)
   - [`EmitterWebhookEventName`](#emitterwebhookeventname)
@@ -42,7 +42,7 @@ Note that while setting a secret is optional on GitHub, it is required to be set
 
 ```js
 // install with: npm install @octokit/webhooks
-const { Webhooks } = require("@octokit/webhooks");
+const { Webhooks, createNodeMiddleware } = require("@octokit/webhooks");
 const webhooks = new Webhooks({
   secret: "mysecret",
 });
@@ -51,8 +51,8 @@ webhooks.onAny(({ id, name, payload }) => {
   console.log(name, "event received");
 });
 
-require("http").createServer(webhooks.middleware).listen(3000);
-// can now receive webhook events at port 3000
+require("http").createServer(createNodeMiddleware(webhooks)).listen(3000);
+// can now receive webhook events at /api/github/webhooks
 ```
 
 ## Local development
@@ -93,52 +93,54 @@ source.onmessage = (event) => {
 7. [webhooks.onAny()](#webhooksonany)
 8. [webhooks.onError()](#webhooksonerror)
 9. [webhooks.removeListener()](#webhooksremoveListener)
-10. [webhooks.middleware()](#webhooksmiddleware)
-11. [Webhook events](#webhook-events)
+10. [Webhook events](#webhook-events)
 
 ### Constructor
 
 ```js
-new Webhooks({secret[, path, transform]})
+new Webhooks({ secret /*, transform */ });
 ```
 
 <table width="100%">
-  <tr>
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>
+          secret
+        </code>
+        <em>(String)</em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Secret as configured in GitHub Settings.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>
+          transform
+        </code>
+        <em>(Function)</em>
+      </td>
+      <td>
+        Only relevant for <a href="#webhookson"><code>webhooks.on</code></a>.
+        Transform emitted event before calling handlers. Can be asynchronous.
+      </td>
+    </tr>
+    <tr>
     <td>
-      <code>
-        secret
-      </code>
-      <em>(String)</em>
+      <code>log</code>
+      <em>
+        object
+      </em>
     </td>
     <td>
-      <strong>Required.</strong>
-      Secret as configured in GitHub Settings.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        path
-      </code>
-      <em>(String)</em>
-    </td>
-    <td>
-      Only relevant for <a href="#webhooksmiddleware"><code>webhooks.middleware</code></a>.
-      Custom path to match requests against. Defaults to <code>/</code>.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        transform
-      </code>
-      <em>(Function)</em>
-    </td>
-    <td>
-      Only relevant for <a href="#webhookson"><code>webhooks.on</code></a>.
-      Transform emitted event before calling handlers. Can be asynchronous.
-    </td>
-  </tr>
+
+Used for internal logging. Defaults to [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) with `debug` and `info` doing nothing.
+
+</td>
+    </tr>
+  </tbody>
 </table>
 
 Returns the `webhooks` API.
@@ -150,20 +152,22 @@ webhooks.sign(eventPayload);
 ```
 
 <table width="100%">
-  <tr>
-    <td>
-      <code>
-        eventPayload
-      </code>
-      <em>
-        (Object)
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Webhook request payload as received from GitHub
-    </td>
-  </tr>
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>
+          eventPayload
+        </code>
+        <em>
+          (Object)
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Webhook request payload as received from GitHub
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 Returns a `signature` string. Throws error if `eventPayload` is not passed.
@@ -177,34 +181,36 @@ webhooks.verify(eventPayload, signature);
 ```
 
 <table width="100%">
-  <tr>
-    <td>
-      <code>
-        eventPayload
-      </code>
-      <em>
-        (Object)
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Webhook event request payload as received from GitHub.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        signature
-      </code>
-      <em>
-        (String)
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Signature string as calculated by <code><a href="#webhookssign">webhooks.sign()</a></code>.
-    </td>
-  </tr>
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>
+          eventPayload
+        </code>
+        <em>
+          (Object)
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Webhook event request payload as received from GitHub.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>
+          signature
+        </code>
+        <em>
+          (String)
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Signature string as calculated by <code><a href="#webhookssign">webhooks.sign()</a></code>.
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 Returns `true` or `false`. Throws error if `eventPayload` or `signature` not passed.
@@ -218,62 +224,64 @@ webhooks.verifyAndReceive({ id, name, payload, signature });
 ```
 
 <table width="100%">
-  <tr>
-    <td>
-      <code>
-        id
-      </code>
-      <em>
-        String
-      </em>
-    </td>
-    <td>
-      Unique webhook event request id
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        name
-      </code>
-      <em>
-        String
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Name of the event. (Event names are set as <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads#delivery-headers"><code>X-GitHub-Event</code> header</a>
-      in the webhook event request.)
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        payload
-      </code>
-      <em>
-        Object
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Webhook event request payload as received from GitHub.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        signature
-      </code>
-      <em>
-        (String)
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Signature string as calculated by <code><a href="#webhookssign">webhooks.sign()</a></code>.
-    </td>
-  </tr>
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>
+          id
+        </code>
+        <em>
+          String
+        </em>
+      </td>
+      <td>
+        Unique webhook event request id
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>
+          name
+        </code>
+        <em>
+          String
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Name of the event. (Event names are set as <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads#delivery-headers"><code>X-GitHub-Event</code> header</a>
+        in the webhook event request.)
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>
+          payload
+        </code>
+        <em>
+          Object
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Webhook event request payload as received from GitHub.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>
+          signature
+        </code>
+        <em>
+          (String)
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Signature string as calculated by <code><a href="#webhookssign">webhooks.sign()</a></code>.
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 Returns a promise.
@@ -309,48 +317,50 @@ webhooks.receive({ id, name, payload });
 ```
 
 <table width="100%">
-  <tr>
-    <td>
-      <code>
-        id
-      </code>
-      <em>
-        String
-      </em>
-    </td>
-    <td>
-      Unique webhook event request id
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        name
-      </code>
-      <em>
-        String
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Name of the event. (Event names are set as <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads#delivery-headers"><code>X-GitHub-Event</code> header</a>
-      in the webhook event request.)
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        payload
-      </code>
-      <em>
-        Object
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Webhook event request payload as received from GitHub.
-    </td>
-  </tr>
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>
+          id
+        </code>
+        <em>
+          String
+        </em>
+      </td>
+      <td>
+        Unique webhook event request id
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>
+          name
+        </code>
+        <em>
+          String
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Name of the event. (Event names are set as <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads#delivery-headers"><code>X-GitHub-Event</code> header</a>
+        in the webhook event request.)
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>
+          payload
+        </code>
+        <em>
+          Object
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Webhook event request payload as received from GitHub.
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 Returns a promise. Runs all handlers set with [`webhooks.on()`](#webhookson) in parallel and waits for them to finish. If one of the handlers rejects or throws an error, then `webhooks.receive()` rejects. The returned error has an `.errors` property which holds an array of all errors caught from the handlers. If no errors occur, `webhooks.receive()` resolves without passing any value.
@@ -365,50 +375,52 @@ webhooks.on(eventNames, handler);
 ```
 
 <table width="100%">
-  <tr>
-    <td>
-      <code>
-        eventName
-      </code>
-      <em>
-        String
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Name of the event. One of <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads">GitHub's supported event names</a>.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        eventNames
-      </code>
-      <em>
-        Array
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Array of event names.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        handler
-      </code>
-      <em>
-        Function
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Method to be run each time the event with the passed name is received.
-      the <code>handler</code> function can be an async function, throw an error or
-      return a Promise. The handler is called with an event object: <code>{id, name, payload}</code>.
-    </td>
-  </tr>
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>
+          eventName
+        </code>
+        <em>
+          String
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Name of the event. One of <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads">GitHub's supported event names</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>
+          eventNames
+        </code>
+        <em>
+          Array
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Array of event names.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>
+          handler
+        </code>
+        <em>
+          Function
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Method to be run each time the event with the passed name is received.
+        the <code>handler</code> function can be an async function, throw an error or
+        return a Promise. The handler is called with an event object: <code>{id, name, payload}</code>.
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 The `.on()` method belongs to the `event-handler` module which can be used [standalone](src/event-handler/).
@@ -420,22 +432,24 @@ webhooks.onAny(handler);
 ```
 
 <table width="100%">
-  <tr>
-    <td>
-      <code>
-        handler
-      </code>
-      <em>
-        Function
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Method to be run each time any event is received.
-      the <code>handler</code> function can be an async function, throw an error or
-      return a Promise. The handler is called with an event object: <code>{id, name, payload}</code>.
-    </td>
-  </tr>
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>
+          handler
+        </code>
+        <em>
+          Function
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Method to be run each time any event is received.
+        the <code>handler</code> function can be an async function, throw an error or
+        return a Promise. The handler is called with an event object: <code>{id, name, payload}</code>.
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 The `.onAny()` method belongs to the `event-handler` module which can be used [standalone](src/event-handler/).
@@ -451,22 +465,24 @@ If a webhook event handler throws an error or returns a promise that rejects, an
 Asynchronous `error` event handler are not blocking the `.receive()` method from completing.
 
 <table width="100%">
-  <tr>
-    <td>
-      <code>
-        handler
-      </code>
-      <em>
-        Function
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Method to be run each time a webhook event handler throws an error or returns a promise that rejects.
-      The <code>handler</code> function can be an async function,
-      return a Promise. The handler is called with an error object that has a .event property which has all the information on the event: <code>{id, name, payload}</code>.
-    </td>
-  </tr>
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>
+          handler
+        </code>
+        <em>
+          Function
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Method to be run each time a webhook event handler throws an error or returns a promise that rejects.
+        The <code>handler</code> function can be an async function,
+        return a Promise. The handler is called with an error object that has a .event property which has all the information on the event: <code>{id, name, payload}</code>.
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 The `.onError()` method belongs to the `event-handler` module which can be used [standalone](src/event-handler/).
@@ -479,105 +495,135 @@ webhooks.removeListener(eventNames, handler);
 ```
 
 <table width="100%">
-  <tr>
-    <td>
-      <code>
-        eventName
-      </code>
-      <em>
-        String
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Name of the event. One of <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads">GitHub’s supported event names</a>, or '*' for the <code>onAny()</code> method or 'error' for the <code>onError()</code> method.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        eventNames
-      </code>
-      <em>
-        Array
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Array of event names.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        handler
-      </code>
-      <em>
-        Function
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      Method which was previously passed to <code><a href="webhookson">webhooks.on()</a></code>. If the same handler was registered multiple times for the same event, only the most recent handler gets removed.
-    </td>
-  </tr>
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>
+          eventName
+        </code>
+        <em>
+          String
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Name of the event. One of <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads">GitHub’s supported event names</a>, or '*' for the <code>onAny()</code> method or 'error' for the <code>onError()</code> method.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>
+          eventNames
+        </code>
+        <em>
+          Array
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Array of event names.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>
+          handler
+        </code>
+        <em>
+          Function
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        Method which was previously passed to <code><a href="webhookson">webhooks.on()</a></code>. If the same handler was registered multiple times for the same event, only the most recent handler gets removed.
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 The `.removeListener()` method belongs to the `event-handler` module which can be used [standalone](src/event-handler/).
 
-### webhooks.middleware()
+### createNodeMiddleware()
 
 ```js
-webhooks.middleware(request, response[, next])
+const { createServer } = require("http");
+const { Webhooks, createNodeMiddleware } = require("@octokit/webhooks");
+
+const webhooks = new Webhooks({
+  secret: "mysecret",
+});
+
+const middleware = createNodeMiddleware(webhooks, { path: "/" });
+
+createServer(middleware).listen(3000);
+// can now receive user authorization callbacks at POST /
 ```
 
 <table width="100%">
-  <tr>
-    <td>
-      <code>
-        request
-      </code>
-      <em>
-        Object
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      A Node.js <a href="https://nodejs.org/docs/latest/api/http.html#http_class_http_clientrequest">http.ClientRequest</a>.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        response
-      </code>
-      <em>
-        Object
-      </em>
-    </td>
-    <td>
-      <strong>Required.</strong>
-      A Node.js <a href="https://nodejs.org/docs/latest/api/http.html#http_class_http_serverresponse">http.ServerResponse</a>.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        next
-      </code>
-      <em>
-        Function
-      </em>
-    </td>
-    <td>
-      Optional function which invokes the next middleware, as used by <a href="https://github.com/senchalabs/connect">Connect</a> and <a href="http://expressjs.com/">Express</a>.
-    </td>
-  </tr>
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>webhooks</code>
+        <em>
+          Webhooks instance
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>path</code>
+        <em>
+          string
+        </em>
+      </td>
+      <td>
+        Custom path to match requests against. Defaults to <code>/api/github/webhooks</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>log</code>
+        <em>
+          object
+        </em>
+      </td>
+      <td>
+
+Used for internal logging. Defaults to [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) with `debug` and `info` doing nothing.
+
+</td>
+    </tr>
+    <tr>
+      <td>
+        <code>onUnhandledRequest</code>
+        <em>
+          function
+        </em>
+      </td>
+      <td>
+
+Defaults to
+
+```js
+function onUnhandledRequest(request, response) {
+  response.writeHead(400, {
+    "content-type": "application/json",
+  });
+  response.end(
+    JSON.stringify({
+      error: error.message,
+    })
+  );
+}
+```
+
+</td>
+    </tr>
+  <tbody>
 </table>
-
-Returns a `requestListener` (or _middleware_) method which can be directly passed to [`http.createServer()`](https://nodejs.org/docs/latest/api/http.html#http_http_createserver_requestlistener), <a href="http://expressjs.com/">Express</a> and other compatible Node.js server frameworks.
-
-Can also be used [standalone](src/middleware/).
 
 ### Webhook events
 
