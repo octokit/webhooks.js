@@ -154,6 +154,43 @@ describe("createNodeMiddleware(webhooks)", () => {
     server.close();
   });
 
+  test("custom non-found handler", async () => {
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    const server = createServer(
+      createNodeMiddleware(webhooks, {
+        onUnhandledRequest(_request, response) {
+          response.writeHead(404);
+          response.end("nope");
+        },
+      })
+    ).listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "PUT",
+        headers: {
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": signatureSha256,
+        },
+        body: "invalid",
+      }
+    );
+
+    expect(response.status).toEqual(404);
+
+    await expect(response.text()).resolves.toEqual("nope");
+
+    server.close();
+  });
+
   test("Handles missing headers", async () => {
     const webhooks = new Webhooks({
       secret: "mySecret",
