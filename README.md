@@ -92,8 +92,9 @@ source.onmessage = (event) => {
 6. [webhooks.on()](#webhookson)
 7. [webhooks.onAny()](#webhooksonany)
 8. [webhooks.onError()](#webhooksonerror)
-9. [webhooks.removeListener()](#webhooksremoveListener)
-10. [Webhook events](#webhook-events)
+9. [webhooks.removeListener()](#webhooksremovelistener)
+10. [createNodeMiddleware()](#createnodemiddleware)
+11. [Webhook events](#webhook-events)
 
 ### Constructor
 
@@ -387,7 +388,7 @@ webhooks.on(eventNames, handler);
       </td>
       <td>
         <strong>Required.</strong>
-        Name of the event. One of <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads">GitHub's supported event names</a>.
+        Name of the event. One of <a href="#webhook-events">GitHub's supported event names</a>, or (if the event has an action property) the name of an event followed by its action in the form of <code>&lt;event>.&lt;action></code>.
       </td>
     </tr>
     <tr>
@@ -507,7 +508,7 @@ webhooks.removeListener(eventNames, handler);
       </td>
       <td>
         <strong>Required.</strong>
-        Name of the event. One of <a href="https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads">GitHub’s supported event names</a>, or '*' for the <code>onAny()</code> method or 'error' for the <code>onError()</code> method.
+        Name of the event. One of <a href="#webhook-events">GitHub's supported event names</a>, or (if the event has an action property) the name of an event followed by its action in the form of <code>&lt;event>.&lt;action></code>, or '*' for the <code>onAny()</code> method or 'error' for the <code>onError()</code> method.
       </td>
     </tr>
     <tr>
@@ -700,12 +701,12 @@ Note that changes to the exported types are not considered breaking changes, as 
 
 ### `EmitterWebhookEventName`
 
-A union of all possible events supported by the event emitter.
+A union of all possible events and event/action combinations supported by the event emitter, e.g. `"check_run" | "check_run.completed" | ... many more ... | "workflow_run.requested"`.
 
 ### `EmitterWebhookEvent`
 
 The object that is emitted by `@octokit/webhooks` as an event; made up of an `id`, `name`, and `payload` properties.
-An optional generic parameter can be passed to narrow the type of the `payload` property to be based on the `name` of the event.
+An optional generic parameter can be passed to narrow the type of the `name` and `payload` properties based on event names or event/action combinations, e.g. `EmitterWebhookEvent<"check_run" | "code_scanning_alert.fixed">`.
 
 ## License
 
