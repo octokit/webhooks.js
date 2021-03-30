@@ -70,7 +70,6 @@ export default async function () {
   // Check all supported options
   const webhooks = new Webhooks({
     secret: "blah",
-    path: "/webhooks",
     transform: (event) => {
       console.log(event.payload);
       return Object.assign(event, { foo: "bar" });

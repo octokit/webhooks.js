@@ -41,17 +41,10 @@ class Webhooks<TTransformed = unknown> {
 
     const state: State & { secret: string } = {
       eventHandler: createEventHandler(options),
-      path: options.path || "/",
       secret: options.secret,
       hooks: {},
       log: createLogger(options.log),
     };
-
-    if ("path" in options) {
-      state.log.warn(
-        "[@octokit/webhooks] `path` option is deprecated and will be removed in a future release of `@octokit/webhooks`. Please use `createNodeMiddleware(webhooks, { path })` instead"
-      );
-    }
 
     this.sign = sign.bind(null, options.secret);
     this.verify = verify.bind(null, options.secret);
