@@ -1,24 +1,6 @@
-import { createWebhooksApi, Webhooks } from "../../src";
+import { Webhooks } from "../../src";
 
 describe("Deprecated methods", () => {
-  test("createWebhooksApi", () => {
-    const warn = jest.fn();
-
-    createWebhooksApi({
-      secret: "foo",
-      log: {
-        debug: () => {},
-        info: () => {},
-        warn: warn,
-        error: () => {},
-      },
-    });
-    expect(warn).toBeCalledWith(
-      "[@octokit/webhooks] `createWebhooksApi()` is deprecated and will be removed in a future release of `@octokit/webhooks`, please use the `Webhooks` class instead"
-    );
-    warn.mockClear();
-  });
-
   test("path parameter", () => {
     const warn = jest.fn();
     new Webhooks({
