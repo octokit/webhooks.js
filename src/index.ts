@@ -46,12 +46,12 @@ class Webhooks<TTransformed = unknown> {
     next?: (err?: any) => void
   ) => void | Promise<void>;
 
-  constructor(options: Options<TTransformed>) {
+  constructor(options: Options<TTransformed> & { secret: string }) {
     if (!options || !options.secret) {
       throw new Error("[@octokit/webhooks] options.secret required");
     }
 
-    const state: State = {
+    const state: State & { secret: string } = {
       eventHandler: createEventHandler(options),
       path: options.path || "/",
       secret: options.secret,
@@ -88,7 +88,9 @@ class Webhooks<TTransformed = unknown> {
 }
 
 /** @deprecated `createWebhooksApi()` is deprecated and will be removed in a future release of `@octokit/webhooks`, please use the `Webhooks` class instead */
-const createWebhooksApi = <TTransformed>(options: Options<TTransformed>) => {
+const createWebhooksApi = <TTransformed>(
+  options: Options<TTransformed> & { secret: string }
+) => {
   const log = createLogger(options.log);
   log.warn(
     "[@octokit/webhooks] `createWebhooksApi()` is deprecated and will be removed in a future release of `@octokit/webhooks`, please use the `Webhooks` class instead"
