@@ -22,7 +22,6 @@ interface BaseWebhookEvent<TName extends WebhookEventName> {
 }
 
 export interface Options<TTransformed = unknown> {
-  path?: string;
   secret?: string;
   transform?: TransformMethod<TTransformed>;
   log?: Partial<Logger>;
