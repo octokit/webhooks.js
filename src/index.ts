@@ -88,7 +88,9 @@ class Webhooks<TTransformed = unknown> {
 }
 
 /** @deprecated `createWebhooksApi()` is deprecated and will be removed in a future release of `@octokit/webhooks`, please use the `Webhooks` class instead */
-const createWebhooksApi = <TTransformed>(options: Options<TTransformed>) => {
+const createWebhooksApi = <TTransformed>(
+  options: Options<TTransformed> & { secret: string }
+) => {
   const log = createLogger(options.log);
   log.warn(
     "[@octokit/webhooks] `createWebhooksApi()` is deprecated and will be removed in a future release of `@octokit/webhooks`, please use the `Webhooks` class instead"
