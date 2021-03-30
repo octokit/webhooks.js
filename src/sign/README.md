@@ -3,9 +3,9 @@
 The `sign` method can be used as a standalone method.
 
 ```js
-const { sign } = require('@octokit/webhooks')
-const signature = sign(secret, eventPayload)
-const signature = sign({ secret, algorithm }, eventPayload)
+const { sign } = require("@octokit/webhooks");
+const signature = sign(secret, eventPayload);
+const signature = sign({ secret, algorithm }, eventPayload);
 // string like "sha1=d03207e4b030cf234e3447bac4d93add4c6643d8"
 ```
 
@@ -32,8 +32,12 @@ const signature = sign({ secret, algorithm }, eventPayload)
       </em>
     </td>
     <td>
-      Algorithm to calculate signature. Can be set to `sha1` or `sha256`. Defaults to `sha1`.
-    </td>
+
+Algorithm to calculate signature. Can be set to `sha1` or `sha256`. `sha1` is supported for legacy reasons. GitHub Enterprise Server 2.22 and older do not send the `X-Hub-Signature-256` header. Defaults to `sha256`.
+
+Learn more at [Validating payloads from GitHub](https://docs.github.com/en/developers/webhooks-and-events/securing-your-webhooks#validating-payloads-from-github)
+
+</td>
   </tr>
   <tr>
     <td>
