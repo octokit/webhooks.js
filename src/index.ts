@@ -1,9 +1,6 @@
-import { IncomingMessage, ServerResponse } from "http";
 import { createLogger } from "./createLogger";
 import { createEventHandler } from "./event-handler/index";
-import { createMiddleware } from "./middleware-legacy/index";
-import { middleware } from "./middleware-legacy/middleware";
-import { verifyAndReceive } from "./middleware-legacy/verify-and-receive";
+import { verifyAndReceive } from "./verify-and-receive";
 import { sign } from "./sign/index";
 import {
   EmitterWebhookEvent,
@@ -37,15 +34,6 @@ class Webhooks<TTransformed = unknown> {
     options: EmitterWebhookEvent & { signature: string }
   ) => Promise<void>;
 
-  /**
-   * @deprecated use `createNodeMiddleware(webhooks)` instead
-   */
-  public middleware: (
-    request: IncomingMessage,
-    response: ServerResponse,
-    next?: (err?: any) => void
-  ) => void | Promise<void>;
-
   constructor(options: Options<TTransformed> & { secret: string }) {
     if (!options || !options.secret) {
       throw new Error("[@octokit/webhooks] options.secret required");
@@ -73,23 +61,11 @@ class Webhooks<TTransformed = unknown> {
     this.removeListener = state.eventHandler.removeListener;
     this.receive = state.eventHandler.receive;
     this.verifyAndReceive = verifyAndReceive.bind(null, state);
-
-    this.middleware = function deprecatedMiddleware(
-      request: IncomingMessage,
-      response: ServerResponse,
-      next?: (err?: any) => void
-    ) {
-      state.log.warn(
-        "[@octokit/webhooks] `webhooks.middleware` is deprecated and will be removed in a future release of `@octokit/webhooks`. Please use `createNodeMiddleware(webhooks)` instead"
-      );
-      return middleware(state, request, response, next);
-    };
   }
 }
 
 export {
   createEventHandler,
-  createMiddleware,
   Webhooks,
   EmitterWebhookEvent,
   WebhookError,

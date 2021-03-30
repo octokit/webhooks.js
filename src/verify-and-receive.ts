@@ -1,5 +1,5 @@
-import { EmitterWebhookEvent, State } from "../types";
-import { verify } from "../verify/index";
+import { EmitterWebhookEvent, State } from "./types";
+import { verify } from "./verify/index";
 
 export function verifyAndReceive(
   state: State & { secret: string },

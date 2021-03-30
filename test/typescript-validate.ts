@@ -1,11 +1,11 @@
 import {
   Webhooks,
   createEventHandler,
-  createMiddleware,
   sign,
   verify,
   EmitterWebhookEvent,
   WebhookError,
+  createNodeMiddleware,
 } from "../src/index";
 import { createServer } from "http";
 import { HandlerFunction, EmitterWebhookEventName } from "../src/types";
@@ -78,11 +78,6 @@ export default async function () {
   });
 
   createEventHandler({ secret: "blah" });
-
-  createMiddleware({
-    secret: "mysecret",
-    path: "/github-webhooks",
-  });
 
   sign("randomSecret", {});
   sign({ secret: "randomSecret" }, {});
@@ -193,7 +188,7 @@ export default async function () {
     console.log(firstError.request);
   });
 
-  createServer(webhooks.middleware).listen(3000);
+  createServer(createNodeMiddleware(webhooks)).listen(3000);
 }
 
 export function webhookErrorTest(error: WebhookError) {
