@@ -16,10 +16,10 @@ export function sign(
 ): string {
   const { secret, algorithm } =
     typeof options === "string"
-      ? { secret: options, algorithm: Algorithm.SHA1 }
+      ? { secret: options, algorithm: Algorithm.SHA256 }
       : {
           secret: options.secret,
-          algorithm: options.algorithm || Algorithm.SHA1,
+          algorithm: options.algorithm || Algorithm.SHA256,
         };
 
   if (!secret || !payload) {
