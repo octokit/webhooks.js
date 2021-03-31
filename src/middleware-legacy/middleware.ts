@@ -7,7 +7,7 @@ import { IncomingMessage, ServerResponse } from "http";
 import { State, WebhookEventHandlerError } from "../types";
 
 export function middleware(
-  state: State,
+  state: State & { secret: string },
   request: IncomingMessage,
   response: ServerResponse,
   next?: Function

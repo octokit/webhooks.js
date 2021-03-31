@@ -1,9 +1,9 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { createLogger } from "./createLogger";
 import { createEventHandler } from "./event-handler/index";
-import { createMiddleware } from "./middleware/index";
-import { middleware } from "./middleware/middleware";
-import { verifyAndReceive } from "./middleware/verify-and-receive";
+import { createMiddleware } from "./middleware-legacy/index";
+import { middleware } from "./middleware-legacy/middleware";
+import { verifyAndReceive } from "./middleware-legacy/verify-and-receive";
 import { sign } from "./sign/index";
 import {
   EmitterWebhookEvent,
@@ -15,6 +15,8 @@ import {
   WebhookEventHandlerError,
 } from "./types";
 import { verify } from "./verify/index";
+
+export { createNodeMiddleware } from "./middleware/node/index";
 
 // U holds the return value of `transform` function in Options
 class Webhooks<TTransformed = unknown> {
@@ -31,27 +33,37 @@ class Webhooks<TTransformed = unknown> {
     callback: HandlerFunction<E, TTransformed>
   ) => void;
   public receive: (event: EmitterWebhookEvent) => Promise<void>;
+  public verifyAndReceive: (
+    options: EmitterWebhookEvent & { signature: string }
+  ) => Promise<void>;
+
+  /**
+   * @deprecated use `createNodeMiddleware(webhooks)` instead
+   */
   public middleware: (
     request: IncomingMessage,
     response: ServerResponse,
     next?: (err?: any) => void
   ) => void | Promise<void>;
-  public verifyAndReceive: (
-    options: EmitterWebhookEvent & { signature: string }
-  ) => Promise<void>;
 
-  constructor(options: Options<TTransformed>) {
+  constructor(options: Options<TTransformed> & { secret: string }) {
     if (!options || !options.secret) {
       throw new Error("[@octokit/webhooks] options.secret required");
     }
 
-    const state: State = {
+    const state: State & { secret: string } = {
       eventHandler: createEventHandler(options),
       path: options.path || "/",
       secret: options.secret,
       hooks: {},
       log: createLogger(options.log),
     };
+
+    if ("path" in options) {
+      state.log.warn(
+        "[@octokit/webhooks] `path` option is deprecated and will be removed in a future release of `@octokit/webhooks`. Please use `createNodeMiddleware(webhooks, { path })` instead"
+      );
+    }
 
     this.sign = sign.bind(null, options.secret);
     this.verify = verify.bind(null, options.secret);
@@ -60,14 +72,27 @@ class Webhooks<TTransformed = unknown> {
     this.onError = state.eventHandler.onError;
     this.removeListener = state.eventHandler.removeListener;
     this.receive = state.eventHandler.receive;
-    this.middleware = middleware.bind(null, state);
     this.verifyAndReceive = verifyAndReceive.bind(null, state);
+
+    this.middleware = function deprecatedMiddleware(
+      request: IncomingMessage,
+      response: ServerResponse,
+      next?: (err?: any) => void
+    ) {
+      state.log.warn(
+        "[@octokit/webhooks] `webhooks.middleware` is deprecated and will be removed in a future release of `@octokit/webhooks`. Please use `createNodeMiddleware(webhooks)` instead"
+      );
+      return middleware(state, request, response, next);
+    };
   }
 }
 
 /** @deprecated `createWebhooksApi()` is deprecated and will be removed in a future release of `@octokit/webhooks`, please use the `Webhooks` class instead */
-const createWebhooksApi = <TTransformed>(options: Options<TTransformed>) => {
-  console.error(
+const createWebhooksApi = <TTransformed>(
+  options: Options<TTransformed> & { secret: string }
+) => {
+  const log = createLogger(options.log);
+  log.warn(
     "[@octokit/webhooks] `createWebhooksApi()` is deprecated and will be removed in a future release of `@octokit/webhooks`, please use the `Webhooks` class instead"
   );
   return new Webhooks<TTransformed>(options);

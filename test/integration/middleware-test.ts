@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
 import { Buffer } from "buffer";
-import { createMiddleware } from "../../src/middleware";
+import { createMiddleware } from "../../src/middleware-legacy";
 
 enum RequestMethodType {
   POST = "POST",

@@ -29,6 +29,9 @@ describe("server-test", () => {
   test("GET /", (t) => {
     const api = new Webhooks({
       secret: "mysecret",
+      log: {
+        warn: () => {},
+      },
     });
     const server = http.createServer(api.middleware);
 
@@ -55,6 +58,9 @@ describe("server-test", () => {
 
     const api = new Webhooks({
       secret: "mysecret",
+      log: {
+        warn: () => {},
+      },
     });
     const server = http.createServer(api.middleware);
 
@@ -94,6 +100,9 @@ describe("server-test", () => {
 
     const api = new Webhooks({
       secret: "mysecret",
+      log: {
+        warn: () => {},
+      },
     });
     const server = http.createServer(api.middleware);
 
@@ -132,6 +141,9 @@ describe("server-test", () => {
 
     const api = new Webhooks({
       secret: "mysecret",
+      log: {
+        warn: () => {},
+      },
     });
     const server = http.createServer(api.middleware);
 
@@ -172,6 +184,9 @@ describe("server-test", () => {
 
     const api = new Webhooks({
       secret: "mysecret",
+      log: {
+        warn: () => {},
+      },
     });
     const dataChunks: any[] = [];
     let timeout: NodeJS.Timeout;
@@ -224,6 +239,9 @@ describe("server-test", () => {
   test("POST / with push event payload (no signature)", (t) => {
     const api = new Webhooks({
       secret: "mysecret",
+      log: {
+        warn: () => {},
+      },
     });
     const server = http.createServer(api.middleware);
     const errorHandler = jest.fn();
@@ -262,6 +280,9 @@ describe("server-test", () => {
   test("POST / with push event payload (invalid signature)", (t) => {
     const api = new Webhooks({
       secret: "mysecret",
+      log: {
+        warn: () => {},
+      },
     });
     const server = http.createServer(api.middleware);
     const errorHandler = jest.fn();
@@ -302,6 +323,9 @@ describe("server-test", () => {
   test("POST / with hook error", (t) => {
     const api = new Webhooks({
       secret: "mysecret",
+      log: {
+        warn: () => {},
+      },
     });
     const server = http.createServer(api.middleware);
 
@@ -345,6 +369,9 @@ describe("server-test", () => {
 
     const api = new Webhooks({
       secret: "mysecret",
+      log: {
+        warn: () => {},
+      },
     });
     const server = http.createServer(api.middleware);
     const tenSecondsInMs = 10 * 1000;

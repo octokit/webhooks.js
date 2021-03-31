@@ -19,6 +19,7 @@ export function verify(
 
   const signatureBuffer = Buffer.from(signature);
   const algorithm = getAlgorithm(signature);
+
   const verificationBuffer = Buffer.from(
     sign({ secret, algorithm }, eventPayload)
   );

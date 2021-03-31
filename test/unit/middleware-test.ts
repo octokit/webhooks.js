@@ -1,10 +1,10 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { middleware } from "../../src/middleware/middleware";
-import { getPayload } from "../../src/middleware/get-payload";
-import { verifyAndReceive } from "../../src/middleware/verify-and-receive";
+import { middleware } from "../../src/middleware-legacy/middleware";
+import { getPayload } from "../../src/middleware-legacy/get-payload";
+import { verifyAndReceive } from "../../src/middleware-legacy/verify-and-receive";
 
-jest.mock("../../src/middleware/get-payload");
-jest.mock("../../src/middleware/verify-and-receive");
+jest.mock("../../src/middleware-legacy/get-payload");
+jest.mock("../../src/middleware-legacy/verify-and-receive");
 
 const mockGetPayload = getPayload as jest.Mock;
 const mockVerifyAndReceive = verifyAndReceive as jest.Mock;
@@ -20,6 +20,7 @@ test("next() callback", () => {
 
   middleware(
     {
+      secret: "mysecret",
       hooks: {},
       log: console,
     },
@@ -45,7 +46,7 @@ describe("when does a timeout on retrieving the payload", () => {
     mockVerifyAndReceive.mockResolvedValueOnce(undefined);
 
     const promiseMiddleware = middleware(
-      { hooks: {}, path: "/foo", log: console },
+      { secret: "mysecret", hooks: {}, path: "/foo", log: console },
       ({
         method: "POST",
         url: "/foo",
@@ -78,7 +79,7 @@ describe("when does a timeout on retrieving the payload", () => {
     mockVerifyAndReceive.mockRejectedValueOnce(new Error("random error"));
 
     const promiseMiddleware = middleware(
-      { hooks: {}, path: "/foo", log: console },
+      { secret: "mysecret", hooks: {}, path: "/foo", log: console },
       ({
         method: "POST",
         url: "/foo",
