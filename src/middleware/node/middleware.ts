@@ -5,7 +5,6 @@ import { WebhookEventName } from "@octokit/webhooks-definitions/schema";
 import { Webhooks } from "../../index";
 import { WebhookEventHandlerError } from "../../types";
 import { MiddlewareOptions } from "./types";
-import { onUnhandledRequestDefault } from "./on-unhandled-request-default";
 import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
 
@@ -21,8 +20,7 @@ export async function middleware(
   const isUnknownRoute = request.method !== "POST" || pathname !== options.path;
   const isExpressMiddleware = typeof next === "function";
   if (!isExpressMiddleware && isUnknownRoute) {
-    options.log.debug(`not found: ${request.method} ${request.url}`);
-    return onUnhandledRequestDefault(request, response);
+    return options.onUnhandledRequest(request, response);
   }
 
   const missingHeaders = getMissingHeaders(request).join(", ");
