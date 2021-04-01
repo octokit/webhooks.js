@@ -5,7 +5,7 @@ import { IncomingMessage } from "http";
 
 declare module "http" {
   interface IncomingMessage {
-    body?: WebhookEvent;
+    body?: WebhookEvent | unknown;
   }
 }
 
@@ -13,7 +13,7 @@ export function getPayload(request: IncomingMessage): Promise<WebhookEvent> {
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
 
-  if (request.body) return Promise.resolve(request.body);
+  if (request.body) return Promise.resolve(request.body as WebhookEvent);
 
   return new Promise((resolve, reject) => {
     let data = "";
