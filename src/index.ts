@@ -1,7 +1,8 @@
+import { sign, verify } from "@octokit/webhooks-methods";
+
 import { createLogger } from "./createLogger";
 import { createEventHandler } from "./event-handler/index";
 import { verifyAndReceive } from "./verify-and-receive";
-import { sign } from "./sign/index";
 import {
   EmitterWebhookEvent,
   EmitterWebhookEventName,
@@ -11,14 +12,16 @@ import {
   WebhookError,
   WebhookEventHandlerError,
 } from "./types";
-import { verify } from "./verify/index";
 
 export { createNodeMiddleware } from "./middleware/node/index";
 
 // U holds the return value of `transform` function in Options
 class Webhooks<TTransformed = unknown> {
-  public sign: (payload: string | object) => string;
-  public verify: (eventPayload: string | object, signature: string) => boolean;
+  public sign: (payload: string | object) => Promise<string>;
+  public verify: (
+    eventPayload: string | object,
+    signature: string
+  ) => Promise<boolean>;
   public on: <E extends EmitterWebhookEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
@@ -57,11 +60,4 @@ class Webhooks<TTransformed = unknown> {
   }
 }
 
-export {
-  createEventHandler,
-  Webhooks,
-  EmitterWebhookEvent,
-  WebhookError,
-  sign,
-  verify,
-};
+export { createEventHandler, Webhooks, EmitterWebhookEvent, WebhookError };

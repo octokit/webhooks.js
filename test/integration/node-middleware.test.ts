@@ -1,19 +1,24 @@
 import { createServer } from "http";
 
 import fetch from "node-fetch";
+import { sign } from "@octokit/webhooks-methods";
 
 // import without types
 const express = require("express");
 
-import { Webhooks, createNodeMiddleware, sign } from "../../src";
+import { Webhooks, createNodeMiddleware } from "../../src";
 import { pushEventPayload } from "../fixtures";
 
-const signatureSha256 = sign(
-  { secret: "mySecret", algorithm: "sha256" },
-  JSON.stringify(pushEventPayload)
-);
+let signatureSha256: string;
 
 describe("createNodeMiddleware(webhooks)", () => {
+  beforeAll(async () => {
+    signatureSha256 = await sign(
+      { secret: "mySecret", algorithm: "sha256" },
+      JSON.stringify(pushEventPayload)
+    );
+  });
+
   test("README example", async () => {
     expect.assertions(3);
 
