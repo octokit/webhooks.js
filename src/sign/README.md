@@ -6,7 +6,7 @@ The `sign` method can be used as a standalone method.
 const { sign } = require("@octokit/webhooks");
 const signature = sign(secret, eventPayload);
 const signature = sign({ secret, algorithm }, eventPayload);
-// string like "sha1=d03207e4b030cf234e3447bac4d93add4c6643d8"
+// string like "sha256=4864d2759938a15468b5df9ade20bf161da9b4f737ea61794142f3484236bda3"
 ```
 
 <table width="100%">
