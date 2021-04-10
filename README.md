@@ -173,7 +173,7 @@ webhooks.sign(eventPayload);
 
 Returns a `signature` string. Throws error if `eventPayload` is not passed.
 
-Can also be used [standalone](src/sign/).
+The `sign` method can be imported as static method from [`@octokit/webhooks-methods`](https://github.com/octokit/webhooks-methods.js/#readme).
 
 ### webhooks.verify()
 
@@ -216,7 +216,7 @@ webhooks.verify(eventPayload, signature);
 
 Returns `true` or `false`. Throws error if `eventPayload` or `signature` not passed.
 
-Can also be used [standalone](src/verify/).
+The `verify` method can be imported as static method from [`@octokit/webhooks-methods`](https://github.com/octokit/webhooks-methods.js/#readme).
 
 ### webhooks.verifyAndReceive()
 
