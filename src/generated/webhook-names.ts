@@ -39,7 +39,7 @@ export const emitterEventNames = [
   "discussion.edited",
   "discussion.locked",
   "discussion.pinned",
-  "discussion.transfered",
+  "discussion.transferred",
   "discussion.unanswered",
   "discussion.unlocked",
   "discussion.unpinned",
