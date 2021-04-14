@@ -306,7 +306,7 @@ eventHandler
     id: request.headers["x-github-delivery"],
     name: request.headers["x-github-event"],
     payload: request.body,
-    signature: request.headers["x-hub-signature"],
+    signature: request.headers["x-hub-signature-256"],
   })
   .catch(handleErrorsFromHooks);
 ```
