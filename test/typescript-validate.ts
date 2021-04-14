@@ -1,11 +1,9 @@
 import {
   Webhooks,
   createEventHandler,
-  createMiddleware,
-  sign,
-  verify,
   EmitterWebhookEvent,
   WebhookError,
+  createNodeMiddleware,
 } from "../src/index";
 import { createServer } from "http";
 import { HandlerFunction, EmitterWebhookEventName } from "../src/types";
@@ -70,7 +68,6 @@ export default async function () {
   // Check all supported options
   const webhooks = new Webhooks({
     secret: "blah",
-    path: "/webhooks",
     transform: (event) => {
       console.log(event.payload);
       return Object.assign(event, { foo: "bar" });
@@ -79,21 +76,9 @@ export default async function () {
 
   createEventHandler({ secret: "blah" });
 
-  createMiddleware({
-    secret: "mysecret",
-    path: "/github-webhooks",
-  });
-
-  sign("randomSecret", {});
-  sign({ secret: "randomSecret" }, {});
-  sign({ secret: "randomSecret", algorithm: "sha1" }, {});
-  sign({ secret: "randomSecret", algorithm: "sha256" }, {});
-
-  verify("randomSecret", {}, "randomSignature");
-
-  webhooks.onAny(({ id, name, payload }) => {
+  webhooks.onAny(async ({ id, name, payload }) => {
     console.log(name, "event received", id);
-    const sig = webhooks.sign(payload);
+    const sig = await webhooks.sign(payload);
     webhooks.verify(payload, sig);
   });
 
@@ -193,7 +178,7 @@ export default async function () {
     console.log(firstError.request);
   });
 
-  createServer(webhooks.middleware).listen(3000);
+  createServer(createNodeMiddleware(webhooks)).listen(3000);
 }
 
 export function webhookErrorTest(error: WebhookError) {

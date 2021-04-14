@@ -1,19 +1,24 @@
 import { createServer } from "http";
 
 import fetch from "node-fetch";
+import { sign } from "@octokit/webhooks-methods";
 
 // import without types
 const express = require("express");
 
-import { Webhooks, createNodeMiddleware, sign } from "../../src";
+import { Webhooks, createNodeMiddleware } from "../../src";
 import { pushEventPayload } from "../fixtures";
 
-const signatureSha256 = sign(
-  { secret: "mySecret", algorithm: "sha256" },
-  JSON.stringify(pushEventPayload)
-);
+let signatureSha256: string;
 
 describe("createNodeMiddleware(webhooks)", () => {
+  beforeAll(async () => {
+    signatureSha256 = await sign(
+      { secret: "mySecret", algorithm: "sha256" },
+      JSON.stringify(pushEventPayload)
+    );
+  });
+
   test("README example", async () => {
     expect.assertions(3);
 
@@ -61,6 +66,7 @@ describe("createNodeMiddleware(webhooks)", () => {
     const server = createServer((req, res) => {
       req.once("data", (chunk) => dataChunks.push(chunk));
       req.once("end", () => {
+        // @ts-expect-error - TS2339: Property 'body' does not exist on type 'IncomingMessage'.
         req.body = JSON.parse(Buffer.concat(dataChunks).toString());
         middleware(req, res);
       });

@@ -1,12 +1,17 @@
-import { EmitterWebhookEvent, State } from "../types";
-import { verify } from "../verify/index";
+import { verify } from "@octokit/webhooks-methods";
 
-export function verifyAndReceive(
+import { EmitterWebhookEvent, State } from "./types";
+
+export async function verifyAndReceive(
   state: State & { secret: string },
   event: EmitterWebhookEvent & { signature: string }
-): any {
+): Promise<any> {
   // verify will validate that the secret is not undefined
-  const matchesSignature = verify(state.secret, event.payload, event.signature);
+  const matchesSignature = await verify(
+    state.secret,
+    event.payload,
+    event.signature
+  );
 
   if (!matchesSignature) {
     const error = new Error(

@@ -1,4 +1,7 @@
-import { IncomingMessage } from "http";
+// remove type imports from http for Deno compatibility
+// see https://github.com/octokit/octokit.js/issues/24#issuecomment-817361886
+// import { IncomingMessage } from "http";
+type IncomingMessage = any;
 
 const WEBHOOK_HEADERS = [
   "x-github-event",
