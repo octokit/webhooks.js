@@ -66,6 +66,7 @@ describe("createNodeMiddleware(webhooks)", () => {
     const server = createServer((req, res) => {
       req.once("data", (chunk) => dataChunks.push(chunk));
       req.once("end", () => {
+        // @ts-expect-error - TS2339: Property 'body' does not exist on type 'IncomingMessage'.
         req.body = JSON.parse(Buffer.concat(dataChunks).toString());
         middleware(req, res);
       });
