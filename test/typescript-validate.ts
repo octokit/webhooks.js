@@ -1,8 +1,6 @@
 import {
   Webhooks,
   createEventHandler,
-  sign,
-  verify,
   EmitterWebhookEvent,
   WebhookError,
   createNodeMiddleware,
@@ -78,16 +76,9 @@ export default async function () {
 
   createEventHandler({ secret: "blah" });
 
-  sign("randomSecret", {});
-  sign({ secret: "randomSecret" }, {});
-  sign({ secret: "randomSecret", algorithm: "sha1" }, {});
-  sign({ secret: "randomSecret", algorithm: "sha256" }, {});
-
-  verify("randomSecret", {}, "randomSignature");
-
-  webhooks.onAny(({ id, name, payload }) => {
+  webhooks.onAny(async ({ id, name, payload }) => {
     console.log(name, "event received", id);
-    const sig = webhooks.sign(payload);
+    const sig = await webhooks.sign(payload);
     webhooks.verify(payload, sig);
   });
 
