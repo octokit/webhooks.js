@@ -385,6 +385,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       body: JSON.stringify(pushEventPayload),
     });
 
+    await expect(response.text()).resolves.toContain("Cannot POST /test");
     expect(response.status).toEqual(404);
 
     server.close();
