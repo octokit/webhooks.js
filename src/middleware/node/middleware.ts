@@ -25,7 +25,7 @@ export async function middleware(
   const isExpressMiddleware = typeof next === "function";
   if (isUnknownRoute) {
     if (isExpressMiddleware) {
-      return next && next();
+      return next!();
     } else {
       return options.onUnhandledRequest(request, response);
     }
