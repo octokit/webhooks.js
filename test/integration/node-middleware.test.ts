@@ -362,6 +362,34 @@ describe("createNodeMiddleware(webhooks)", () => {
     server.close();
   });
 
+  test("express middleware no next", async () => {
+    const app = express();
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    app.all("/foo", (_request: any, response: any) => response.end("ok\n"));
+    app.post("/test", createNodeMiddleware(webhooks));
+
+    const server = app.listen();
+
+    const { port } = server.address();
+
+    const response = await fetch(`http://localhost:${port}/test`, {
+      method: "POST",
+      headers: {
+        "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+        "X-GitHub-Event": "push",
+        "X-Hub-Signature-256": signatureSha256,
+      },
+      body: JSON.stringify(pushEventPayload),
+    });
+
+    expect(response.status).toEqual(404);
+
+    server.close();
+  });
+
   test("express middleware match options.path", async () => {
     const app = express();
     const webhooks = new Webhooks({
