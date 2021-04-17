@@ -23,8 +23,12 @@ export async function middleware(
 
   const isUnknownRoute = request.method !== "POST" || pathname !== options.path;
   const isExpressMiddleware = typeof next === "function";
-  if (!isExpressMiddleware && isUnknownRoute) {
-    return options.onUnhandledRequest(request, response);
+  if (isUnknownRoute) {
+    if (isExpressMiddleware) {
+      return next!();
+    } else {
+      return options.onUnhandledRequest(request, response);
+    }
   }
 
   const missingHeaders = getMissingHeaders(request).join(", ");
