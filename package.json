@@ -32,7 +32,7 @@
     "@pika/plugin-ts-standard-pkg": "^0.9.2",
     "@types/jest": "^26.0.9",
     "@types/json-schema": "^7.0.7",
-    "@types/node": "^14.0.14",
+    "@types/node": "^14.14.37",
     "@types/node-fetch": "^2.5.8",
     "@types/prettier": "^2.0.0",
     "axios": "^0.21.0",
