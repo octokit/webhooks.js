@@ -13,9 +13,14 @@ jobs:
       - run: npm ci
       - uses: gr2m/await-npm-package-version-action@v1
         with:
-          package: "@octokit/webhooks-definitions"
+          package: "@octokit/webhooks-schemas"
           version: ${{ github.event.client_payload.release.tag_name }}
-      - run: npm install --save-exact @octokit/webhooks-definitions@latest
+      - run: npm install --save-exact --save-dev @octokit/webhooks-schemas@latest
+      - uses: gr2m/await-npm-package-version-action@v1
+        with:
+          package: "@octokit/webhooks-types"
+          version: ${{ github.event.client_payload.release.tag_name }}
+      - run: npm install --save-exact @octokit/webhooks-types@latest
       - run: npm run generate-types
       - name: create pull request
         uses: gr2m/create-or-update-pull-request-action@v1.x
