@@ -12,7 +12,7 @@ interface Schema extends JSONSchema7 {
   oneOf: JSONSchemaWithRef[];
 }
 
-const schema = require("@octokit/webhooks-definitions/schema.json") as Schema;
+const schema = require("@octokit/webhooks-schemas") as Schema;
 
 const guessAtEventName = (name: string) => {
   const [, eventName] = /^(.+)[$_-]event/u.exec(name) ?? [];
