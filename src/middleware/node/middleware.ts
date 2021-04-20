@@ -4,7 +4,7 @@
 type IncomingMessage = any;
 type ServerResponse = any;
 
-import { WebhookEventName } from "@octokit/webhooks-definitions/schema";
+import { WebhookEventName } from "@octokit/webhooks-types";
 
 import { Webhooks } from "../../index";
 import { WebhookEventHandlerError } from "../../types";

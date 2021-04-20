@@ -2,7 +2,7 @@ import { RequestError } from "@octokit/request-error";
 import type {
   WebhookEventMap,
   WebhookEventName,
-} from "@octokit/webhooks-definitions/schema";
+} from "@octokit/webhooks-types";
 import { Logger } from "./createLogger";
 import type { emitterEventNames } from "./generated/webhook-names";
 

@@ -1,4 +1,4 @@
-import { WebhookEvent } from "@octokit/webhooks-definitions/schema";
+import { WebhookEvent } from "@octokit/webhooks-types";
 // @ts-ignore to address #245
 import AggregateError from "aggregate-error";
 

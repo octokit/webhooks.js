@@ -2,7 +2,7 @@ import {
   InstallationCreatedEvent,
   InstallationDeletedEvent,
   PushEvent,
-} from "@octokit/webhooks-definitions/schema";
+} from "@octokit/webhooks-types";
 import pushEvent from "./push-payload.json";
 import installationCreatedEvent from "./installation-created-payload.json";
 import installationDeletedEvent from "./installation-deleted-payload.json";
