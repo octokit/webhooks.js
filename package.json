@@ -20,7 +20,7 @@
   "dependencies": {
     "@octokit/request-error": "^2.0.2",
     "@octokit/webhooks-methods": "^1.0.0",
-    "@octokit/webhooks-types": "3.69.1",
+    "@octokit/webhooks-types": "3.69.2",
     "aggregate-error": "^3.1.0"
   },
   "devDependencies": {
