@@ -82,7 +82,8 @@
       "github>octokit/.github"
     ],
     "ignoreDeps": [
-      "@octokit/webhooks-definitions"
+      "@octokit/webhooks-schemas",
+      "@octokit/webhooks-types"
     ]
   }
 }
