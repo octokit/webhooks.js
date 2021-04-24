@@ -11,8 +11,10 @@ export function wrapErrorHandler(handler: Function, error: Error) {
     console.log(error);
   }
 
-  returnValue?.catch?.((error: Error) => {
-    console.log('FATAL: Error occurred in "error" event handler');
-    console.log(error);
-  });
+  if (returnValue && returnValue.catch) {
+    returnValue.catch((error: Error) => {
+      console.log('FATAL: Error occurred in "error" event handler');
+      console.log(error);
+    });
+  }
 }
