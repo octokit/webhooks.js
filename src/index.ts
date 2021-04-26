@@ -1,7 +1,7 @@
-import { createLogger } from "./createLogger";
-import { createEventHandler } from "./event-handler/index";
+import { createLogger } from "./createLogger.js";
+import { createEventHandler } from "./event-handler/index.js";
 import { sign, verify } from "@octokit/webhooks-methods";
-import { verifyAndReceive } from "./verify-and-receive";
+import { verifyAndReceive } from "./verify-and-receive.js";
 import type {
   EmitterWebhookEvent,
   EmitterWebhookEventName,
@@ -12,10 +12,10 @@ import type {
   WebhookError,
   WebhookEventHandlerError,
   EmitterWebhookEventWithStringPayloadAndSignature,
-} from "./types";
+} from "./types.ts";
 
-export { createNodeMiddleware } from "./middleware/node/index";
-export { emitterEventNames } from "./generated/webhook-names";
+export { createNodeMiddleware } from "./middleware/node/index.js";
+export { emitterEventNames } from "./generated/webhook-names.js";
 
 // U holds the return value of `transform` function in Options
 class Webhooks<TTransformed = unknown> {
