@@ -20,13 +20,13 @@
   "dependencies": {
     "@octokit/request-error": "^2.0.2",
     "@octokit/webhooks-methods": "^1.0.0",
-    "@octokit/webhooks-types": "3.71.0",
+    "@octokit/webhooks-types": "3.72.0",
     "aggregate-error": "^3.1.0"
   },
   "devDependencies": {
     "@jest/types": "^26.6.2",
     "@octokit/tsconfig": "^1.0.1",
-    "@octokit/webhooks-schemas": "3.71.0",
+    "@octokit/webhooks-schemas": "3.72.0",
     "@pika/pack": "^0.5.0",
     "@pika/plugin-build-node": "^0.9.2",
     "@pika/plugin-build-web": "^0.9.2",
