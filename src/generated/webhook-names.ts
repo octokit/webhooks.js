@@ -198,6 +198,7 @@ export const emitterEventNames = [
   "security_advisory.performed",
   "security_advisory.published",
   "security_advisory.updated",
+  "security_advisory.withdrawn",
   "sponsorship",
   "sponsorship.cancelled",
   "sponsorship.created",
