@@ -63,7 +63,8 @@ export interface WebhookEventHandlerError extends AggregateError<WebhookError> {
  */
 declare class AggregateError<T extends Error = Error>
   extends Error
-  implements Iterable<T> {
+  implements Iterable<T>
+{
   readonly name: "AggregateError";
   constructor(errors: ReadonlyArray<T | { [key: string]: any } | string>);
 

@@ -12,5 +12,7 @@ import installationDeletedEvent from "./installation-deleted-payload.json";
 // @see https://github.com/microsoft/TypeScript/issues/32063
 
 export const pushEventPayload = pushEvent as PushEvent;
-export const installationCreatedPayload = installationCreatedEvent as InstallationCreatedEvent;
-export const installationDeletedPayload = installationDeletedEvent as InstallationDeletedEvent;
+export const installationCreatedPayload =
+  installationCreatedEvent as InstallationCreatedEvent;
+export const installationDeletedPayload =
+  installationDeletedEvent as InstallationDeletedEvent;
