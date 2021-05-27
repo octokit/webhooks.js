@@ -694,7 +694,7 @@ If there are actions for a webhook, events are emitted for both, the webhook nam
 
 ## TypeScript
 
-The types for the webhook payloads are sourced from `@octokit/webhooks-definitions`,
+The types for the webhook payloads are sourced from [`@octokit/webhooks-types`](https://github.com/octokit/webhooks/tree/master/payload-types),
 which can be used by themselves.
 
 In addition to these types, `@octokit/webhooks` exports 2 types specific to itself:
