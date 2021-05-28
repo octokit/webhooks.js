@@ -11,7 +11,10 @@ function handleEventHandlers(
   webhookName: EmitterWebhookEventName | "error" | "*",
   handler: Function
 ) {
-  state.hooks[webhookName] ||= [];
+  if (!state.hooks[webhookName]) {
+    state.hooks[webhookName] = [];
+  }
+
   state.hooks[webhookName].push(handler);
 }
 export function receiverOn(
