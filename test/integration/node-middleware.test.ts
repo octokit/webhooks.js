@@ -19,6 +19,10 @@ describe("createNodeMiddleware(webhooks)", () => {
     );
   });
 
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   test("README example", async () => {
     expect.assertions(3);
 
