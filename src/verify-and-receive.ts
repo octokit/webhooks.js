@@ -1,10 +1,16 @@
 import { verify } from "@octokit/webhooks-methods";
 
-import { EmitterWebhookEvent, State } from "./types";
+import {
+  EmitterWebhookEventWithStringPayloadAndSignature,
+  EmitterWebhookEventWithSignature,
+  State,
+} from "./types";
 
 export async function verifyAndReceive(
   state: State & { secret: string },
-  event: EmitterWebhookEvent & { signature: string }
+  event:
+    | EmitterWebhookEventWithStringPayloadAndSignature
+    | EmitterWebhookEventWithSignature
 ): Promise<any> {
   // verify will validate that the secret is not undefined
   const matchesSignature = await verify(
@@ -26,6 +32,9 @@ export async function verifyAndReceive(
   return state.eventHandler.receive({
     id: event.id,
     name: event.name,
-    payload: event.payload,
+    payload:
+      typeof event.payload === "string"
+        ? JSON.parse(event.payload)
+        : event.payload,
   });
 }
