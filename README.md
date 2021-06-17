@@ -189,7 +189,7 @@ webhooks.verify(eventPayload, signature);
           eventPayload
         </code>
         <em>
-          (Object)
+          (Object or String)
         </em>
       </td>
       <td>
