@@ -1,7 +1,7 @@
-import { sign, verify } from "@octokit/webhooks-methods";
-
 import { createLogger } from "./createLogger";
 import { createEventHandler } from "./event-handler/index";
+import { sign } from "./sign";
+import { verify } from "./verify";
 import { verifyAndReceive } from "./verify-and-receive";
 import {
   EmitterWebhookEvent,
