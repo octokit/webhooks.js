@@ -1,4 +1,13 @@
+import { readFileSync } from "fs";
+
+import { sign } from "@octokit/webhooks-methods";
+
 import { Webhooks, EmitterWebhookEvent } from "../../src";
+
+const pushEventPayloadString = readFileSync(
+  "test/fixtures/push-payload.json",
+  "utf-8"
+);
 
 describe("Webhooks", () => {
   test("new Webhooks() without secret option", () => {
@@ -6,6 +15,31 @@ describe("Webhooks", () => {
     expect(() => new Webhooks()).toThrow(
       "[@octokit/webhooks] options.secret required"
     );
+  });
+
+  test("webhooks.verify(payload, signature) with string payload", async () => {
+    const secret = "mysecret";
+    const webhooks = new Webhooks({ secret });
+
+    await webhooks.verify(
+      pushEventPayloadString,
+      await sign({ secret, algorithm: "sha256" }, pushEventPayloadString)
+    );
+  });
+
+  test("webhooks.verifyAndReceive({ ...event, signature }) with string payload", async () => {
+    const secret = "mysecret";
+    const webhooks = new Webhooks({ secret });
+
+    await webhooks.verifyAndReceive({
+      id: "1",
+      name: "push",
+      payload: pushEventPayloadString,
+      signature: await sign(
+        { secret, algorithm: "sha256" },
+        pushEventPayloadString
+      ),
+    });
   });
 
   test("webhooks.verifyAndReceive(event) with incorrect signature", async () => {
