@@ -15,6 +15,17 @@ export type EmitterWebhookEvent<
     }
   : BaseWebhookEvent<Extract<TEmitterEvent, WebhookEventName>>;
 
+export type EmitterWebhookEventWithStringPayloadAndSignature = {
+  id: string;
+  name: EmitterWebhookEventName;
+  payload: string;
+  signature: string;
+};
+
+export type EmitterWebhookEventWithSignature = EmitterWebhookEvent & {
+  signature: string;
+};
+
 interface BaseWebhookEvent<TName extends WebhookEventName> {
   id: string;
   name: TName;

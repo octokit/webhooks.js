@@ -11,6 +11,8 @@ import {
   State,
   WebhookError,
   WebhookEventHandlerError,
+  EmitterWebhookEventWithStringPayloadAndSignature,
+  EmitterWebhookEventWithSignature,
 } from "./types";
 
 export { createNodeMiddleware } from "./middleware/node/index";
@@ -34,7 +36,9 @@ class Webhooks<TTransformed = unknown> {
   ) => void;
   public receive: (event: EmitterWebhookEvent) => Promise<void>;
   public verifyAndReceive: (
-    options: EmitterWebhookEvent & { signature: string }
+    options:
+      | EmitterWebhookEventWithStringPayloadAndSignature
+      | EmitterWebhookEventWithSignature
   ) => Promise<void>;
 
   constructor(options: Options<TTransformed> & { secret: string }) {
