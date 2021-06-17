@@ -260,7 +260,7 @@ webhooks.verifyAndReceive({ id, name, payload, signature });
           payload
         </code>
         <em>
-          Object
+          Object or String
         </em>
       </td>
       <td>
