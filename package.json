@@ -10,8 +10,8 @@
     "build": "pika build",
     "coverage": "jest --coverage && open coverage/lcov-report/index.html",
     "generate-types": "ts-node --transpile-only scripts/generate-types.ts",
-    "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
-    "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*' README.md package.json",
+    "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json",
+    "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json",
     "pretest": "npm run -s lint",
     "test": "jest --coverage",
     "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 --esModuleInterop --moduleResolution node test/typescript-validate.ts"
