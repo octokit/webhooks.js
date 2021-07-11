@@ -64,4 +64,10 @@ class Webhooks<TTransformed = unknown> {
   }
 }
 
-export { createEventHandler, Webhooks, EmitterWebhookEvent, EmitterWebhookEventName, WebhookError };
+export {
+  createEventHandler,
+  Webhooks,
+  EmitterWebhookEvent,
+  EmitterWebhookEventName,
+  WebhookError,
+};
