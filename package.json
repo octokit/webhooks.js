@@ -31,7 +31,7 @@
     "@pika/plugin-build-node": "^0.9.2",
     "@pika/plugin-build-web": "^0.9.2",
     "@pika/plugin-ts-standard-pkg": "^0.9.2",
-    "@types/jest": "^26.0.9",
+    "@types/jest": "^27.0.0",
     "@types/json-schema": "^7.0.7",
     "@types/node": "^14.0.14",
     "@types/node-fetch": "^2.5.8",
