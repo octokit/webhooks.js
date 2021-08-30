@@ -82,7 +82,7 @@ describe("when a handler throws an error", () => {
         name: "push",
         payload: pushEventPayload,
       });
-    } catch (error) {
+    } catch (error: any) {
       expect(error.message).toMatch(/oops/);
 
       const errors = Array.from(error);
@@ -186,7 +186,7 @@ test("multiple errors in same event handler", async () => {
       name: "push",
       payload: pushEventPayload,
     });
-  } catch (error) {
+  } catch (error: any) {
     expect(error.message).toMatch("oops");
     expect(Array.from(error).length).toBe(2);
 
