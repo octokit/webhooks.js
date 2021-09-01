@@ -30,7 +30,7 @@ class Webhooks<TTransformed = unknown> {
   ) => void;
   public onAny: (callback: (event: EmitterWebhookEvent) => any) => void;
   public onError: (callback: (event: WebhookEventHandlerError) => any) => void;
-  public removeListener: <E extends (EmitterWebhookEventName | '*')>(
+  public removeListener: <E extends EmitterWebhookEventName | "*">(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
   ) => void;
