@@ -41,9 +41,11 @@ export interface Options<TTransformed = unknown> {
 type TransformMethod<T> = (event: EmitterWebhookEvent) => T | PromiseLike<T>;
 
 export type HandlerFunction<
-  TName extends EmitterWebhookEventName,
+  TName extends EmitterWebhookEventName | "*",
   TTransformed
-> = (event: EmitterWebhookEvent<TName> & TTransformed) => any;
+> = TName extends "*"
+  ? (event: EmitterWebhookEvent & TTransformed) => any
+  : (event: EmitterWebhookEvent<Exclude<TName, "*">> & TTransformed) => any;
 
 type Hooks = {
   [key: string]: Function[];
