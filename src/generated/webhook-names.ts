@@ -2,6 +2,10 @@
 // make edits in scripts/generate-types.ts
 
 export const emitterEventNames = [
+  "branch_protection_rule",
+  "branch_protection_rule.created",
+  "branch_protection_rule.deleted",
+  "branch_protection_rule.edited",
   "check_run",
   "check_run.completed",
   "check_run.created",
