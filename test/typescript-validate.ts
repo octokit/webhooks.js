@@ -119,6 +119,11 @@ export default async function () {
     return Promise.resolve(10);
   });
 
+  webhooks.removeListener("*", async ({ id, name, payload }) => {
+    console.log(name, "event received", id);
+    const sig = await webhooks.sign(payload);
+    webhooks.verify(payload, sig);
+  });
   webhooks.removeListener("check_run.created", ({ name, payload }) => {
     console.log(payload.check_run.conclusion, name);
   });
