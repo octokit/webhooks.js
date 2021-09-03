@@ -25,11 +25,7 @@ test('require("@octokit/webhooks").createEventHandler', () => {
 });
 
 test('require("@octokit/webhooks").emitterEventNames', () => {
-  const emitWarningSpy = jest.spyOn(process, "emitWarning");
-
   const allEvents = emitterEventNames;
   expect(typeof allEvents).toBe("object");
   expect(typeof allEvents[0]).toBe("string");
-
-  expect(emitWarningSpy).not.toHaveBeenCalled();
 });
