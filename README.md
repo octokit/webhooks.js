@@ -698,8 +698,12 @@ If there are actions for a webhook, events are emitted for both, the webhook nam
 
 ### emitterEventNames
 
-The read only tuple containing all the possible webhook event names listed above.
-This might be useful in GUI and input validation.
+A read only tuple containing all the possible combinations of the webhook events + actions listed above. This might be useful in GUI and input validation.
+
+```js
+import { emitterEventNames } from "@octokit/webhooks";
+emitterEventNames // ["check_run", "check_run.completed", ...]
+```
 
 ## TypeScript
 
