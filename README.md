@@ -702,7 +702,7 @@ A read only tuple containing all the possible combinations of the webhook events
 
 ```js
 import { emitterEventNames } from "@octokit/webhooks";
-emitterEventNames // ["check_run", "check_run.completed", ...]
+emitterEventNames; // ["check_run", "check_run.completed", ...]
 ```
 
 ## TypeScript
