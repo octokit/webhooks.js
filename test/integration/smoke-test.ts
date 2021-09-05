@@ -1,4 +1,4 @@
-import { Webhooks, createEventHandler } from "../../src";
+import { Webhooks, createEventHandler, emitterEventNames } from "../../src";
 
 test("@octokit/webhooks", () => {
   const emitWarningSpy = jest.spyOn(process, "emitWarning");
@@ -22,4 +22,10 @@ test('require("@octokit/webhooks").createEventHandler', () => {
     createEventHandler({});
   }).not.toThrow();
   expect(emitWarningSpy).not.toHaveBeenCalled();
+});
+
+test('require("@octokit/webhooks").emitterEventNames', () => {
+  const allEvents = emitterEventNames;
+  expect(typeof allEvents).toBe("object");
+  expect(typeof allEvents[0]).toBe("string");
 });

@@ -2,6 +2,10 @@
 // make edits in scripts/generate-types.ts
 
 export const emitterEventNames = [
+  "branch_protection_rule",
+  "branch_protection_rule.created",
+  "branch_protection_rule.deleted",
+  "branch_protection_rule.edited",
   "check_run",
   "check_run.completed",
   "check_run.created",
@@ -222,6 +226,9 @@ export const emitterEventNames = [
   "watch",
   "watch.started",
   "workflow_dispatch",
+  "workflow_job",
+  "workflow_job.completed",
+  "workflow_job.started",
   "workflow_run",
   "workflow_run.completed",
   "workflow_run.requested",
