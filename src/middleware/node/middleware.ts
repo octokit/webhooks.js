@@ -95,6 +95,6 @@ export async function middleware(
 
     const statusCode = Array.from(error as WebhookEventHandlerError)[0].status;
     response.statusCode = typeof statusCode !== "undefined" ? statusCode : 500;
-    response.end(error.toString());
+    response.end(String(error));
   }
 }

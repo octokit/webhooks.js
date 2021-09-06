@@ -29,7 +29,7 @@ export function getPayload(request: IncomingMessage): Promise<WebhookEvent> {
     request.on("end", () => {
       try {
         resolve(JSON.parse(data));
-      } catch (error) {
+      } catch (error: any) {
         error.message = "Invalid JSON";
         error.status = 400;
         reject(new AggregateError([error]));
