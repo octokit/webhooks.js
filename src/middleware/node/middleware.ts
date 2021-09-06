@@ -19,7 +19,20 @@ export async function middleware(
   response: ServerResponse,
   next?: Function
 ) {
-  const { pathname } = new URL(request.url as string, "http://localhost");
+  let pathname: string;
+  try {
+    pathname = new URL(request.url as string, "http://localhost").pathname;
+  } catch (error) {
+    response.writeHead(422, {
+      "content-type": "application/json",
+    });
+    response.end(
+      JSON.stringify({
+        error: `Request URL could not be parsed: ${request.url}`,
+      })
+    );
+    return;
+  }
 
   const isUnknownRoute = request.method !== "POST" || pathname !== options.path;
   const isExpressMiddleware = typeof next === "function";

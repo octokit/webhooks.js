@@ -16,6 +16,7 @@ import {
 } from "./types";
 
 export { createNodeMiddleware } from "./middleware/node/index";
+export { emitterEventNames } from "./generated/webhook-names";
 
 // U holds the return value of `transform` function in Options
 class Webhooks<TTransformed = unknown> {

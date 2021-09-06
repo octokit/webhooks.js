@@ -458,4 +458,46 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     server.close();
   });
+
+  test("Handles invalid URL", async () => {
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    let middlewareWasRan: () => void;
+    const untilMiddlewareIsRan = new Promise<void>(function (resolve) {
+      middlewareWasRan = resolve;
+    });
+    const actualMiddleware = createNodeMiddleware(webhooks);
+    const mockedMiddleware = async function (
+      ...[req, ...rest]: Parameters<typeof actualMiddleware>
+    ) {
+      req.url = "//";
+      await actualMiddleware(req, ...rest);
+      middlewareWasRan();
+    };
+    const server = createServer(mockedMiddleware).listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "POST",
+        headers: {
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": signatureSha256,
+        },
+        body: pushEventPayload,
+      }
+    );
+
+    await untilMiddlewareIsRan;
+    expect(response.status).toEqual(422);
+    expect(await response.text()).toMatch(/Request URL could not be parsed/);
+
+    server.close();
+  });
 });
