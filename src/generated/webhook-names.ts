@@ -228,6 +228,7 @@ export const emitterEventNames = [
   "workflow_dispatch",
   "workflow_job",
   "workflow_job.completed",
+  "workflow_job.queued",
   "workflow_job.started",
   "workflow_run",
   "workflow_run.completed",
