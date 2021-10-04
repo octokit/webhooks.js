@@ -45,6 +45,11 @@ export type HandlerFunction<
   TTransformed
 > = (event: EmitterWebhookEvent<TName> & TTransformed) => any;
 
+export type RemoveHandlerFunction<
+  TName extends EmitterWebhookEventName | "*",
+  TTransformed
+> = (event: EmitterWebhookEvent<Exclude<TName, "*">> & TTransformed) => any;
+
 type Hooks = {
   [key: string]: Function[];
 };

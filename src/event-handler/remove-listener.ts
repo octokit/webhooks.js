@@ -2,7 +2,7 @@ import { EmitterWebhookEventName, State } from "../types";
 
 export function removeListener(
   state: State,
-  webhookNameOrNames: EmitterWebhookEventName | EmitterWebhookEventName[],
+  webhookNameOrNames: "*" | EmitterWebhookEventName | EmitterWebhookEventName[],
   handler: Function
 ) {
   if (Array.isArray(webhookNameOrNames)) {
