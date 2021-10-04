@@ -6,7 +6,11 @@ import {
   createNodeMiddleware,
 } from "../src/index";
 import { createServer } from "http";
-import { HandlerFunction, EmitterWebhookEventName } from "../src/types";
+import {
+  HandlerFunction,
+  RemoveHandlerFunction,
+  EmitterWebhookEventName,
+} from "../src/types";
 
 // ************************************************************
 // THIS CODE IS NOT EXECUTED. IT IS FOR TYPECHECKING ONLY
@@ -117,6 +121,12 @@ export default async function () {
 
   webhooks.on("check_run.created", () => {
     return Promise.resolve(10);
+  });
+
+  webhooks.removeListener("*", async ({ id, name, payload }) => {
+    console.log(name, "event received", id);
+    const sig = await webhooks.sign(payload);
+    webhooks.verify(payload, sig);
   });
 
   webhooks.removeListener("check_run.created", ({ name, payload }) => {
