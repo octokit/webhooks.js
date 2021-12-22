@@ -24,8 +24,6 @@ export const emitterEventNames = [
   "code_scanning_alert.reopened_by_user",
   "commit_comment",
   "commit_comment.created",
-  "content_reference",
-  "content_reference.created",
   "create",
   "delete",
   "deploy_key",
