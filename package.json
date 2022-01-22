@@ -39,7 +39,7 @@
     "axios": "^0.22.0",
     "express": "^4.17.1",
     "jest": "^27.0.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "prettier": "2.4.1",
     "prettier-plugin-packagejson": "^2.2.9",
     "semantic-release": "^18.0.0",
