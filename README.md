@@ -1,6 +1,5 @@
 # @octokit/webhooks
 
-
 > GitHub webhook events toolset for Node.js
 
 [![@latest](https://img.shields.io/npm/v/@octokit/webhooks.svg)](https://www.npmjs.com/package/@octokit/webhooks)
