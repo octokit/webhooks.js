@@ -85,7 +85,7 @@ const generateTypeScriptFile = (name: string, contents: string[]) => {
 const asCode = (str: string): string => `\`${str}\``;
 const asLink = (event: string): string => {
   const link = `https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#${event.replace(
-    /[^a-z_]/g,
+    /[^a-z_0-9]/g,
     ""
   )}`;
 
