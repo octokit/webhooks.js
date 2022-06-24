@@ -40,7 +40,7 @@
     "express": "^4.17.1",
     "jest": "^27.0.0",
     "node-fetch": "^2.6.7",
-    "prettier": "2.4.1",
+    "prettier": "2.7.1",
     "prettier-plugin-packagejson": "^2.2.9",
     "ts-jest": "^27.0.0",
     "ts-node": "^10.0.0",
