@@ -7,7 +7,7 @@
   "license": "MIT",
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "scripts": {
-    "build": "pika build",
+    "build": "pika-pack build",
     "coverage": "jest --coverage && open coverage/lcov-report/index.html",
     "generate-types": "ts-node --transpile-only scripts/generate-types.ts",
     "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json",
