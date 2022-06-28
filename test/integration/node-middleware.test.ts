@@ -264,7 +264,42 @@ describe("createNodeMiddleware(webhooks)", () => {
       }
     );
 
-    await expect(response.text()).resolves.toMatch(/boom/);
+    await expect(response.text()).resolves.toMatch(/Error: boom/);
+    expect(response.status).toEqual(500);
+
+    server.close();
+  });
+
+  test("Handles empty errors", async () => {
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    webhooks.on("push", () => {
+      throw new Error();
+    });
+
+    const server = createServer(createNodeMiddleware(webhooks)).listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "POST",
+        headers: {
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": signatureSha256,
+        },
+        body: pushEventPayload,
+      }
+    );
+
+    await expect(response.text()).resolves.toMatch(
+      /Error: An Unspecified error occurred/
+    );
     expect(response.status).toEqual(500);
 
     server.close();

@@ -93,8 +93,18 @@ export async function middleware(
 
     if (didTimeout) return;
 
-    const statusCode = Array.from(error as WebhookEventHandlerError)[0].status;
-    response.statusCode = typeof statusCode !== "undefined" ? statusCode : 500;
-    response.end(String(error));
+    const err = Array.from(error as WebhookEventHandlerError)[0];
+    const errorMessage = err.message
+      ? `${err.name}: ${err.message}`
+      : "Error: An Unspecified error occurred";
+    response.statusCode = typeof err.status !== "undefined" ? err.status : 500;
+
+    options.log.error(error);
+
+    response.end(
+      JSON.stringify({
+        error: errorMessage,
+      })
+    );
   }
 }
