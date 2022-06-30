@@ -7,7 +7,7 @@ type ServerResponse = any;
 import { Logger } from "../../createLogger";
 
 export type MiddlewareOptions = {
-  path?: string;
+  path?: string | RegExp;
   log?: Logger;
   onUnhandledRequest?: (
     request: IncomingMessage,
