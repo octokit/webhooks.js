@@ -1,0 +1,4 @@
+{
+  "extends": ["github>octokit/.github"],
+  "ignoreDeps": ["@octokit/webhooks-schemas", "@octokit/webhooks-types"]
+}
