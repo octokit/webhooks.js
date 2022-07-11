@@ -80,14 +80,5 @@
         "@pika/plugin-build-web"
       ]
     ]
-  },
-  "renovate": {
-    "extends": [
-      "github>octokit/.github"
-    ],
-    "ignoreDeps": [
-      "@octokit/webhooks-schemas",
-      "@octokit/webhooks-types"
-    ]
   }
 }
