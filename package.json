@@ -17,6 +17,19 @@
     "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 --esModuleInterop --moduleResolution node test/typescript-validate.ts"
   },
   "prettier": {},
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/github",
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "./pkg"
+        }
+      ]
+    ]
+  },
   "dependencies": {
     "@octokit/request-error": "^3.0.0",
     "@octokit/webhooks-methods": "^3.0.0",
@@ -65,19 +78,6 @@
       ],
       [
         "@pika/plugin-build-web"
-      ]
-    ]
-  },
-  "release": {
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/github",
-      [
-        "@semantic-release/npm",
-        {
-          "pkgRoot": "./pkg"
-        }
       ]
     ]
   },
