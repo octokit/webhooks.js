@@ -102,6 +102,8 @@ export const emitterEventNames = [
   "membership",
   "membership.added",
   "membership.removed",
+  "merge_group",
+  "merge_group.checks_requested",
   "meta",
   "meta.deleted",
   "milestone",
