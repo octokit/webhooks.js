@@ -38,4 +38,4 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npm run validate:ts
-    if: ${{ always }}
+    if: ${{ always() }}
