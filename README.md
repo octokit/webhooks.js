@@ -599,32 +599,6 @@ Used for internal logging. Defaults to [`console`](https://developer.mozilla.org
 
 </td>
     </tr>
-    <tr>
-      <td>
-        <code>onUnhandledRequest</code>
-        <em>
-          function
-        </em>
-      </td>
-      <td>
-
-Defaults to
-
-```js
-function onUnhandledRequest(request, response) {
-  response.writeHead(400, {
-    "content-type": "application/json",
-  });
-  response.end(
-    JSON.stringify({
-      error: error.message,
-    })
-  );
-}
-```
-
-</td>
-    </tr>
   <tbody>
 </table>
 
