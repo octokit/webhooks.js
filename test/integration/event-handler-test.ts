@@ -57,7 +57,7 @@ test("events", async () => {
   });
 
   expect(hooksCalled).toMatchInlineSnapshot(`
-    Array [
+    [
       "hook2",
       "* (push)",
       "hook1",
