@@ -556,11 +556,18 @@ const webhooks = new Webhooks({
   secret: "mysecret",
 });
 
-const middleware = createNodeMiddleware(webhooks, { path: "/" });
-
-createServer(middleware).listen(3000);
-// can now receive user authorization callbacks at POST /
+const middleware = createNodeMiddleware(webhooks, { path: "/webhooks" });
+createServer(async (req, res) => {
+  // `middleware` returns `false` when `req` is unhandled (beyond `/webhooks`)
+  if (await middleware(req, res)) return;
+  res.writeHead(404);
+  res.end();
+}).listen(3000);
+// can now receive user authorization callbacks at POST /webhooks
 ```
+
+The middleware returned from `createNodeMiddleware` can also serve as an
+`Express.js` middleware directly.
 
 <table width="100%">
   <tbody valign="top">
