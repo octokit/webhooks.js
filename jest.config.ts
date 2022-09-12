@@ -10,12 +10,14 @@ const config: Config.InitialOptions = {
       lines: 100,
     },
   },
-  globals: {
-    "ts-jest": {
-      tsconfig: {
-        esModuleInterop: true,
-      },
-    },
+  transform: {
+    "^.+\\.tsx?$": ["ts-jest",
+      {
+        tsconfig: {
+          esModuleInterop: true,
+        },
+      }
+    ],
   },
   preset: "ts-jest",
   restoreMocks: true,
