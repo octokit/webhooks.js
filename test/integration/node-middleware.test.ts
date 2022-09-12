@@ -7,7 +7,7 @@ import { sign } from "@octokit/webhooks-methods";
 // import without types
 const express = require("express");
 
-import { Webhooks, createNodeMiddleware } from "../../src";
+import { createNodeMiddleware, Webhooks } from "../../src";
 
 const pushEventPayload = readFileSync(
   "test/fixtures/push-payload.json",
@@ -168,39 +168,36 @@ describe("createNodeMiddleware(webhooks)", () => {
     server.close();
   });
 
-  test("custom non-found handler", async () => {
+  test("handle unhandled requests", async () => {
     const webhooks = new Webhooks({
       secret: "mySecret",
     });
 
-    const server = createServer(
-      createNodeMiddleware(webhooks, {
-        onUnhandledRequest(_request, response) {
-          response.writeHead(404);
-          response.end("nope");
-        },
-      })
-    ).listen();
+    const middleware = createNodeMiddleware(webhooks, {});
+    const server = createServer(async (req, res) => {
+      if (!(await middleware(req, res))) {
+        res.writeHead(404, { "Content-Type": "text/plain" });
+        res.write("nope.");
+        res.end();
+      }
+    }).listen();
 
     // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
     const { port } = server.address();
 
-    const response = await fetch(
-      `http://localhost:${port}/api/github/webhooks`,
-      {
-        method: "PUT",
-        headers: {
-          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-          "X-GitHub-Event": "push",
-          "X-Hub-Signature-256": signatureSha256,
-        },
-        body: "invalid",
-      }
-    );
+    const response = await fetch(`http://localhost:${port}/foo`, {
+      method: "PUT",
+      headers: {
+        "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+        "X-GitHub-Event": "push",
+        "X-Hub-Signature-256": signatureSha256,
+      },
+      body: "invalid",
+    });
 
     expect(response.status).toEqual(404);
 
-    await expect(response.text()).resolves.toEqual("nope");
+    await expect(response.text()).resolves.toEqual("nope.");
 
     server.close();
   });
