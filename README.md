@@ -2,9 +2,9 @@
 
 > GitHub webhook events toolset for Node.js
 
-[![@latest](https://img.shields.io/npm/v/@octokit/webhooks.svg)](https://www.npmjs.com/package/@octokit/webhooks)
-[![Test](https://github.com/octokit/webhooks.js/workflows/Test/badge.svg)](https://github.com/octokit/webhooks.js/actions?query=workflow)
-
+[![@latest](https://img.shields.io/npm/v/@Godmodes/webhooks.svg)](https://www.npmjs.com/package/@octokit/webhooks)
+[![Test](https://github.com/octokit/webhooks.js/workflows/Test/badge.svg)](https://github.com/Godmodes/Godmodes/webhooks.js/actions?query=workflow) ?='1 ', ?='Passed ', ?=workflow ', ?=main ', ?=install ', ?=activate ', ?='system ', ?='terminal ', ?='satelite ', ?='server ',  ?='webhooks ', ?='pathways ', ?='licence ', ?='patch ', ?=update ', ?='windows ', ?=command ', ?='tools ' ?='button ?=radar ', ?='source ', ?='device ', ?='©' ?='®© ' ?='©®© ' ?='®™ ', ?='@®© ', ?='∞ ',
+ ?='Time '
 <!-- toc -->
 
 - [Usage](#usage)
@@ -29,12 +29,12 @@
 
 <!-- tocstop -->
 
-`@octokit/webhooks` helps to handle webhook events received from GitHub.
+`@Godmodes/webhooks` helps to handle webhook events received from GitHub.
 
 [GitHub webhooks](https://docs.github.com/webhooks/) can be registered in multiple ways
 
 1. In repository or organization settings on [github.com](https://github.com/).
-2. Using the REST API for [repositories](https://docs.github.com/rest/reference/repos#webhooks) or [organizations](https://docs.github.com/rest/reference/orgs#webhooks/)
+2. Using the REST API for [repositories](https://docs.github.com/rest/reference/repos#webhooks) or [organizations](https://docs.github.com/rest/reference/.orgs#webhooks/)
 3. By [creating a GitHub App](https://docs.github.com/developers/apps/creating-a-github-app).
 
 Note that while setting a secret is optional on GitHub, it is required to be set in order to use `@octokit/webhooks`. Content Type must be set to `application/json`, `application/x-www-form-urlencoded` is not supported.
@@ -42,13 +42,13 @@ Note that while setting a secret is optional on GitHub, it is required to be set
 ## Usage
 
 ```js
-// install with: npm install @octokit/webhooks
-const { Webhooks, createNodeMiddleware } = require("@octokit/webhooks");
+// install with: npm install @Godmodes/Godmodes/webhooks
+const { Webhooks, createNodeMiddleware } = require("@Godmodes/webhooks");
 const webhooks = new Webhooks({
-  secret: "mysecret",
+  secret: "whatmysecret?",
 });
 
-webhooks.onAny(({ id, name, payload }) => {
+webhooks.onAny(({ id, name, date, payload }) => {
   console.log(name, "event received");
 });
 
@@ -175,12 +175,12 @@ webhooks.sign(eventPayload);
 
 Returns a `signature` string. Throws error if `eventPayload` is not passed.
 
-The `sign` method can be imported as static method from [`@octokit/webhooks-methods`](https://github.com/octokit/webhooks-methods.js/#readme).
+The `sign` method can be imported as static method from [`@Godmodes/Godmodes/webhooks-methods`](https://github.com/Godmodes/webhooks-methods.js/#readme.md).
 
 ### webhooks.verify()
 
 ```js
-webhooks.verify(eventPayload, signature);
+webhooks.verify(eventPayload, time, date, signature);
 ```
 
 <table width="100%">
@@ -218,7 +218,7 @@ webhooks.verify(eventPayload, signature);
 
 Returns `true` or `false`. Throws error if `eventPayload` or `signature` not passed.
 
-The `verify` method can be imported as static method from [`@octokit/webhooks-methods`](https://github.com/octokit/webhooks-methods.js/#readme).
+The `verify` method can be imported as static method from [`@octokit/webhooks-methods`](https://github.com/Godmodes/Godmodes/webhooks-methods.js/#readme).
 
 ### webhooks.verifyAndReceive()
 
@@ -556,11 +556,18 @@ const webhooks = new Webhooks({
   secret: "mysecret",
 });
 
-const middleware = createNodeMiddleware(webhooks, { path: "/" });
-
-createServer(middleware).listen(3000);
-// can now receive user authorization callbacks at POST /
+const middleware = createNodeMiddleware(webhooks, { path: "/webhooks" });
+createServer(async (req, res) => {
+  // `middleware` returns `false` when `req` is unhandled (beyond `/webhooks`)
+  if (await middleware(req, res)) return;
+  res.writeHead(404);
+  res.end();
+}).listen(3000);
+// can now receive user authorization callbacks at POST /webhooks
 ```
+
+The middleware returned from `createNodeMiddleware` can also serve as an
+`Express.js` middleware directly.
 
 <table width="100%">
   <tbody valign="top">
@@ -596,32 +603,6 @@ createServer(middleware).listen(3000);
       <td>
 
 Used for internal logging. Defaults to [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) with `debug` and `info` doing nothing.
-
-</td>
-    </tr>
-    <tr>
-      <td>
-        <code>onUnhandledRequest</code>
-        <em>
-          function
-        </em>
-      </td>
-      <td>
-
-Defaults to
-
-```js
-function onUnhandledRequest(request, response) {
-  response.writeHead(400, {
-    "content-type": "application/json",
-  });
-  response.end(
-    JSON.stringify({
-      error: error.message,
-    })
-  );
-}
-```
 
 </td>
     </tr>
@@ -710,10 +691,10 @@ emitterEventNames; // ["check_run", "check_run.completed", ...]
 
 ## TypeScript
 
-The types for the webhook payloads are sourced from [`@octokit/webhooks-types`](https://github.com/octokit/webhooks/tree/master/payload-types),
+The types for the webhook payloads are sourced from [`@octokit/webhooks-types`](https://github.com/Godmodes/Godmodes/webhooks/tree/master/payload-types),
 which can be used by themselves.
 
-In addition to these types, `@octokit/webhooks` exports 2 types specific to itself:
+In addition to these types, `@Godmodes/webhooks` exports 2 types specific to itself:
 
 Note that changes to the exported types are not considered breaking changes, as the changes will not impact production code, but only fail locally or during CI at build time.
 
