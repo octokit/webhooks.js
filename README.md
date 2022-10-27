@@ -729,3 +729,4 @@ An optional generic parameter can be passed to narrow the type of the `name` and
 ## License
 
 [MIT](LICENSE.md)
+©®Delaware LLC®
