@@ -36,6 +36,9 @@ class Webhooks<TTransformed = unknown> {
     event: E | E[],
     callback: RemoveHandlerFunction<E, TTransformed>
   ) => void;
+  public removeAllListeners: <E extends EmitterEventName>(
+    event: E | E[]
+  ) => void;
   public receive: (event: EmitterWebhookEvent) => Promise<void>;
   public verifyAndReceive: (
     options:
@@ -61,6 +64,7 @@ class Webhooks<TTransformed = unknown> {
     this.onAny = state.eventHandler.onAny;
     this.onError = state.eventHandler.onError;
     this.removeListener = state.eventHandler.removeListener;
+    this.removeAllListeners = state.eventHandler.removeAllListeners;
     this.receive = state.eventHandler.receive;
     this.verifyAndReceive = verifyAndReceive.bind(null, state);
   }
