@@ -3,13 +3,13 @@ import { verify as verifyMethod } from "@octokit/webhooks-methods";
 import { toNormalizedJsonString } from "./to-normalized-json-string";
 
 export async function verify(
-  secret: string,
+  secret: string | string[],
   payload: string | object,
   signature: string
 ): Promise<any> {
-  return verifyMethod(
-    secret,
-    typeof payload === "string" ? payload : toNormalizedJsonString(payload),
-    signature
-  );
+  const secrets = typeof secret === "string" ? [secret] : secret;
+  const np =
+    typeof payload === "string" ? payload : toNormalizedJsonString(payload);
+
+  return secrets.some((s: string) => verifyMethod(s, np, signature));
 }
