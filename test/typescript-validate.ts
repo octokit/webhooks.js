@@ -69,6 +69,11 @@ export default async function () {
     secret: "blah",
   });
 
+  // Check that secret can be an array, too
+  new Webhooks({
+    secret: ["blah", "bleh"],
+  });
+
   // Check all supported options
   const webhooks = new Webhooks({
     secret: "blah",

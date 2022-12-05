@@ -43,12 +43,12 @@ class Webhooks<TTransformed = unknown> {
       | EmitterWebhookEventWithSignature
   ) => Promise<void>;
 
-  constructor(options: Options<TTransformed> & { secret: string }) {
+  constructor(options: Options<TTransformed> & { secret: string | string[] }) {
     if (!options || !options.secret) {
       throw new Error("[@octokit/webhooks] options.secret required");
     }
 
-    const state: State & { secret: string } = {
+    const state: State & { secret: string | string[] } = {
       eventHandler: createEventHandler(options),
       secret: options.secret,
       hooks: {},

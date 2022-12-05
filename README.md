@@ -56,6 +56,17 @@ require("http").createServer(createNodeMiddleware(webhooks)).listen(3000);
 // can now receive webhook events at /api/github/webhooks
 ```
 
+To ease key rotation, one can also feed the `Webhook` constructor an array of
+secrets. Generate a new secret and update your Webhook receiver to accept
+both this new one and the current secret, then update GitHub to send the new
+secret, then update your Webhook receiver to accept only the new secret.
+
+```js
+const webhooks = new Webhooks({
+  secret: ["mynewsecret", "myoldsecret"],
+});
+```
+
 ## Local development
 
 You can receive webhooks on your local machine or even browser using [EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) and [smee.io](https://smee.io/).
@@ -111,11 +122,13 @@ new Webhooks({ secret /*, transform */ });
         <code>
           secret
         </code>
-        <em>(String)</em>
+        <em>(String or String Array)</em>
       </td>
       <td>
         <strong>Required.</strong>
-        Secret as configured in GitHub Settings.
+        Secret as configured in GitHub Settings.  If an array of strings, an
+        incoming webhook event will be accepted if its signature verifies
+        with any of the secrets given.
       </td>
     </tr>
     <tr>
