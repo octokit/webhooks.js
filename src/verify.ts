@@ -11,5 +11,12 @@ export async function verify(
   const np =
     typeof payload === "string" ? payload : toNormalizedJsonString(payload);
 
-  return secrets.some((s: string) => verifyMethod(s, np, signature));
+  for (const s of secrets) {
+    const v : boolean = await verifyMethod(s, np, signature);
+    if (v) {
+      return v;
+    }
+  }
+
+  return false;
 }
