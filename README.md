@@ -59,7 +59,7 @@ require("http").createServer(createNodeMiddleware(webhooks)).listen(3000);
 To ease key rotation, one can also feed the `Webhook` constructor an array of
 secrets. Generate a new secret and update your Webhook receiver to accept both
 this new one and the current secret, then update GitHub to send the new secret,
-then update your Webhook receiver to accept only the new secret.  Signatures will
+then update your Webhook receiver to accept only the new secret. Signatures will
 always be made with the first secret.
 
 ```js
