@@ -55,7 +55,10 @@ class Webhooks<TTransformed = unknown> {
       log: createLogger(options.log),
     };
 
-    this.sign = sign.bind(null, options.secret);
+    const firstsecret =
+      typeof options.secret === "string" ? options.secret : options.secret[0];
+
+    this.sign = sign.bind(null, firstsecret);
     this.verify = verify.bind(null, options.secret);
     this.on = state.eventHandler.on;
     this.onAny = state.eventHandler.onAny;
