@@ -26,12 +26,8 @@ export type Iverify = {
 };
 export type IverifyAndReceive = {
   /** @deprecated Passing a JSON payload object to `verifyAndReceive()` is deprecated and the functionality will be removed in a future release of `@octokit/webhooks`. */
-  (
-    options: EmitterWebhookEventWithSignature
-  ): Promise<void>;
-  (
-    options: EmitterWebhookEventWithStringPayloadAndSignature
-  ): Promise<void>;
+  (options: EmitterWebhookEventWithSignature): Promise<void>;
+  (options: EmitterWebhookEventWithStringPayloadAndSignature): Promise<void>;
 };
 
 // U holds the return value of `transform` function in Options
@@ -77,9 +73,11 @@ class Webhooks<TTransformed = unknown> {
     this.onError = state.eventHandler.onError;
     this.removeListener = state.eventHandler.removeListener;
     this.receive = state.eventHandler.receive;
-    this.verifyAndReceive = (options:
-      | EmitterWebhookEventWithStringPayloadAndSignature
-      | EmitterWebhookEventWithSignature) => {
+    this.verifyAndReceive = (
+      options:
+        | EmitterWebhookEventWithStringPayloadAndSignature
+        | EmitterWebhookEventWithSignature
+    ) => {
       if (typeof options.payload === "object") {
         console.error(
           "[@octokit/webhooks] Passing a JSON payload object to `verify()` is deprecated and the functionality will be removed in a future release of `@octokit/webhooks`"
