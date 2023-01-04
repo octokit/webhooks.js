@@ -191,7 +191,7 @@ webhooks.verify(eventPayload, signature);
           eventPayload
         </code>
         <em>
-          (Object or String)
+          (Object [deprecated] or String)
         </em>
       </td>
       <td>
@@ -262,7 +262,7 @@ webhooks.verifyAndReceive({ id, name, payload, signature });
           payload
         </code>
         <em>
-          Object or String
+          Object (deprecated) or String
         </em>
       </td>
       <td>
@@ -601,7 +601,7 @@ Used for internal logging. Defaults to [`console`](https://developer.mozilla.org
     </tr>
     <tr>
       <td>
-        <code>onUnhandledRequest</code>
+        <code>onUnhandledRequest (deprecated)</code>
         <em>
           function
         </em>

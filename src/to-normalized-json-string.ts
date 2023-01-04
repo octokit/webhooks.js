@@ -1,5 +1,5 @@
 /**
- * GitHub sends its JSON with an indentation of 2 spaces and a line break at the end
+ * GitHub sends its JSON with no indentation and no line break at the end
  */
 export function toNormalizedJsonString(payload: object) {
   const payloadString = JSON.stringify(payload);
