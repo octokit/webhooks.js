@@ -12,9 +12,15 @@ export function createNodeMiddleware(
     log = createLogger(),
   }: MiddlewareOptions = {}
 ) {
+  const deprecateOnUnhandledRequest = (request: any, response: any) => {
+    console.error(
+      "[@octokit/webhooks] `onUnhandledRequest()` is deprecated and will be removed in a future release of `@octokit/webhooks`"
+    );
+    return onUnhandledRequest(request, response);
+  };
   return middleware.bind(null, webhooks, {
     path,
-    onUnhandledRequest,
+    onUnhandledRequest: deprecateOnUnhandledRequest,
     log,
   } as Required<MiddlewareOptions>);
 }
