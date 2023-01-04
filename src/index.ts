@@ -80,7 +80,7 @@ class Webhooks<TTransformed = unknown> {
     ) => {
       if (typeof options.payload === "object") {
         console.error(
-          "[@octokit/webhooks] Passing a JSON payload object to `verify()` is deprecated and the functionality will be removed in a future release of `@octokit/webhooks`"
+          "[@octokit/webhooks] Passing a JSON payload object to `verifyAndReceive()` is deprecated and the functionality will be removed in a future release of `@octokit/webhooks`"
         );
       }
       return verifyAndReceive(state, options);
