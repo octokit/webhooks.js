@@ -21,7 +21,7 @@ export type EmitterWebhookEventWithStringPayloadAndSignature = {
   payload: string;
   signature: string;
 };
-
+/** @deprecated */
 export type EmitterWebhookEventWithSignature = EmitterWebhookEvent & {
   signature: string;
 };
