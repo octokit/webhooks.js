@@ -6,7 +6,7 @@ import type {
 import { Logger } from "./createLogger";
 import type { emitterEventNames } from "./generated/webhook-names";
 
-export type EmitterWebhookEventName = typeof emitterEventNames[number];
+export type EmitterWebhookEventName = (typeof emitterEventNames)[number];
 export type EmitterWebhookEvent<
   TEmitterEvent extends EmitterWebhookEventName = EmitterWebhookEventName
 > = TEmitterEvent extends `${infer TWebhookEvent}.${infer TAction}`
