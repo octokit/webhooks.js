@@ -29,6 +29,6 @@ export async function verifyAndReceive(
   return state.eventHandler.receive({
     id: event.id,
     name: event.name,
-    payload: JSON.parse(event.payload)
+    payload: JSON.parse(event.payload),
   });
 }

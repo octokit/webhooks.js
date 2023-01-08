@@ -33,7 +33,9 @@ class Webhooks<TTransformed = unknown> {
     callback: RemoveHandlerFunction<E, TTransformed>
   ) => void;
   public receive: (event: EmitterWebhookEvent) => Promise<void>;
-  public verifyAndReceive: (options: EmitterWebhookEventWithStringPayloadAndSignature) => Promise<void>;;
+  public verifyAndReceive: (
+    options: EmitterWebhookEventWithStringPayloadAndSignature
+  ) => Promise<void>;
 
   constructor(options: Options<TTransformed> & { secret: string }) {
     if (!options || !options.secret) {
