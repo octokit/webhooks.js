@@ -1,5 +1,5 @@
 // remove type imports from http for Deno compatibility
-// see https://github.com/octokit/octokit.js/issues/24#issuecomment-817361886
+// see https://github.com/octokit/octokit.js/issues/2075#issuecomment-817361886
 // import { IncomingMessage, ServerResponse } from "http";
 type IncomingMessage = any;
 type ServerResponse = any;
@@ -19,6 +19,19 @@ export async function middleware(
   response: ServerResponse,
   next?: Function
 ) {
+  if (request.headers["content-type"] !== "application/json") {
+    response.writeHead(415, {
+      "content-type": "application/json",
+      accept: "application/json",
+    });
+    response.end(
+      JSON.stringify({
+        error: `Unsupported "Content-Type" header value. Must be "application/json"`,
+      })
+    );
+    return;
+  }
+
   let pathname: string;
   try {
     pathname = new URL(request.url as string, "http://localhost").pathname;
