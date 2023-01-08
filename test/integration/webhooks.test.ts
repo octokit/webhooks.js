@@ -3,7 +3,6 @@ import { readFileSync } from "fs";
 import { sign } from "@octokit/webhooks-methods";
 
 import { Webhooks } from "../../src";
-import { toNormalizedJsonString } from "../../src/to-normalized-json-string";
 
 const pushEventPayloadString = readFileSync(
   "test/fixtures/push-payload.json",
@@ -30,17 +29,6 @@ describe("Webhooks", () => {
     const webhooks = new Webhooks({ secret });
 
     await webhooks.sign(pushEventPayloadString);
-  });
-
-  test("webhooks.verify(payload, signature) with string payload containing special characters", async () => {
-    const secret = "mysecret";
-    const webhooks = new Webhooks({ secret });
-
-    const payload = toNormalizedJsonString({
-      foo: "Foo\n\u001b[34mbar: ♥♥♥♥♥♥♥♥\nthis-is-lost\u001b[0m\u001b[2K",
-    });
-
-    await webhooks.verify(payload, await sign(secret, payload));
   });
 
   test("webhooks.verify(payload, signature) with string payload", async () => {
