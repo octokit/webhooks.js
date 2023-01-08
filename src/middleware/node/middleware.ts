@@ -44,7 +44,10 @@ export async function middleware(
     }
   }
 
-  if (request.headers["content-type"] !== "application/json") {
+  // Check if the Content-Type header is `application/json` and allow for charset to be specified in it
+  // Otherwise, return a 415 Unsupported Media Type error
+  // See https://github.com/octokit/webhooks.js/issues/158
+  if (!request.headers["content-type"].startsWith("application/json")) {
     response.writeHead(415, {
       "content-type": "application/json",
       accept: "application/json",
