@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 
 import { sign } from "@octokit/webhooks-methods";
 
-import { Webhooks, EmitterWebhookEvent } from "../../src";
+import { Webhooks } from "../../src";
 import { toNormalizedJsonString } from "../../src/to-normalized-json-string";
 
 const pushEventPayloadString = readFileSync(
@@ -30,16 +30,6 @@ describe("Webhooks", () => {
     const webhooks = new Webhooks({ secret });
 
     await webhooks.sign(pushEventPayloadString);
-  });
-
-  test("webhooks.verify(payload, signature) with object payload", async () => {
-    const secret = "mysecret";
-    const webhooks = new Webhooks({ secret });
-
-    await webhooks.verify(
-      JSON.parse(pushEventPayloadString),
-      await sign({ secret, algorithm: "sha256" }, pushEventPayloadString)
-    );
   });
 
   test("webhooks.verify(payload, signature) with object payload containing special characters", async () => {
@@ -84,7 +74,7 @@ describe("Webhooks", () => {
   test("webhooks.verifyAndReceive(event) with incorrect signature", async () => {
     const webhooks = new Webhooks({ secret: "mysecret" });
 
-    const pingPayload = {} as EmitterWebhookEvent<"ping">["payload"];
+    const pingPayload = "{}";
     await expect(async () =>
       webhooks.verifyAndReceive({
         id: "1",
