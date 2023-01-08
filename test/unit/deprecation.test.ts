@@ -1,10 +1,7 @@
-import { createServer } from "http";
 import { readFileSync } from "fs";
-
-import fetch from "node-fetch";
 import { sign } from "@octokit/webhooks-methods";
 
-import { Webhooks, createNodeMiddleware } from "../../src";
+import { Webhooks } from "../../src";
 
 const pushEventPayloadString = readFileSync(
   "test/fixtures/push-payload.json",
@@ -17,40 +14,6 @@ describe("Deprecations", () => {
       { secret: "mySecret", algorithm: "sha256" },
       pushEventPayloadString
     );
-  });
-  test("onUnhandledRequest", async () => {
-    const spy = jest.spyOn(console, "error");
-    const webhooks = new Webhooks({
-      secret: "mySecret",
-    });
-
-    const server = createServer(
-      createNodeMiddleware(webhooks, {
-        onUnhandledRequest(_request, response) {
-          response.writeHead(404);
-          response.end("nope");
-        },
-      })
-    ).listen();
-
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
-
-    await fetch(`http://localhost:${port}/api/github/webhooks`, {
-      method: "PUT",
-      headers: {
-        "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-        "X-GitHub-Event": "push",
-        "X-Hub-Signature-256": signatureSha256,
-      },
-      body: "invalid",
-    });
-
-    expect(spy).toBeCalledWith(
-      "[@octokit/webhooks] `onUnhandledRequest()` is deprecated and will be removed in a future release of `@octokit/webhooks`"
-    );
-    spy.mockClear();
-    server.close();
   });
 
   test("webhooks.verify(payload, signature) with object payload", async () => {
