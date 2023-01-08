@@ -7,15 +7,7 @@ const pushEventPayloadString = readFileSync(
   "test/fixtures/push-payload.json",
   "utf-8"
 );
-let signatureSha256: string;
 describe("Deprecations", () => {
-  beforeAll(async () => {
-    signatureSha256 = await sign(
-      { secret: "mySecret", algorithm: "sha256" },
-      pushEventPayloadString
-    );
-  });
-
   test("webhooks.verify(payload, signature) with object payload", async () => {
     const spy = jest.spyOn(console, "error");
     const secret = "mysecret";
