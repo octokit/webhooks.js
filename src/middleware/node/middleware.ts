@@ -79,7 +79,7 @@ export async function middleware(
     await webhooks.verifyAndReceive({
       id: id,
       name: eventName as any,
-      payload: payload as any,
+      payload,
       signature: signatureSHA256,
     });
     clearTimeout(timeout);

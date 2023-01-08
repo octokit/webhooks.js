@@ -1,24 +1,18 @@
 import { verify } from "@octokit/webhooks-methods";
 
-import { toNormalizedJsonString } from "./to-normalized-json-string";
 import {
   EmitterWebhookEventWithStringPayloadAndSignature,
-  EmitterWebhookEventWithSignature,
   State,
 } from "./types";
 
 export async function verifyAndReceive(
   state: State & { secret: string },
-  event:
-    | EmitterWebhookEventWithStringPayloadAndSignature
-    | EmitterWebhookEventWithSignature
+  event: EmitterWebhookEventWithStringPayloadAndSignature
 ): Promise<any> {
   // verify will validate that the secret is not undefined
   const matchesSignature = await verify(
     state.secret,
-    typeof event.payload === "object"
-      ? toNormalizedJsonString(event.payload)
-      : event.payload,
+    event.payload,
     event.signature
   );
 
@@ -35,9 +29,6 @@ export async function verifyAndReceive(
   return state.eventHandler.receive({
     id: event.id,
     name: event.name,
-    payload:
-      typeof event.payload === "string"
-        ? JSON.parse(event.payload)
-        : event.payload,
+    payload: JSON.parse(event.payload),
   });
 }

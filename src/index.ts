@@ -1,7 +1,7 @@
 import { createLogger } from "./createLogger";
 import { createEventHandler } from "./event-handler/index";
 import { sign } from "./sign";
-import { verify } from "./verify";
+import { verify } from "@octokit/webhooks-methods";
 import { verifyAndReceive } from "./verify-and-receive";
 import {
   EmitterWebhookEvent,
@@ -13,27 +13,15 @@ import {
   WebhookError,
   WebhookEventHandlerError,
   EmitterWebhookEventWithStringPayloadAndSignature,
-  EmitterWebhookEventWithSignature,
 } from "./types";
 
 export { createNodeMiddleware } from "./middleware/node/index";
 export { emitterEventNames } from "./generated/webhook-names";
 
-export type Iverify = {
-  /** @deprecated Passing a JSON payload object to `verify()` is deprecated and the functionality will be removed in a future release of `@octokit/webhooks`. */
-  (eventPayload: object, signature: string): Promise<boolean>;
-  (eventPayload: string, signature: string): Promise<boolean>;
-};
-export type IverifyAndReceive = {
-  /** @deprecated Passing a JSON payload object to `verifyAndReceive()` is deprecated and the functionality will be removed in a future release of `@octokit/webhooks`. */
-  (options: EmitterWebhookEventWithSignature): Promise<void>;
-  (options: EmitterWebhookEventWithStringPayloadAndSignature): Promise<void>;
-};
-
 // U holds the return value of `transform` function in Options
 class Webhooks<TTransformed = unknown> {
   public sign: (payload: string | object) => Promise<string>;
-  public verify: Iverify;
+  public verify: (eventPayload: string, signature: string) => Promise<boolean>;
   public on: <E extends EmitterWebhookEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>
@@ -45,7 +33,9 @@ class Webhooks<TTransformed = unknown> {
     callback: RemoveHandlerFunction<E, TTransformed>
   ) => void;
   public receive: (event: EmitterWebhookEvent) => Promise<void>;
-  public verifyAndReceive: IverifyAndReceive;
+  public verifyAndReceive: (
+    options: EmitterWebhookEventWithStringPayloadAndSignature
+  ) => Promise<void>;
 
   constructor(options: Options<TTransformed> & { secret: string }) {
     if (!options || !options.secret) {
@@ -60,31 +50,13 @@ class Webhooks<TTransformed = unknown> {
     };
 
     this.sign = sign.bind(null, options.secret);
-    this.verify = (eventPayload: object | string, signature: string) => {
-      if (typeof eventPayload === "object") {
-        console.error(
-          "[@octokit/webhooks] Passing a JSON payload object to `verify()` is deprecated and the functionality will be removed in a future release of `@octokit/webhooks`"
-        );
-      }
-      return verify(options.secret, eventPayload, signature);
-    };
+    this.verify = verify.bind(null, options.secret);
     this.on = state.eventHandler.on;
     this.onAny = state.eventHandler.onAny;
     this.onError = state.eventHandler.onError;
     this.removeListener = state.eventHandler.removeListener;
     this.receive = state.eventHandler.receive;
-    this.verifyAndReceive = (
-      options:
-        | EmitterWebhookEventWithStringPayloadAndSignature
-        | EmitterWebhookEventWithSignature
-    ) => {
-      if (typeof options.payload === "object") {
-        console.error(
-          "[@octokit/webhooks] Passing a JSON payload object to `verifyAndReceive()` is deprecated and the functionality will be removed in a future release of `@octokit/webhooks`"
-        );
-      }
-      return verifyAndReceive(state, options);
-    };
+    this.verifyAndReceive = verifyAndReceive.bind(null, state);
   }
 }
 
