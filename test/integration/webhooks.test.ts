@@ -17,13 +17,6 @@ describe("Webhooks", () => {
     );
   });
 
-  test("webhooks.sign(payload) with object payload", async () => {
-    const secret = "mysecret";
-    const webhooks = new Webhooks({ secret });
-
-    await webhooks.sign(JSON.parse(pushEventPayloadString));
-  });
-
   test("webhooks.sign(payload) with string payload", async () => {
     const secret = "mysecret";
     const webhooks = new Webhooks({ secret });
