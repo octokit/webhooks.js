@@ -19,19 +19,6 @@ export async function middleware(
   response: ServerResponse,
   next?: Function
 ) {
-  if (request.headers["content-type"] !== "application/json") {
-    response.writeHead(415, {
-      "content-type": "application/json",
-      accept: "application/json",
-    });
-    response.end(
-      JSON.stringify({
-        error: `Unsupported "Content-Type" header value. Must be "application/json"`,
-      })
-    );
-    return;
-  }
-
   let pathname: string;
   try {
     pathname = new URL(request.url as string, "http://localhost").pathname;
@@ -55,6 +42,19 @@ export async function middleware(
     } else {
       return options.onUnhandledRequest(request, response);
     }
+  }
+
+  if (request.headers["content-type"] !== "application/json") {
+    response.writeHead(415, {
+      "content-type": "application/json",
+      accept: "application/json",
+    });
+    response.end(
+      JSON.stringify({
+        error: `Unsupported "Content-Type" header value. Must be "application/json"`,
+      })
+    );
+    return;
   }
 
   const missingHeaders = getMissingHeaders(request).join(", ");
