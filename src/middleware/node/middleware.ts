@@ -56,7 +56,7 @@ export async function middleware(
         error: `Unsupported "Content-Type" header value. Must be "application/json"`,
       })
     );
-    return;
+    return true;
   }
 
   const missingHeaders = getMissingHeaders(request).join(", ");
