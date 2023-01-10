@@ -1,5 +1,5 @@
 // remove type imports from http for Deno compatibility
-// see https://github.com/octokit/octokit.js/issues/24#issuecomment-817361886
+// see https://github.com/octokit/octokit.js/issues/2075#issuecomment-817361886
 // import { IncomingMessage, ServerResponse } from "http";
 type IncomingMessage = any;
 type ServerResponse = any;
@@ -42,6 +42,22 @@ export async function middleware(
     } else {
       return options.onUnhandledRequest(request, response);
     }
+  }
+
+  // Check if the Content-Type header is `application/json` and allow for charset to be specified in it
+  // Otherwise, return a 415 Unsupported Media Type error
+  // See https://github.com/octokit/webhooks.js/issues/158
+  if (!request.headers["content-type"].startsWith("application/json")) {
+    response.writeHead(415, {
+      "content-type": "application/json",
+      accept: "application/json",
+    });
+    response.end(
+      JSON.stringify({
+        error: `Unsupported "Content-Type" header value. Must be "application/json"`,
+      })
+    );
+    return;
   }
 
   const missingHeaders = getMissingHeaders(request).join(", ");
