@@ -162,7 +162,7 @@ webhooks.sign(eventPayload);
           eventPayload
         </code>
         <em>
-          (Object)
+          (String)
         </em>
       </td>
       <td>

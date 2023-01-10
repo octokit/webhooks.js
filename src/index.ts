@@ -1,7 +1,6 @@
 import { createLogger } from "./createLogger";
 import { createEventHandler } from "./event-handler/index";
-import { sign } from "./sign";
-import { verify } from "@octokit/webhooks-methods";
+import { sign, verify } from "@octokit/webhooks-methods";
 import { verifyAndReceive } from "./verify-and-receive";
 import {
   EmitterWebhookEvent,
@@ -20,7 +19,7 @@ export { emitterEventNames } from "./generated/webhook-names";
 
 // U holds the return value of `transform` function in Options
 class Webhooks<TTransformed = unknown> {
-  public sign: (payload: string | object) => Promise<string>;
+  public sign: (payload: string) => Promise<string>;
   public verify: (eventPayload: string, signature: string) => Promise<boolean>;
   public on: <E extends EmitterWebhookEventName>(
     event: E | E[],
