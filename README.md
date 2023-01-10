@@ -692,7 +692,7 @@ emitterEventNames; // ["check_run", "check_run.completed", ...]
 
 ## TypeScript
 
-The types for the webhook payloads are sourced from [`@octokit/webhooks-types`](https://github.com/octokit/webhooks/tree/master/payload-types),
+The types for the webhook payloads are sourced from [`@octokit/webhooks-types`](https://github.com/octokit/webhooks/tree/main/payload-types),
 which can be used by themselves.
 
 In addition to these types, `@octokit/webhooks` exports 2 types specific to itself:
