@@ -12,11 +12,20 @@ import AggregateError from "aggregate-error";
 // }
 type IncomingMessage = any;
 
-export function getPayload(request: IncomingMessage): Promise<WebhookEvent> {
+export function getPayload(
+  request: IncomingMessage
+): Promise<WebhookEvent | string> {
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
 
-  if (request.body) return Promise.resolve(request.body as WebhookEvent);
+  if (request.body) {
+    if (typeof request.body !== "string") {
+      console.error(
+        "[@octokit/webhooks] Passing the payload as a JSON object in `request.body` is deprecated and will be removed in a future release of `@octokit/webhooks`, please pass it as a a `string` instead."
+      );
+    }
+    return Promise.resolve(request.body as WebhookEvent | string);
+  }
 
   return new Promise((resolve, reject) => {
     let data = "";
@@ -28,7 +37,9 @@ export function getPayload(request: IncomingMessage): Promise<WebhookEvent> {
     request.on("data", (chunk: string) => (data += chunk));
     request.on("end", () => {
       try {
-        resolve(JSON.parse(data));
+        // Call JSON.parse() only to check if the payload is valid JSON
+        JSON.parse(data);
+        resolve(data);
       } catch (error: any) {
         error.message = "Invalid JSON";
         error.status = 400;
