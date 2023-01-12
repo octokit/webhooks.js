@@ -18,7 +18,14 @@ export function getPayload(
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
 
-  if (request.body) return Promise.resolve(request.body as WebhookEvent | string);
+  if (request.body) {
+    if (typeof request.body !== "string") {
+      console.error(
+        "[@octokit/webhooks] Passing the payload as a JSON object in `request.body` is deprecated and will be removed in a future release of `@octokit/webhooks`, please pass it as a a `string` instead."
+      );
+    }
+    return Promise.resolve(request.body as WebhookEvent | string);
+  }
 
   return new Promise((resolve, reject) => {
     let data = "";
