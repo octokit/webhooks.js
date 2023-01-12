@@ -32,7 +32,7 @@
 `@octokit/webhooks` helps to handle webhook events received from GitHub.
 
 [GitHub webhooks](https://docs.github.com/webhooks/) can be registered in multiple ways
-![image](https://user-images.githubusercontent.com/4595477/211971688-c0148b26-a4aa-4f24-b8ef-aaddd6368cfc.png)
+⚠️ 
 
 1. In repository or organization settings on [github.com](https://github.com/).
 2. Using the REST API for [repositories](https://docs.github.com/rest/reference/repos#webhooks) or [organizations](https://docs.github.com/rest/reference/orgs#webhooks/)
