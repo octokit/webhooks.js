@@ -37,6 +37,8 @@ export function getPayload(
     request.on("data", (chunk: string) => (data += chunk));
     request.on("end", () => {
       try {
+        // Call JSON.parse() only to check if the payload is valid JSON
+        JSON.parse(data);
         resolve(data);
       } catch (error: any) {
         error.message = "Invalid JSON";
