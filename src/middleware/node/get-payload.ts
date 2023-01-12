@@ -28,7 +28,7 @@ export function getPayload(request: IncomingMessage): Promise<WebhookEvent | str
     request.on("data", (chunk: string) => (data += chunk));
     request.on("end", () => {
       try {
-        resolve(JSON.parse(data));
+        resolve(data);
       } catch (error: any) {
         error.message = "Invalid JSON";
         error.status = 400;
