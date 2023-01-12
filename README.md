@@ -32,6 +32,7 @@
 `@octokit/webhooks` helps to handle webhook events received from GitHub.
 
 [GitHub webhooks](https://docs.github.com/webhooks/) can be registered in multiple ways
+![image](https://user-images.githubusercontent.com/4595477/211971688-c0148b26-a4aa-4f24-b8ef-aaddd6368cfc.png)
 
 1. In repository or organization settings on [github.com](https://github.com/).
 2. Using the REST API for [repositories](https://docs.github.com/rest/reference/repos#webhooks) or [organizations](https://docs.github.com/rest/reference/orgs#webhooks/)
@@ -717,6 +718,8 @@ which can be used by themselves.
 In addition to these types, `@octokit/webhooks` exports 2 types specific to itself:
 
 Note that changes to the exported types are not considered breaking changes, as the changes will not impact production code, but only fail locally or during CI at build time.
+
+**⚠️ Caution ⚠️**: Webhooks Types are expected to be used with the [`strictNullChecks` option](https://www.typescriptlang.org/tsconfig#strictNullChecks) enabled in your `tsconfig`. If you don't have this option enabled, there's the possibility that you get `never` as the inferred type in some use cases. See [octokit/webhooks#395](https://github.com/octokit/webhooks/issues/395) for details.
 
 ### `EmitterWebhookEventName`
 
