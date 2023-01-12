@@ -27,7 +27,8 @@ export function getPayload(request: IncomingMessage): Promise<string> {
     request.on("data", (chunk: string) => (data += chunk));
     request.on("end", () => {
       try {
-        JSON.parse(data); // check if data is valid JSON
+        // Call JSON.parse() only to check if the payload is valid JSON
+        JSON.parse(data);
         resolve(data);
       } catch (error: any) {
         error.message = "Invalid JSON";
