@@ -20,7 +20,7 @@ export function getPayload(
 
   if (request.body) {
     if (typeof request.body !== "string") {
-      console.error(
+      console.warn(
         "[@octokit/webhooks] Passing the payload as a JSON object in `request.body` is deprecated and will be removed in a future release of `@octokit/webhooks`, please pass it as a a `string` instead."
       );
     }

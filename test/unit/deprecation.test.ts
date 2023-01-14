@@ -19,7 +19,7 @@ describe("Deprecations", () => {
     );
   });
   test("onUnhandledRequest", async () => {
-    const spy = jest.spyOn(console, "error");
+    const spy = jest.spyOn(console, "warn");
     const webhooks = new Webhooks({
       secret: "mySecret",
     });
@@ -54,7 +54,7 @@ describe("Deprecations", () => {
   });
 
   test("webhooks.verify(payload, signature) with object payload", async () => {
-    const spy = jest.spyOn(console, "error");
+    const spy = jest.spyOn(console, "warn");
     const secret = "mysecret";
     const webhooks = new Webhooks({ secret });
 
@@ -69,7 +69,7 @@ describe("Deprecations", () => {
   });
 
   test("webhooks.verifyAndReceive(payload, signature) with object payload", async () => {
-    const spy = jest.spyOn(console, "error");
+    const spy = jest.spyOn(console, "warn");
     const secret = "mysecret";
     const webhooks = new Webhooks({ secret });
 

@@ -62,7 +62,7 @@ class Webhooks<TTransformed = unknown> {
     this.sign = sign.bind(null, options.secret);
     this.verify = (eventPayload: object | string, signature: string) => {
       if (typeof eventPayload === "object") {
-        console.error(
+        console.warn(
           "[@octokit/webhooks] Passing a JSON payload object to `verify()` is deprecated and the functionality will be removed in a future release of `@octokit/webhooks`"
         );
       }
@@ -79,7 +79,7 @@ class Webhooks<TTransformed = unknown> {
         | EmitterWebhookEventWithSignature
     ) => {
       if (typeof options.payload === "object") {
-        console.error(
+        console.warn(
           "[@octokit/webhooks] Passing a JSON payload object to `verifyAndReceive()` is deprecated and the functionality will be removed in a future release of `@octokit/webhooks`"
         );
       }
