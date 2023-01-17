@@ -138,7 +138,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     server.close();
   });
-  
+
   test("Handles Missing Content-Type", async () => {
     const webhooks = new Webhooks({
       secret: "mySecret",
