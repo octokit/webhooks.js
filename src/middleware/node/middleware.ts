@@ -48,7 +48,7 @@ export async function middleware(
   // Otherwise, return a 415 Unsupported Media Type error
   // See https://github.com/octokit/webhooks.js/issues/158
   if (
-    request.headers["content-type"] == null ||
+    !request.headers["content-type"] ||
     !request.headers["content-type"].startsWith("application/json")
   ) {
     response.writeHead(415, {
