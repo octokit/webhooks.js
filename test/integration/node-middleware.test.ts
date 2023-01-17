@@ -138,6 +138,36 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     server.close();
   });
+  
+  test("Handles Missing Content-Type", async () => {
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    const server = createServer(createNodeMiddleware(webhooks)).listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "POST",
+        headers: {
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": signatureSha256,
+        },
+        body: pushEventPayload,
+      }
+    );
+
+    await expect(response.text()).resolves.toBe(
+      '{"error":"Unsupported \\"Content-Type\\" header value. Must be \\"application/json\\""}'
+    );
+    expect(response.status).toEqual(415);
+
+    server.close();
+  });
 
   test("Handles invalid JSON", async () => {
     const webhooks = new Webhooks({
