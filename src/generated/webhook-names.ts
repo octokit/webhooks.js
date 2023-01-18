@@ -70,6 +70,8 @@ export const emitterEventNames = [
   "installation_repositories",
   "installation_repositories.added",
   "installation_repositories.removed",
+  "installation_target",
+  "installation_target.renamed",
   "issue_comment",
   "issue_comment.created",
   "issue_comment.deleted",
