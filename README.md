@@ -56,6 +56,17 @@ require("http").createServer(createNodeMiddleware(webhooks)).listen(3000);
 // can now receive webhook events at /api/github/webhooks
 ```
 
+To ease key rotation, the `Webhooks` constructor also accepts an array of additional secrets used as fallbacks for verification.
+That is, if a message fails to verify with the provided `secret`, the receiver will also test against each of these additional secrets.
+The message will be accepted if it verifies against any secret.
+
+```js
+const webhooks = new Webhooks({
+  secret: "mysecret",
+  alternativeSecretsForVerification: ["oldsecret1", "oldsecret2"],
+});
+```
+
 ## Local development
 
 You can receive webhooks on your local machine or even browser using [EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) and [smee.io](https://smee.io/).
@@ -143,6 +154,19 @@ Used for internal logging. Defaults to [`console`](https://developer.mozilla.org
 
 </td>
     </tr>
+    <tr>
+      <td>
+        <code>
+          alternativeSecretsForVerification
+        </code>
+        <em>(Array of Strings)</em>
+      </td>
+      <td>
+        Additional secrets, as configured in GitHub Settings, to use as fallbacks for incoming messages.
+        This is intended to facilitate key rotation, and so will usually be null or an empty array.
+      </td>
+    </tr>
+
   </tbody>
 </table>
 

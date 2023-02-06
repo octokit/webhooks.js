@@ -55,6 +55,8 @@ class Webhooks<TTransformed = unknown> {
     const state: State & { secret: string } = {
       eventHandler: createEventHandler(options),
       secret: options.secret,
+      alternativeSecretsForVerification:
+        options.alternativeSecretsForVerification,
       hooks: {},
       log: createLogger(options.log),
     };
@@ -66,7 +68,12 @@ class Webhooks<TTransformed = unknown> {
           "[@octokit/webhooks] Passing a JSON payload object to `verify()` is deprecated and the functionality will be removed in a future release of `@octokit/webhooks`"
         );
       }
-      return verify(options.secret, eventPayload, signature);
+      return verify(
+        options.secret,
+        options.alternativeSecretsForVerification,
+        eventPayload,
+        signature
+      );
     };
     this.on = state.eventHandler.on;
     this.onAny = state.eventHandler.onAny;
