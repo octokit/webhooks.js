@@ -4,11 +4,11 @@
 type IncomingMessage = any;
 type ServerResponse = any;
 
-import { WebhookEventName } from "@octokit/webhooks-types";
+import type { WebhookEventName } from "@octokit/webhooks-types";
 
-import { Webhooks } from "../../index";
-import { WebhookEventHandlerError } from "../../types";
-import { MiddlewareOptions } from "./types";
+import type { Webhooks } from "../../index";
+import type { WebhookEventHandlerError } from "../../types";
+import type { MiddlewareOptions } from "./types";
 import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
 

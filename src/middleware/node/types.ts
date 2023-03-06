@@ -4,7 +4,7 @@
 type IncomingMessage = any;
 type ServerResponse = any;
 
-import { Logger } from "../../createLogger";
+import type { Logger } from "../../createLogger";
 
 export type MiddlewareOptions = {
   path?: string;
