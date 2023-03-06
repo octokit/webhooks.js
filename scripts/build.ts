@@ -9,7 +9,7 @@ const sharedOptions: BuildOptions = {
   minify: false,
   allowOverwrite: true,
   packages: "external",
-}
+};
 
 async function main() {
   // Start with a clean slate
@@ -25,14 +25,15 @@ async function main() {
   });
 
   // Remove the types file from the dist-src folder
-  const typeFiles = glob(["./pkg/dist-src/types.js", "./pkg/dist-src/**/types.js"]);
+  const typeFiles = glob([
+    "./pkg/dist-src/types.js",
+    "./pkg/dist-src/**/types.js",
+  ]);
   for (const typeFile of typeFiles) {
     rmSync(typeFile);
   }
 
-  const entryPoints = [
-    "./pkg/dist-src/index.js",
-  ];
+  const entryPoints = ["./pkg/dist-src/index.js"];
 
   // Build the source code as a bundle for Node.js as CJS
   await esbuild.build({
