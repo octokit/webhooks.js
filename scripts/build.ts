@@ -25,8 +25,7 @@ async function main() {
   });
 
   const entryPoints = [
-    ...glob("./pkg/dist-src/*.js"),
-    ...glob("./pkg/dist-src/**/*.js"),
+    "./pkg/dist-src/index.js",
   ];
 
   // Build the source code as a bundle for Node.js as CJS
