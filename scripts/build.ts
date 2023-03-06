@@ -27,6 +27,8 @@ async function main() {
   // Remove the types file from the dist-src folder
   const typeFiles = glob([
     "./pkg/dist-src/types.js",
+    "./pkg/dist-src/types.js.map",
+    "./pkg/dist-src/**/types.js.map",
     "./pkg/dist-src/**/types.js",
   ]);
   for (const typeFile of typeFiles) {
