@@ -1,6 +1,6 @@
 import { verify } from "@octokit/webhooks-methods";
 
-import {
+import type {
   EmitterWebhookEventWithStringPayloadAndSignature,
   State,
 } from "./types";

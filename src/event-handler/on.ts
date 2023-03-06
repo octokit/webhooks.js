@@ -1,5 +1,5 @@
 import { emitterEventNames } from "../generated/webhook-names";
-import {
+import type {
   EmitterWebhookEvent,
   EmitterWebhookEventName,
   State,

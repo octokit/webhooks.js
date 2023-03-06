@@ -1,9 +1,9 @@
-import { RequestError } from "@octokit/request-error";
+import type { RequestError } from "@octokit/request-error";
 import type {
   WebhookEventMap,
   WebhookEventName,
 } from "@octokit/webhooks-types";
-import { Logger } from "./createLogger";
+import type { Logger } from "./createLogger";
 import type { emitterEventNames } from "./generated/webhook-names";
 
 export type EmitterWebhookEventName = (typeof emitterEventNames)[number];
