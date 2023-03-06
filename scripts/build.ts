@@ -24,6 +24,12 @@ async function main() {
     ...sharedOptions,
   });
 
+  // Remove the types file from the dist-src folder
+  const typeFiles = glob(["./pkg/dist-src/types.js", "./pkg/dist-src/**/types.js"]);
+  for (const typeFile of typeFiles) {
+    rmSync(typeFile);
+  }
+
   const entryPoints = [
     "./pkg/dist-src/index.js",
   ];
