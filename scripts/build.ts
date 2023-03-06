@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node-transpile-only
 
 import esbuild, { type BuildOptions } from "esbuild";
-import { copyFileSync, readFileSync, writeFileSync, rmdirSync } from "fs";
+import { copyFileSync, readFileSync, writeFileSync, rmSync } from "fs";
 import { globSync as glob } from "glob";
 
 const sharedOptions: BuildOptions = {
@@ -13,7 +13,7 @@ const sharedOptions: BuildOptions = {
 
 async function main() {
   // Start with a clean slate
-  rmdirSync("pkg", { recursive: true });
+  rmSync("pkg", { recursive: true });
   // Build the source code for a neutral platform as ESM
   await esbuild.build({
     entryPoints: [...glob("./src/*.ts"), ...glob("./src/**/*.ts")],
