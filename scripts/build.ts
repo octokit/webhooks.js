@@ -16,7 +16,7 @@ async function main() {
   rmSync("pkg", { recursive: true });
   // Build the source code for a neutral platform as ESM
   await esbuild.build({
-    entryPoints: [...glob("./src/*.ts"), ...glob("./src/**/*.ts")],
+    entryPoints: glob(["./src/*.ts", "./src/**/*.ts"]),
     outdir: "pkg/dist-src",
     bundle: false,
     platform: "neutral",
