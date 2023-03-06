@@ -1,7 +1,7 @@
 import { verify } from "@octokit/webhooks-methods";
 
 import { toNormalizedJsonString } from "./to-normalized-json-string";
-import {
+import type {
   EmitterWebhookEventWithStringPayloadAndSignature,
   EmitterWebhookEventWithSignature,
   State,

@@ -3,7 +3,7 @@ import { createEventHandler } from "./event-handler/index";
 import { sign } from "./sign";
 import { verify } from "./verify";
 import { verifyAndReceive } from "./verify-and-receive";
-import {
+import type {
   EmitterWebhookEvent,
   EmitterWebhookEventName,
   HandlerFunction,
@@ -91,7 +91,7 @@ class Webhooks<TTransformed = unknown> {
 export {
   createEventHandler,
   Webhooks,
-  EmitterWebhookEvent,
-  EmitterWebhookEventName,
-  WebhookError,
+  type EmitterWebhookEvent,
+  type EmitterWebhookEventName,
+  type WebhookError,
 };
