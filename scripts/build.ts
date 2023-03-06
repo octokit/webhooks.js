@@ -57,10 +57,13 @@ async function main() {
     ...sharedOptions,
   });
 
-  // Copy the README, LICENSE and package.json to the pkg folder
+  // Copy the README, LICENSE to the pkg folder
   copyFileSync("LICENSE.md", "pkg/LICENSE");
   copyFileSync("README.md", "pkg/README.md");
+
+  // Handle the package.json
   let pkg = JSON.parse(readFileSync("package.json", "utf8").toString());
+  // Remove unnecessary fields from the package.json
   delete pkg.scripts;
   delete pkg.prettier;
   delete pkg.release;
