@@ -8,6 +8,7 @@ const sharedOptions: BuildOptions = {
   sourcemap: true,
   minify: false,
   allowOverwrite: true,
+  packages: "external",
 }
 
 async function main() {
@@ -34,7 +35,6 @@ async function main() {
     outdir: "pkg/dist-node",
     bundle: true,
     platform: "node",
-    packages: "external",
     target: "node14",
     format: "cjs",
     ...sharedOptions,
