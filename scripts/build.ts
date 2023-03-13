@@ -58,7 +58,7 @@ async function main() {
   });
 
   // Copy the README, LICENSE to the pkg folder
-  copyFileSync("LICENSE.md", "pkg/LICENSE");
+  copyFileSync("LICENSE.md", "pkg/LICENSE.md");
   copyFileSync("README.md", "pkg/README.md");
 
   // Handle the package.json
