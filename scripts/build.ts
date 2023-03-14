@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node-transpile-only
 
 import esbuild, { type BuildOptions } from "esbuild";
-import { copyFileSync, readFileSync, writeFileSync, rmSync } from "fs";
+import { copyFile, readFile, writeFile, rm } from "fs/promises";
 import { globSync as glob } from "glob";
 
 const sharedOptions: BuildOptions = {
@@ -13,7 +13,7 @@ const sharedOptions: BuildOptions = {
 
 async function main() {
   // Start with a clean slate
-  rmSync("pkg", { recursive: true });
+  await rm("pkg", { recursive: true });
   // Build the source code for a neutral platform as ESM
   await esbuild.build({
     entryPoints: glob(["./src/*.ts", "./src/**/*.ts"]),
@@ -32,7 +32,7 @@ async function main() {
     "./pkg/dist-src/**/types.js",
   ]);
   for (const typeFile of typeFiles) {
-    rmSync(typeFile);
+    await rm(typeFile);
   }
 
   const entryPoints = ["./pkg/dist-src/index.js"];
@@ -60,16 +60,16 @@ async function main() {
   ]);
 
   // Copy the README, LICENSE to the pkg folder
-  copyFileSync("LICENSE.md", "pkg/LICENSE.md");
-  copyFileSync("README.md", "pkg/README.md");
+  await copyFile("LICENSE.md", "pkg/LICENSE.md");
+  await copyFile("README.md", "pkg/README.md");
 
   // Handle the package.json
-  let pkg = JSON.parse(readFileSync("package.json", "utf8").toString());
+  let pkg = JSON.parse((await readFile("package.json", "utf8")).toString());
   // Remove unnecessary fields from the package.json
   delete pkg.scripts;
   delete pkg.prettier;
   delete pkg.release;
-  writeFileSync(
+  await writeFile(
     "pkg/package.json",
     JSON.stringify(
       {
