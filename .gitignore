@@ -2,5 +2,5 @@
 coverage
 node_modules
 
-# Pika builds
+# Build output folder
 pkg/
