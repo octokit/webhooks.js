@@ -1,10 +1,8 @@
-#!/usr/bin/env ts-node-transpile-only
-
-import esbuild, { type BuildOptions } from "esbuild";
+import esbuild from "esbuild";
 import { copyFile, readFile, writeFile, rm } from "fs/promises";
 import { glob } from "glob";
 
-const sharedOptions: BuildOptions = {
+const sharedOptions = {
   sourcemap: true,
   minify: false,
   allowOverwrite: true,
