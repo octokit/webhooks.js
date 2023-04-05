@@ -7,7 +7,7 @@ type ServerResponse = any;
 import type { Logger } from "../../createLogger";
 
 export type MiddlewareOptions = {
-  path?: string;
+  path?: string | RegExp;
   log?: Logger;
   /** @deprecated `onUnhandledRequest()` is deprecated and will be removed in a future release of `@octokit/webhooks` */
   onUnhandledRequest?: (

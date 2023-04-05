@@ -12,6 +12,8 @@ export type EmitterWebhookEvent<
 > = TEmitterEvent extends `${infer TWebhookEvent}.${infer TAction}`
   ? BaseWebhookEvent<Extract<TWebhookEvent, WebhookEventName>> & {
       payload: { action: TAction };
+    } & {
+      extraData?: any;
     }
   : BaseWebhookEvent<Extract<TEmitterEvent, WebhookEventName>>;
 
@@ -20,6 +22,7 @@ export type EmitterWebhookEventWithStringPayloadAndSignature = {
   name: EmitterWebhookEventName;
   payload: string;
   signature: string;
+  extraData?: any;
 };
 /** @deprecated */
 export type EmitterWebhookEventWithSignature = EmitterWebhookEvent & {
@@ -30,6 +33,7 @@ interface BaseWebhookEvent<TName extends WebhookEventName> {
   id: string;
   name: TName;
   payload: WebhookEventMap[TName];
+  extraData?: any;
 }
 
 export interface Options<TTransformed = unknown> {

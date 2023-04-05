@@ -48,7 +48,7 @@ const webhooks = new Webhooks({
   secret: "mysecret",
 });
 
-webhooks.onAny(({ id, name, payload }) => {
+webhooks.onAny(({ id, name, payload, extraData }) => {
   console.log(name, "event received");
 });
 
@@ -223,7 +223,7 @@ The `verify` method can be imported as static method from [`@octokit/webhooks-me
 ### webhooks.verifyAndReceive()
 
 ```js
-webhooks.verifyAndReceive({ id, name, payload, signature });
+webhooks.verifyAndReceive({ id, name, payload, extraData, signature });
 ```
 
 <table width="100%">
@@ -316,7 +316,7 @@ eventHandler
 ### webhooks.receive()
 
 ```js
-webhooks.receive({ id, name, payload });
+webhooks.receive({ id, name, payload, extraData });
 ```
 
 <table width="100%">
@@ -370,6 +370,8 @@ Returns a promise. Runs all handlers set with [`webhooks.on()`](#webhookson) in 
 
 The `.receive()` method belongs to the `event-handler` module which can be used [standalone](src/event-handler/).
 
+The `extraData` is an optional parameter, if it is set, it will be available in the `on` functions.
+
 ### webhooks.on()
 
 ```js
@@ -420,7 +422,7 @@ webhooks.on(eventNames, handler);
         <strong>Required.</strong>
         Method to be run each time the event with the passed name is received.
         the <code>handler</code> function can be an async function, throw an error or
-        return a Promise. The handler is called with an event object: <code>{id, name, payload}</code>.
+        return a Promise. The handler is called with an event object: <code>{id, name, payload, extraData}</code>.
       </td>
     </tr>
   </tbody>
@@ -449,7 +451,7 @@ webhooks.onAny(handler);
         <strong>Required.</strong>
         Method to be run each time any event is received.
         the <code>handler</code> function can be an async function, throw an error or
-        return a Promise. The handler is called with an event object: <code>{id, name, payload}</code>.
+        return a Promise. The handler is called with an event object: <code>{id, name, payload, extraData}</code>.
       </td>
     </tr>
   </tbody>
@@ -482,7 +484,7 @@ Asynchronous `error` event handler are not blocking the `.receive()` method from
         <strong>Required.</strong>
         Method to be run each time a webhook event handler throws an error or returns a promise that rejects.
         The <code>handler</code> function can be an async function,
-        return a Promise. The handler is called with an error object that has a .event property which has all the information on the event: <code>{id, name, payload}</code>.
+        return a Promise. The handler is called with an error object that has a .event property which has all the information on the event: <code>{id, name, payload, extraData}</code>.
       </td>
     </tr>
   </tbody>
@@ -579,21 +581,32 @@ createServer(middleware).listen(3000);
       <td>
         <code>path</code>
         <em>
-          string
+          string | RegEx
         </em>
       </td>
       <td>
         Custom path to match requests against. Defaults to <code>/api/github/webhooks</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>log</code>
-        <em>
-          object
-        </em>
-      </td>
-      <td>
+
+Can be used as a regular expression;
+
+```js
+const middleware = createNodeMiddleware(webhooks, {
+  path: /^\/api\/github\/webhooks/,
+});
+```
+
+Test the regex before usage, the `g` and `y` flags [makes it stateful](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test)!
+
+</td>
+</tr>
+<tr>
+<td>
+<code>log</code>
+<em>
+object
+</em>
+</td>
+<td>
 
 Used for internal logging. Defaults to [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) with `debug` and `info` doing nothing.
 
@@ -727,7 +740,7 @@ A union of all possible events and event/action combinations supported by the ev
 
 ### `EmitterWebhookEvent`
 
-The object that is emitted by `@octokit/webhooks` as an event; made up of an `id`, `name`, and `payload` properties.
+The object that is emitted by `@octokit/webhooks` as an event; made up of an `id`, `name`, and `payload` properties, with an optional `extraData`.
 An optional generic parameter can be passed to narrow the type of the `name` and `payload` properties based on event names or event/action combinations, e.g. `EmitterWebhookEvent<"check_run" | "code_scanning_alert.fixed">`.
 
 ## License

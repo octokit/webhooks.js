@@ -33,8 +33,11 @@ export async function middleware(
     );
     return;
   }
-
-  const isUnknownRoute = request.method !== "POST" || pathname !== options.path;
+  const pathMatch =
+    options.path instanceof RegExp
+      ? options.path.test(pathname)
+      : pathname === options.path;
+  const isUnknownRoute = request.method !== "POST" || !pathMatch;
   const isExpressMiddleware = typeof next === "function";
   if (isUnknownRoute) {
     if (isExpressMiddleware) {
@@ -91,7 +94,12 @@ export async function middleware(
     didTimeout = true;
     response.statusCode = 202;
     response.end("still processing\n");
-  }, 9000).unref();
+  }, 9000);
+
+  /* istanbul ignore else */
+  if (typeof timeout.unref === "function") {
+    timeout.unref();
+  }
 
   try {
     const payload = await getPayload(request);
@@ -101,6 +109,7 @@ export async function middleware(
       name: eventName as any,
       payload: payload as any,
       signature: signatureSHA256,
+      extraData: request,
     });
     clearTimeout(timeout);
 

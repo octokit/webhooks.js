@@ -39,5 +39,6 @@ export async function verifyAndReceive(
       typeof event.payload === "string"
         ? JSON.parse(event.payload)
         : event.payload,
+    extraData: event.extraData,
   });
 }
