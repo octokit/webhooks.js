@@ -11,7 +11,7 @@ const sharedOptions = {
 
 async function main() {
   // Start with a clean slate
-  await rm("pkg", { recursive: true });
+  await rm("pkg", { recursive: true, force: true });
   // Build the source code for a neutral platform as ESM
   await esbuild.build({
     entryPoints: await glob(["./src/*.ts", "./src/**/*.ts"]),
