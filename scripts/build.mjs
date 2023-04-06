@@ -75,6 +75,7 @@ async function main() {
         module: "dist-web/index.js",
         types: "dist-src/index.d.ts",
         source: "dist-src/index.js",
+        sideEffects: false
       },
       null,
       2
