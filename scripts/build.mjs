@@ -21,7 +21,7 @@ async function main() {
     platform: "neutral",
     format: "esm",
     ...sharedOptions,
-    sourcemap: false
+    sourcemap: false,
   });
 
   // Remove the types file from the dist-src folder
@@ -77,7 +77,7 @@ async function main() {
         module: "dist-web/index.js",
         types: "dist-src/index.d.ts",
         source: "dist-src/index.js",
-        sideEffects: false
+        sideEffects: false,
       },
       null,
       2
