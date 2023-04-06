@@ -3,7 +3,8 @@ import { copyFile, readFile, writeFile, rm } from "fs/promises";
 import { glob } from "glob";
 
 const sharedOptions = {
-  sourcemap: true,
+  sourcemap: "external",
+  sourcesContent: false,
   minify: false,
   allowOverwrite: true,
   packages: "external",
@@ -20,6 +21,7 @@ async function main() {
     platform: "neutral",
     format: "esm",
     ...sharedOptions,
+    sourcemap: false
   });
 
   // Remove the types file from the dist-src folder
