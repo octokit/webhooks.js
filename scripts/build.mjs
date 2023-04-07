@@ -75,7 +75,7 @@ async function main() {
         files: ["dist-*/**", "bin/**"],
         main: "dist-node/index.js",
         module: "dist-web/index.js",
-        types: "dist-src/index.d.ts",
+        types: "dist-types/index.d.ts",
         source: "dist-src/index.js",
         sideEffects: false,
       },
