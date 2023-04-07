@@ -4,7 +4,7 @@ import { glob } from "glob";
 
 const sharedOptions = {
   sourcemap: "external",
-  sourcesContent: false,
+  sourcesContent: true,
   minify: false,
   allowOverwrite: true,
   packages: "external",
