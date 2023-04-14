@@ -11,6 +11,7 @@ import type { WebhookEventHandlerError } from "../../types";
 import type { MiddlewareOptions } from "./types";
 import { getMissingHeaders } from "./get-missing-headers";
 import { getPayload } from "./get-payload";
+import { onUnhandledRequestDefault } from "./on-unhandled-request-default";
 
 export async function middleware(
   webhooks: Webhooks,
@@ -18,7 +19,7 @@ export async function middleware(
   request: IncomingMessage,
   response: ServerResponse,
   next?: Function
-) {
+): Promise<boolean> {
   let pathname: string;
   try {
     pathname = new URL(request.url as string, "http://localhost").pathname;
@@ -31,17 +32,15 @@ export async function middleware(
         error: `Request URL could not be parsed: ${request.url}`,
       })
     );
-    return;
+    return true;
   }
 
-  const isUnknownRoute = request.method !== "POST" || pathname !== options.path;
-  const isExpressMiddleware = typeof next === "function";
-  if (isUnknownRoute) {
-    if (isExpressMiddleware) {
-      return next!();
-    } else {
-      return options.onUnhandledRequest(request, response);
-    }
+  if (pathname !== options.path) {
+    next?.();
+    return false;
+  } else if (request.method !== "POST") {
+    onUnhandledRequestDefault(request, response);
+    return true;
   }
 
   // Check if the Content-Type header is `application/json` and allow for charset to be specified in it
@@ -60,7 +59,7 @@ export async function middleware(
         error: `Unsupported "Content-Type" header value. Must be "application/json"`,
       })
     );
-    return;
+    return true;
   }
 
   const missingHeaders = getMissingHeaders(request).join(", ");
@@ -75,7 +74,7 @@ export async function middleware(
       })
     );
 
-    return;
+    return true;
   }
 
   const eventName = request.headers["x-github-event"] as WebhookEventName;
@@ -99,18 +98,19 @@ export async function middleware(
     await webhooks.verifyAndReceive({
       id: id,
       name: eventName as any,
-      payload: payload as any,
+      payload,
       signature: signatureSHA256,
     });
     clearTimeout(timeout);
 
-    if (didTimeout) return;
+    if (didTimeout) return true;
 
     response.end("ok\n");
+    return true;
   } catch (error) {
     clearTimeout(timeout);
 
-    if (didTimeout) return;
+    if (didTimeout) return true;
 
     const err = Array.from(error as WebhookEventHandlerError)[0];
     const errorMessage = err.message
@@ -125,5 +125,7 @@ export async function middleware(
         error: errorMessage,
       })
     );
+
+    return true;
   }
 }

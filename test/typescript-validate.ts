@@ -82,8 +82,8 @@ export default async function () {
 
   webhooks.onAny(async ({ id, name, payload }) => {
     console.log(name, "event received", id);
-    const sig = await webhooks.sign(payload);
-    webhooks.verify(payload, sig);
+    const sig = await webhooks.sign(JSON.stringify(payload));
+    webhooks.verify(JSON.stringify(payload), sig);
   });
 
   webhooks.on("check_run.completed", () => {});

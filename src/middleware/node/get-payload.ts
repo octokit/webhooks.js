@@ -1,4 +1,3 @@
-import type { WebhookEvent } from "@octokit/webhooks-types";
 // @ts-ignore to address #245
 import AggregateError from "aggregate-error";
 
@@ -12,20 +11,11 @@ import AggregateError from "aggregate-error";
 // }
 type IncomingMessage = any;
 
-export function getPayload(
-  request: IncomingMessage
-): Promise<WebhookEvent | string> {
+export function getPayload(request: IncomingMessage): Promise<string> {
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
 
-  if (request.body) {
-    if (typeof request.body !== "string") {
-      console.warn(
-        "[@octokit/webhooks] Passing the payload as a JSON object in `request.body` is deprecated and will be removed in a future release of `@octokit/webhooks`, please pass it as a a `string` instead."
-      );
-    }
-    return Promise.resolve(request.body as WebhookEvent | string);
-  }
+  if (request.body) return Promise.resolve(request.body);
 
   return new Promise((resolve, reject) => {
     let data = "";

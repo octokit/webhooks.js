@@ -162,7 +162,7 @@ webhooks.sign(eventPayload);
           eventPayload
         </code>
         <em>
-          (Object)
+          (String)
         </em>
       </td>
       <td>
@@ -556,11 +556,18 @@ const webhooks = new Webhooks({
   secret: "mysecret",
 });
 
-const middleware = createNodeMiddleware(webhooks, { path: "/" });
-
-createServer(middleware).listen(3000);
-// can now receive user authorization callbacks at POST /
+const middleware = createNodeMiddleware(webhooks, { path: "/webhooks" });
+createServer(async (req, res) => {
+  // `middleware` returns `false` when `req` is unhandled (beyond `/webhooks`)
+  if (await middleware(req, res)) return;
+  res.writeHead(404);
+  res.end();
+}).listen(3000);
+// can now receive user authorization callbacks at POST /webhooks
 ```
+
+The middleware returned from `createNodeMiddleware` can also serve as an
+`Express.js` middleware directly.
 
 <table width="100%">
   <tbody valign="top">
@@ -596,32 +603,6 @@ createServer(middleware).listen(3000);
       <td>
 
 Used for internal logging. Defaults to [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) with `debug` and `info` doing nothing.
-
-</td>
-    </tr>
-    <tr>
-      <td>
-        <code>onUnhandledRequest (deprecated)</code>
-        <em>
-          function
-        </em>
-      </td>
-      <td>
-
-Defaults to
-
-```js
-function onUnhandledRequest(request, response) {
-  response.writeHead(400, {
-    "content-type": "application/json",
-  });
-  response.end(
-    JSON.stringify({
-      error: error.message,
-    })
-  );
-}
-```
 
 </td>
     </tr>
