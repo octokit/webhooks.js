@@ -30,7 +30,7 @@ export type EmitterWebhookEvent<
       Extract<TEmitterEvent, EmitterWebhookEventName>
     >
   : BaseWebhookEvent<
-      Extract<SnakeCaseToKebabCase<TEmitterEvent>, keyof webhooksIdentifiers>,
+      Extract<TEmitterEvent, keyof webhooksIdentifiers>,
       TEmitterEvent
     >;
 
