@@ -1,7 +1,4 @@
-import { webhooks } from "@wolfy1339/openapi-webhooks-types";
-
-export type WebhookEventDefinition<TEventName extends keyof webhooks> =
-  webhooks[TEventName]["post"]["requestBody"]["content"]["application/json"];
+import { WebhookEventDefinition } from "../types";
 
 export type webhooksIdentifiers = {
   branch_protection_rule:
@@ -179,6 +176,7 @@ export type webhooksIdentifiers = {
   pull_request_review_thread:
     | WebhookEventDefinition<"pull-request-review-thread-resolved">
     | WebhookEventDefinition<"pull-request-review-thread-unresolved">;
+  push: WebhookEventDefinition<"push">;
   registry_package:
     | WebhookEventDefinition<"registry-package-published">
     | WebhookEventDefinition<"registry-package-updated">;
