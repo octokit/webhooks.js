@@ -1,19 +1,12 @@
 import type { RequestError } from "@octokit/request-error";
-import type {
-  WebhookEventMap,
-  WebhookEventName,
-} from "@octokit/webhooks-types";
+import type { webhooksIdentifiers } from "./generated/webhook-identifiers";
 import type { Logger } from "./createLogger";
 import type { emitterEventNames } from "./generated/webhook-names";
 
-export type EmitterWebhookEventName = (typeof emitterEventNames)[number];
+export type EmitterWebhookEventName = keyof webhooksIdentifiers;
 export type EmitterWebhookEvent<
   TEmitterEvent extends EmitterWebhookEventName = EmitterWebhookEventName
-> = TEmitterEvent extends `${infer TWebhookEvent}.${infer TAction}`
-  ? BaseWebhookEvent<Extract<TWebhookEvent, WebhookEventName>> & {
-      payload: { action: TAction };
-    }
-  : BaseWebhookEvent<Extract<TEmitterEvent, WebhookEventName>>;
+> = BaseWebhookEvent<TEmitterEvent>;
 
 export type EmitterWebhookEventWithStringPayloadAndSignature = {
   id: string;
@@ -22,10 +15,10 @@ export type EmitterWebhookEventWithStringPayloadAndSignature = {
   signature: string;
 };
 
-interface BaseWebhookEvent<TName extends WebhookEventName> {
+interface BaseWebhookEvent<TName extends EmitterWebhookEventName> {
   id: string;
   name: TName;
-  payload: WebhookEventMap[TName];
+  payload: webhooksIdentifiers[TName];
 }
 
 export interface Options<TTransformed = unknown> {
