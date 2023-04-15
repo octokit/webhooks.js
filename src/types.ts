@@ -27,7 +27,7 @@ export type EmitterWebhookEvent<
         `${SnakeCaseToKebabCase<TWebhookEvent>}-${TAction}`,
         WebhookEventName
       >,
-      TEmitterEvent
+      Extract<TEmitterEvent, EmitterWebhookEventName>
     >
   : BaseWebhookEvent<
       Extract<SnakeCaseToKebabCase<TEmitterEvent>, keyof webhooksIdentifiers>,
