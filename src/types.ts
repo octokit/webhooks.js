@@ -1,7 +1,6 @@
 import type { RequestError } from "@octokit/request-error";
 import type { webhooksIdentifiers } from "./generated/webhook-identifiers";
 import type { Logger } from "./createLogger";
-import type { emitterEventNames } from "./generated/webhook-names";
 
 export type EmitterWebhookEventName = keyof webhooksIdentifiers;
 export type EmitterWebhookEvent<
