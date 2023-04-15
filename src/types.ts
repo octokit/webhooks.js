@@ -10,7 +10,10 @@ type SnakeCaseToKebabCase<TString extends string> =
     : TString;
 
 export type WebhookEventName = keyof OpenAPIWebhooks;
-export type ExtractEvents<TEventName> = TEventName extends `${infer _TWebhookEvent}.${infer _TAction}` ? never : TEventName;
+export type ExtractEvents<TEventName> =
+  TEventName extends `${infer _TWebhookEvent}.${infer _TAction}`
+    ? never
+    : TEventName;
 export type WebhookEvents = ExtractEvents<EmitterWebhookEventName>;
 export type WebhookEventDefinition<TEventName extends WebhookEventName> =
   OpenAPIWebhooks[TEventName]["post"]["requestBody"]["content"]["application/json"];
@@ -19,8 +22,17 @@ export type EmitterWebhookEventName = (typeof emitterEventNames)[number];
 export type EmitterWebhookEvent<
   TEmitterEvent extends EmitterWebhookEventName = EmitterWebhookEventName
 > = TEmitterEvent extends `${infer TWebhookEvent}.${infer TAction}`
-  ? OpenAPIWebhookEvent<Extract<`${SnakeCaseToKebabCase<TWebhookEvent>}-${TAction}`, WebhookEventName>, TEmitterEvent>
-  : BaseWebhookEvent<Extract<SnakeCaseToKebabCase<TEmitterEvent>, keyof webhooksIdentifiers>, TEmitterEvent>;
+  ? OpenAPIWebhookEvent<
+      Extract<
+        `${SnakeCaseToKebabCase<TWebhookEvent>}-${TAction}`,
+        WebhookEventName
+      >,
+      TEmitterEvent
+    >
+  : BaseWebhookEvent<
+      Extract<SnakeCaseToKebabCase<TEmitterEvent>, keyof webhooksIdentifiers>,
+      TEmitterEvent
+    >;
 
 export type EmitterWebhookEventWithStringPayloadAndSignature = {
   id: string;
@@ -29,12 +41,18 @@ export type EmitterWebhookEventWithStringPayloadAndSignature = {
   signature: string;
 };
 
-interface BaseWebhookEvent<TKeyName extends keyof webhooksIdentifiers, TName extends EmitterWebhookEventName> {
+interface BaseWebhookEvent<
+  TKeyName extends keyof webhooksIdentifiers,
+  TName extends EmitterWebhookEventName
+> {
   id: string;
   name: TName;
   payload: webhooksIdentifiers[TKeyName];
 }
-interface OpenAPIWebhookEvent<TKeyName extends WebhookEventName, TName extends EmitterWebhookEventName> {
+interface OpenAPIWebhookEvent<
+  TKeyName extends WebhookEventName,
+  TName extends EmitterWebhookEventName
+> {
   id: string;
   name: TName;
   payload: WebhookEventDefinition<TKeyName>;
