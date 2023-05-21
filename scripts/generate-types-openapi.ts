@@ -2,13 +2,7 @@
 
 import { strict as assert } from "assert";
 import * as fs from "fs";
-import {
-  MediaTypeObject,
-  OpenAPI3,
-  OperationObject,
-  PathItemObject,
-  RequestBodyObject,
-} from "./types";
+import { OpenAPI3, OperationObject, PathItemObject } from "./types";
 import { format } from "prettier";
 
 const schema = require("@wolfy1339/openapi-webhooks").schemas[
@@ -30,7 +24,7 @@ for (let webhookDefinitionKey of Object.keys(schema.webhooks!)) {
     .operationId!.replace(/-/g, "_")
     .replace("/", ".");
 
-  const [eventName, actionName] = emitterEventName.split(".");
+  const [eventName] = emitterEventName.split(".");
   events.add(eventName);
   events.add(emitterEventName);
   eventsMap[eventName] ||= new Set<string>();
