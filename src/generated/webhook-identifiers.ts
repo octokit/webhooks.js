@@ -25,6 +25,8 @@ export type webhooksIdentifiers = {
     | WebhookEventDefinition<"code-scanning-alert-reopened">
     | WebhookEventDefinition<"code-scanning-alert-reopened-by-user">;
   commit_comment: WebhookEventDefinition<"commit-comment-created">;
+  create: WebhookEventDefinition<"create">;
+  delete: WebhookEventDefinition<"delete">;
   dependabot_alert:
     | WebhookEventDefinition<"dependabot-alert-auto-dismissed">
     | WebhookEventDefinition<"dependabot-alert-auto-reopened">
@@ -59,7 +61,9 @@ export type webhooksIdentifiers = {
     | WebhookEventDefinition<"discussion-comment-created">
     | WebhookEventDefinition<"discussion-comment-deleted">
     | WebhookEventDefinition<"discussion-comment-edited">;
+  fork: WebhookEventDefinition<"fork">;
   github_app_authorization: WebhookEventDefinition<"github-app-authorization-revoked">;
+  gollum: WebhookEventDefinition<"gollum">;
   installation:
     | WebhookEventDefinition<"installation-created">
     | WebhookEventDefinition<"installation-deleted">
@@ -130,11 +134,13 @@ export type webhooksIdentifiers = {
   package:
     | WebhookEventDefinition<"package-published">
     | WebhookEventDefinition<"package-updated">;
+  page_build: WebhookEventDefinition<"page-build">;
   personal_access_token_request:
     | WebhookEventDefinition<"personal-access-token-request-approved">
     | WebhookEventDefinition<"personal-access-token-request-cancelled">
     | WebhookEventDefinition<"personal-access-token-request-created">
     | WebhookEventDefinition<"personal-access-token-request-denied">;
+  ping: WebhookEventDefinition<"ping">;
   project_card:
     | WebhookEventDefinition<"project-card-converted">
     | WebhookEventDefinition<"project-card-created">
@@ -166,6 +172,7 @@ export type webhooksIdentifiers = {
     | WebhookEventDefinition<"projects-v2-item-edited">
     | WebhookEventDefinition<"projects-v2-item-reordered">
     | WebhookEventDefinition<"projects-v2-item-restored">;
+  public: WebhookEventDefinition<"public">;
   pull_request:
     | WebhookEventDefinition<"pull-request-assigned">
     | WebhookEventDefinition<"pull-request-auto-merge-disabled">
@@ -199,6 +206,7 @@ export type webhooksIdentifiers = {
   pull_request_review_thread:
     | WebhookEventDefinition<"pull-request-review-thread-resolved">
     | WebhookEventDefinition<"pull-request-review-thread-unresolved">;
+  push: WebhookEventDefinition<"push">;
   registry_package:
     | WebhookEventDefinition<"registry-package-published">
     | WebhookEventDefinition<"registry-package-updated">;
@@ -224,6 +232,7 @@ export type webhooksIdentifiers = {
     | WebhookEventDefinition<"repository-transferred">
     | WebhookEventDefinition<"repository-unarchived">;
   repository_dispatch: WebhookEventDefinition<"repository-dispatch-sample.collected">;
+  repository_import: WebhookEventDefinition<"repository-import">;
   repository_vulnerability_alert:
     | WebhookEventDefinition<"repository-vulnerability-alert-create">
     | WebhookEventDefinition<"repository-vulnerability-alert-dismiss">
@@ -239,6 +248,7 @@ export type webhooksIdentifiers = {
     | WebhookEventDefinition<"security-advisory-published">
     | WebhookEventDefinition<"security-advisory-updated">
     | WebhookEventDefinition<"security-advisory-withdrawn">;
+  security_and_analysis: WebhookEventDefinition<"security-and-analysis">;
   sponsorship:
     | WebhookEventDefinition<"sponsorship-cancelled">
     | WebhookEventDefinition<"sponsorship-created">
@@ -249,6 +259,8 @@ export type webhooksIdentifiers = {
   star:
     | WebhookEventDefinition<"star-created">
     | WebhookEventDefinition<"star-deleted">;
+  status: WebhookEventDefinition<"status">;
+  team_add: WebhookEventDefinition<"team-add">;
   team:
     | WebhookEventDefinition<"team-added-to-repository">
     | WebhookEventDefinition<"team-created">
@@ -256,6 +268,7 @@ export type webhooksIdentifiers = {
     | WebhookEventDefinition<"team-edited">
     | WebhookEventDefinition<"team-removed-from-repository">;
   watch: WebhookEventDefinition<"watch-started">;
+  workflow_dispatch: WebhookEventDefinition<"workflow-dispatch">;
   workflow_job:
     | WebhookEventDefinition<"workflow-job-completed">
     | WebhookEventDefinition<"workflow-job-in-progress">
