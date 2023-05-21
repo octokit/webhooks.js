@@ -33,10 +33,8 @@ for (let webhookDefinitionKey of Object.keys(schema.webhooks!)) {
   const [eventName, actionName] = emitterEventName.split(".");
   events.add(eventName);
   events.add(emitterEventName);
-  if (actionName) {
-    eventsMap[eventName] ||= new Set<string>();
-    eventsMap[eventName].add(webhookDefinitionKey);
-  }
+  eventsMap[eventName] ||= new Set<string>();
+  eventsMap[eventName].add(webhookDefinitionKey);
 }
 
 const outDir = "src/generated/";
