@@ -42,13 +42,13 @@
   "dependencies": {
     "@octokit/request-error": "^3.0.0",
     "@octokit/webhooks-methods": "^3.0.0",
-    "@octokit/webhooks-types": "7.0.0",
+    "@octokit/webhooks-types": "7.0.1",
     "aggregate-error": "^3.1.0"
   },
   "devDependencies": {
     "@jest/types": "^29.0.0",
     "@octokit/tsconfig": "^1.0.1",
-    "@octokit/webhooks-schemas": "7.0.0",
+    "@octokit/webhooks-schemas": "7.0.1",
     "@types/jest": "^29.0.0",
     "@types/json-schema": "^7.0.7",
     "@types/node": "^18.0.0",
