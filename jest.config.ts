@@ -1,4 +1,4 @@
-import { Config } from "@jest/types";
+import type { Config } from "@jest/types";
 import "ts-jest";
 
 const config: Config.InitialOptions = {
@@ -22,4 +22,5 @@ const config: Config.InitialOptions = {
   testRegex: /test\/.*\/.*.test.ts/u.source,
 };
 
-export default config;
+// @ts-expect-error We have to use a CommonJS export here due to `verbatimModuleSyntax`
+export = config;
