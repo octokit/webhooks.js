@@ -23,5 +23,4 @@ const config: Config.InitialOptions = {
 };
 
 // We have to use a CommonJS export here due to `verbatimModuleSyntax`
-// Any TypeScript errors that may show up in an IDE for this line are safe to ignore
-export = config;
+module.exports = config;
