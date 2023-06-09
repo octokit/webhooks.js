@@ -13,13 +13,10 @@ const config: Config.InitialOptions = {
   transform: {
     "^.+\\.tsx?$": ["ts-jest",
       {
-        tsconfig: {
-          esModuleInterop: true,
-        },
+        tsconfig: "test/tsconfig.json",
       }
     ],
   },
-  preset: "ts-jest",
   restoreMocks: true,
   testEnvironment: "node",
   testRegex: /test\/.*\/.*.test.ts/u.source,

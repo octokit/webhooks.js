@@ -8,6 +8,7 @@
     }
   },
   "compilerOptions": {
+    "esModuleInterop": true,
     "declaration": true,
     "outDir": "pkg/dist-types",
     "emitDeclarationOnly": true,
