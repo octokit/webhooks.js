@@ -40,8 +40,8 @@
     ]
   },
   "dependencies": {
-    "@octokit/request-error": "^3.0.0",
-    "@octokit/webhooks-methods": "^3.0.0",
+    "@octokit/request-error": "^4.0.0",
+    "@octokit/webhooks-methods": "^4.0.0",
     "@octokit/webhooks-types": "7.0.3",
     "aggregate-error": "^3.1.0"
   },
@@ -55,7 +55,7 @@
     "@types/node-fetch": "^2.5.8",
     "@types/prettier": "^2.0.0",
     "axios": "^1.0.0",
-    "esbuild": "^0.17.11",
+    "esbuild": "^0.18.0",
     "express": "^4.17.1",
     "glob": "^10.0.0",
     "jest": "^29.0.0",
@@ -67,7 +67,7 @@
     "typescript": "^5.0.0"
   },
   "engines": {
-    "node": ">= 14"
+    "node": ">= 18"
   },
   "publishConfig": {
     "access": "public"
