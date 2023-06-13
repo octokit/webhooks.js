@@ -1,4 +1,4 @@
-import { Config } from "@jest/types";
+import type { Config } from "@jest/types";
 import "ts-jest";
 
 const config: Config.InitialOptions = {
@@ -13,16 +13,14 @@ const config: Config.InitialOptions = {
   transform: {
     "^.+\\.tsx?$": ["ts-jest",
       {
-        tsconfig: {
-          esModuleInterop: true,
-        },
+        tsconfig: "test/tsconfig.json",
       }
     ],
   },
-  preset: "ts-jest",
   restoreMocks: true,
   testEnvironment: "node",
   testRegex: /test\/.*\/.*.test.ts/u.source,
 };
 
-export default config;
+// We have to use a CommonJS export here due to `verbatimModuleSyntax`
+module.exports = config;

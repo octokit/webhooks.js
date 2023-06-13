@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@jest/types": "^29.0.0",
-    "@octokit/tsconfig": "^1.0.1",
+    "@octokit/tsconfig": "^2.0.0",
     "@octokit/webhooks-schemas": "7.0.3",
     "@types/jest": "^29.0.0",
     "@types/json-schema": "^7.0.7",
