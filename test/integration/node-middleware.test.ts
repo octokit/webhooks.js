@@ -1,7 +1,6 @@
 import { createServer } from "http";
 import { readFileSync } from "fs";
 
-import fetch from "node-fetch";
 import { sign } from "@octokit/webhooks-methods";
 
 // import without types
