@@ -2,7 +2,7 @@
 
 import { strict as assert } from "assert";
 import * as fs from "fs";
-import { JSONSchema7, JSONSchema7Definition } from "json-schema";
+import type { JSONSchema7, JSONSchema7Definition } from "json-schema";
 import { format } from "prettier";
 
 type JSONSchemaWithRef = JSONSchema7 & Required<Pick<JSONSchema7, "$ref">>;
