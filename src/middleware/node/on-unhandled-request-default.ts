@@ -6,7 +6,7 @@ type ServerResponse = any;
 
 export function onUnhandledRequestDefault(
   request: IncomingMessage,
-  response: ServerResponse
+  response: ServerResponse,
 ) {
   response.writeHead(404, {
     "content-type": "application/json",
@@ -14,6 +14,6 @@ export function onUnhandledRequestDefault(
   response.end(
     JSON.stringify({
       error: `Unknown route: ${request.method} ${request.url}`,
-    })
+    }),
   );
 }

@@ -3,11 +3,11 @@ import type { EmitterWebhookEventName, State } from "../types";
 export function removeListener(
   state: State,
   webhookNameOrNames: "*" | EmitterWebhookEventName | EmitterWebhookEventName[],
-  handler: Function
+  handler: Function,
 ) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>
-      removeListener(state, webhookName, handler)
+      removeListener(state, webhookName, handler),
     );
     return;
   }

@@ -8,7 +8,7 @@ export function createNodeMiddleware(
   {
     path = "/api/github/webhooks",
     log = createLogger(),
-  }: MiddlewareOptions = {}
+  }: MiddlewareOptions = {},
 ) {
   return middleware.bind(null, webhooks, {
     path,

@@ -26,7 +26,7 @@ const guessAtActionName = (name: string) => name.replace("$", ".");
 const getDefinitionName = (ref: string): string => {
   assert.ok(
     ref.startsWith("#/definitions/"),
-    `${ref} does not reference a valid definition`
+    `${ref} does not reference a valid definition`,
   );
 
   const [, name] = /^#\/definitions\/(.+)$/u.exec(ref) ?? [];
@@ -47,7 +47,7 @@ const buildEventProperties = ([
 ];
 
 const isJSONSchemaWithRef = (
-  object: JSONSchema7Definition
+  object: JSONSchema7Definition,
 ): object is JSONSchemaWithRef =>
   typeof object === "object" && object.$ref !== undefined;
 
@@ -69,7 +69,7 @@ const listEvents = () => {
 const getEmitterEvents = (): string[] => {
   return listEvents().reduce<string[]>(
     (properties, event) => properties.concat(buildEventProperties(event)),
-    []
+    [],
   );
 };
 
@@ -78,7 +78,7 @@ const outDir = "src/generated/";
 const generateTypeScriptFile = (name: string, contents: string[]) => {
   fs.writeFileSync(
     `${outDir}/${name}.ts`,
-    format(contents.join("\n"), { parser: "typescript" })
+    format(contents.join("\n"), { parser: "typescript" }),
   );
 };
 
@@ -86,7 +86,7 @@ const asCode = (str: string): string => `\`${str}\``;
 const asLink = (event: string): string => {
   const link = `https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#${event.replace(
     /[^a-z_0-9]/g,
-    ""
+    "",
   )}`;
 
   return `[${asCode(event)}](${link})`;
@@ -108,12 +108,12 @@ const updateReadme = (properties: string[]) => {
 
       return events;
     },
-    {}
+    {},
   );
 
   const rows = Object.entries(events).map(
     ([event, actions]) =>
-      `| ${asLink(event)} | ${actions.map(asCode).join("<br>")} |`
+      `| ${asLink(event)} | ${actions.map(asCode).join("<br>")} |`,
   );
 
   const table = format([headers, "| --- | --- |", ...rows].join("\n"), {
@@ -136,8 +136,8 @@ const updateReadme = (properties: string[]) => {
     "README.md",
     `${readme.slice(
       0,
-      tableStartIndex + TableStartString.length
-    )}\n\n${table}\n${readme.slice(tableEndIndex)}`
+      tableStartIndex + TableStartString.length,
+    )}\n\n${table}\n${readme.slice(tableEndIndex)}`,
   );
 };
 

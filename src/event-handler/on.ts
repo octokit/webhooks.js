@@ -9,7 +9,7 @@ import type {
 function handleEventHandlers(
   state: State,
   webhookName: EmitterWebhookEventName | "error" | "*",
-  handler: Function
+  handler: Function,
 ) {
   if (!state.hooks[webhookName]) {
     state.hooks[webhookName] = [];
@@ -20,11 +20,11 @@ function handleEventHandlers(
 export function receiverOn(
   state: State,
   webhookNameOrNames: EmitterWebhookEventName | EmitterWebhookEventName[],
-  handler: Function
+  handler: Function,
 ) {
   if (Array.isArray(webhookNameOrNames)) {
     webhookNameOrNames.forEach((webhookName) =>
-      receiverOn(state, webhookName, handler)
+      receiverOn(state, webhookName, handler),
     );
     return;
   }
@@ -42,7 +42,7 @@ export function receiverOn(
 
   if (!emitterEventNames.includes(webhookNameOrNames)) {
     state.log.warn(
-      `"${webhookNameOrNames}" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)`
+      `"${webhookNameOrNames}" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)`,
     );
   }
 
@@ -51,14 +51,14 @@ export function receiverOn(
 
 export function receiverOnAny(
   state: State,
-  handler: (event: EmitterWebhookEvent) => any
+  handler: (event: EmitterWebhookEvent) => any,
 ) {
   handleEventHandlers(state, "*", handler);
 }
 
 export function receiverOnError(
   state: State,
-  handler: (event: WebhookEventHandlerError) => any
+  handler: (event: WebhookEventHandlerError) => any,
 ) {
   handleEventHandlers(state, "error", handler);
 }

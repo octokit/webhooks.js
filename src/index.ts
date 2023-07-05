@@ -23,17 +23,17 @@ class Webhooks<TTransformed = unknown> {
   public verify: (eventPayload: string, signature: string) => Promise<boolean>;
   public on: <E extends EmitterWebhookEventName>(
     event: E | E[],
-    callback: HandlerFunction<E, TTransformed>
+    callback: HandlerFunction<E, TTransformed>,
   ) => void;
   public onAny: (callback: (event: EmitterWebhookEvent) => any) => void;
   public onError: (callback: (event: WebhookEventHandlerError) => any) => void;
   public removeListener: <E extends EmitterWebhookEventName | "*">(
     event: E | E[],
-    callback: RemoveHandlerFunction<E, TTransformed>
+    callback: RemoveHandlerFunction<E, TTransformed>,
   ) => void;
   public receive: (event: EmitterWebhookEvent) => Promise<void>;
   public verifyAndReceive: (
-    options: EmitterWebhookEventWithStringPayloadAndSignature
+    options: EmitterWebhookEventWithStringPayloadAndSignature,
   ) => Promise<void>;
 
   constructor(options: Options<TTransformed> & { secret: string }) {

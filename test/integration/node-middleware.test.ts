@@ -10,7 +10,7 @@ import { createNodeMiddleware, Webhooks } from "../../src";
 
 const pushEventPayload = readFileSync(
   "test/fixtures/push-payload.json",
-  "utf-8"
+  "utf-8",
 );
 let signatureSha256: string;
 
@@ -18,7 +18,7 @@ describe("createNodeMiddleware(webhooks)", () => {
   beforeAll(async () => {
     signatureSha256 = await sign(
       { secret: "mySecret", algorithm: "sha256" },
-      pushEventPayload
+      pushEventPayload,
     );
   });
 
@@ -53,7 +53,7 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     expect(response.status).toEqual(200);
@@ -98,7 +98,7 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     expect(response.status).toEqual(200);
@@ -127,11 +127,11 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await expect(response.text()).resolves.toBe(
-      '{"error":"Unsupported \\"Content-Type\\" header value. Must be \\"application/json\\""}'
+      '{"error":"Unsupported \\"Content-Type\\" header value. Must be \\"application/json\\""}',
     );
     expect(response.status).toEqual(415);
 
@@ -157,11 +157,11 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await expect(response.text()).resolves.toBe(
-      '{"error":"Unsupported \\"Content-Type\\" header value. Must be \\"application/json\\""}'
+      '{"error":"Unsupported \\"Content-Type\\" header value. Must be \\"application/json\\""}',
     );
     expect(response.status).toEqual(415);
 
@@ -189,7 +189,7 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: "invalid",
-      }
+      },
     );
 
     expect(response.status).toEqual(400);
@@ -220,13 +220,13 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: "invalid",
-      }
+      },
     );
 
     expect(response.status).toEqual(404);
 
     await expect(response.text()).resolves.toMatch(
-      /Unknown route: PUT \/api\/github\/webhooks/
+      /Unknown route: PUT \/api\/github\/webhooks/,
     );
 
     server.close();
@@ -287,13 +287,13 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: "invalid",
-      }
+      },
     );
 
     expect(response.status).toEqual(400);
 
     await expect(response.text()).resolves.toMatch(
-      /Required headers missing: x-github-event/
+      /Required headers missing: x-github-event/,
     );
 
     server.close();
@@ -324,7 +324,7 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await expect(response.text()).resolves.toMatch(/Error: boom/);
@@ -358,11 +358,11 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await expect(response.text()).resolves.toMatch(
-      /Error: An Unspecified error occurred/
+      /Error: An Unspecified error occurred/,
     );
     expect(response.status).toEqual(500);
 
@@ -397,7 +397,7 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await expect(response.text()).resolves.toMatch(/still processing/);
@@ -433,7 +433,7 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await expect(response.text()).resolves.toMatch(/still processing/);
@@ -448,7 +448,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     app.use(createNodeMiddleware(webhooks));
     app.all("*", (_request: any, response: any) =>
-      response.status(404).send("Dafuq")
+      response.status(404).send("Dafuq"),
     );
 
     const server = app.listen();
@@ -506,7 +506,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     app.use(createNodeMiddleware(webhooks, { path: "/test" }));
     app.all("*", (_request: any, response: any) =>
-      response.status(404).send("Dafuq")
+      response.status(404).send("Dafuq"),
     );
 
     const server = app.listen();
@@ -538,7 +538,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     app.post("/test", createNodeMiddleware(webhooks, { path: "/test" }));
     app.all("*", (_request: any, response: any) =>
-      response.status(404).send("Dafuq")
+      response.status(404).send("Dafuq"),
     );
 
     const server = app.listen();
@@ -595,7 +595,7 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await untilMiddlewareIsRan;

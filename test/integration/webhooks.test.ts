@@ -6,14 +6,14 @@ import { Webhooks } from "../../src";
 
 const pushEventPayloadString = readFileSync(
   "test/fixtures/push-payload.json",
-  "utf-8"
+  "utf-8",
 );
 
 describe("Webhooks", () => {
   test("new Webhooks() without secret option", () => {
     // @ts-expect-error
     expect(() => new Webhooks()).toThrow(
-      "[@octokit/webhooks] options.secret required"
+      "[@octokit/webhooks] options.secret required",
     );
   });
 
@@ -30,7 +30,7 @@ describe("Webhooks", () => {
 
     await webhooks.verify(
       pushEventPayloadString,
-      await sign({ secret, algorithm: "sha256" }, pushEventPayloadString)
+      await sign({ secret, algorithm: "sha256" }, pushEventPayloadString),
     );
   });
 
@@ -44,7 +44,7 @@ describe("Webhooks", () => {
       payload: pushEventPayloadString,
       signature: await sign(
         { secret, algorithm: "sha256" },
-        pushEventPayloadString
+        pushEventPayloadString,
       ),
     });
   });
@@ -59,9 +59,9 @@ describe("Webhooks", () => {
         name: "ping",
         payload: pingPayload,
         signature: "nope",
-      })
+      }),
     ).rejects.toThrow(
-      "[@octokit/webhooks] signature does not match event payload and secret"
+      "[@octokit/webhooks] signature does not match event payload and secret",
     );
   });
 
@@ -74,7 +74,7 @@ describe("Webhooks", () => {
 
     await expect(async () =>
       // @ts-expect-error
-      webhooks.receive(new Error("oops"))
+      webhooks.receive(new Error("oops")),
     ).rejects.toThrow();
   });
 });
