@@ -8,7 +8,7 @@ import type { emitterEventNames } from "./generated/webhook-names";
 
 export type EmitterWebhookEventName = (typeof emitterEventNames)[number];
 export type EmitterWebhookEvent<
-  TEmitterEvent extends EmitterWebhookEventName = EmitterWebhookEventName
+  TEmitterEvent extends EmitterWebhookEventName = EmitterWebhookEventName,
 > = TEmitterEvent extends `${infer TWebhookEvent}.${infer TAction}`
   ? BaseWebhookEvent<Extract<TWebhookEvent, WebhookEventName>> & {
       payload: { action: TAction };
@@ -38,12 +38,12 @@ type TransformMethod<T> = (event: EmitterWebhookEvent) => T | PromiseLike<T>;
 
 export type HandlerFunction<
   TName extends EmitterWebhookEventName,
-  TTransformed
+  TTransformed,
 > = (event: EmitterWebhookEvent<TName> & TTransformed) => any;
 
 export type RemoveHandlerFunction<
   TName extends EmitterWebhookEventName | "*",
-  TTransformed
+  TTransformed,
 > = (event: EmitterWebhookEvent<Exclude<TName, "*">> & TTransformed) => any;
 
 type Hooks = {

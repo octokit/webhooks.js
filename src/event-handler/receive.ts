@@ -17,7 +17,7 @@ type EventAction = Extract<
 function getHooks(
   state: State,
   eventPayloadAction: EventAction | null,
-  eventName: EmitterWebhookEventName
+  eventName: EmitterWebhookEventName,
 ): Function[] {
   const hooks = [state.hooks[eventName], state.hooks["*"]];
 
@@ -54,7 +54,7 @@ export function receiverHandle(state: State, event: EmitterWebhookEvent) {
   const hooks = getHooks(
     state,
     "action" in event.payload ? event.payload.action : null,
-    event.name
+    event.name,
   );
 
   if (hooks.length === 0) {

@@ -21,7 +21,7 @@ test("error handler returns rejected Error", () => {
   const consoleLogSpy = jest.spyOn(console, "log").mockImplementation(noop);
   const promise = Promise.reject(new Error("oopsydoopsy"));
   expect(() =>
-    wrapErrorHandler(() => promise, new Error("oops"))
+    wrapErrorHandler(() => promise, new Error("oops")),
   ).not.toThrow();
 
   promise.catch(() => {

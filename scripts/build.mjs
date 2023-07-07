@@ -80,8 +80,8 @@ async function main() {
         sideEffects: false,
       },
       null,
-      2
-    )
+      2,
+    ),
   );
 }
 main();
