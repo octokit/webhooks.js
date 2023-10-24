@@ -51,7 +51,7 @@
     "@octokit/webhooks-schemas": "7.1.0",
     "@types/jest": "^29.0.0",
     "@types/json-schema": "^7.0.7",
-    "@types/node": "^18.0.0",
+    "@types/node": "^20.0.0",
     "@types/prettier": "^2.0.0",
     "axios": "^1.0.0",
     "esbuild": "^0.19.0",
