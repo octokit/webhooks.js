@@ -605,7 +605,7 @@ describe("createNodeMiddleware(webhooks)", () => {
     server.close();
   });
 
-  test.only("Handles invalid signature", async () => {
+  test("Handles invalid signature", async () => {
     expect.assertions(3);
 
     const webhooks = new Webhooks({
