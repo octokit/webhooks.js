@@ -615,7 +615,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     webhooks.onError((error) => {
       expect(error.message).toContain(
-        "signature does not match event payload and secret",
+        "signature does not match event payload and secret"
       );
     });
 
@@ -642,12 +642,12 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": "",
         },
         body: pushEventPayload,
-      },
+      }
     );
 
     expect(response.status).toEqual(400);
     await expect(response.text()).resolves.toBe(
-      '{"error":"Error: [@octokit/webhooks] signature does not match event payload and secret"}',
+      '{"error":"Error: [@octokit/webhooks] signature does not match event payload and secret"}'
     );
 
     server.close();
