@@ -5,7 +5,7 @@ name: Release
       - main
       - next
       - beta
-      - v*.x
+      - *.x
 jobs:
   release:
     name: release
