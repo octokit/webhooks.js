@@ -500,4 +500,51 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     server.close();
   });
+
+  test("Handles invalid signature", async () => {
+    expect.assertions(3);
+
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    webhooks.onError((error) => {
+      expect(error.message).toContain(
+        "signature does not match event payload and secret"
+      );
+    });
+
+    const log = {
+      debug: jest.fn(),
+      info: jest.fn(),
+      warn: jest.fn(),
+      error: jest.fn(),
+    };
+    const middleware = createNodeMiddleware(webhooks, { log });
+    const server = createServer(middleware).listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-GitHub-Delivery": "1",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": "",
+        },
+        body: pushEventPayload,
+      }
+    );
+
+    expect(response.status).toEqual(400);
+    await expect(response.text()).resolves.toContain(
+      "Error: [@octokit/webhooks] signature does not match event payload and secret"
+    );
+
+    server.close();
+  });
 });

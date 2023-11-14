@@ -20,7 +20,7 @@ export async function verifyAndReceive(
       ? toNormalizedJsonString(event.payload)
       : event.payload,
     event.signature
-  );
+  ).catch(() => false);
 
   if (!matchesSignature) {
     const error = new Error(
