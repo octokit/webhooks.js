@@ -14,7 +14,7 @@ export async function verifyAndReceive(
     state.secret,
     event.payload,
     event.signature
-  );
+  ).catch(() => false);
 
   if (!matchesSignature) {
     const error = new Error(
