@@ -19,6 +19,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: ls pkg/
+      - run: ls pkg/dist-types
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
