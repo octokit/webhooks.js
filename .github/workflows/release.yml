@@ -14,13 +14,13 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 16
           cache: npm
       - run: npm ci
       - run: npm run build
       - run: ls pkg/
       - run: ls pkg/dist-types
-      - run: npx semantic-release --debug
+      - run: npx semantic-release@18 --debug
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.OCTOKITBOT_NPM_TOKEN }}
