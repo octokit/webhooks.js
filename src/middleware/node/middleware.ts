@@ -27,11 +27,7 @@ export async function middleware(
     response.writeHead(422, {
       "content-type": "application/json",
     });
-    response.end(
-      JSON.stringify({
-        error: `Request URL could not be parsed: ${request.url}`,
-      }),
-    );
+    response.end(`{"error":"Request URL could not be parsed: ${request.url}"}`);
     return true;
   }
 
@@ -55,9 +51,7 @@ export async function middleware(
       accept: "application/json",
     });
     response.end(
-      JSON.stringify({
-        error: `Unsupported "Content-Type" header value. Must be "application/json"`,
-      }),
+      '{"error":"Unsupported \\"Content-Type\\" header value. Must be \\"application/json\\""}',
     );
     return true;
   }
@@ -68,11 +62,8 @@ export async function middleware(
     response.writeHead(400, {
       "content-type": "application/json",
     });
-    response.end(
-      JSON.stringify({
-        error: `Required headers missing: ${missingHeaders}`,
-      }),
-    );
+
+    response.end(`{"error":"Required headers missing: ${missingHeaders}"}`);
 
     return true;
   }
@@ -113,18 +104,19 @@ export async function middleware(
     if (didTimeout) return true;
 
     const err = Array.from(error as WebhookEventHandlerError)[0];
-    const errorMessage = err.message
-      ? `${err.name}: ${err.message}`
-      : "Error: An Unspecified error occurred";
     response.statusCode = typeof err.status !== "undefined" ? err.status : 500;
 
     options.log.error(error);
 
-    response.end(
-      JSON.stringify({
-        error: errorMessage,
-      }),
-    );
+    if (err.message) {
+      response.end(
+        JSON.stringify({
+          error: `${err.name}: ${err.message}`,
+        }),
+      );
+    } else {
+      response.end('{"error": "Error: An Unspecified error occurred"}');
+    }
 
     return true;
   }
