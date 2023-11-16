@@ -4,11 +4,12 @@ import type {
   EmitterWebhookEventWithStringPayloadAndSignature,
   State,
 } from "./types";
+import AggregateError from "aggregate-error";
 
 export async function verifyAndReceive(
   state: State & { secret: string },
   event: EmitterWebhookEventWithStringPayloadAndSignature,
-): Promise<any> {
+): Promise<void> {
   // verify will validate that the secret is not undefined
   const matchesSignature = await verify(
     state.secret,
@@ -26,9 +27,20 @@ export async function verifyAndReceive(
     );
   }
 
-  return state.eventHandler.receive({
-    id: event.id,
-    name: event.name,
-    payload: JSON.parse(event.payload),
-  });
+  try {
+    return state.eventHandler.receive({
+      id: event.id,
+      name: event.name,
+      payload: JSON.parse(event.payload),
+    });
+  } catch (error: any) {
+    error.message = "Invalid JSON";
+    error.status = 400;
+    let tmpStackTraceLimit = Error.stackTraceLimit;
+    Error.stackTraceLimit = 0;
+    const aggregateError = new AggregateError([error]);
+    Error.stackTraceLimit = tmpStackTraceLimit;
+    aggregateError.stack = error.stack;
+    throw aggregateError;
+  }
 }
