@@ -1,3 +1,4 @@
+// @ts-ignore to address #245
 import AggregateError from "aggregate-error";
 import { verify } from "@octokit/webhooks-methods";
 
