@@ -36,11 +36,6 @@ export async function verifyAndReceive(
   } catch (error: any) {
     error.message = "Invalid JSON";
     error.status = 400;
-    let tmpStackTraceLimit = Error.stackTraceLimit;
-    Error.stackTraceLimit = 0;
-    const aggregateError = new AggregateError([error]);
-    Error.stackTraceLimit = tmpStackTraceLimit;
-    aggregateError.stack = error.stack;
-    throw aggregateError;
+    throw new AggregateError([error]);
   }
 }
