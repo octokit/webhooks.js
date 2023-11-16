@@ -25,8 +25,6 @@ export function getPayload(request: IncomingMessage): Promise<string> {
     // istanbul ignore next
     request.on("error", (error: Error) => reject(new AggregateError([error])));
     request.on("data", (chunk: string) => (data += chunk));
-    request.on("end", () => {
-      resolve(data);
-    });
+    request.on("end", () => resolve(data));
   });
 }
