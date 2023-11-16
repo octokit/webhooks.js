@@ -1,6 +1,8 @@
+import AggregateError from "aggregate-error";
 import { verify } from "@octokit/webhooks-methods";
 
 import type {
+  EmitterWebhookEvent,
   EmitterWebhookEventWithStringPayloadAndSignature,
   State,
 } from "./types";
@@ -8,7 +10,7 @@ import type {
 export async function verifyAndReceive(
   state: State & { secret: string },
   event: EmitterWebhookEventWithStringPayloadAndSignature,
-): Promise<any> {
+): Promise<void> {
   // verify will validate that the secret is not undefined
   const matchesSignature = await verify(
     state.secret,
@@ -26,9 +28,18 @@ export async function verifyAndReceive(
     );
   }
 
+  let payload: EmitterWebhookEvent["payload"];
+  try {
+    payload = JSON.parse(event.payload);
+  } catch (error: any) {
+    error.message = "Invalid JSON";
+    error.status = 400;
+    throw new AggregateError([error]);
+  }
+
   return state.eventHandler.receive({
     id: event.id,
     name: event.name,
-    payload: JSON.parse(event.payload),
+    payload,
   });
 }

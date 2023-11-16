@@ -178,6 +178,8 @@ describe("createNodeMiddleware(webhooks)", () => {
     // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
     const { port } = server.address();
 
+    const payload = '{"name":"invalid"';
+
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
       {
@@ -186,9 +188,9 @@ describe("createNodeMiddleware(webhooks)", () => {
           "Content-Type": "application/json",
           "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
           "X-GitHub-Event": "push",
-          "X-Hub-Signature-256": signatureSha256,
+          "X-Hub-Signature-256": await sign("mySecret", payload),
         },
-        body: "invalid",
+        body: payload,
       },
     );
 
