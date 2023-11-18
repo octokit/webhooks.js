@@ -49,16 +49,16 @@ export function receiverOn(
   handleEventHandlers(state, webhookNameOrNames, handler);
 }
 
-export function receiverOnAny(
+export function receiverOnAny<TTransformed>(
   state: State,
-  handler: (event: EmitterWebhookEvent) => any,
+  handler: (event: EmitterWebhookEvent & TTransformed) => any,
 ) {
   handleEventHandlers(state, "*", handler);
 }
 
-export function receiverOnError(
+export function receiverOnError<TTransformed>(
   state: State,
-  handler: (event: WebhookEventHandlerError) => any,
+  handler: (event: WebhookEventHandlerError<TTransformed>) => any,
 ) {
   handleEventHandlers(state, "error", handler);
 }
