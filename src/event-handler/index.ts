@@ -21,7 +21,9 @@ interface EventHandler<TTransformed> {
     callback: HandlerFunction<E, TTransformed>,
   ): void;
   onAny(handler: (event: EmitterWebhookEvent & TTransformed) => any): void;
-  onError(handler: (event: WebhookEventHandlerError<TTransformed>) => any): void;
+  onError(
+    handler: (event: WebhookEventHandlerError<TTransformed>) => any,
+  ): void;
   removeListener<E extends EmitterWebhookEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>,
