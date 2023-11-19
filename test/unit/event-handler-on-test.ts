@@ -1,5 +1,5 @@
-import { receiverOn } from "../../src/event-handler/on.js";
-import { State } from "../../src/types";
+import { receiverOn } from "../../src/event-handler/on.ts";
+import type { State } from "../../src/types.ts";
 
 function noop() {}
 

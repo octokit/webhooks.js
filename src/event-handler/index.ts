@@ -6,7 +6,7 @@ import type {
   Options,
   State,
   WebhookEventHandlerError,
-} from "../types";
+} from "../types.ts";
 import {
   receiverOn as on,
   receiverOnAny as onAny,

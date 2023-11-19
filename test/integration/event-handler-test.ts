@@ -1,9 +1,12 @@
-import { createEventHandler } from "../../src/event-handler/index.js";
-import { EmitterWebhookEvent, WebhookEventHandlerError } from "../../src/types";
+import { createEventHandler } from "../../src/event-handler/index.ts";
+import type {
+  EmitterWebhookEvent,
+  WebhookEventHandlerError,
+} from "../../src/types.ts";
 import {
   installationCreatedPayload,
   pushEventPayload,
-} from "../fixtures/index.js";
+} from "../fixtures/index.ts";
 
 test("events", async () => {
   const eventHandler = createEventHandler({});

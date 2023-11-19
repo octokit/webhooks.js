@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { readFileSync } from "node:fs";
 
 import { sign } from "@octokit/webhooks-methods";
 

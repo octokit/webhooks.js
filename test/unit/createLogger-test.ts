@@ -1,4 +1,4 @@
-import { createLogger } from "../../src/createLogger.js";
+import { createLogger } from "../../src/createLogger.ts";
 
 const noop = () => {};
 

@@ -6,7 +6,7 @@ import type {
   EmitterWebhookEvent,
   EmitterWebhookEventWithStringPayloadAndSignature,
   State,
-} from "./types";
+} from "./types.ts";
 
 export async function verifyAndReceive(
   state: State & { secret: string },

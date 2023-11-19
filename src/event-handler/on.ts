@@ -4,7 +4,7 @@ import type {
   EmitterWebhookEventName,
   State,
   WebhookEventHandlerError,
-} from "../types";
+} from "../types.ts";
 
 function handleEventHandlers(
   state: State,
