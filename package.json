@@ -43,7 +43,7 @@
     "@octokit/request-error": "^5.0.0",
     "@octokit/webhooks-methods": "^4.0.0",
     "@octokit/webhooks-types": "7.1.0",
-    "@wolfy1339/openapi-webhooks": "^5.0.0",
+    "@wolfy1339/openapi-webhooks-types": "^5.0.0",
     "aggregate-error": "^3.1.0"
   },
   "devDependencies": {
@@ -54,7 +54,7 @@
     "@types/json-schema": "^7.0.7",
     "@types/node": "^20.0.0",
     "@types/prettier": "^2.0.0",
-    "@wolfy1339/openapi-webhooks": "^1.5.6",
+    "@wolfy1339/openapi-webhooks": "^5.0.0",
     "axios": "^1.0.0",
     "esbuild": "^0.19.0",
     "express": "^4.17.1",
