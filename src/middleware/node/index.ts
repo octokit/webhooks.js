@@ -1,7 +1,7 @@
 import { createLogger } from "../../createLogger.js";
 import type { Webhooks } from "../../index.js";
 import { middleware } from "./middleware.js";
-import type { MiddlewareOptions } from "./types.ts";
+import type { MiddlewareOptions } from "./types.js";
 
 export function createNodeMiddleware(
   webhooks: Webhooks,

@@ -12,7 +12,7 @@ import type {
   WebhookError,
   WebhookEventHandlerError,
   EmitterWebhookEventWithStringPayloadAndSignature,
-} from "./types.ts";
+} from "./types.js";
 
 export { createNodeMiddleware } from "./middleware/node/index.js";
 export { emitterEventNames } from "./generated/webhook-names.js";

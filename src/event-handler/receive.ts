@@ -6,7 +6,7 @@ import type {
   State,
   WebhookError,
   WebhookEventHandlerError,
-} from "../types.ts";
+} from "../types.js";
 import { wrapErrorHandler } from "./wrap-error-handler.js";
 
 type EventAction = Extract<
