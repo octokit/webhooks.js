@@ -26,7 +26,7 @@ const fn = (webhookEvent: EmitterWebhookEvent) => {
 
 declare const on: <E extends EmitterWebhookEventName>(
   name: E | E[],
-  callback: HandlerFunction<E, unknown>
+  callback: HandlerFunction<E, unknown>,
 ) => void;
 
 on(["check_run.completed", "code_scanning_alert.fixed"], (event) => {
@@ -98,7 +98,7 @@ export default async function () {
       if ("comment" in payload) {
         console.log(payload.comment.user.login);
       }
-    }
+    },
   );
 
   webhooks.on(["milestone"], (event) => {

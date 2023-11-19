@@ -25,16 +25,6 @@ export function getPayload(request: IncomingMessage): Promise<string> {
     // istanbul ignore next
     request.on("error", (error: Error) => reject(new AggregateError([error])));
     request.on("data", (chunk: string) => (data += chunk));
-    request.on("end", () => {
-      try {
-        // Call JSON.parse() only to check if the payload is valid JSON
-        JSON.parse(data);
-        resolve(data);
-      } catch (error: any) {
-        error.message = "Invalid JSON";
-        error.status = 400;
-        reject(new AggregateError([error]));
-      }
-    });
+    request.on("end", () => resolve(data));
   });
 }

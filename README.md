@@ -75,7 +75,7 @@ source.onmessage = (event) => {
       id: webhookEvent["x-request-id"],
       name: webhookEvent["x-github-event"],
       signature: webhookEvent["x-hub-signature"],
-      payload: webhookEvent.body,
+      payload: JSON.stringify(webhookEvent.body),
     })
     .catch(console.error);
 };
@@ -108,9 +108,7 @@ new Webhooks({ secret /*, transform */ });
   <tbody valign="top">
     <tr>
       <td>
-        <code>
-          secret
-        </code>
+        <code>secret</code>
         <em>(String)</em>
       </td>
       <td>
@@ -120,9 +118,7 @@ new Webhooks({ secret /*, transform */ });
     </tr>
     <tr>
       <td>
-        <code>
-          transform
-        </code>
+        <code>transform</code>
         <em>(Function)</em>
       </td>
       <td>
@@ -158,9 +154,7 @@ webhooks.sign(eventPayload);
   <tbody valign="top">
     <tr>
       <td>
-        <code>
-          eventPayload
-        </code>
+        <code>eventPayload</code>
         <em>
           (String)
         </em>
@@ -187,9 +181,7 @@ webhooks.verify(eventPayload, signature);
   <tbody valign="top">
     <tr>
       <td>
-        <code>
-          eventPayload
-        </code>
+        <code>eventPayload</code>
         <em>
           (Object [deprecated] or String)
         </em>
@@ -201,9 +193,7 @@ webhooks.verify(eventPayload, signature);
     </tr>
     <tr>
       <td>
-        <code>
-          signature
-        </code>
+        <code>signature</code>
         <em>
           (String)
         </em>
@@ -230,9 +220,7 @@ webhooks.verifyAndReceive({ id, name, payload, signature });
   <tbody valign="top">
     <tr>
       <td>
-        <code>
-          id
-        </code>
+        <code>id</code>
         <em>
           String
         </em>
@@ -243,9 +231,7 @@ webhooks.verifyAndReceive({ id, name, payload, signature });
     </tr>
     <tr>
       <td>
-        <code>
-          name
-        </code>
+        <code>name</code>
         <em>
           String
         </em>
@@ -258,9 +244,7 @@ webhooks.verifyAndReceive({ id, name, payload, signature });
     </tr>
     <tr>
       <td>
-        <code>
-          payload
-        </code>
+        <code>payload</code>
         <em>
           Object (deprecated) or String
         </em>
@@ -272,9 +256,7 @@ webhooks.verifyAndReceive({ id, name, payload, signature });
     </tr>
     <tr>
       <td>
-        <code>
-          signature
-        </code>
+        <code>signature</code>
         <em>
           (String)
         </em>
@@ -323,9 +305,7 @@ webhooks.receive({ id, name, payload });
   <tbody valign="top">
     <tr>
       <td>
-        <code>
-          id
-        </code>
+        <code>id</code>
         <em>
           String
         </em>
@@ -336,9 +316,7 @@ webhooks.receive({ id, name, payload });
     </tr>
     <tr>
       <td>
-        <code>
-          name
-        </code>
+        <code>name</code>
         <em>
           String
         </em>
@@ -351,9 +329,7 @@ webhooks.receive({ id, name, payload });
     </tr>
     <tr>
       <td>
-        <code>
-          payload
-        </code>
+        <code>payload</code>
         <em>
           Object
         </em>
@@ -381,9 +357,7 @@ webhooks.on(eventNames, handler);
   <tbody valign="top">
     <tr>
       <td>
-        <code>
-          eventName
-        </code>
+        <code>eventName</code>
         <em>
           String
         </em>
@@ -395,9 +369,7 @@ webhooks.on(eventNames, handler);
     </tr>
     <tr>
       <td>
-        <code>
-          eventNames
-        </code>
+        <code>eventNames</code>
         <em>
           Array
         </em>
@@ -409,9 +381,7 @@ webhooks.on(eventNames, handler);
     </tr>
     <tr>
       <td>
-        <code>
-          handler
-        </code>
+        <code>handler</code>
         <em>
           Function
         </em>
@@ -438,9 +408,7 @@ webhooks.onAny(handler);
   <tbody valign="top">
     <tr>
       <td>
-        <code>
-          handler
-        </code>
+        <code>handler</code>
         <em>
           Function
         </em>
@@ -471,9 +439,7 @@ Asynchronous `error` event handler are not blocking the `.receive()` method from
   <tbody valign="top">
     <tr>
       <td>
-        <code>
-          handler
-        </code>
+        <code>handler</code>
         <em>
           Function
         </em>
@@ -501,9 +467,7 @@ webhooks.removeListener(eventNames, handler);
   <tbody valign="top">
     <tr>
       <td>
-        <code>
-          eventName
-        </code>
+        <code>eventName</code>
         <em>
           String
         </em>
@@ -515,9 +479,7 @@ webhooks.removeListener(eventNames, handler);
     </tr>
     <tr>
       <td>
-        <code>
-          eventNames
-        </code>
+        <code>eventNames</code>
         <em>
           Array
         </em>
@@ -529,9 +491,7 @@ webhooks.removeListener(eventNames, handler);
     </tr>
     <tr>
       <td>
-        <code>
-          handler
-        </code>
+        <code>handler</code>
         <em>
           Function
         </em>

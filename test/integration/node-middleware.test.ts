@@ -1,7 +1,6 @@
 import { createServer } from "http";
 import { readFileSync } from "fs";
 
-import fetch from "node-fetch";
 import { sign } from "@octokit/webhooks-methods";
 
 // import without types
@@ -11,7 +10,7 @@ import { createNodeMiddleware, Webhooks } from "../../src";
 
 const pushEventPayload = readFileSync(
   "test/fixtures/push-payload.json",
-  "utf-8"
+  "utf-8",
 );
 let signatureSha256: string;
 
@@ -19,7 +18,7 @@ describe("createNodeMiddleware(webhooks)", () => {
   beforeAll(async () => {
     signatureSha256 = await sign(
       { secret: "mySecret", algorithm: "sha256" },
-      pushEventPayload
+      pushEventPayload,
     );
   });
 
@@ -54,7 +53,7 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     expect(response.status).toEqual(200);
@@ -99,7 +98,7 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     expect(response.status).toEqual(200);
@@ -128,11 +127,11 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await expect(response.text()).resolves.toBe(
-      '{"error":"Unsupported \\"Content-Type\\" header value. Must be \\"application/json\\""}'
+      '{"error":"Unsupported \\"Content-Type\\" header value. Must be \\"application/json\\""}',
     );
     expect(response.status).toEqual(415);
 
@@ -158,11 +157,11 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await expect(response.text()).resolves.toBe(
-      '{"error":"Unsupported \\"Content-Type\\" header value. Must be \\"application/json\\""}'
+      '{"error":"Unsupported \\"Content-Type\\" header value. Must be \\"application/json\\""}',
     );
     expect(response.status).toEqual(415);
 
@@ -179,6 +178,8 @@ describe("createNodeMiddleware(webhooks)", () => {
     // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
     const { port } = server.address();
 
+    const payload = '{"name":"invalid"';
+
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
       {
@@ -187,10 +188,10 @@ describe("createNodeMiddleware(webhooks)", () => {
           "Content-Type": "application/json",
           "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
           "X-GitHub-Event": "push",
-          "X-Hub-Signature-256": signatureSha256,
+          "X-Hub-Signature-256": await sign("mySecret", payload),
         },
-        body: "invalid",
-      }
+        body: payload,
+      },
     );
 
     expect(response.status).toEqual(400);
@@ -221,13 +222,13 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: "invalid",
-      }
+      },
     );
 
     expect(response.status).toEqual(404);
 
     await expect(response.text()).resolves.toMatch(
-      /Unknown route: PUT \/api\/github\/webhooks/
+      /Unknown route: PUT \/api\/github\/webhooks/,
     );
 
     server.close();
@@ -288,13 +289,13 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: "invalid",
-      }
+      },
     );
 
     expect(response.status).toEqual(400);
 
     await expect(response.text()).resolves.toMatch(
-      /Required headers missing: x-github-event/
+      /Required headers missing: x-github-event/,
     );
 
     server.close();
@@ -325,7 +326,7 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await expect(response.text()).resolves.toMatch(/Error: boom/);
@@ -359,11 +360,11 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await expect(response.text()).resolves.toMatch(
-      /Error: An Unspecified error occurred/
+      /Error: An Unspecified error occurred/,
     );
     expect(response.status).toEqual(500);
 
@@ -398,7 +399,7 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await expect(response.text()).resolves.toMatch(/still processing/);
@@ -434,7 +435,7 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await expect(response.text()).resolves.toMatch(/still processing/);
@@ -449,7 +450,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     app.use(createNodeMiddleware(webhooks));
     app.all("*", (_request: any, response: any) =>
-      response.status(404).send("Dafuq")
+      response.status(404).send("Dafuq"),
     );
 
     const server = app.listen();
@@ -507,7 +508,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     app.use(createNodeMiddleware(webhooks, { path: "/test" }));
     app.all("*", (_request: any, response: any) =>
-      response.status(404).send("Dafuq")
+      response.status(404).send("Dafuq"),
     );
 
     const server = app.listen();
@@ -539,7 +540,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     app.post("/test", createNodeMiddleware(webhooks, { path: "/test" }));
     app.all("*", (_request: any, response: any) =>
-      response.status(404).send("Dafuq")
+      response.status(404).send("Dafuq"),
     );
 
     const server = app.listen();
@@ -596,12 +597,59 @@ describe("createNodeMiddleware(webhooks)", () => {
           "X-Hub-Signature-256": signatureSha256,
         },
         body: pushEventPayload,
-      }
+      },
     );
 
     await untilMiddlewareIsRan;
     expect(response.status).toEqual(422);
     expect(await response.text()).toMatch(/Request URL could not be parsed/);
+
+    server.close();
+  });
+
+  test("Handles invalid signature", async () => {
+    expect.assertions(3);
+
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+    });
+
+    webhooks.onError((error) => {
+      expect(error.message).toContain(
+        "signature does not match event payload and secret",
+      );
+    });
+
+    const log = {
+      debug: jest.fn(),
+      info: jest.fn(),
+      warn: jest.fn(),
+      error: jest.fn(),
+    };
+    const middleware = createNodeMiddleware(webhooks, { log });
+    const server = createServer(middleware).listen();
+
+    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+    const { port } = server.address();
+
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-GitHub-Delivery": "1",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": "",
+        },
+        body: pushEventPayload,
+      },
+    );
+
+    expect(response.status).toEqual(400);
+    await expect(response.text()).resolves.toBe(
+      '{"error":"Error: [@octokit/webhooks] signature does not match event payload and secret"}',
+    );
 
     server.close();
   });

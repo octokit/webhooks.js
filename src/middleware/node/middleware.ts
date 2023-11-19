@@ -18,7 +18,7 @@ export async function middleware(
   options: Required<MiddlewareOptions>,
   request: IncomingMessage,
   response: ServerResponse,
-  next?: Function
+  next?: Function,
 ): Promise<boolean> {
   let pathname: string;
   try {
@@ -30,7 +30,7 @@ export async function middleware(
     response.end(
       JSON.stringify({
         error: `Request URL could not be parsed: ${request.url}`,
-      })
+      }),
     );
     return true;
   }
@@ -57,7 +57,7 @@ export async function middleware(
     response.end(
       JSON.stringify({
         error: `Unsupported "Content-Type" header value. Must be "application/json"`,
-      })
+      }),
     );
     return true;
   }
@@ -71,7 +71,7 @@ export async function middleware(
     response.end(
       JSON.stringify({
         error: `Required headers missing: ${missingHeaders}`,
-      })
+      }),
     );
 
     return true;
@@ -123,7 +123,7 @@ export async function middleware(
     response.end(
       JSON.stringify({
         error: errorMessage,
-      })
+      }),
     );
 
     return true;

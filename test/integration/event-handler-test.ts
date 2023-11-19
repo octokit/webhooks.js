@@ -89,7 +89,7 @@ describe("when a handler throws an error", () => {
 
       expect(errors.length).toBe(1);
       expect((Array.from(error) as { message: string }[])[0].message).toBe(
-        "oops"
+        "oops",
       );
 
       expect(error instanceof Error).toBeTruthy();

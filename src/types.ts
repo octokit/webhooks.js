@@ -20,7 +20,7 @@ export type WebhookEventDefinition<TEventName extends WebhookEventName> =
 
 export type EmitterWebhookEventName = (typeof emitterEventNames)[number];
 export type EmitterWebhookEvent<
-  TEmitterEvent extends EmitterWebhookEventName = EmitterWebhookEventName
+  TEmitterEvent extends EmitterWebhookEventName = EmitterWebhookEventName,
 > = TEmitterEvent extends `${infer TWebhookEvent}.${infer TAction}`
   ? OpenAPIWebhookEvent<
       Extract<
@@ -68,12 +68,12 @@ type TransformMethod<T> = (event: EmitterWebhookEvent) => T | PromiseLike<T>;
 
 export type HandlerFunction<
   TName extends EmitterWebhookEventName,
-  TTransformed
+  TTransformed,
 > = (event: EmitterWebhookEvent<TName> & TTransformed) => any;
 
 export type RemoveHandlerFunction<
   TName extends EmitterWebhookEventName | "*",
-  TTransformed
+  TTransformed,
 > = (event: EmitterWebhookEvent<Exclude<TName, "*">> & TTransformed) => any;
 
 type Hooks = {
@@ -92,8 +92,9 @@ export interface State extends Options<any> {
 export type WebhookError = Error & Partial<RequestError>;
 
 // todo: rename to "EmitterErrorEvent"
-export interface WebhookEventHandlerError extends AggregateError<WebhookError> {
-  event: EmitterWebhookEvent;
+export interface WebhookEventHandlerError<TTransformed = unknown>
+  extends AggregateError<WebhookError> {
+  event: EmitterWebhookEvent & TTransformed;
 }
 
 /**

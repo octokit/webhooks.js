@@ -18,19 +18,21 @@ import { removeListener } from "./remove-listener";
 interface EventHandler<TTransformed> {
   on<E extends EmitterWebhookEventName>(
     event: E | E[],
-    callback: HandlerFunction<E, TTransformed>
+    callback: HandlerFunction<E, TTransformed>,
   ): void;
-  onAny(handler: (event: EmitterWebhookEvent) => any): void;
-  onError(handler: (event: WebhookEventHandlerError) => any): void;
+  onAny(handler: (event: EmitterWebhookEvent & TTransformed) => any): void;
+  onError(
+    handler: (event: WebhookEventHandlerError<TTransformed>) => any,
+  ): void;
   removeListener<E extends EmitterWebhookEventName>(
     event: E | E[],
-    callback: HandlerFunction<E, TTransformed>
+    callback: HandlerFunction<E, TTransformed>,
   ): void;
   receive(event: EmitterWebhookEvent): Promise<void>;
 }
 
 export function createEventHandler<TTransformed>(
-  options: Options<TTransformed>
+  options: Options<TTransformed>,
 ): EventHandler<TTransformed> {
   const state: State = {
     hooks: {},
@@ -43,8 +45,8 @@ export function createEventHandler<TTransformed>(
 
   return {
     on: on.bind(null, state),
-    onAny: onAny.bind(null, state),
-    onError: onError.bind(null, state),
+    onAny: (onAny<TTransformed>).bind(null, state),
+    onError: (onError<TTransformed>).bind(null, state),
     removeListener: removeListener.bind(null, state),
     receive: receive.bind(null, state),
   };
