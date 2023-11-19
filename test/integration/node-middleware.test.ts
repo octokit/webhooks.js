@@ -1,5 +1,5 @@
-import { createServer } from "http";
-import { readFileSync } from "fs";
+import { createServer } from "node:http";
+import { readFileSync } from "node:fs";
 
 import { sign } from "@octokit/webhooks-methods";
 
