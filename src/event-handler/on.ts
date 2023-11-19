@@ -42,7 +42,7 @@ export function receiverOn(
 
   if (
     !emitterEventNames.includes(
-      webhookNameOrNames as (typeof emitterEventNames)[number]
+      webhookNameOrNames as (typeof emitterEventNames)[number],
     )
   ) {
     state.log.warn(

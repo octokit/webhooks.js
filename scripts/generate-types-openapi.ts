@@ -36,7 +36,7 @@ const outDir = "src/generated/";
 const generateTypeScriptFile = (name: string, contents: string[]) => {
   fs.writeFileSync(
     `${outDir}/${name}.ts`,
-    format(contents.join("\n"), { parser: "typescript" })
+    format(contents.join("\n"), { parser: "typescript" }),
   );
 };
 
@@ -44,7 +44,7 @@ const asCode = (str: string): string => `\`${str}\``;
 const asLink = (event: string): string => {
   const link = `https://docs.github.com/en/webhooks-and-events/webhook-events-and-payloads#${event.replace(
     /[^a-z_0-9]/g,
-    ""
+    "",
   )}`;
 
   return `[${asCode(event)}](${link})`;
@@ -66,12 +66,12 @@ const updateReadme = (properties: string[]) => {
 
       return events;
     },
-    {}
+    {},
   );
 
   const rows = Object.entries(events).map(
     ([event, actions]) =>
-      `| ${asLink(event)} | ${actions.map(asCode).join("<br>")} |`
+      `| ${asLink(event)} | ${actions.map(asCode).join("<br>")} |`,
   );
 
   const table = format([headers, "| --- | --- |", ...rows].join("\n"), {
@@ -94,8 +94,8 @@ const updateReadme = (properties: string[]) => {
     "README.md",
     `${readme.slice(
       0,
-      tableStartIndex + TableStartString.length
-    )}\n\n${table}\n${readme.slice(tableEndIndex)}`
+      tableStartIndex + TableStartString.length,
+    )}\n\n${table}\n${readme.slice(tableEndIndex)}`,
   );
 };
 
@@ -122,7 +122,7 @@ const run = () => {
       (key) =>
         `"${key}": ${Array.from(eventsMap[key])
           .map((event) => `WebhookEventDefinition<` + `"${event}">`)
-          .join(" | ")}`
+          .join(" | ")}`,
     ),
     "}",
   ]);

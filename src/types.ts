@@ -43,7 +43,7 @@ export type EmitterWebhookEventWithStringPayloadAndSignature = {
 
 interface BaseWebhookEvent<
   TKeyName extends keyof webhooksIdentifiers,
-  TName extends EmitterWebhookEventName
+  TName extends EmitterWebhookEventName,
 > {
   id: string;
   name: TName;
@@ -51,7 +51,7 @@ interface BaseWebhookEvent<
 }
 interface OpenAPIWebhookEvent<
   TKeyName extends WebhookEventName,
-  TName extends EmitterWebhookEventName
+  TName extends EmitterWebhookEventName,
 > {
   id: string;
   name: TName;
