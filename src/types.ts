@@ -3,8 +3,8 @@ import type {
   WebhookEventMap,
   WebhookEventName,
 } from "@octokit/webhooks-types";
-import type { Logger } from "./createLogger";
-import type { emitterEventNames } from "./generated/webhook-names";
+import type { Logger } from "./createLogger.ts";
+import type { emitterEventNames } from "./generated/webhook-names.ts";
 
 export type EmitterWebhookEventName = (typeof emitterEventNames)[number];
 export type EmitterWebhookEvent<

@@ -1,5 +1,5 @@
-import { receiverHandle as receive } from "../../src/event-handler/receive";
-import { State } from "../../src/types";
+import { receiverHandle as receive } from "../../src/event-handler/receive.ts";
+import type { State } from "../../src/types.ts";
 
 const state: State = {
   secret: "mysecret",

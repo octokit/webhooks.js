@@ -11,11 +11,16 @@ const config: Config.InitialOptions = {
     },
   },
   transform: {
-    "^.+\\.tsx?$": ["ts-jest",
+    "^.+\\.tsx?$": [
+      "ts-jest",
       {
         tsconfig: "test/tsconfig.json",
-      }
+      },
     ],
+  },
+  moduleNameMapper: {
+    "ipaddr.js": "<rootDir>/node_modules/ipaddr.js/lib/ipaddr.js",
+    "^(.+)\\.jsx?$": "$1",
   },
   restoreMocks: true,
   testEnvironment: "node",

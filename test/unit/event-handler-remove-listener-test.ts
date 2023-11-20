@@ -1,5 +1,5 @@
-import { removeListener } from "../../src/event-handler/remove-listener";
-import { State } from "../../src/types";
+import { removeListener } from "../../src/event-handler/remove-listener.ts";
+import type { State } from "../../src/types.ts";
 
 test("remove-listener: single listener", () => {
   const push = () => {};
