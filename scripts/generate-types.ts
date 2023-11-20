@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node-transpile-only
 
-import { strict as assert } from "assert";
-import * as fs from "fs";
+import { strict as assert } from "node:assert";
+import * as fs from "node:fs";
 import type { JSONSchema7, JSONSchema7Definition } from "json-schema";
 import { format } from "prettier";
 
