@@ -64,7 +64,9 @@ export type WebhookError = Error & Partial<RequestError>;
 // todo: rename to "EmitterErrorEvent"
 export interface WebhookEventHandlerError<TTransformed = unknown>
   extends AggregateError<WebhookError> {
-  event: TTransformed extends unknown ? EmitterWebhookEvent : EmitterWebhookEvent & TTransformed;
+  event: TTransformed extends unknown
+    ? EmitterWebhookEvent
+    : EmitterWebhookEvent & TTransformed;
 }
 
 /**

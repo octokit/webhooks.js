@@ -26,7 +26,11 @@ class Webhooks<TTransformed = unknown> {
     callback: HandlerFunction<E, TTransformed>,
   ) => void;
   public onAny: (
-    callback: (event: TTransformed extends unknown ? EmitterWebhookEvent : EmitterWebhookEvent & TTransformed) => any,
+    callback: (
+      event: TTransformed extends unknown
+        ? EmitterWebhookEvent
+        : EmitterWebhookEvent & TTransformed,
+    ) => any,
   ) => void;
   public onError: (
     callback: (event: WebhookEventHandlerError<TTransformed>) => any,

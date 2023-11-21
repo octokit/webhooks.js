@@ -20,7 +20,13 @@ interface EventHandler<TTransformed = unknown> {
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>,
   ): void;
-  onAny(handler: (event: TTransformed extends unknown ? EmitterWebhookEvent : EmitterWebhookEvent & TTransformed) => any): void;
+  onAny(
+    handler: (
+      event: TTransformed extends unknown
+        ? EmitterWebhookEvent
+        : EmitterWebhookEvent & TTransformed,
+    ) => any,
+  ): void;
   onError(
     handler: (event: WebhookEventHandlerError<TTransformed>) => any,
   ): void;
