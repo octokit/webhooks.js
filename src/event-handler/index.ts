@@ -15,7 +15,7 @@ import {
 import { receiverHandle as receive } from "./receive.js";
 import { removeListener } from "./remove-listener.js";
 
-interface EventHandler<TTransformed = unknown> {
+interface EventHandler<TTransformed> {
   on<E extends EmitterWebhookEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>,
