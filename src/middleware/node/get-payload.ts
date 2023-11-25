@@ -12,11 +12,6 @@ import AggregateError from "aggregate-error";
 type IncomingMessage = any;
 
 export function getPayload(request: IncomingMessage): Promise<string> {
-  // If request.body already exists we can stop here
-  // See https://github.com/octokit/webhooks.js/pull/23
-
-  if (request.body) return Promise.resolve(request.body);
-
   return new Promise((resolve, reject) => {
     let data = "";
 
