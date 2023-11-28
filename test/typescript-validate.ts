@@ -5,7 +5,7 @@ import {
   WebhookError,
   createNodeMiddleware,
 } from "../src/index.ts";
-import { createServer } from "http";
+import { createServer } from "node:http";
 import type {
   HandlerFunction,
   RemoveHandlerFunction,
