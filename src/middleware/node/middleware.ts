@@ -77,11 +77,16 @@ export async function middleware(
     return true;
   }
 
-  const eventName = request.headers["x-github-event"] as WebhookEventName;
-  const signatureSHA256 = request.headers["x-hub-signature-256"] as string;
-  const id = request.headers["x-github-delivery"] as string;
-
-  options.log.debug(`${eventName} event received (id: ${id})`);
+  const {
+    "x-github-event": name,
+    "x-hub-signature-256": signature,
+    "x-github-delivery": id,
+  } = request.headers as {
+    'x-github-event': WebhookEventName;
+    'x-hub-signature-256': string;
+    'x-github-delivery': string;
+  }
+  options.log.debug(`${name} event received (id: ${id})`);
 
   // GitHub will abort the request if it does not receive a response within 10s
   // See https://github.com/octokit/webhooks.js/issues/185
@@ -96,26 +101,30 @@ export async function middleware(
     let payload: Buffer;
     let body: { [key: string]: any } | undefined;
 
-    const bodyType = typeof request.body;
-
-    // The body is a String (e.g. Lambda)
-    if (bodyType === "string") {
-      payload = request.body;
-      // The body is already an Object and rawBody is a Buffer (e.g. GCF)
-    } else if (bodyType === "object" && request.rawBody instanceof Buffer) {
-      body = request.body;
-      payload = request.rawBody;
-      // We need to load the payload from the request (normal case of Node.js server)
+    if ("body" in request) {
+      if (
+        typeof request.body === "object" &&
+        "rawBody" in request &&
+        request.rawBody instanceof Buffer
+      ) {
+        // The body is already an Object and rawBody is a Buffer (e.g. GCF)
+        body = request.body;
+        payload = request.rawBody;
+      } else {
+        // The body is a String (e.g. Lambda)
+        payload = request.body;
+      }
     } else {
+      // We need to load the payload from the request (normal case of Node.js server)
       payload = await getPayload(request);
     }
 
     await webhooks.verifyAndReceive({
-      id: id,
-      name: eventName as any,
+      id,
+      name,
       payload,
       body,
-      signature: signatureSHA256,
+      signature,
     });
     clearTimeout(timeout);
 
