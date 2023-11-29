@@ -11,20 +11,15 @@ import AggregateError from "aggregate-error";
 // }
 type IncomingMessage = any;
 
-export function getPayload(request: IncomingMessage): Promise<string> {
+export function getPayload(request: IncomingMessage): Promise<Buffer> {
   // If request.body already exists we can stop here
   // See https://github.com/octokit/webhooks.js/pull/23
-
-  if (request.body) return Promise.resolve(request.body);
-
   return new Promise((resolve, reject) => {
-    let data = "";
-
-    request.setEncoding("utf8");
+    let data: Buffer[] = [];
 
     // istanbul ignore next
     request.on("error", (error: Error) => reject(new AggregateError([error])));
-    request.on("data", (chunk: string) => (data += chunk));
-    request.on("end", () => resolve(data));
+    request.on("data", (chunk: Buffer) => data.push(chunk));
+    request.on("end", () => resolve(Buffer.concat(data)));
   });
 }

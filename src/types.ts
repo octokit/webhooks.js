@@ -18,7 +18,8 @@ export type EmitterWebhookEvent<
 export type EmitterWebhookEventWithStringPayloadAndSignature = {
   id: string;
   name: EmitterWebhookEventName;
-  payload: string;
+  body?: { [key: string]: any };
+  payload: string | Buffer;
   signature: string;
 };
 

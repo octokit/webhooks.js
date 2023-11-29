@@ -93,12 +93,28 @@ export async function middleware(
   }, 9000).unref();
 
   try {
-    const payload = await getPayload(request);
+    let payload: Buffer;
+    let body: { [key: string]: any } | undefined;
+
+    const bodyType = typeof request.body;
+
+    // The body is a String (e.g. Lambda)
+    if (bodyType === "string") {
+      payload = request.body;
+      // The body is already an Object and rawBody is a Buffer (e.g. GCF)
+    } else if (bodyType === "object" && request.rawBody instanceof Buffer) {
+      body = request.body;
+      payload = request.rawBody;
+      // We need to load the payload from the request (normal case of Node.js server)
+    } else {
+      payload = await getPayload(request);
+    }
 
     await webhooks.verifyAndReceive({
       id: id,
       name: eventName as any,
       payload,
+      body,
       signature: signatureSHA256,
     });
     clearTimeout(timeout);

@@ -15,6 +15,7 @@ export async function verifyAndReceive(
   // verify will validate that the secret is not undefined
   const matchesSignature = await verify(
     state.secret,
+    // @ts-expect-error verify uses createHmac, which can take Strings and Buffers
     event.payload,
     event.signature,
   ).catch(() => false);
@@ -29,18 +30,29 @@ export async function verifyAndReceive(
     );
   }
 
-  let payload: EmitterWebhookEvent["payload"];
+  // The body is already an Object (e.g. GCF) and can be passed directly to the EventHandler
+  if (event.body) {
+    return state.eventHandler.receive({
+      id: event.id,
+      name: event.name,
+      payload: event.body as EmitterWebhookEvent["payload"],
+    });
+  }
+
+  const payload =
+    typeof event.payload === "string"
+      ? event.payload
+      : event.payload.toString("utf8");
+
   try {
-    payload = JSON.parse(event.payload);
+    return state.eventHandler.receive({
+      id: event.id,
+      name: event.name,
+      payload: JSON.parse(payload) as EmitterWebhookEvent["payload"],
+    });
   } catch (error: any) {
     error.message = "Invalid JSON";
     error.status = 400;
     throw new AggregateError([error]);
   }
-
-  return state.eventHandler.receive({
-    id: event.id,
-    name: event.name,
-    payload,
-  });
 }
