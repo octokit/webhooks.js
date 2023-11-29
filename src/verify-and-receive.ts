@@ -39,20 +39,22 @@ export async function verifyAndReceive(
     });
   }
 
-  const payload =
-    typeof event.payload === "string"
-      ? event.payload
-      : event.payload.toString("utf8");
+  let payload;
 
   try {
-    return state.eventHandler.receive({
-      id: event.id,
-      name: event.name,
-      payload: JSON.parse(payload) as EmitterWebhookEvent["payload"],
-    });
+    payload =
+      typeof event.payload === "string"
+        ? JSON.parse(event.payload)
+        : JSON.parse(event.payload.toString("utf8"));
   } catch (error: any) {
     error.message = "Invalid JSON";
     error.status = 400;
     throw new AggregateError([error]);
   }
+
+  return state.eventHandler.receive({
+    id: event.id,
+    name: event.name,
+    payload,
+  });
 }
