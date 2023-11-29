@@ -419,7 +419,7 @@ describe("createNodeMiddleware(webhooks)", () => {
   });
 
   test("Handles timeout", async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers({ doNotFake: ["setImmediate"] });
 
     const webhooks = new Webhooks({
       secret: "mySecret",
@@ -454,7 +454,7 @@ describe("createNodeMiddleware(webhooks)", () => {
   });
 
   test("Handles timeout with error", async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers({ doNotFake: ["setImmediate"] });
 
     const webhooks = new Webhooks({
       secret: "mySecret",
