@@ -20,25 +20,12 @@ export async function middleware(
   response: ServerResponse,
   next?: Function,
 ): Promise<boolean> {
-  let pathname: string;
-  try {
-    pathname = new URL(request.url as string, "http://localhost").pathname;
-  } catch (error) {
-    response.writeHead(422, {
-      "content-type": "application/json",
-    });
-    response.end(
-      JSON.stringify({
-        error: `Request URL could not be parsed: ${request.url}`,
-      }),
-    );
-    return true;
-  }
-
-  if (pathname !== options.path) {
+  if (request.url !== options.path) {
     next?.();
     return false;
-  } else if (request.method !== "POST") {
+  }
+
+  if (request.method !== "POST") {
     onUnhandledRequestDefault(request, response);
     return true;
   }
