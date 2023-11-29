@@ -82,10 +82,10 @@ export async function middleware(
     "x-hub-signature-256": signature,
     "x-github-delivery": id,
   } = request.headers as {
-    'x-github-event': WebhookEventName;
-    'x-hub-signature-256': string;
-    'x-github-delivery': string;
-  }
+    "x-github-event": WebhookEventName;
+    "x-hub-signature-256": string;
+    "x-github-delivery": string;
+  };
   options.log.debug(`${name} event received (id: ${id})`);
 
   // GitHub will abort the request if it does not receive a response within 10s
