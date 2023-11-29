@@ -39,7 +39,7 @@ export async function verifyAndReceive(
     });
   }
 
-  let payload;
+  let payload: EmitterWebhookEvent["payload"];
 
   try {
     payload =
