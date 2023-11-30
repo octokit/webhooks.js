@@ -20,10 +20,8 @@ export function getPayload(request: IncomingMessage): Promise<string> {
   return new Promise((resolve, reject) => {
     let data: Buffer[] = [];
 
-    // istanbul ignore next
     request.on("error", (error: Error) => reject(new AggregateError([error])));
     request.on("data", data.push.bind(data));
-    // istanbul ignore next
     request.on("end", () =>
       setImmediate(
         resolve,
