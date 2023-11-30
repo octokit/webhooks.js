@@ -77,8 +77,8 @@ export async function middleware(
     return true;
   }
 
-  const eventName = request.headers["x-github-event"] as WebhookEventName;
-  const signatureSHA256 = request.headers["x-hub-signature-256"] as string;
+  const name = request.headers["x-github-event"] as WebhookEventName;
+  const signature = request.headers["x-hub-signature-256"] as string;
   const id = request.headers["x-github-delivery"] as string;
   options.log.debug(`${name} event received (id: ${id})`);
 
