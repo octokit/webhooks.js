@@ -30,15 +30,6 @@ export async function verifyAndReceive(
     );
   }
 
-  // The body is already an Object (e.g. GCF) and can be passed directly to the EventHandler
-  if (event.body) {
-    return state.eventHandler.receive({
-      id: event.id,
-      name: event.name,
-      payload: event.body as EmitterWebhookEvent["payload"],
-    });
-  }
-
   let payload: EmitterWebhookEvent["payload"];
 
   try {

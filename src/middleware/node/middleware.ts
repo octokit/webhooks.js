@@ -99,7 +99,6 @@ export async function middleware(
 
   try {
     let payload: Buffer;
-    let body: { [key: string]: any } | undefined;
 
     if ("body" in request) {
       if (
@@ -108,7 +107,6 @@ export async function middleware(
         request.rawBody instanceof Buffer
       ) {
         // The body is already an Object and rawBody is a Buffer (e.g. GCF)
-        body = request.body;
         payload = request.rawBody;
       } else {
         // The body is a String (e.g. Lambda)
@@ -123,7 +121,6 @@ export async function middleware(
       id,
       name,
       payload,
-      body,
       signature,
     });
     clearTimeout(timeout);
