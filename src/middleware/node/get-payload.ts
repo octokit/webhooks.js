@@ -2,12 +2,12 @@
 import AggregateError from "aggregate-error";
 
 // remove type imports from http for Deno compatibility
-// see https://github.com/octokit/octokit.js/issues/24#issuecomment-817361886
-// import { IncomingMessage } from "http";
-// declare module "http" {
-//   interface IncomingMessage {
-//     body?: WebhookEvent | unknown;
-//   }
+// see https://github.com/octokit/octokit.js/issues/2075#issuecomment-817361886
+// import type { IncomingMessage } from "node:http";
+// declare module "node:http" {
+//    interface IncomingMessage {
+//      body?: string;
+//    }
 // }
 type IncomingMessage = any;
 
