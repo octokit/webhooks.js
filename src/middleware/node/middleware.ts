@@ -77,15 +77,9 @@ export async function middleware(
     return true;
   }
 
-  const {
-    "x-github-event": name,
-    "x-hub-signature-256": signature,
-    "x-github-delivery": id,
-  } = request.headers as {
-    "x-github-event": WebhookEventName;
-    "x-hub-signature-256": string;
-    "x-github-delivery": string;
-  };
+  const eventName = request.headers["x-github-event"] as WebhookEventName;
+  const signatureSHA256 = request.headers["x-hub-signature-256"] as string;
+  const id = request.headers["x-github-delivery"] as string;
   options.log.debug(`${name} event received (id: ${id})`);
 
   // GitHub will abort the request if it does not receive a response within 10s
