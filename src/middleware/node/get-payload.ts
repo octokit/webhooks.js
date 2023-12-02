@@ -21,7 +21,7 @@ export function getPayload(request: IncomingMessage): Promise<string> {
     let data: Buffer[] = [];
 
     request.on("error", (error: Error) => reject(new AggregateError([error])));
-    request.on("data", data.push.bind(data));
+    request.on("data", (chunk: Buffer) => data.push(chunk));
     request.on("end", () =>
       // setImmediate improves the throughput by reducing the pressure from
       // the event loop
