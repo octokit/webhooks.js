@@ -23,6 +23,8 @@ export function getPayload(request: IncomingMessage): Promise<string> {
     request.on("error", (error: Error) => reject(new AggregateError([error])));
     request.on("data", data.push.bind(data));
     request.on("end", () =>
+      // setImmediate improves the throughput by reducing the pressure from
+      // the event loop
       setImmediate(
         resolve,
         data.length === 1
