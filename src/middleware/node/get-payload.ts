@@ -17,7 +17,7 @@ export function getPayload(request: IncomingMessage): Promise<Buffer> {
 
     // istanbul ignore next
     request.on("error", (error: Error) => reject(new AggregateError([error])));
-    request.on("data", data.push.bind(data));
+    request.on("data", (chunk: string) => data.push(chunk);
     // istanbul ignore next
     request.on("end", () =>
       setImmediate(resolve, data.length === 1 ? data[0] : Buffer.concat(data)),
