@@ -17,7 +17,7 @@ export function getPayload(request: IncomingMessage): Promise<Buffer> {
 
     // istanbul ignore next
     request.on("error", (error: Error) => reject(new AggregateError([error])));
-    request.on("data", (chunk: string) => data.push(chunk);
+    request.on("data", (chunk: Buffer) => data.push(chunk));
     // istanbul ignore next
     request.on("end", () =>
       // setImmediate improves the throughput by reducing the pressure from
