@@ -20,6 +20,8 @@ export function getPayload(request: IncomingMessage): Promise<Buffer> {
     request.on("data", (chunk: string) => data.push(chunk);
     // istanbul ignore next
     request.on("end", () =>
+      // setImmediate improves the throughput by reducing the pressure from
+      // the event loop
       setImmediate(resolve, data.length === 1 ? data[0] : Buffer.concat(data)),
     );
   });
