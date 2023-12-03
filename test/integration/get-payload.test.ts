@@ -1,5 +1,5 @@
 import EventEmitter from "node:events";
-import { getPayload } from "../../src/middleware/node/get-payload";
+import { getPayload } from "../../src/middleware/node/get-payload.ts";
 
 describe("getPayload", () => {
   it("returns a promise", () => {
