@@ -41,9 +41,7 @@ export function receiverOn(
   }
 
   if (
-    !emitterEventNames.includes(
-      webhookNameOrNames as (typeof emitterEventNames)[number],
-    )
+    !emitterEventNames.includes(webhookNameOrNames)
   ) {
     state.log.warn(
       `"${webhookNameOrNames}" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)`,
