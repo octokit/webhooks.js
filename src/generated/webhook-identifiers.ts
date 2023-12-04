@@ -4,6 +4,9 @@
 import { WebhookEventDefinition } from "../types";
 
 export type webhooksIdentifiers = {
+  branch_protection_configuration:
+    | WebhookEventDefinition<"branch-protection-configuration-disabled">
+    | WebhookEventDefinition<"branch-protection-configuration-enabled">;
   branch_protection_rule:
     | WebhookEventDefinition<"branch-protection-rule-created">
     | WebhookEventDefinition<"branch-protection-rule-deleted">
@@ -26,6 +29,11 @@ export type webhooksIdentifiers = {
     | WebhookEventDefinition<"code-scanning-alert-reopened-by-user">;
   commit_comment: WebhookEventDefinition<"commit-comment-created">;
   create: WebhookEventDefinition<"create">;
+  custom_property:
+    | WebhookEventDefinition<"custom-property-created">
+    | WebhookEventDefinition<"custom-property-deleted">
+    | WebhookEventDefinition<"custom-property-updated">;
+  custom_property_values: WebhookEventDefinition<"custom-property-values-updated">;
   delete: WebhookEventDefinition<"delete">;
   dependabot_alert:
     | WebhookEventDefinition<"dependabot-alert-auto-dismissed">
@@ -40,6 +48,10 @@ export type webhooksIdentifiers = {
     | WebhookEventDefinition<"deploy-key-deleted">;
   deployment: WebhookEventDefinition<"deployment-created">;
   deployment_protection_rule: WebhookEventDefinition<"deployment-protection-rule-requested">;
+  deployment_review:
+    | WebhookEventDefinition<"deployment-review-approved">
+    | WebhookEventDefinition<"deployment-review-rejected">
+    | WebhookEventDefinition<"deployment-review-requested">;
   deployment_status: WebhookEventDefinition<"deployment-status-created">;
   discussion:
     | WebhookEventDefinition<"discussion-answered">
@@ -233,6 +245,10 @@ export type webhooksIdentifiers = {
     | WebhookEventDefinition<"repository-unarchived">;
   repository_dispatch: WebhookEventDefinition<"repository-dispatch-sample.collected">;
   repository_import: WebhookEventDefinition<"repository-import">;
+  repository_ruleset:
+    | WebhookEventDefinition<"repository-ruleset-created">
+    | WebhookEventDefinition<"repository-ruleset-deleted">
+    | WebhookEventDefinition<"repository-ruleset-edited">;
   repository_vulnerability_alert:
     | WebhookEventDefinition<"repository-vulnerability-alert-create">
     | WebhookEventDefinition<"repository-vulnerability-alert-dismiss">
