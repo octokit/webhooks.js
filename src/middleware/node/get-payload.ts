@@ -12,11 +12,21 @@ import AggregateError from "aggregate-error";
 type IncomingMessage = any;
 
 export function getPayload(request: IncomingMessage): Promise<string> {
-  // If request.body already exists we can stop here
-  // See https://github.com/octokit/webhooks.js/pull/23
+  if ("body" in request) {
+    if (
+      typeof request.body === "object" &&
+      "rawBody" in request &&
+      request.rawBody instanceof Buffer
+    ) {
+      // The body is already an Object and rawBody is a Buffer (e.g. GCF)
+      return Promise.resolve(request.rawBody.toString("utf8"));
+    } else {
+      // The body is a String (e.g. Lambda)
+      return Promise.resolve(request.body);
+    }
+  }
 
-  if (request.body) return Promise.resolve(request.body);
-
+  // We need to load the payload from the request (normal case of Node.js server)
   return new Promise((resolve, reject) => {
     let data: Buffer[] = [];
 
