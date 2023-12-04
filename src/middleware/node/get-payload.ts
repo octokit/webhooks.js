@@ -18,13 +18,19 @@ export function getPayload(request: IncomingMessage): Promise<string> {
   if (request.body) return Promise.resolve(request.body);
 
   return new Promise((resolve, reject) => {
-    let data = "";
+    let data: Buffer[] = [];
 
-    request.setEncoding("utf8");
-
-    // istanbul ignore next
     request.on("error", (error: Error) => reject(new AggregateError([error])));
-    request.on("data", (chunk: string) => (data += chunk));
-    request.on("end", () => resolve(data));
+    request.on("data", (chunk: Buffer) => data.push(chunk));
+    request.on("end", () =>
+      // setImmediate improves the throughput by reducing the pressure from
+      // the event loop
+      setImmediate(
+        resolve,
+        data.length === 1
+          ? data[0].toString("utf8")
+          : Buffer.concat(data).toString("utf8"),
+      ),
+    );
   });
 }
