@@ -1,38 +1,26 @@
 import type { RequestError } from "@octokit/request-error";
 import type { webhooks as OpenAPIWebhooks } from "@wolfy1339/openapi-webhooks-types";
-import type { webhooksIdentifiers } from "./generated/webhook-identifiers.ts";
+import type { EventPayloadMap } from "./generated/webhook-identifiers.ts";
 import type { Logger } from "./createLogger.ts";
 import type { emitterEventNames } from "./generated/webhook-names.ts";
 
-type SnakeCaseToKebabCase<TString extends string> =
-  TString extends `${infer TPart1}_${infer TRest}`
-    ? `${TPart1}-${SnakeCaseToKebabCase<TRest>}`
-    : TString;
-
-export type WebhookEventName = keyof OpenAPIWebhooks;
+export type WebhookEventName = keyof EventPayloadMap;
 export type ExtractEvents<TEventName> =
   TEventName extends `${infer _TWebhookEvent}.${infer _TAction}`
     ? never
     : TEventName;
 export type WebhookEvents = ExtractEvents<EmitterWebhookEventName>;
-export type WebhookEventDefinition<TEventName extends WebhookEventName> =
+export type WebhookEventDefinition<TEventName extends keyof OpenAPIWebhooks> =
   OpenAPIWebhooks[TEventName]["post"]["requestBody"]["content"]["application/json"];
 
 export type EmitterWebhookEventName = (typeof emitterEventNames)[number];
 export type EmitterWebhookEvent<
   TEmitterEvent extends EmitterWebhookEventName = EmitterWebhookEventName,
 > = TEmitterEvent extends `${infer TWebhookEvent}.${infer TAction}`
-  ? OpenAPIWebhookEvent<
-      Extract<
-        `${SnakeCaseToKebabCase<TWebhookEvent>}-${TAction}`,
-        WebhookEventName
-      >,
-      Extract<TWebhookEvent, EmitterWebhookEventName>
-    >
-  : BaseWebhookEvent<
-      Extract<TEmitterEvent, keyof webhooksIdentifiers>,
-      TEmitterEvent
-    >;
+  ? BaseWebhookEvent<Extract<TWebhookEvent, WebhookEventName>> & {
+      payload: { action: TAction };
+    }
+  : BaseWebhookEvent<Extract<TEmitterEvent, WebhookEventName>>;
 
 export type EmitterWebhookEventWithStringPayloadAndSignature = {
   id: string;
@@ -41,21 +29,10 @@ export type EmitterWebhookEventWithStringPayloadAndSignature = {
   signature: string;
 };
 
-interface BaseWebhookEvent<
-  TKeyName extends keyof webhooksIdentifiers,
-  TName extends EmitterWebhookEventName,
-> {
+interface BaseWebhookEvent<TName extends WebhookEventName> {
   id: string;
   name: TName;
-  payload: webhooksIdentifiers[TKeyName];
-}
-interface OpenAPIWebhookEvent<
-  TKeyName extends WebhookEventName,
-  TName extends EmitterWebhookEventName,
-> {
-  id: string;
-  name: TName;
-  payload: WebhookEventDefinition<TKeyName>;
+  payload: EventPayloadMap[TName];
 }
 
 export interface Options<TTransformed = unknown> {

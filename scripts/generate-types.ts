@@ -115,9 +115,9 @@ const run = async () => {
     "// THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY",
     "// make edits in scripts/generate-types.ts",
     "",
-    "import { WebhookEventDefinition } from '../types';",
+    "import type { WebhookEventDefinition } from '../types.js';",
     "",
-    "export type webhooksIdentifiers = {",
+    "export type EventPayloadMap = {",
     ...Object.keys(eventsMap).map(
       (key) =>
         `"${key}": ${Array.from(eventsMap[key])
@@ -125,6 +125,7 @@ const run = async () => {
           .join(" | ")}`,
     ),
     "}",
+    "export type WebhookEventName = keyof EventPayloadMap;",
   ]);
 
   await updateReadme(emitterEvents);

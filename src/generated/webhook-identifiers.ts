@@ -1,9 +1,9 @@
 // THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY
 // make edits in scripts/generate-types.ts
 
-import { WebhookEventDefinition } from "../types";
+import type { WebhookEventDefinition } from "../types.js";
 
-export type webhooksIdentifiers = {
+export type EventPayloadMap = {
   branch_protection_configuration:
     | WebhookEventDefinition<"branch-protection-configuration-disabled">
     | WebhookEventDefinition<"branch-protection-configuration-enabled">;
@@ -295,3 +295,4 @@ export type webhooksIdentifiers = {
     | WebhookEventDefinition<"workflow-run-in-progress">
     | WebhookEventDefinition<"workflow-run-requested">;
 };
+export type WebhookEventName = keyof EventPayloadMap;
