@@ -1,8 +1,8 @@
 #!/usr/bin/env ts-node-transpile-only
 
-import { strict as assert } from "assert";
-import * as fs from "fs";
-import { OpenAPI3, OperationObject, PathItemObject } from "./types";
+import { strict as assert } from "node:assert";
+import * as fs from "node:fs";
+import type { OpenAPI3, OperationObject, PathItemObject } from "./types.js";
 import { format } from "prettier";
 
 const schema = require("@wolfy1339/openapi-webhooks").schemas[
@@ -33,10 +33,10 @@ for (let webhookDefinitionKey of Object.keys(schema.webhooks!)) {
 
 const outDir = "src/generated/";
 
-const generateTypeScriptFile = (name: string, contents: string[]) => {
+const generateTypeScriptFile = async (name: string, contents: string[]) => {
   fs.writeFileSync(
     `${outDir}/${name}.ts`,
-    format(contents.join("\n"), { parser: "typescript" }),
+    await format(contents.join("\n"), { parser: "typescript" }),
   );
 };
 
@@ -50,7 +50,7 @@ const asLink = (event: string): string => {
   return `[${asCode(event)}](${link})`;
 };
 
-const updateReadme = (properties: string[]) => {
+const updateReadme = async (properties: string[]) => {
   const headers = "| Event | Actions |";
 
   const events = properties.reduce<Record<string, string[]>>(
@@ -74,7 +74,7 @@ const updateReadme = (properties: string[]) => {
       `| ${asLink(event)} | ${actions.map(asCode).join("<br>")} |`,
   );
 
-  const table = format([headers, "| --- | --- |", ...rows].join("\n"), {
+  const table = await format([headers, "| --- | --- |", ...rows].join("\n"), {
     parser: "markdown",
   });
 
@@ -99,10 +99,10 @@ const updateReadme = (properties: string[]) => {
   );
 };
 
-const run = () => {
+const run = async () => {
   const emitterEvents = getEmitterEvents();
 
-  generateTypeScriptFile("webhook-names", [
+  await generateTypeScriptFile("webhook-names", [
     "// THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY",
     "// make edits in scripts/generate-types.ts",
     "",
@@ -111,7 +111,7 @@ const run = () => {
     "] as const;",
   ]);
 
-  generateTypeScriptFile("webhook-identifiers", [
+  await generateTypeScriptFile("webhook-identifiers", [
     "// THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY",
     "// make edits in scripts/generate-types.ts",
     "",
@@ -127,7 +127,7 @@ const run = () => {
     "}",
   ]);
 
-  updateReadme(emitterEvents);
+  await updateReadme(emitterEvents);
 };
 
 run();
