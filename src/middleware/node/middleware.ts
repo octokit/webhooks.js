@@ -4,7 +4,7 @@
 type IncomingMessage = any;
 type ServerResponse = any;
 
-import type { WebhookEventName } from "@octokit/webhooks-types";
+import type { WebhookEventName } from "../../generated/webhook-identifiers.js";
 
 import type { Webhooks } from "../../index.js";
 import type { WebhookEventHandlerError } from "../../types.js";
