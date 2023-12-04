@@ -14,7 +14,7 @@
     "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json",
     "pretest": "npm run -s lint",
     "test": "jest --coverage",
-    "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 --esModuleInterop --moduleResolution node test/typescript-validate.ts"
+    "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 --esModuleInterop --moduleResolution node16 --module node16 --allowImportingTsExtensions test/typescript-validate.ts"
   },
   "prettier": {},
   "release": {

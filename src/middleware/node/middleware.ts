@@ -1,17 +1,17 @@
 // remove type imports from http for Deno compatibility
 // see https://github.com/octokit/octokit.js/issues/2075#issuecomment-817361886
-// import { IncomingMessage, ServerResponse } from "http";
+// import type { IncomingMessage, ServerResponse } from "node:http";
 type IncomingMessage = any;
 type ServerResponse = any;
 
 import type { WebhookEventName } from "@octokit/webhooks-types";
 
-import type { Webhooks } from "../../index";
-import type { WebhookEventHandlerError } from "../../types";
-import type { MiddlewareOptions } from "./types";
-import { getMissingHeaders } from "./get-missing-headers";
-import { getPayload } from "./get-payload";
-import { onUnhandledRequestDefault } from "./on-unhandled-request-default";
+import type { Webhooks } from "../../index.js";
+import type { WebhookEventHandlerError } from "../../types.js";
+import type { MiddlewareOptions } from "./types.js";
+import { getMissingHeaders } from "./get-missing-headers.js";
+import { getPayload } from "./get-payload.js";
+import { onUnhandledRequestDefault } from "./on-unhandled-request-default.js";
 
 export async function middleware(
   webhooks: Webhooks,

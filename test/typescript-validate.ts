@@ -1,16 +1,16 @@
 import {
   Webhooks,
   createEventHandler,
-  EmitterWebhookEvent,
+  type EmitterWebhookEvent,
   WebhookError,
   createNodeMiddleware,
-} from "../src/index";
-import { createServer } from "http";
-import {
+} from "../src/index.ts";
+import { createServer } from "node:http";
+import type {
   HandlerFunction,
   RemoveHandlerFunction,
   EmitterWebhookEventName,
-} from "../src/types";
+} from "../src/types.ts";
 
 // ************************************************************
 // THIS CODE IS NOT EXECUTED. IT IS FOR TYPECHECKING ONLY

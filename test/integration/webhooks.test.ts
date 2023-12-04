@@ -1,8 +1,8 @@
-import { readFileSync } from "fs";
+import { readFileSync } from "node:fs";
 
 import { sign } from "@octokit/webhooks-methods";
 
-import { Webhooks } from "../../src";
+import { Webhooks } from "../../src/index.ts";
 
 const pushEventPayloadString = readFileSync(
   "test/fixtures/push-payload.json",

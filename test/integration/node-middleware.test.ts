@@ -1,12 +1,12 @@
-import { createServer } from "http";
-import { readFileSync } from "fs";
+import { createServer } from "node:http";
+import { readFileSync } from "node:fs";
 
 import { sign } from "@octokit/webhooks-methods";
 
 // import without types
 const express = require("express");
 
-import { createNodeMiddleware, Webhooks } from "../../src";
+import { createNodeMiddleware, Webhooks } from "../../src/index.ts";
 
 const pushEventPayload = readFileSync(
   "test/fixtures/push-payload.json",
@@ -372,7 +372,7 @@ describe("createNodeMiddleware(webhooks)", () => {
   });
 
   test("Handles timeout", async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers({ doNotFake: ["setImmediate"] });
 
     const webhooks = new Webhooks({
       secret: "mySecret",
@@ -407,7 +407,7 @@ describe("createNodeMiddleware(webhooks)", () => {
   });
 
   test("Handles timeout with error", async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers({ doNotFake: ["setImmediate"] });
 
     const webhooks = new Webhooks({
       secret: "mySecret",
@@ -653,4 +653,48 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     server.close();
   });
+});
+
+test("request.body is already an Object and has request.rawBody as Buffer (e.g. GCF)", async () => {
+  expect.assertions(3);
+
+  const webhooks = new Webhooks({
+    secret: "mySecret",
+  });
+  const dataChunks: any[] = [];
+  const middleware = createNodeMiddleware(webhooks);
+
+  const server = createServer((req, res) => {
+    req.once("data", (chunk) => dataChunks.push(chunk));
+    req.once("end", () => {
+      // @ts-expect-error - TS2339: Property 'rawBody' does not exist on type 'IncomingMessage'.
+      req.rawBody = Buffer.concat(dataChunks);
+      // @ts-expect-error - TS2339: Property 'body' does not exist on type 'IncomingMessage'.
+      req.body = JSON.parse(req.rawBody);
+      middleware(req, res);
+    });
+  }).listen();
+
+  webhooks.on("push", (event) => {
+    expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
+  });
+
+  // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
+  const { port } = server.address();
+
+  const response = await fetch(`http://localhost:${port}/api/github/webhooks`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+      "X-GitHub-Event": "push",
+      "X-Hub-Signature-256": signatureSha256,
+    },
+    body: pushEventPayload,
+  });
+
+  expect(response.status).toEqual(200);
+  expect(await response.text()).toEqual("ok\n");
+
+  server.close();
 });

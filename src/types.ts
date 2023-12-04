@@ -1,8 +1,8 @@
 import type { RequestError } from "@octokit/request-error";
 import type { webhooks as OpenAPIWebhooks } from "@wolfy1339/openapi-webhooks-types";
-import type { webhooksIdentifiers } from "./generated/webhook-identifiers";
-import type { Logger } from "./createLogger";
-import type { emitterEventNames } from "./generated/webhook-names";
+import type { webhooksIdentifiers } from "./generated/webhook-identifiers.ts";
+import type { Logger } from "./createLogger.ts";
+import type { emitterEventNames } from "./generated/webhook-names.ts";
 
 type SnakeCaseToKebabCase<TString extends string> =
   TString extends `${infer TPart1}_${infer TRest}`
@@ -94,7 +94,9 @@ export type WebhookError = Error & Partial<RequestError>;
 // todo: rename to "EmitterErrorEvent"
 export interface WebhookEventHandlerError<TTransformed = unknown>
   extends AggregateError<WebhookError> {
-  event: EmitterWebhookEvent & TTransformed;
+  event: TTransformed extends unknown
+    ? EmitterWebhookEvent
+    : EmitterWebhookEvent & TTransformed;
 }
 
 /**

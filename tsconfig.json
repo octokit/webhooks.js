@@ -1,5 +1,5 @@
 {
-  "extends": "@octokit/tsconfig",
+  "extends": "./node_modules/@octokit/tsconfig/tsconfig.json",
   "include": ["src/**/*"],
   "ts-node": {
     "compilerOptions": {

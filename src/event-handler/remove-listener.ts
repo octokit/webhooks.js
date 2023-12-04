@@ -1,4 +1,4 @@
-import type { EmitterWebhookEventName, State } from "../types";
+import type { EmitterWebhookEventName, State } from "../types.js";
 
 export function removeListener(
   state: State,
