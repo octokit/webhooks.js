@@ -15,7 +15,9 @@ export async function verifyAndReceive(
   // verify will validate that the secret is not undefined
   const matchesSignature = await verify(
     state.secret,
-    event.payload,
+    typeof event.payload === "string"
+      ? event.payload
+      : JSON.stringify(event.payload),
     event.signature,
   ).catch(() => false);
 
@@ -31,7 +33,10 @@ export async function verifyAndReceive(
 
   let payload: EmitterWebhookEvent["payload"];
   try {
-    payload = JSON.parse(event.payload);
+    payload =
+      typeof event.payload === "string"
+        ? JSON.parse(event.payload)
+        : event.payload;
   } catch (error: any) {
     error.message = "Invalid JSON";
     error.status = 400;

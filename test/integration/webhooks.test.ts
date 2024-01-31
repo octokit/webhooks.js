@@ -49,6 +49,21 @@ describe("Webhooks", () => {
     });
   });
 
+  test("webhooks.verifyAndReceive({ ...event, signature }) with object payload", async () => {
+    const secret = "mysecret";
+    const webhooks = new Webhooks({ secret });
+
+    await webhooks.verifyAndReceive({
+      id: "1",
+      name: "push",
+      payload: JSON.parse(pushEventPayloadString),
+      signature: await sign(
+        { secret, algorithm: "sha256" },
+        pushEventPayloadString,
+      ),
+    });
+  });
+
   test("webhooks.verifyAndReceive(event) with incorrect signature", async () => {
     const webhooks = new Webhooks({ secret: "mysecret" });
 
