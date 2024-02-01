@@ -11,7 +11,16 @@ import AggregateError from "aggregate-error";
 // }
 type IncomingMessage = any;
 
-export function getPayload(request: IncomingMessage): Promise<string> {
+
+async function buffer(readable: Readable) {
+  const chunks = [];
+  for await (const chunk of readable) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+  }
+  return Buffer.concat(chunks);
+}
+
+export async function getPayload(request: IncomingMessage): Promise<string> {
   if ("body" in request) {
     if (
       typeof request.body === "object" &&
@@ -19,10 +28,13 @@ export function getPayload(request: IncomingMessage): Promise<string> {
       request.rawBody instanceof Buffer
     ) {
       // The body is already an Object and rawBody is a Buffer (e.g. GCF)
-      return Promise.resolve(request.rawBody.toString("utf8"));
+      return request.rawBody.toString("utf8");
+    } else if(Symbol.asyncIterator in request || Symbol.iterator in request) {
+      const buf = await buffer(req);
+      return buf.toString('utf8');
     } else {
       // The body is a String (e.g. Lambda)
-      return Promise.resolve(request.body);
+      return request.body;
     }
   }
 
