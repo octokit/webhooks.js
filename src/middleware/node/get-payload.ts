@@ -29,6 +29,7 @@ export async function getPayload(request: IncomingMessage): Promise<string> {
     ) {
       // The body is already an Object and rawBody is a Buffer (e.g. GCF)
       return request.rawBody.toString("utf8");
+    // request is a readable stream (e.g. vercel)
     } else if(Symbol.asyncIterator in request || Symbol.iterator in request) {
       const buf = await buffer(req);
       return buf.toString('utf8');
