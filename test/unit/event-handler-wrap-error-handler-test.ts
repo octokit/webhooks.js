@@ -1,4 +1,5 @@
 import { wrapErrorHandler } from "../../src/event-handler/wrap-error-handler.ts";
+import { jest } from "@jest/globals";
 
 const noop = () => {};
 

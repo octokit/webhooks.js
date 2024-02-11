@@ -10,11 +10,13 @@ const config: Config.InitialOptions = {
       lines: 100,
     },
   },
+  extensionsToTreatAsEsm: ['.ts'],
   transform: {
     "^.+\\.tsx?$": [
       "ts-jest",
       {
         tsconfig: "test/tsconfig.json",
+        useESM: true,
       },
     ],
   },
