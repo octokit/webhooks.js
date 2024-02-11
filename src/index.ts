@@ -1,5 +1,8 @@
 import { createLogger } from "./createLogger.js";
-import { createEventHandler } from "./event-handler/index.js";
+import {
+  createEventHandler,
+  type EventHandler,
+} from "./event-handler/index.js";
 import { sign, verify } from "@octokit/webhooks-methods";
 import { verifyAndReceive } from "./verify-and-receive.js";
 import type {
@@ -49,7 +52,10 @@ class Webhooks<TTransformed = unknown> {
       throw new Error("[@octokit/webhooks] options.secret required");
     }
 
-    const state: State & { secret: string } = {
+    const state: State & {
+      secret: string;
+      eventHandler: EventHandler<TTransformed>;
+    } = {
       eventHandler: createEventHandler(options),
       secret: options.secret,
       hooks: {},

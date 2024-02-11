@@ -5,6 +5,7 @@ import type {
   HandlerFunction,
   Options,
   State,
+  WebhookError,
   WebhookEventHandlerError,
 } from "../types.js";
 import {
@@ -15,7 +16,7 @@ import {
 import { receiverHandle as receive } from "./receive.js";
 import { removeListener } from "./remove-listener.js";
 
-interface EventHandler<TTransformed> {
+export interface EventHandler<TTransformed> {
   on<E extends EmitterWebhookEventName>(
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>,
@@ -34,7 +35,7 @@ interface EventHandler<TTransformed> {
     event: E | E[],
     callback: HandlerFunction<E, TTransformed>,
   ): void;
-  receive(event: EmitterWebhookEvent): Promise<void>;
+  receive(event: EmitterWebhookEvent | WebhookError): Promise<void>;
 }
 
 export function createEventHandler<TTransformed>(
