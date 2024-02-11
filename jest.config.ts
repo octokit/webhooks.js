@@ -29,5 +29,4 @@ const config: Config.InitialOptions = {
   testRegex: /test\/.*\/.*.test.ts/u.source,
 };
 
-// We have to use a CommonJS export here due to `verbatimModuleSyntax`
-module.exports = config;
+export default config;
