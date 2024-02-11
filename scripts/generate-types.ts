@@ -5,7 +5,7 @@ import * as fs from "node:fs";
 import type { OpenAPI3, OperationObject, PathItemObject } from "./types.js";
 import { format } from "prettier";
 
-const schema = (await import("@wolfy1339/openapi-webhooks")).schemas[
+const schema = (await import("@wolfy1339/openapi-webhooks")).default.schemas[
   "api.github.com"
 ] as OpenAPI3;
 

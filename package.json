@@ -10,7 +10,7 @@
   "scripts": {
     "build": "node scripts/build.mjs && tsc -p tsconfig.json",
     "coverage": "jest --coverage && open coverage/lcov-report/index.html",
-    "generate-types": "ts-node --transpile-only scripts/generate-types.ts",
+    "generate-types": "node --loader=ts-node/esm scripts/generate-types.ts",
     "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json",
     "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json",
     "pretest": "npm run -s lint",
