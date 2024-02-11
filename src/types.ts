@@ -1,10 +1,17 @@
 import type { RequestError } from "@octokit/request-error";
-import type {
-  WebhookEventMap,
-  WebhookEventName,
-} from "@octokit/webhooks-types";
+import type { webhooks as OpenAPIWebhooks } from "@wolfy1339/openapi-webhooks-types";
+import type { EventPayloadMap } from "./generated/webhook-identifiers.js";
 import type { Logger } from "./createLogger.js";
 import type { emitterEventNames } from "./generated/webhook-names.js";
+
+export type WebhookEventName = keyof EventPayloadMap;
+export type ExtractEvents<TEventName> =
+  TEventName extends `${infer _TWebhookEvent}.${infer _TAction}`
+    ? never
+    : TEventName;
+export type WebhookEvents = ExtractEvents<EmitterWebhookEventName>;
+export type WebhookEventDefinition<TEventName extends keyof OpenAPIWebhooks> =
+  OpenAPIWebhooks[TEventName]["post"]["requestBody"]["content"]["application/json"];
 
 export type EmitterWebhookEventName = (typeof emitterEventNames)[number];
 export type EmitterWebhookEvent<
@@ -25,7 +32,7 @@ export type EmitterWebhookEventWithStringPayloadAndSignature = {
 interface BaseWebhookEvent<TName extends WebhookEventName> {
   id: string;
   name: TName;
-  payload: WebhookEventMap[TName];
+  payload: EventPayloadMap[TName];
 }
 
 export interface Options<TTransformed = unknown> {

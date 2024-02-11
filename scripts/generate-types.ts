@@ -2,76 +2,34 @@
 
 import { strict as assert } from "node:assert";
 import * as fs from "node:fs";
-import type { JSONSchema7, JSONSchema7Definition } from "json-schema";
+import type { OpenAPI3, OperationObject, PathItemObject } from "./types.js";
 import { format } from "prettier";
 
-type JSONSchemaWithRef = JSONSchema7 & Required<Pick<JSONSchema7, "$ref">>;
-
-interface Schema extends JSONSchema7 {
-  definitions: Record<string, JSONSchema7>;
-  oneOf: JSONSchemaWithRef[];
-}
-
-const schema = require("@octokit/webhooks-schemas") as Schema;
-
-const guessAtEventName = (name: string) => {
-  const [, eventName] = /^(.+)[$_-]event/u.exec(name) ?? [];
-
-  assert.ok(eventName, `unable to guess event name for "${name}"`);
-
-  return eventName;
-};
-const guessAtActionName = (name: string) => name.replace("$", ".");
-
-const getDefinitionName = (ref: string): string => {
-  assert.ok(
-    ref.startsWith("#/definitions/"),
-    `${ref} does not reference a valid definition`,
-  );
-
-  const [, name] = /^#\/definitions\/(.+)$/u.exec(ref) ?? [];
-
-  assert.ok(name, `unable to find definition name ${ref}`);
-
-  return name;
-};
-
-type NameAndActions = [name: string, actions: string[]];
-
-const buildEventProperties = ([
-  eventName,
-  actions,
-]: NameAndActions): string[] => [
-  guessAtEventName(eventName),
-  ...actions.map(guessAtActionName),
-];
-
-const isJSONSchemaWithRef = (
-  object: JSONSchema7Definition,
-): object is JSONSchemaWithRef =>
-  typeof object === "object" && object.$ref !== undefined;
-
-const listEvents = () => {
-  return schema.oneOf.map<NameAndActions>(({ $ref }) => {
-    const name = getDefinitionName($ref);
-    const definition = schema.definitions[name];
-
-    assert.ok(definition, `unable to find definition named ${name}`);
-
-    if (definition.oneOf?.every(isJSONSchemaWithRef)) {
-      return [name, definition.oneOf.map((def) => getDefinitionName(def.$ref))];
-    }
-
-    return [name, []];
-  });
-};
+const schema = require("@wolfy1339/openapi-webhooks").schemas[
+  "api.github.com"
+] as OpenAPI3;
 
 const getEmitterEvents = (): string[] => {
-  return listEvents().reduce<string[]>(
-    (properties, event) => properties.concat(buildEventProperties(event)),
-    [],
-  );
+  return Array.from(events).sort();
 };
+const eventsMap: Record<string, Set<string>> = {};
+const events = new Set<string>();
+
+for (let webhookDefinitionKey of Object.keys(schema.webhooks!)) {
+  const webhookDefinition = schema.webhooks![
+    webhookDefinitionKey
+  ] as PathItemObject;
+  const operationDefinition = webhookDefinition.post as OperationObject;
+  const emitterEventName = operationDefinition
+    .operationId!.replace(/-/g, "_")
+    .replace("/", ".");
+
+  const [eventName] = emitterEventName.split(".");
+  events.add(eventName);
+  events.add(emitterEventName);
+  eventsMap[eventName] ||= new Set<string>();
+  eventsMap[eventName].add(webhookDefinitionKey);
+}
 
 const outDir = "src/generated/";
 
@@ -84,7 +42,7 @@ const generateTypeScriptFile = async (name: string, contents: string[]) => {
 
 const asCode = (str: string): string => `\`${str}\``;
 const asLink = (event: string): string => {
-  const link = `https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#${event.replace(
+  const link = `https://docs.github.com/en/webhooks-and-events/webhook-events-and-payloads#${event.replace(
     /[^a-z_0-9]/g,
     "",
   )}`;
@@ -151,6 +109,23 @@ const run = async () => {
     "export const emitterEventNames = [",
     ...emitterEvents.map((key) => `"${key}",`),
     "] as const;",
+  ]);
+
+  await generateTypeScriptFile("webhook-identifiers", [
+    "// THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY",
+    "// make edits in scripts/generate-types.ts",
+    "",
+    "import type { WebhookEventDefinition } from '../types.js';",
+    "",
+    "export type EventPayloadMap = {",
+    ...Object.keys(eventsMap).map(
+      (key) =>
+        `"${key}": ${Array.from(eventsMap[key])
+          .map((event) => `WebhookEventDefinition<` + `"${event}">`)
+          .join(" | ")}`,
+    ),
+    "}",
+    "export type WebhookEventName = keyof EventPayloadMap;",
   ]);
 
   await updateReadme(emitterEvents);

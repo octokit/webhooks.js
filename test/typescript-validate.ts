@@ -96,7 +96,7 @@ export default async function () {
         console.log(payload.check_run.output.title);
       }
       if ("comment" in payload) {
-        console.log(payload.comment.user.login);
+        console.log(payload.comment.user!.login);
       }
     },
   );
