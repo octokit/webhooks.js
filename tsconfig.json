@@ -2,11 +2,8 @@
   "extends": "./node_modules/@octokit/tsconfig/tsconfig.json",
   "include": ["src/**/*"],
   "ts-node": {
-    "transpileOnly": true,
     "compilerOptions": {
-      "module": "Node16",
-      "target": "Node16",
-      "esModuleInterop": true
+      "verbatimModuleSyntax": false
     }
   },
   "compilerOptions": {
