@@ -43,7 +43,7 @@ async function main() {
       bundle: true,
       platform: "node",
       target: "node18",
-      format: "cjs",
+      format: "esm",
       ...sharedOptions,
     }),
     // Build an ESM browser bundle

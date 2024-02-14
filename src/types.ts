@@ -3,6 +3,7 @@ import type { webhooks as OpenAPIWebhooks } from "@wolfy1339/openapi-webhooks-ty
 import type { EventPayloadMap } from "./generated/webhook-identifiers.js";
 import type { Logger } from "./createLogger.js";
 import type { emitterEventNames } from "./generated/webhook-names.js";
+import type AggregateError from "aggregate-error";
 
 export type WebhookEventName = keyof EventPayloadMap;
 export type ExtractEvents<TEventName> =
@@ -74,21 +75,4 @@ export interface WebhookEventHandlerError<TTransformed = unknown>
   event: TTransformed extends unknown
     ? EmitterWebhookEvent
     : EmitterWebhookEvent & TTransformed;
-}
-
-/**
- * Workaround for TypeScript incompatibility with types exported by aggregate-error.
- * Credit: https://git.io/JUEEr
- * @copyright Sindre Sorhus
- * @license MIT (https://git.io/JUEEK)
- * @see https://github.com/octokit/webhooks.js/pull/270/files
- */
-declare class AggregateError<T extends Error = Error>
-  extends Error
-  implements Iterable<T>
-{
-  readonly name: "AggregateError";
-  constructor(errors: ReadonlyArray<T | { [key: string]: any } | string>);
-
-  [Symbol.iterator](): IterableIterator<T>;
 }
