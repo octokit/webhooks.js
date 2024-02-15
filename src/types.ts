@@ -3,7 +3,9 @@ import type {
   WebhookEventMap,
   WebhookEventName,
 } from "@octokit/webhooks-types";
+export type { WebhookEventName } from "@octokit/webhooks-types";
 import type { Logger } from "./createLogger.js";
+import type { EventHandler } from "./event-handler/index.js";
 import type { emitterEventNames } from "./generated/webhook-names.js";
 
 export type EmitterWebhookEventName = (typeof emitterEventNames)[number];
@@ -17,7 +19,7 @@ export type EmitterWebhookEvent<
 
 export type EmitterWebhookEventWithStringPayloadAndSignature = {
   id: string;
-  name: EmitterWebhookEventName;
+  name: WebhookEventName;
   payload: string;
   signature: string;
 };
@@ -51,7 +53,7 @@ type Hooks = {
 };
 
 export interface State extends Options<any> {
-  eventHandler?: any;
+  eventHandler?: EventHandler<unknown>;
   hooks: Hooks;
   log: Logger;
 }

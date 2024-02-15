@@ -2,9 +2,9 @@
 import AggregateError from "aggregate-error";
 import type {
   EmitterWebhookEvent,
-  EmitterWebhookEventName,
   State,
   WebhookError,
+  WebhookEventName,
   WebhookEventHandlerError,
 } from "../types.js";
 import { wrapErrorHandler } from "./wrap-error-handler.js";
@@ -17,7 +17,7 @@ type EventAction = Extract<
 function getHooks(
   state: State,
   eventPayloadAction: EventAction | null,
-  eventName: EmitterWebhookEventName,
+  eventName: WebhookEventName,
 ): Function[] {
   const hooks = [state.hooks[eventName], state.hooks["*"]];
 
@@ -29,7 +29,10 @@ function getHooks(
 }
 
 // main handler function
-export function receiverHandle(state: State, event: EmitterWebhookEvent) {
+export function receiverHandle(
+  state: State,
+  event: EmitterWebhookEvent | WebhookError,
+) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {
