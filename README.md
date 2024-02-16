@@ -183,7 +183,7 @@ webhooks.verify(eventPayload, signature);
       <td>
         <code>eventPayload</code>
         <em>
-          (Object [deprecated] or String)
+          (String)
         </em>
       </td>
       <td>
@@ -246,7 +246,7 @@ webhooks.verifyAndReceive({ id, name, payload, signature });
       <td>
         <code>payload</code>
         <em>
-          Object (deprecated) or String
+          String
         </em>
       </td>
       <td>
