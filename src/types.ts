@@ -1,5 +1,5 @@
 import type { RequestError } from "@octokit/request-error";
-import type { webhooks as OpenAPIWebhooks } from "@wolfy1339/openapi-webhooks-types";
+import type { webhooks as OpenAPIWebhooks } from "@octokit/openapi-webhooks-types";
 import type { EventPayloadMap } from "./generated/webhook-identifiers.js";
 import type { Logger } from "./createLogger.js";
 import type { emitterEventNames } from "./generated/webhook-names.js";
