@@ -43,7 +43,8 @@ Note that while setting a secret is optional on GitHub, it is required to be set
 
 ```js
 // install with: npm install @octokit/webhooks
-const { Webhooks, createNodeMiddleware } = require("@octokit/webhooks");
+import { Webhooks, createNodeMiddleware } from "@octokit/webhooks";
+import { createServer } from "node:http";
 const webhooks = new Webhooks({
   secret: "mysecret",
 });
@@ -52,7 +53,7 @@ webhooks.onAny(({ id, name, payload }) => {
   console.log(name, "event received");
 });
 
-require("http").createServer(createNodeMiddleware(webhooks)).listen(3000);
+createServer(createNodeMiddleware(webhooks)).listen(3000);
 // can now receive webhook events at /api/github/webhooks
 ```
 
@@ -81,7 +82,7 @@ source.onmessage = (event) => {
 };
 ```
 
-`EventSource` is a native browser API and can be polyfilled for browsers that don’t support it. In node, you can use the [`eventsource`](https://github.com/EventSource/eventsource) package: install with `npm install eventsource`, then `const EventSource = require('eventsource')`
+`EventSource` is a native browser API and can be polyfilled for browsers that don’t support it. In node, you can use the [`eventsource`](https://github.com/EventSource/eventsource) package: install with `npm install eventsource`, then `import EventSource from "eventsource";)`
 
 ## API
 
@@ -278,7 +279,7 @@ Additionally, if verification fails, rejects the returned promise and emits an `
 Example
 
 ```js
-const { Webhooks } = require("@octokit/webhooks");
+import { Webhooks } from "@octokit/webhooks";
 const webhooks = new Webhooks({
   secret: "mysecret",
 });
@@ -509,8 +510,8 @@ The `.removeListener()` method belongs to the `event-handler` module which can b
 ### createNodeMiddleware()
 
 ```js
-const { createServer } = require("http");
-const { Webhooks, createNodeMiddleware } = require("@octokit/webhooks");
+import { createServer } from "node:http";
+import { Webhooks, createNodeMiddleware } from "@octokit/webhooks";
 
 const webhooks = new Webhooks({
   secret: "mysecret",
