@@ -41,9 +41,9 @@
     ]
   },
   "dependencies": {
-    "@octokit/request-error": "^5.0.0",
-    "@octokit/webhooks-methods": "^4.0.0",
     "@octokit/openapi-webhooks-types": "5.3.2",
+    "@octokit/request-error": "^6.0.0-beta.3",
+    "@octokit/webhooks-methods": "^5.0.0-beta.2",
     "aggregate-error": "^5.0.0"
   },
   "devDependencies": {
