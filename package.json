@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@octokit/request-error": "^5.0.0",
-    "@octokit/webhooks-methods": "^4.0.0",
+    "@octokit/webhooks-methods": "^4.1.0",
     "@octokit/webhooks-types": "7.3.2",
     "aggregate-error": "^3.1.0"
   },
