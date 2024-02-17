@@ -7,9 +7,6 @@
     }
   },
   "compilerOptions": {
-    "lib": ["ESNext"],
-    "module": "Node16",
-    "moduleResolution": "node16",
     "esModuleInterop": true,
     "declaration": true,
     "outDir": "pkg/dist-types",
