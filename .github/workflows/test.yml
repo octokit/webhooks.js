@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node:
+        node_version:
           - 18
           - 20
-    name: Node ${{ matrix.node }}
+    name: Node ${{ matrix.node_version }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
