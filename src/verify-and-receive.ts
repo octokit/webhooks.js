@@ -6,10 +6,12 @@ import type {
   EmitterWebhookEvent,
   EmitterWebhookEventWithStringPayloadAndSignature,
   State,
+  WebhookError,
 } from "./types.js";
+import type { EventHandler } from "./event-handler/index.js";
 
 export async function verifyAndReceive(
-  state: State & { secret: string },
+  state: State & { secret: string; eventHandler: EventHandler<unknown> },
   event: EmitterWebhookEventWithStringPayloadAndSignature,
 ): Promise<void> {
   // verify will validate that the secret is not undefined
@@ -25,7 +27,7 @@ export async function verifyAndReceive(
     );
 
     return state.eventHandler.receive(
-      Object.assign(error, { event, status: 400 }),
+      Object.assign(error, { event, status: 400 }) as WebhookError,
     );
   }
 
@@ -42,5 +44,5 @@ export async function verifyAndReceive(
     id: event.id,
     name: event.name,
     payload,
-  });
+  } as EmitterWebhookEvent);
 }

@@ -2,6 +2,7 @@ import type { RequestError } from "@octokit/request-error";
 import type { webhooks as OpenAPIWebhooks } from "@octokit/openapi-webhooks-types";
 import type { EventPayloadMap } from "./generated/webhook-identifiers.js";
 import type { Logger } from "./createLogger.js";
+import type { EventHandler } from "./event-handler/index.js";
 import type { emitterEventNames } from "./generated/webhook-names.js";
 import type AggregateError from "aggregate-error";
 
@@ -25,7 +26,7 @@ export type EmitterWebhookEvent<
 
 export type EmitterWebhookEventWithStringPayloadAndSignature = {
   id: string;
-  name: EmitterWebhookEventName;
+  name: WebhookEventName;
   payload: string;
   signature: string;
 };
@@ -59,7 +60,7 @@ type Hooks = {
 };
 
 export interface State extends Options<any> {
-  eventHandler?: any;
+  eventHandler?: EventHandler<unknown>;
   hooks: Hooks;
   log: Logger;
 }
