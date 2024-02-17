@@ -34,7 +34,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           cache: npm
-          node-version: 16
+          node-version: 20
       - run: npm ci
       - run: npm run validate:ts
     if: ${{ always() }}
