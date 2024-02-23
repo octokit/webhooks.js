@@ -40,14 +40,14 @@
     ]
   },
   "dependencies": {
-    "@octokit/request-error": "^5.0.0",
-    "@octokit/webhooks-methods": "^4.1.0",
+    "@octokit/request-error": "^6.0.0",
+    "@octokit/webhooks-methods": "^5.0.0",
     "@octokit/webhooks-types": "7.3.2",
     "aggregate-error": "^3.1.0"
   },
   "devDependencies": {
     "@jest/types": "^29.0.0",
-    "@octokit/tsconfig": "^2.0.0",
+    "@octokit/tsconfig": "^3.0.0",
     "@octokit/webhooks-schemas": "7.3.2",
     "@types/jest": "^29.0.0",
     "@types/json-schema": "^7.0.7",
