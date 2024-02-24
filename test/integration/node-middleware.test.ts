@@ -2,9 +2,11 @@ import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
 
 import { sign } from "@octokit/webhooks-methods";
+import { jest } from "@jest/globals";
 
 // import without types
-const express = require("express");
+// @ts-expect-error
+const express = (await import("express")).default;
 
 import { createNodeMiddleware, Webhooks } from "../../src/index.ts";
 
@@ -16,10 +18,7 @@ let signatureSha256: string;
 
 describe("createNodeMiddleware(webhooks)", () => {
   beforeAll(async () => {
-    signatureSha256 = await sign(
-      { secret: "mySecret", algorithm: "sha256" },
-      pushEventPayload,
-    );
+    signatureSha256 = await sign("mySecret", pushEventPayload);
   });
 
   afterEach(() => {

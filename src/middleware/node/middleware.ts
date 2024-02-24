@@ -1,10 +1,8 @@
 // remove type imports from http for Deno compatibility
 // see https://github.com/octokit/octokit.js/issues/2075#issuecomment-817361886
-// import type { IncomingMessage, ServerResponse } from "node:http";
-type IncomingMessage = any;
-type ServerResponse = any;
+import type { IncomingMessage, ServerResponse } from "node:http";
 
-import type { WebhookEventName } from "@octokit/webhooks-types";
+import type { WebhookEventName } from "../../generated/webhook-identifiers.js";
 
 import type { Webhooks } from "../../index.js";
 import type { WebhookEventHandlerError } from "../../types.js";
@@ -112,7 +110,7 @@ export async function middleware(
 
     if (didTimeout) return true;
 
-    const err = Array.from(error as WebhookEventHandlerError)[0];
+    const err = Array.from((error as WebhookEventHandlerError).errors)[0];
     const errorMessage = err.message
       ? `${err.name}: ${err.message}`
       : "Error: An Unspecified error occurred";

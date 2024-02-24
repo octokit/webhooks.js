@@ -1,5 +1,6 @@
 import { receiverOn } from "../../src/event-handler/on.ts";
 import type { State } from "../../src/types.ts";
+import { jest } from "@jest/globals";
 
 function noop() {}
 

@@ -1,4 +1,3 @@
-// @ts-ignore to address #245
 import AggregateError from "aggregate-error";
 import type {
   EmitterWebhookEvent,
@@ -38,7 +37,6 @@ export function receiverHandle(
   if (event instanceof Error) {
     const error = Object.assign(new AggregateError([event]), {
       event,
-      errors: [event],
     });
 
     errorHandlers.forEach((handler) => wrapErrorHandler(handler, error));
@@ -88,7 +86,6 @@ export function receiverHandle(
     const error = new AggregateError(errors) as WebhookEventHandlerError;
     Object.assign(error, {
       event,
-      errors,
     });
 
     errorHandlers.forEach((handler) => wrapErrorHandler(handler, error));

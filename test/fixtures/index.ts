@@ -1,8 +1,4 @@
-import {
-  InstallationCreatedEvent,
-  InstallationDeletedEvent,
-  PushEvent,
-} from "@octokit/webhooks-types";
+import { WebhookEventDefinition } from "../../src/types";
 import pushEvent from "./push-payload.json";
 import installationCreatedEvent from "./installation-created-payload.json";
 import installationDeletedEvent from "./installation-deleted-payload.json";
@@ -11,8 +7,8 @@ import installationDeletedEvent from "./installation-deleted-payload.json";
 // meaning TypeScript complains about enum values not being assignable to strings
 // @see https://github.com/microsoft/TypeScript/issues/32063
 
-export const pushEventPayload = pushEvent as PushEvent;
+export const pushEventPayload = pushEvent as WebhookEventDefinition<"push">;
 export const installationCreatedPayload =
-  installationCreatedEvent as InstallationCreatedEvent;
+  installationCreatedEvent as WebhookEventDefinition<"installation-created">;
 export const installationDeletedPayload =
-  installationDeletedEvent as InstallationDeletedEvent;
+  installationDeletedEvent as WebhookEventDefinition<"installation-deleted">;
