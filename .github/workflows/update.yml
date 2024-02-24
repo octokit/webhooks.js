@@ -2,7 +2,8 @@ name: Update
 "on":
   push:
     branches:
-      - renovate/openapi-webhooks-*
+      - renovate/octokit-openapi-webhooks-*
+      - renovate/octokit-monorepo
 jobs:
   update:
     runs-on: ubuntu-latest
