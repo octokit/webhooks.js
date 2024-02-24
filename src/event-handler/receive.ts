@@ -54,7 +54,7 @@ export function receiverHandle(
   // flatten arrays of event listeners and remove undefined values
   const hooks = getHooks(
     state,
-    "action" in event.payload ? event.payload.action! : null,
+    "action" in event.payload ? event.payload.action : null,
     event.name,
   );
 
