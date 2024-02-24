@@ -1,8 +1,10 @@
 name: Update
 "on":
-  repository_dispatch:
-    types:
-      - octokit/webhooks release
+  push:
+    branches:
+      - renovate/octokit-openapi-webhooks-*
+      - renovate/octokit-monorepo
+      - renovate/major-octokit-monorepo
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -11,18 +13,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           cache: npm
-          node-version: 16
+          node-version: 20
       - run: npm ci
-      - uses: gr2m/await-npm-package-version-action@v1
-        with:
-          package: "@octokit/webhooks-schemas"
-          version: ${{ github.event.client_payload.release.tag_name }}
-      - run: npm install --save-exact --save-dev @octokit/webhooks-schemas@latest
-      - uses: gr2m/await-npm-package-version-action@v1
-        with:
-          package: "@octokit/webhooks-types"
-          version: ${{ github.event.client_payload.release.tag_name }}
-      - run: npm install --save-exact @octokit/webhooks-types@latest
       - run: npm run generate-types
       - name: create pull request
         uses: gr2m/create-or-update-pull-request-action@v1.x
@@ -30,19 +22,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.OCTOKITBOT_PAT }}
         with:
           title: 🚧 🤖📯 Webhooks changed
-          body: >
-            A new release of
-            [@octokit/webhooks-definitions](https://github.com/octokit/webhooks)
-            was just released 👋🤖
-
-
-            This pull request updates the TypeScript definitions derived from
-            `@octokit/webhooks-definitions`. I can't tell if the changes are
-            fixes, features or breaking, you'll have to figure that out on
-            yourself and adapt the commit messages accordingly to trigger the
-            right release, see [our commit message
-            conventions](https://github.com/octokit/openapi/blob/main/CONTRIBUTING.md#merging-the-pull-request--releasing-a-new-version).
-          branch: update-octokit-webhooks
+          body: An update to the OpenAPI spec has been detected, and required updates to your code. Please review the changes and merge this PR if everything looks good.
+          branch: ${{ github.ref }}
           author: Octokit Bot <octokitbot@martynus.net>
           commit-message: "WIP: Webhooks changed - please review"
-          labels: "Type: Maintenance"

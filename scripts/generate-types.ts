@@ -5,6 +5,7 @@ import * as fs from "node:fs";
 import type { OpenAPI3, OperationObject, PathItemObject } from "./types.js";
 import { format } from "prettier";
 
+// @ts-expect-error - There is no type definition for this package, your IDE may complain that this directive is unused but it is not
 const schema = (await import("@octokit/openapi-webhooks")).default.schemas[
   "api.github.com"
 ] as OpenAPI3;
@@ -130,5 +131,5 @@ const run = async () => {
 
   await updateReadme(emitterEvents);
 };
-
+console.log("Generating types...");
 run();
