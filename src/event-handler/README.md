@@ -27,7 +27,7 @@ eventHandler.receive({
 If you receive events through a publicly accessible URL, make sure to verify that the event request is coming from GitHub:
 
 ```js
-const { verify } = require('@octokit/webhooks')
+import { verify } from '@octokit/webhooks';
 const secret = 'mysecret'
 
 if (!verify(secret, request.payload, request.headers['x-hub-signature'])) {

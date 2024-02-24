@@ -10,11 +10,13 @@ const config: Config.InitialOptions = {
       lines: 100,
     },
   },
+  extensionsToTreatAsEsm: ['.ts'],
   transform: {
     "^.+\\.tsx?$": [
       "ts-jest",
       {
         tsconfig: "test/tsconfig.json",
+        useESM: true,
       },
     ],
   },
@@ -27,5 +29,4 @@ const config: Config.InitialOptions = {
   testRegex: /test\/.*\/.*.test.ts/u.source,
 };
 
-// We have to use a CommonJS export here due to `verbatimModuleSyntax`
-module.exports = config;
+export default config;

@@ -91,12 +91,12 @@ describe("when a handler throws an error", () => {
     } catch (error: any) {
       expect(error.message).toMatch(/oops/);
 
-      const errors = Array.from(error);
+      const errors = Array.from(error.errors);
 
       expect(errors.length).toBe(1);
-      expect((Array.from(error) as { message: string }[])[0].message).toBe(
-        "oops",
-      );
+      expect(
+        (Array.from(error.errors) as { message: string }[])[0].message,
+      ).toBe("oops");
 
       expect(error instanceof Error).toBeTruthy();
     }
@@ -194,7 +194,7 @@ test("multiple errors in same event handler", async () => {
     });
   } catch (error: any) {
     expect(error.message).toMatch("oops");
-    expect(Array.from(error).length).toBe(2);
+    expect(Array.from(error.errors).length).toBe(2);
 
     expect(error instanceof Error);
   }

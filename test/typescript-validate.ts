@@ -96,7 +96,7 @@ export default async function () {
         console.log(payload.check_run.output.title);
       }
       if ("comment" in payload) {
-        console.log(payload.comment.user.login);
+        console.log(payload.comment.user!.login);
       }
     },
   );
@@ -182,9 +182,9 @@ export default async function () {
 
   webhooks.onError((error) => {
     console.log(error.event.name);
-    const [firstError] = Array.from(error);
+    const [firstError] = Array.from(error.errors);
     console.log(firstError.status);
-    console.log(firstError.headers);
+    console.log(firstError?.request.headers);
     console.log(firstError.request);
   });
 

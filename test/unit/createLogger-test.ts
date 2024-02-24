@@ -1,4 +1,5 @@
 import { createLogger } from "../../src/createLogger.ts";
+import { jest } from "@jest/globals";
 
 const noop = () => {};
 
