@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@jest/types": "^29.0.0",
-    "@octokit/openapi-webhooks": "5.3.2",
+    "@octokit/openapi-webhooks": "6.0.0",
     "@octokit/tsconfig": "^3.0.0",
     "@types/jest": "^29.0.0",
     "@types/node": "^20.0.0",
