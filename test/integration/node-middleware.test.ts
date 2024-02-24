@@ -18,10 +18,7 @@ let signatureSha256: string;
 
 describe("createNodeMiddleware(webhooks)", () => {
   beforeAll(async () => {
-    signatureSha256 = await sign(
-      { secret: "mySecret", algorithm: "sha256" },
-      pushEventPayload,
-    );
+    signatureSha256 = await sign("mySecret", pushEventPayload);
   });
 
   afterEach(() => {
