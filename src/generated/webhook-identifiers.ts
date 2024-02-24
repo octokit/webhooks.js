@@ -258,7 +258,8 @@ export type EventPayloadMap = {
     | WebhookEventDefinition<"secret-scanning-alert-created">
     | WebhookEventDefinition<"secret-scanning-alert-reopened">
     | WebhookEventDefinition<"secret-scanning-alert-resolved">
-    | WebhookEventDefinition<"secret-scanning-alert-revoked">;
+    | WebhookEventDefinition<"secret-scanning-alert-revoked">
+    | WebhookEventDefinition<"secret-scanning-alert-validated">;
   secret_scanning_alert_location: WebhookEventDefinition<"secret-scanning-alert-location-created">;
   security_advisory:
     | WebhookEventDefinition<"security-advisory-published">

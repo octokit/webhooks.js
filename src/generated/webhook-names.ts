@@ -266,6 +266,7 @@ export const emitterEventNames = [
   "secret_scanning_alert.reopened",
   "secret_scanning_alert.resolved",
   "secret_scanning_alert.revoked",
+  "secret_scanning_alert.validated",
   "secret_scanning_alert_location",
   "secret_scanning_alert_location.created",
   "security_advisory",
