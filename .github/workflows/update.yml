@@ -4,6 +4,7 @@ name: Update
     branches:
       - renovate/octokit-openapi-webhooks-*
       - renovate/octokit-monorepo
+      - renovate/major-octokit-monorepo
 jobs:
   update:
     runs-on: ubuntu-latest
