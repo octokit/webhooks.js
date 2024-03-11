@@ -3,9 +3,6 @@ name: Update
   repository_dispatch:
     types:
       - octokit/webhooks release
-  push:
-    branches:
-      - "12.x"
 jobs:
   update:
     runs-on: ubuntu-latest
