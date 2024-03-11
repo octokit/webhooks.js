@@ -5,6 +5,11 @@ name: Update
       - renovate/octokit-openapi-webhooks-*
       - renovate/octokit-monorepo
       - renovate/major-octokit-monorepo
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version of https://www.npmjs.com/package/@octokit/openapi-webhooks
+        required: true
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -14,7 +19,20 @@ jobs:
         with:
           cache: npm
           node-version: 20
+      - run: >-
+          echo "OCTOKIT_OPENAPI_WEBHOOKS_VERSION=${{ github.event.inputs.version }}" >>
+          $GITHUB_ENV
+        if: github.event.inputs.version
+      - run: echo "OCTOKIT_OPENAPI_WEBHOOKS_VERSION => $OCTOKIT_OPENAPI_WEBHOOKS_VERSION"
+        if: github.event.inputs.version
+      - uses: gr2m/await-npm-package-version-action@v1
+        with:
+          package: "@octokit/openapi-webhooks"
+          version: ${{ env.OCTOKIT_OPENAPI_WEBHOOKS_VERSION }}
+        if: github.event.inputs.version
       - run: npm ci
+      - run: npm i --save-exact @octokit/openapi-webhooks@${{ env.OCTOKIT_OPENAPI_WEBHOOKS_VERSION }} @octokit/openapi-webhooks-types@${{ env.OCTOKIT_OPENAPI_WEBHOOKS_VERSION }}
+        if: github.event.inputs.version
       - run: npm run generate-types
       - name: create pull request
         uses: gr2m/create-or-update-pull-request-action@v1.x
