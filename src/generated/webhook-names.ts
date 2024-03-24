@@ -2,6 +2,9 @@
 // make edits in scripts/generate-types.ts
 
 export const emitterEventNames = [
+  "branch_protection_configuration",
+  "branch_protection_rule.disabled",
+  "branch_protection_rule.enabled",
   "branch_protection_rule",
   "branch_protection_rule.created",
   "branch_protection_rule.deleted",
@@ -25,6 +28,11 @@ export const emitterEventNames = [
   "commit_comment",
   "commit_comment.created",
   "create",
+  "custom_property",
+  "custom_property.created",
+  "custom_property.deleted",
+  "custom_property_values",
+  "custom_property_values.updated",
   "delete",
   "dependabot_alert",
   "dependabot_alert.created",
