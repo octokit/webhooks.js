@@ -10,7 +10,7 @@ const sharedOptions = {
   packages: "external",
   platform: "neutral",
   format: "esm",
-  target: "es2022"
+  target: "es2022",
 };
 
 async function main() {
