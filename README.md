@@ -672,6 +672,12 @@ In addition to these types, `@octokit/webhooks` exports 2 types specific to itse
 
 Note that changes to the exported types are not considered breaking changes, as the changes will not impact production code, but only fail locally or during CI at build time.
 
+> [!IMPORTANT]
+> As we use [conditional exports](https://nodejs.org/api/packages.html#conditional-exports), you will need to adapt your `tsconfig.json` by setting `"moduleResolution": "node16", "module": "node16"`.
+>
+> See the TypeScript docs on [package.json "exports"](https://www.typescriptlang.org/docs/handbook/modules/reference.html#packagejson-exports).<br>
+> See this [helpful guide on transitioning to ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) from [@sindresorhus](https://github.com/sindresorhus)
+
 **⚠️ Caution ⚠️**: Webhooks Types are expected to be used with the [`strictNullChecks` option](https://www.typescriptlang.org/tsconfig#strictNullChecks) enabled in your `tsconfig`. If you don't have this option enabled, there's the possibility that you get `never` as the inferred type in some use cases. See [octokit/webhooks#395](https://github.com/octokit/webhooks/issues/395) for details.
 
 ### `EmitterWebhookEventName`
