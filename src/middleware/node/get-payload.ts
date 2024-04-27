@@ -12,7 +12,7 @@ import AggregateError from "aggregate-error";
 type IncomingMessage = any;
 
 export function getPayload(request: IncomingMessage): Promise<string> {
-  if ("body" in request) {
+  if (request.body) {
     if (
       typeof request.body === "object" &&
       "rawBody" in request &&
