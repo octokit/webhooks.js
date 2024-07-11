@@ -22,7 +22,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.OCTOKITBOT_PAT }}
         with:
           title: 🚧 🤖📯 Webhooks changed
-          body: An update to the OpenAPI spec has been detected, and required updates to your code. Please review the changes and merge this PR if everything looks good.
+          body:
+            An update to the OpenAPI spec has been detected, and required updates to
+            your code. Please review the changes and merge this PR if everything
+            looks good.
           branch: ${{ github.ref }}
           author: Octokit Bot <octokitbot@martynus.net>
           commit-message: "WIP: Webhooks changed - please review"
