@@ -1,3 +1,4 @@
+import { describe, test, expect, it } from "vitest";
 import { createEventHandler } from "../../src/event-handler/index.ts";
 import type {
   EmitterWebhookEvent,
@@ -76,6 +77,7 @@ test("events", async () => {
 
 describe("when a handler throws an error", () => {
   it("throws an aggregated error", async () => {
+    expect.assertions(4);
     const eventHandler = createEventHandler({});
 
     eventHandler.on("push", () => {
@@ -131,7 +133,7 @@ describe("when a handler throws an error", () => {
   });
 });
 
-test("options.transform", (done) => {
+test("options.transform", () => {
   expect.assertions(2);
 
   const eventHandler = createEventHandler({
@@ -143,8 +145,6 @@ test("options.transform", (done) => {
 
   eventHandler.on("push", (event: EmitterWebhookEvent) => {
     expect(event).toBe("funky");
-
-    done();
   });
 
   eventHandler.receive({
@@ -154,7 +154,7 @@ test("options.transform", (done) => {
   });
 });
 
-test("async options.transform", (done) => {
+test("async options.transform", () => {
   const eventHandler = createEventHandler({
     transform: () => {
       return Promise.resolve("funky");
@@ -163,7 +163,6 @@ test("async options.transform", (done) => {
 
   eventHandler.on("push", (event: EmitterWebhookEvent) => {
     expect(event).toBe("funky");
-    done();
   });
 
   eventHandler.receive({
@@ -174,7 +173,7 @@ test("async options.transform", (done) => {
 });
 
 test("multiple errors in same event handler", async () => {
-  expect.assertions(2);
+  expect.assertions(3);
 
   const eventHandler = createEventHandler({});
 

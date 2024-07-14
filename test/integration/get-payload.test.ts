@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import EventEmitter from "node:events";
 import { getPayload } from "../../src/middleware/node/get-payload.ts";
 

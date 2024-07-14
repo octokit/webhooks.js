@@ -1,12 +1,12 @@
+import { test, expect, vi } from "vitest";
 import {
   Webhooks,
   createEventHandler,
   emitterEventNames,
 } from "../../src/index.ts";
-import { jest } from "@jest/globals";
 
 test("@octokit/webhooks", () => {
-  const emitWarningSpy = jest.spyOn(process, "emitWarning");
+  const emitWarningSpy = vi.spyOn(process, "emitWarning");
   const api = new Webhooks({
     secret: "mysecret",
   });
@@ -21,7 +21,7 @@ test("@octokit/webhooks", () => {
 });
 
 test('require("@octokit/webhooks").createEventHandler', () => {
-  const emitWarningSpy = jest.spyOn(process, "emitWarning");
+  const emitWarningSpy = vi.spyOn(process, "emitWarning");
 
   expect(() => {
     createEventHandler({});

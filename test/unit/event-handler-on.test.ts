@@ -1,6 +1,6 @@
+import { expect, test, beforeEach, vi } from "vitest";
 import { receiverOn } from "../../src/event-handler/on.ts";
 import type { State } from "../../src/types.ts";
-import { jest } from "@jest/globals";
 
 function noop() {}
 
@@ -9,11 +9,13 @@ const state: State = {
   log: console,
 };
 
-beforeEach(() => jest.resetAllMocks());
+beforeEach(() => {
+  vi.resetAllMocks();
+});
 
 // Test broken with TypeScript without the ignore
 test("receiver.on with invalid event name", () => {
-  const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(noop);
+  const consoleWarnSpy = vi.spyOn(console, "warn").mockImplementation(noop);
 
   // @ts-expect-error
   receiverOn(state, "foo", noop);

@@ -1,3 +1,4 @@
+import { test, expect } from "vitest";
 import { receiverHandle as receive } from "../../src/event-handler/receive.ts";
 import type { State } from "../../src/types.ts";
 

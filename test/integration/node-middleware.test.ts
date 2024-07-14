@@ -1,8 +1,8 @@
+import { describe, beforeAll, afterEach, expect, test, vi } from "vitest";
 import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
 
 import { sign } from "@octokit/webhooks-methods";
-import { jest } from "@jest/globals";
 
 // import without types
 // @ts-expect-error
@@ -22,7 +22,7 @@ describe("createNodeMiddleware(webhooks)", () => {
   });
 
   afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   test("README example", async () => {
@@ -371,14 +371,14 @@ describe("createNodeMiddleware(webhooks)", () => {
   });
 
   test("Handles timeout", async () => {
-    jest.useFakeTimers({ doNotFake: ["setImmediate"] });
+    vi.useFakeTimers({ toFake: ["setTimeout"] });
 
     const webhooks = new Webhooks({
       secret: "mySecret",
     });
 
     webhooks.on("push", async () => {
-      jest.advanceTimersByTime(10000);
+      vi.advanceTimersByTime(10000);
       server.close();
     });
 
@@ -406,14 +406,14 @@ describe("createNodeMiddleware(webhooks)", () => {
   });
 
   test("Handles timeout with error", async () => {
-    jest.useFakeTimers({ doNotFake: ["setImmediate"] });
+    vi.useFakeTimers({ toFake: ["setTimeout"] });
 
     const webhooks = new Webhooks({
       secret: "mySecret",
     });
 
     webhooks.on("push", async () => {
-      jest.advanceTimersByTime(10000);
+      vi.advanceTimersByTime(10000);
       server.close();
       throw new Error("oops");
     });
@@ -620,10 +620,10 @@ describe("createNodeMiddleware(webhooks)", () => {
     });
 
     const log = {
-      debug: jest.fn(),
-      info: jest.fn(),
-      warn: jest.fn(),
-      error: jest.fn(),
+      debug: vi.fn(),
+      info: vi.fn(),
+      warn: vi.fn(),
+      error: vi.fn(),
     };
     const middleware = createNodeMiddleware(webhooks, { log });
     const server = createServer(middleware).listen();

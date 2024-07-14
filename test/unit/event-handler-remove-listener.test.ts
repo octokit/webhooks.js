@@ -1,5 +1,19 @@
+import { test, expect } from "vitest";
 import { removeListener } from "../../src/event-handler/remove-listener.ts";
 import type { State } from "../../src/types.ts";
+
+test("remove-listener: no listener", () => {
+  const push = () => {};
+  const state: State = {
+    hooks: {
+      push: [],
+    },
+    log: console,
+  };
+
+  expect(() => removeListener(state, "push", push)).not.toThrow();
+  expect(state).toStrictEqual({ hooks: { push: [] }, log: console });
+});
 
 test("remove-listener: single listener", () => {
   const push = () => {};
