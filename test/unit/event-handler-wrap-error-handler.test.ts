@@ -1,12 +1,12 @@
+import { test, expect, vi } from "vitest";
 import { wrapErrorHandler } from "../../src/event-handler/wrap-error-handler.ts";
-import { jest } from "@jest/globals";
 
 const noop = () => {};
 
 test("error thrown in error handler", () => {
   expect.assertions(2);
 
-  const consoleLogSpy = jest.spyOn(console, "log").mockImplementation(noop);
+  const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(noop);
   expect(() => {
     wrapErrorHandler(() => {
       throw new Error("oopsydoopsy");
@@ -19,7 +19,7 @@ test("error thrown in error handler", () => {
 test("error handler returns rejected Error", () => {
   expect.assertions(2);
 
-  const consoleLogSpy = jest.spyOn(console, "log").mockImplementation(noop);
+  const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(noop);
   const promise = Promise.reject(new Error("oopsydoopsy"));
   expect(() =>
     wrapErrorHandler(() => promise, new Error("oops")),
