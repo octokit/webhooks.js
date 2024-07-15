@@ -4,7 +4,6 @@ import type { EventPayloadMap } from "./generated/webhook-identifiers.js";
 import type { Logger } from "./createLogger.js";
 import type { EventHandler } from "./event-handler/index.js";
 import type { emitterEventNames } from "./generated/webhook-names.js";
-import type AggregateError from "aggregate-error";
 
 export type WebhookEventName = keyof EventPayloadMap;
 export type ExtractEvents<TEventName> =
@@ -70,9 +69,13 @@ export interface State extends Options<any> {
  */
 export type WebhookError = Error & Partial<RequestError>;
 
+export interface AggregateWebhookError extends AggregateError {
+  errors: WebhookError[];
+}
+
 // todo: rename to "EmitterErrorEvent"
 export interface WebhookEventHandlerError<TTransformed = unknown>
-  extends AggregateError<WebhookError> {
+  extends AggregateWebhookError {
   event: TTransformed extends unknown
     ? EmitterWebhookEvent
     : EmitterWebhookEvent & TTransformed;

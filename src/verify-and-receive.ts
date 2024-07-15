@@ -1,4 +1,3 @@
-import AggregateError from "aggregate-error";
 import { verify } from "@octokit/webhooks-methods";
 
 import type {
@@ -36,7 +35,7 @@ export async function verifyAndReceive(
   } catch (error: any) {
     error.message = "Invalid JSON";
     error.status = 400;
-    throw new AggregateError([error]);
+    throw new AggregateError([error], error.message);
   }
 
   return state.eventHandler.receive({

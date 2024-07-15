@@ -1,4 +1,3 @@
-import AggregateError from "aggregate-error";
 import type {
   EmitterWebhookEvent,
   State,
@@ -35,7 +34,7 @@ export function receiverHandle(
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {
-    const error = Object.assign(new AggregateError([event]), {
+    const error = Object.assign(new AggregateError([event], event.message), {
       event,
     });
 
@@ -44,11 +43,13 @@ export function receiverHandle(
   }
 
   if (!event || !event.name) {
-    throw new AggregateError(["Event name not passed"]);
+    const error = new Error("Event name not passed");
+    throw new AggregateError([error], error.message);
   }
 
   if (!event.payload) {
-    throw new AggregateError(["Event payload not passed"]);
+    const error = new Error("Event name not passed");
+    throw new AggregateError([error], error.message);
   }
 
   // flatten arrays of event listeners and remove undefined values
@@ -83,7 +84,10 @@ export function receiverHandle(
       return;
     }
 
-    const error = new AggregateError(errors) as WebhookEventHandlerError;
+    const error = new AggregateError(
+      errors,
+      errors.map((error) => error.message).join("\n"),
+    ) as WebhookEventHandlerError;
     Object.assign(error, {
       event,
     });
