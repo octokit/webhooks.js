@@ -1,12 +1,12 @@
 {
   "name": "@octokit/webhooks",
   "version": "0.0.0-development",
-  "type": "module",
   "description": "GitHub webhook events toolset for Node.js",
   "keywords": [],
   "repository": "github:octokit/webhooks.js",
   "license": "MIT",
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs && tsc -p tsconfig.json",
     "generate-types": "node --loader=ts-node/esm scripts/generate-types.ts",
@@ -16,7 +16,11 @@
     "test": "vitest run --coverage",
     "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 --esModuleInterop --moduleResolution node16 --module node16 --allowImportingTsExtensions test/typescript-validate.ts"
   },
-  "prettier": {},
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-packagejson"
+    ]
+  },
   "release": {
     "branches": [
       "+([0-9]).x",
@@ -50,7 +54,6 @@
     "@octokit/tsconfig": "^3.0.0",
     "@types/node": "^20.0.0",
     "@vitest/coverage-v8": "^2.0.2",
-    "axios": "^1.0.0",
     "esbuild": "^0.23.0",
     "express": "^4.17.1",
     "glob": "^11.0.0",
