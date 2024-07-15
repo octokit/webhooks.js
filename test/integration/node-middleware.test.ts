@@ -1,6 +1,7 @@
 import { describe, beforeAll, afterEach, expect, test, vi } from "vitest";
 import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
+import type { AddressInfo } from "node:net";
 
 import { sign } from "@octokit/webhooks-methods";
 
@@ -38,8 +39,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -83,8 +83,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
     });
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -113,8 +112,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
       {
@@ -144,8 +142,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
       {
@@ -174,8 +171,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const payload = '{"name":"invalid"';
 
@@ -207,8 +203,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -247,8 +242,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       }
     }).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(`http://localhost:${port}/foo`, {
       method: "PUT",
@@ -274,8 +268,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -311,8 +304,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -345,8 +337,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -384,8 +375,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -420,8 +410,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -582,8 +571,7 @@ describe("createNodeMiddleware(webhooks)", () => {
     };
     const server = createServer(mockedMiddleware).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -628,8 +616,7 @@ describe("createNodeMiddleware(webhooks)", () => {
     const middleware = createNodeMiddleware(webhooks, { log });
     const server = createServer(middleware).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -678,8 +665,7 @@ test("request.body is already an Object and has request.rawBody as Buffer (e.g. 
     expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
   });
 
-  // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-  const { port } = server.address();
+  const { port } = server.address() as AddressInfo;
 
   const response = await fetch(`http://localhost:${port}/api/github/webhooks`, {
     method: "POST",
