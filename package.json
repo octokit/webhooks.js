@@ -13,8 +13,8 @@
     "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json",
     "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json",
     "pretest": "npm run -s lint",
-    "test": "vitest run --coverage",
-    "validate:ts": "tsc --noEmit --noImplicitAny --target es2020 --esModuleInterop --moduleResolution node16 --module node16 --allowImportingTsExtensions test/typescript-validate.ts"
+    "test": "vitest",
+    "validate:ts": "tsc --noEmit --noImplicitAny --target es2023 --esModuleInterop --moduleResolution node16 --module node16 --allowImportingTsExtensions test/typescript-validate.ts"
   },
   "prettier": {
     "plugins": [
@@ -46,8 +46,7 @@
   "dependencies": {
     "@octokit/openapi-webhooks-types": "8.3.0",
     "@octokit/request-error": "^6.0.1",
-    "@octokit/webhooks-methods": "^5.0.0",
-    "aggregate-error": "^5.0.0"
+    "@octokit/webhooks-methods": "^5.0.0"
   },
   "devDependencies": {
     "@octokit/openapi-webhooks": "8.3.0",
