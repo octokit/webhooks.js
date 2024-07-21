@@ -98,10 +98,15 @@ export function createNodeHandler(
       const errorMessage = err.message
         ? `${err.name}: ${err.message}`
         : "Error: An Unspecified error occurred";
-      response.statusCode =
+      
+      const statusCode =
         typeof err.status !== "undefined" ? err.status : 500;
 
       logger.error(error);
+
+      response.writeHead(statusCode, {
+        "content-type": "application/json"
+      });
 
       response.end(
         JSON.stringify({
