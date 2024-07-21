@@ -287,7 +287,7 @@ describe("createNodeMiddleware(webhooks)", () => {
     expect(response.status).toEqual(400);
 
     await expect(response.text()).resolves.toMatch(
-      /Required headers missing: x-github-event/,
+      /Required header missing: x-github-event/,
     );
 
     server.close();

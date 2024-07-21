@@ -9,7 +9,7 @@ import type { WebhookEventName } from "../../generated/webhook-identifiers.js";
 import type { Webhooks } from "../../index.js";
 import type { WebhookEventHandlerError } from "../../types.js";
 import type { MiddlewareOptions } from "./types.js";
-import { getMissingHeaders } from "./get-missing-headers.js";
+import { validateHeaders } from "./validate-headers.js";
 import { getPayload } from "./get-payload.js";
 
 type Handler = (
@@ -44,18 +44,7 @@ export function createNodeHandler(
       return true;
     }
 
-    const missingHeaders = getMissingHeaders(request).join(", ");
-
-    if (missingHeaders) {
-      response.writeHead(400, {
-        "content-type": "application/json",
-      });
-      response.end(
-        JSON.stringify({
-          error: `Required headers missing: ${missingHeaders}`,
-        }),
-      );
-
+    if (validateHeaders(request, response)) {
       return true;
     }
 
@@ -98,14 +87,13 @@ export function createNodeHandler(
       const errorMessage = err.message
         ? `${err.name}: ${err.message}`
         : "Error: An Unspecified error occurred";
-      
-      const statusCode =
-        typeof err.status !== "undefined" ? err.status : 500;
+
+      const statusCode = typeof err.status !== "undefined" ? err.status : 500;
 
       logger.error(error);
 
       response.writeHead(statusCode, {
-        "content-type": "application/json"
+        "content-type": "application/json",
       });
 
       response.end(
