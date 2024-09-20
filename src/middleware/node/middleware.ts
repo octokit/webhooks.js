@@ -2,8 +2,6 @@
 // see https://github.com/octokit/octokit.js/issues/2075#issuecomment-817361886
 import type { IncomingMessage, ServerResponse } from "node:http";
 
-import type { WebhookEventName } from "../../generated/webhook-identifiers.js";
-
 import type { Webhooks } from "../../index.js";
 import type { WebhookEventHandlerError } from "../../types.js";
 import type { MiddlewareOptions } from "./types.js";
@@ -75,7 +73,7 @@ export async function middleware(
     return true;
   }
 
-  const eventName = request.headers["x-github-event"] as WebhookEventName;
+  const eventName = request.headers["x-github-event"] as string;
   const signatureSHA256 = request.headers["x-hub-signature-256"] as string;
   const id = request.headers["x-github-delivery"] as string;
 
@@ -95,7 +93,7 @@ export async function middleware(
 
     await webhooks.verifyAndReceive({
       id: id,
-      name: eventName as any,
+      name: eventName,
       payload,
       signature: signatureSHA256,
     });
