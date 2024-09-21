@@ -1,10 +1,11 @@
+import { describe, expect, it, vi } from "vitest";
 import { createLogger } from "../../src/createLogger.ts";
 
 const noop = () => {};
 
 describe("createLogger", () => {
-  jest.spyOn(console, "warn").mockImplementation(noop);
-  jest.spyOn(console, "error").mockImplementation(noop);
+  vi.spyOn(console, "warn").mockImplementation(noop);
+  vi.spyOn(console, "error").mockImplementation(noop);
 
   describe("when nothing is passed", () => {
     it("provides default implementations for all log levels", () => {
@@ -19,8 +20,8 @@ describe("createLogger", () => {
 
   describe("when some log levels are provided", () => {
     const partialLogger = {
-      debug: jest.fn(),
-      error: jest.fn(),
+      debug: vi.fn(),
+      error: vi.fn(),
     };
 
     it("uses the provided implementations for the given log levels", () => {

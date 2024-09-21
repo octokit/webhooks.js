@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import EventEmitter from "node:events";
 import { getPayload } from "../../src/middleware/node/get-payload.ts";
 
@@ -73,5 +74,20 @@ describe("getPayload", () => {
     request.emit("end");
 
     expect(await promise).toEqual("foo");
+  });
+
+  it("resolves with a string if the body key of the request is defined but value is undefined", async () => {
+    const request = new EventEmitter();
+    // @ts-ignore body is not part of EventEmitter, which we are using
+    // to mock the request object
+    request.body = undefined;
+
+    const promise = getPayload(request);
+
+    // we emit data, to ensure that the body attribute is preferred
+    request.emit("data", "bar");
+    request.emit("end");
+
+    expect(await promise).toEqual("bar");
   });
 });

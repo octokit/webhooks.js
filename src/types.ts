@@ -1,10 +1,18 @@
 import type { RequestError } from "@octokit/request-error";
-import type {
-  WebhookEventMap,
-  WebhookEventName,
-} from "@octokit/webhooks-types";
+import type { webhooks as OpenAPIWebhooks } from "@octokit/openapi-webhooks-types";
+import type { EventPayloadMap } from "./generated/webhook-identifiers.js";
 import type { Logger } from "./createLogger.js";
+import type { EventHandler } from "./event-handler/index.js";
 import type { emitterEventNames } from "./generated/webhook-names.js";
+
+export type WebhookEventName = keyof EventPayloadMap;
+export type ExtractEvents<TEventName> =
+  TEventName extends `${infer _TWebhookEvent}.${infer _TAction}`
+    ? never
+    : TEventName;
+export type WebhookEvents = ExtractEvents<EmitterWebhookEventName>;
+export type WebhookEventDefinition<TEventName extends keyof OpenAPIWebhooks> =
+  OpenAPIWebhooks[TEventName]["post"]["requestBody"]["content"]["application/json"];
 
 export type EmitterWebhookEventName = (typeof emitterEventNames)[number];
 export type EmitterWebhookEvent<
@@ -17,7 +25,7 @@ export type EmitterWebhookEvent<
 
 export type EmitterWebhookEventWithStringPayloadAndSignature = {
   id: string;
-  name: EmitterWebhookEventName;
+  name: WebhookEventName;
   payload: string;
   signature: string;
 };
@@ -25,7 +33,7 @@ export type EmitterWebhookEventWithStringPayloadAndSignature = {
 interface BaseWebhookEvent<TName extends WebhookEventName> {
   id: string;
   name: TName;
-  payload: WebhookEventMap[TName];
+  payload: EventPayloadMap[TName];
 }
 
 export interface Options<TTransformed = unknown> {
@@ -51,7 +59,7 @@ type Hooks = {
 };
 
 export interface State extends Options<any> {
-  eventHandler?: any;
+  eventHandler?: EventHandler<unknown>;
   hooks: Hooks;
   log: Logger;
 }
@@ -61,27 +69,14 @@ export interface State extends Options<any> {
  */
 export type WebhookError = Error & Partial<RequestError>;
 
+export interface AggregateWebhookError extends AggregateError {
+  errors: WebhookError[];
+}
+
 // todo: rename to "EmitterErrorEvent"
 export interface WebhookEventHandlerError<TTransformed = unknown>
-  extends AggregateError<WebhookError> {
+  extends AggregateWebhookError {
   event: TTransformed extends unknown
     ? EmitterWebhookEvent
     : EmitterWebhookEvent & TTransformed;
-}
-
-/**
- * Workaround for TypeScript incompatibility with types exported by aggregate-error.
- * Credit: https://git.io/JUEEr
- * @copyright Sindre Sorhus
- * @license MIT (https://git.io/JUEEK)
- * @see https://github.com/octokit/webhooks.js/pull/270/files
- */
-declare class AggregateError<T extends Error = Error>
-  extends Error
-  implements Iterable<T>
-{
-  readonly name: "AggregateError";
-  constructor(errors: ReadonlyArray<T | { [key: string]: any } | string>);
-
-  [Symbol.iterator](): IterableIterator<T>;
 }

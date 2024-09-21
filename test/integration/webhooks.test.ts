@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-
+import { describe, test, expect } from "vitest";
 import { sign } from "@octokit/webhooks-methods";
 
 import { Webhooks } from "../../src/index.ts";
@@ -30,7 +30,7 @@ describe("Webhooks", () => {
 
     await webhooks.verify(
       pushEventPayloadString,
-      await sign({ secret, algorithm: "sha256" }, pushEventPayloadString),
+      await sign(secret, pushEventPayloadString),
     );
   });
 
@@ -42,10 +42,7 @@ describe("Webhooks", () => {
       id: "1",
       name: "push",
       payload: pushEventPayloadString,
-      signature: await sign(
-        { secret, algorithm: "sha256" },
-        pushEventPayloadString,
-      ),
+      signature: await sign(secret, pushEventPayloadString),
     });
   });
 

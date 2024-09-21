@@ -1,10 +1,13 @@
+import { describe, beforeAll, afterEach, expect, test, vi } from "vitest";
 import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
+import type { AddressInfo } from "node:net";
 
 import { sign } from "@octokit/webhooks-methods";
 
 // import without types
-const express = require("express");
+// @ts-expect-error
+const express = (await import("express")).default;
 
 import { createNodeMiddleware, Webhooks } from "../../src/index.ts";
 
@@ -16,14 +19,11 @@ let signatureSha256: string;
 
 describe("createNodeMiddleware(webhooks)", () => {
   beforeAll(async () => {
-    signatureSha256 = await sign(
-      { secret: "mySecret", algorithm: "sha256" },
-      pushEventPayload,
-    );
+    signatureSha256 = await sign("mySecret", pushEventPayload);
   });
 
   afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   test("README example", async () => {
@@ -39,8 +39,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -84,8 +83,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
     });
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -114,8 +112,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
       {
@@ -145,8 +142,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
       {
@@ -175,8 +171,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const payload = '{"name":"invalid"';
 
@@ -208,8 +203,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -248,8 +242,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       }
     }).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(`http://localhost:${port}/foo`, {
       method: "PUT",
@@ -275,8 +268,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -312,8 +304,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -346,8 +337,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -372,21 +362,20 @@ describe("createNodeMiddleware(webhooks)", () => {
   });
 
   test("Handles timeout", async () => {
-    jest.useFakeTimers({ doNotFake: ["setImmediate"] });
+    vi.useFakeTimers({ toFake: ["setTimeout"] });
 
     const webhooks = new Webhooks({
       secret: "mySecret",
     });
 
     webhooks.on("push", async () => {
-      jest.advanceTimersByTime(10000);
+      vi.advanceTimersByTime(10000);
       server.close();
     });
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -407,22 +396,21 @@ describe("createNodeMiddleware(webhooks)", () => {
   });
 
   test("Handles timeout with error", async () => {
-    jest.useFakeTimers({ doNotFake: ["setImmediate"] });
+    vi.useFakeTimers({ toFake: ["setTimeout"] });
 
     const webhooks = new Webhooks({
       secret: "mySecret",
     });
 
     webhooks.on("push", async () => {
-      jest.advanceTimersByTime(10000);
+      vi.advanceTimersByTime(10000);
       server.close();
       throw new Error("oops");
     });
 
     const server = createServer(createNodeMiddleware(webhooks)).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -583,8 +571,7 @@ describe("createNodeMiddleware(webhooks)", () => {
     };
     const server = createServer(mockedMiddleware).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -621,16 +608,15 @@ describe("createNodeMiddleware(webhooks)", () => {
     });
 
     const log = {
-      debug: jest.fn(),
-      info: jest.fn(),
-      warn: jest.fn(),
-      error: jest.fn(),
+      debug: vi.fn(),
+      info: vi.fn(),
+      warn: vi.fn(),
+      error: vi.fn(),
     };
     const middleware = createNodeMiddleware(webhooks, { log });
     const server = createServer(middleware).listen();
 
-    // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(
       `http://localhost:${port}/api/github/webhooks`,
@@ -679,8 +665,7 @@ test("request.body is already an Object and has request.rawBody as Buffer (e.g. 
     expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
   });
 
-  // @ts-expect-error complains about { port } although it's included in returned AddressInfo interface
-  const { port } = server.address();
+  const { port } = server.address() as AddressInfo;
 
   const response = await fetch(`http://localhost:${port}/api/github/webhooks`, {
     method: "POST",

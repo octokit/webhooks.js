@@ -1,10 +1,8 @@
-// @ts-ignore to address #245
-import AggregateError from "aggregate-error";
 import type {
   EmitterWebhookEvent,
-  EmitterWebhookEventName,
   State,
   WebhookError,
+  WebhookEventName,
   WebhookEventHandlerError,
 } from "../types.js";
 import { wrapErrorHandler } from "./wrap-error-handler.js";
@@ -17,7 +15,7 @@ type EventAction = Extract<
 function getHooks(
   state: State,
   eventPayloadAction: EventAction | null,
-  eventName: EmitterWebhookEventName,
+  eventName: WebhookEventName,
 ): Function[] {
   const hooks = [state.hooks[eventName], state.hooks["*"]];
 
@@ -29,13 +27,15 @@ function getHooks(
 }
 
 // main handler function
-export function receiverHandle(state: State, event: EmitterWebhookEvent) {
+export function receiverHandle(
+  state: State,
+  event: EmitterWebhookEvent | WebhookError,
+) {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {
-    const error = Object.assign(new AggregateError([event]), {
+    const error = Object.assign(new AggregateError([event], event.message), {
       event,
-      errors: [event],
     });
 
     errorHandlers.forEach((handler) => wrapErrorHandler(handler, error));
@@ -43,11 +43,13 @@ export function receiverHandle(state: State, event: EmitterWebhookEvent) {
   }
 
   if (!event || !event.name) {
-    throw new AggregateError(["Event name not passed"]);
+    const error = new Error("Event name not passed");
+    throw new AggregateError([error], error.message);
   }
 
   if (!event.payload) {
-    throw new AggregateError(["Event payload not passed"]);
+    const error = new Error("Event name not passed");
+    throw new AggregateError([error], error.message);
   }
 
   // flatten arrays of event listeners and remove undefined values
@@ -82,10 +84,12 @@ export function receiverHandle(state: State, event: EmitterWebhookEvent) {
       return;
     }
 
-    const error = new AggregateError(errors) as WebhookEventHandlerError;
+    const error = new AggregateError(
+      errors,
+      errors.map((error) => error.message).join("\n"),
+    ) as WebhookEventHandlerError;
     Object.assign(error, {
       event,
-      errors,
     });
 
     errorHandlers.forEach((handler) => wrapErrorHandler(handler, error));

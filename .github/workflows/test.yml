@@ -12,10 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node:
+        node_version:
           - 18
           - 20
-    name: Node ${{ matrix.node }}
+          - 22
+    name: Node ${{ matrix.node_version }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -34,7 +35,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           cache: npm
-          node-version: 16
+          node-version: 20
       - run: npm ci
       - run: npm run validate:ts
     if: ${{ always() }}

@@ -3,8 +3,7 @@
   "include": ["src/**/*"],
   "ts-node": {
     "compilerOptions": {
-      "module": "CommonJS",
-      "esModuleInterop": true
+      "verbatimModuleSyntax": false
     }
   },
   "compilerOptions": {
