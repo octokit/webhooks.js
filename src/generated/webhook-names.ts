@@ -3,8 +3,8 @@
 
 export const emitterEventNames = [
   "branch_protection_configuration",
-  "branch_protection_rule.disabled",
-  "branch_protection_rule.enabled",
+  "branch_protection_configuration.disabled",
+  "branch_protection_configuration.enabled",
   "branch_protection_rule",
   "branch_protection_rule.created",
   "branch_protection_rule.deleted",
@@ -126,6 +126,7 @@ export const emitterEventNames = [
   "membership.removed",
   "merge_group",
   "merge_group.checks_requested",
+  "merge_group.destroyed",
   "meta",
   "meta.deleted",
   "milestone",
