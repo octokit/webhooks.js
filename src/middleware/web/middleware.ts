@@ -85,8 +85,8 @@ export async function middleware(
       resolve(
         new Response("still processing\n", {
           status: 202,
-          headers: { "Content-Type": "text/plain" }
-        })
+          headers: { "Content-Type": "text/plain" },
+        }),
       );
     }, 9000).unref();
   });
@@ -118,16 +118,19 @@ export async function middleware(
 
       options.log.error(error);
 
-      return new Response(JSON.stringify({
+      return new Response(
+        JSON.stringify({
           error: errorMessage,
-        }), {
+        }),
+        {
           status: typeof err.status !== "undefined" ? err.status : 500,
           headers: {
             "content-type": "application/json",
           },
-        })
+        },
+      );
     }
-  }
-  
+  };
+
   return await Promise.race([timeoutPromise, processWebhook()]);
 }
