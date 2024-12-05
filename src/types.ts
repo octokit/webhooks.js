@@ -38,6 +38,7 @@ interface BaseWebhookEvent<TName extends WebhookEventName> {
 
 export interface Options<TTransformed = unknown> {
   secret?: string;
+  additionalSecrets?: undefined | string[];
   transform?: TransformMethod<TTransformed>;
   log?: Partial<Logger>;
 }

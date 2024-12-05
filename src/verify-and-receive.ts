@@ -1,4 +1,4 @@
-import { verify } from "@octokit/webhooks-methods";
+import { verifyWithFallback } from "@octokit/webhooks-methods";
 
 import type {
   EmitterWebhookEvent,
@@ -13,10 +13,11 @@ export async function verifyAndReceive(
   event: EmitterWebhookEventWithStringPayloadAndSignature,
 ): Promise<void> {
   // verify will validate that the secret is not undefined
-  const matchesSignature = await verify(
+  const matchesSignature = await verifyWithFallback(
     state.secret,
     event.payload,
     event.signature,
+    state.additionalSecrets,
   ).catch(() => false);
 
   if (!matchesSignature) {
