@@ -18,6 +18,7 @@ import type {
 } from "./types.js";
 
 export { createNodeMiddleware } from "./middleware/node/index.js";
+export { createWebMiddleware } from "./middleware/web/index.js";
 export { emitterEventNames } from "./generated/webhook-names.js";
 
 // U holds the return value of `transform` function in Options

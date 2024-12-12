@@ -3,7 +3,7 @@ import type { Webhooks } from "../../index.js";
 import { middleware } from "./middleware.js";
 import type { MiddlewareOptions } from "../types.js";
 
-export function createNodeMiddleware(
+export function createWebMiddleware(
   webhooks: Webhooks,
   {
     path = "/api/github/webhooks",
