@@ -639,6 +639,47 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     server.close();
   });
+
+  test("Additional secrets", async () => {
+    const signatureSha256AdditionalSecret = await sign(
+      "additionalSecret2",
+      pushEventPayload,
+    );
+
+    expect.assertions(3);
+
+    const webhooks = new Webhooks({
+      secret: "mySecret",
+      additionalSecrets: ["additionalSecret1", "additionalSecret2"],
+    });
+
+    webhooks.on("push", (event) => {
+      expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
+    });
+
+    const server = createServer(createNodeMiddleware(webhooks)).listen();
+
+    const { port } = server.address() as AddressInfo;
+
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": signatureSha256AdditionalSecret,
+        },
+        body: pushEventPayload,
+      },
+    );
+
+    expect(response.status).toEqual(200);
+    await expect(response.text()).resolves.toBe("ok\n");
+
+    server.close();
+  });
 });
 
 test("request.body is already an Object and has request.rawBody as Buffer (e.g. GCF)", async () => {
