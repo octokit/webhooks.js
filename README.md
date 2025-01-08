@@ -551,7 +551,7 @@ The middleware returned from `createNodeMiddleware` can also serve as an
         </em>
       </td>
       <td>
-        Custom path to match requests against. Defaults to <code>/api/github/webhooks</code>. Set this to EXACTLY "/" if you want to use the middleware as a custom handler in your own routers
+        Custom path to match requests against. Defaults to <code>/api/github/webhooks</code>. Set this to EXACTLY `"/"` if you want to use the middleware as a custom handler in your own routers
       </td>
     </tr>
     <tr>
