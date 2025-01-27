@@ -1,15 +1,11 @@
-import { describe, beforeAll, afterEach, expect, test, vi } from "vitest";
 import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
+import { describe, beforeAll, afterEach, test, expect, vi } from "vitest";
 import type { AddressInfo } from "node:net";
 
 import { sign } from "@octokit/webhooks-methods";
 
-// import without types
-// @ts-expect-error
-const express = (await import("express")).default;
-
-import { createNodeMiddleware, Webhooks } from "../../src/index.ts";
+import { createNodeHandler, Webhooks } from "../../src/index.ts";
 
 const pushEventPayload = readFileSync(
   "test/fixtures/push-payload.json",
@@ -17,7 +13,7 @@ const pushEventPayload = readFileSync(
 );
 let signatureSha256: string;
 
-describe("createNodeMiddleware(webhooks)", () => {
+describe("createNodeHandler(webhooks)", () => {
   beforeAll(async () => {
     signatureSha256 = await sign("mySecret", pushEventPayload);
   });
@@ -37,7 +33,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeHandler(webhooks)).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -68,7 +64,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
     const dataChunks: any[] = [];
-    const middleware = createNodeMiddleware(webhooks);
+    const middleware = createNodeHandler(webhooks);
 
     const server = createServer((req, res) => {
       req.once("data", (chunk) => dataChunks.push(chunk));
@@ -110,7 +106,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeHandler(webhooks)).listen();
 
     const { port } = server.address() as AddressInfo;
     const response = await fetch(
@@ -140,7 +136,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeHandler(webhooks)).listen();
 
     const { port } = server.address() as AddressInfo;
     const response = await fetch(
@@ -169,7 +165,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeHandler(webhooks)).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -201,7 +197,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeHandler(webhooks)).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -219,44 +215,11 @@ describe("createNodeMiddleware(webhooks)", () => {
       },
     );
 
-    expect(response.status).toEqual(404);
+    expect(response.status).toEqual(400);
 
     await expect(response.text()).resolves.toMatch(
-      /Unknown route: PUT \/api\/github\/webhooks/,
+      /{"error":"Error: \[@octokit\/webhooks\] signature does not match event payload and secret"}/,
     );
-
-    server.close();
-  });
-
-  test("handle unhandled requests", async () => {
-    const webhooks = new Webhooks({
-      secret: "mySecret",
-    });
-
-    const middleware = createNodeMiddleware(webhooks, {});
-    const server = createServer(async (req, res) => {
-      if (!(await middleware(req, res))) {
-        res.writeHead(404, { "Content-Type": "text/plain" });
-        res.write("nope.");
-        res.end();
-      }
-    }).listen();
-
-    const { port } = server.address() as AddressInfo;
-
-    const response = await fetch(`http://localhost:${port}/foo`, {
-      method: "PUT",
-      headers: {
-        "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-        "X-GitHub-Event": "push",
-        "X-Hub-Signature-256": signatureSha256,
-      },
-      body: "invalid",
-    });
-
-    expect(response.status).toEqual(404);
-
-    await expect(response.text()).resolves.toEqual("nope.");
 
     server.close();
   });
@@ -266,7 +229,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeHandler(webhooks)).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -302,7 +265,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       throw new Error("boom");
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeHandler(webhooks)).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -335,7 +298,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       throw new Error();
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeHandler(webhooks)).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -373,7 +336,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       server.close();
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeHandler(webhooks)).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -408,7 +371,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       throw new Error("oops");
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeHandler(webhooks)).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -430,170 +393,6 @@ describe("createNodeMiddleware(webhooks)", () => {
     expect(response.status).toEqual(202);
   });
 
-  test("express middleware no mount path 404", async () => {
-    const app = express();
-    const webhooks = new Webhooks({
-      secret: "mySecret",
-    });
-
-    app.use(createNodeMiddleware(webhooks));
-    app.all("*", (_request: any, response: any) =>
-      response.status(404).send("Dafuq"),
-    );
-
-    const server = app.listen();
-
-    const { port } = server.address();
-
-    const response = await fetch(`http://localhost:${port}/test`, {
-      method: "POST",
-      body: pushEventPayload,
-    });
-
-    await expect(response.text()).resolves.toBe("Dafuq");
-    expect(response.status).toEqual(404);
-
-    server.close();
-  });
-
-  test("express middleware no mount path no next", async () => {
-    const app = express();
-    const webhooks = new Webhooks({
-      secret: "mySecret",
-    });
-
-    app.all("/foo", (_request: any, response: any) => response.end("ok\n"));
-    app.use(createNodeMiddleware(webhooks));
-
-    const server = app.listen();
-
-    const { port } = server.address();
-
-    const response = await fetch(`http://localhost:${port}/test`, {
-      method: "POST",
-      body: pushEventPayload,
-    });
-
-    await expect(response.text()).resolves.toContain("Cannot POST /test");
-    expect(response.status).toEqual(404);
-
-    const responseForFoo = await fetch(`http://localhost:${port}/foo`, {
-      method: "POST",
-      body: pushEventPayload,
-    });
-
-    await expect(responseForFoo.text()).resolves.toContain("ok\n");
-    expect(responseForFoo.status).toEqual(200);
-
-    server.close();
-  });
-
-  test("express middleware no mount path with options.path", async () => {
-    const app = express();
-    const webhooks = new Webhooks({
-      secret: "mySecret",
-    });
-
-    app.use(createNodeMiddleware(webhooks, { path: "/test" }));
-    app.all("*", (_request: any, response: any) =>
-      response.status(404).send("Dafuq"),
-    );
-
-    const server = app.listen();
-
-    const { port } = server.address();
-
-    const response = await fetch(`http://localhost:${port}/test`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-        "X-GitHub-Event": "push",
-        "X-Hub-Signature-256": signatureSha256,
-      },
-      body: pushEventPayload,
-    });
-
-    await expect(response.text()).resolves.toBe("ok\n");
-    expect(response.status).toEqual(200);
-
-    server.close();
-  });
-
-  test("express middleware with mount path with options.path", async () => {
-    const app = express();
-    const webhooks = new Webhooks({
-      secret: "mySecret",
-    });
-
-    app.post("/test", createNodeMiddleware(webhooks, { path: "/test" }));
-    app.all("*", (_request: any, response: any) =>
-      response.status(404).send("Dafuq"),
-    );
-
-    const server = app.listen();
-
-    const { port } = server.address();
-
-    const response = await fetch(`http://localhost:${port}/test`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-        "X-GitHub-Event": "push",
-        "X-Hub-Signature-256": signatureSha256,
-      },
-      body: pushEventPayload,
-    });
-
-    await expect(response.text()).resolves.toBe("ok\n");
-    expect(response.status).toEqual(200);
-
-    server.close();
-  });
-
-  test("Handles invalid URL", async () => {
-    const webhooks = new Webhooks({
-      secret: "mySecret",
-    });
-
-    let middlewareWasRan: () => void;
-    const untilMiddlewareIsRan = new Promise<void>(function (resolve) {
-      middlewareWasRan = resolve;
-    });
-    const actualMiddleware = createNodeMiddleware(webhooks);
-    const mockedMiddleware = async function (
-      ...[req, ...rest]: Parameters<typeof actualMiddleware>
-    ) {
-      req.url = "//";
-      await actualMiddleware(req, ...rest);
-      middlewareWasRan();
-    };
-    const server = createServer(mockedMiddleware).listen();
-
-    const { port } = server.address() as AddressInfo;
-
-    const response = await fetch(
-      `http://localhost:${port}/api/github/webhooks`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-          "X-GitHub-Event": "push",
-          "X-Hub-Signature-256": signatureSha256,
-        },
-        body: pushEventPayload,
-      },
-    );
-
-    await untilMiddlewareIsRan;
-    expect(response.status).toEqual(422);
-    expect(await response.text()).toMatch(/Request URL could not be parsed/);
-
-    server.close();
-  });
-
   test("Handles invalid signature", async () => {
     expect.assertions(3);
 
@@ -613,7 +412,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       warn: vi.fn(),
       error: vi.fn(),
     };
-    const middleware = createNodeMiddleware(webhooks, { log });
+    const middleware = createNodeHandler(webhooks, { log });
     const server = createServer(middleware).listen();
 
     const { port } = server.address() as AddressInfo;
@@ -639,47 +438,4 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     server.close();
   });
-});
-
-test("request.body is already an Object and has request.rawBody as Buffer (e.g. GCF)", async () => {
-  expect.assertions(3);
-
-  const webhooks = new Webhooks({
-    secret: "mySecret",
-  });
-  const dataChunks: any[] = [];
-  const middleware = createNodeMiddleware(webhooks);
-
-  const server = createServer((req, res) => {
-    req.once("data", (chunk) => dataChunks.push(chunk));
-    req.once("end", () => {
-      // @ts-expect-error - TS2339: Property 'rawBody' does not exist on type 'IncomingMessage'.
-      req.rawBody = Buffer.concat(dataChunks);
-      // @ts-expect-error - TS2339: Property 'body' does not exist on type 'IncomingMessage'.
-      req.body = JSON.parse(req.rawBody);
-      middleware(req, res);
-    });
-  }).listen();
-
-  webhooks.on("push", (event) => {
-    expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
-  });
-
-  const { port } = server.address() as AddressInfo;
-
-  const response = await fetch(`http://localhost:${port}/api/github/webhooks`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-      "X-GitHub-Event": "push",
-      "X-Hub-Signature-256": signatureSha256,
-    },
-    body: pushEventPayload,
-  });
-
-  expect(response.status).toEqual(200);
-  expect(await response.text()).toEqual("ok\n");
-
-  server.close();
 });
