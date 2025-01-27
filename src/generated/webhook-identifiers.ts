@@ -184,6 +184,10 @@ export type EventPayloadMap = {
     | WebhookEventDefinition<"projects-v2-item-edited">
     | WebhookEventDefinition<"projects-v2-item-reordered">
     | WebhookEventDefinition<"projects-v2-item-restored">;
+  projects_v2_status_update:
+    | WebhookEventDefinition<"projects-v2-status-update-created">
+    | WebhookEventDefinition<"projects-v2-status-update-deleted">
+    | WebhookEventDefinition<"projects-v2-status-update-edited">;
   public: WebhookEventDefinition<"public">;
   pull_request:
     | WebhookEventDefinition<"pull-request-assigned">
@@ -258,7 +262,6 @@ export type EventPayloadMap = {
     | WebhookEventDefinition<"secret-scanning-alert-created">
     | WebhookEventDefinition<"secret-scanning-alert-reopened">
     | WebhookEventDefinition<"secret-scanning-alert-resolved">
-    | WebhookEventDefinition<"secret-scanning-alert-revoked">
     | WebhookEventDefinition<"secret-scanning-alert-validated">;
   secret_scanning_alert_location: WebhookEventDefinition<"secret-scanning-alert-location-created">;
   security_advisory:
@@ -277,6 +280,11 @@ export type EventPayloadMap = {
     | WebhookEventDefinition<"star-created">
     | WebhookEventDefinition<"star-deleted">;
   status: WebhookEventDefinition<"status">;
+  sub_issues:
+    | WebhookEventDefinition<"sub-issues-parent-issue-added">
+    | WebhookEventDefinition<"sub-issues-parent-issue-removed">
+    | WebhookEventDefinition<"sub-issues-sub-issue-added">
+    | WebhookEventDefinition<"sub-issues-sub-issue-removed">;
   team_add: WebhookEventDefinition<"team-add">;
   team:
     | WebhookEventDefinition<"team-added-to-repository">
