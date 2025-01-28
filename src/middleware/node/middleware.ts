@@ -5,7 +5,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import type { Webhooks } from "../../index.js";
 import type { WebhookEventHandlerError } from "../../types.js";
 import type { MiddlewareOptions } from "./types.js";
-import { getMissingHeaders } from "./get-missing-headers.js";
+import { validateHeaders } from "./validate-headers.js";
 import { getPayload } from "./get-payload.js";
 import { onUnhandledRequestDefault } from "./on-unhandled-request-default.js";
 
@@ -58,18 +58,7 @@ export async function middleware(
     return true;
   }
 
-  const missingHeaders = getMissingHeaders(request).join(", ");
-
-  if (missingHeaders) {
-    response.writeHead(400, {
-      "content-type": "application/json",
-    });
-    response.end(
-      JSON.stringify({
-        error: `Required headers missing: ${missingHeaders}`,
-      }),
-    );
-
+  if (validateHeaders(request, response)) {
     return true;
   }
 
