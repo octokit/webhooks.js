@@ -16,7 +16,7 @@ const webhookHeadersMissingMessage = {
   }),
 };
 
-function sendMissindHeaderResponse(
+function sendMissingHeaderResponse(
   response: OutgoingMessage,
   missingHeader: keyof typeof webhookHeadersMissingMessage,
 ) {
@@ -32,11 +32,11 @@ export function validateHeaders(
   response: OutgoingMessage,
 ) {
   if ("x-github-event" in request.headers === false) {
-    sendMissindHeaderResponse(response, "x-github-event");
+    sendMissingHeaderResponse(response, "x-github-event");
   } else if ("x-hub-signature-256" in request.headers === false) {
-    sendMissindHeaderResponse(response, "x-hub-signature-256");
+    sendMissingHeaderResponse(response, "x-hub-signature-256");
   } else if ("x-github-delivery" in request.headers === false) {
-    sendMissindHeaderResponse(response, "x-github-delivery");
+    sendMissingHeaderResponse(response, "x-github-delivery");
   } else {
     return false;
   }
