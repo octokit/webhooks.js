@@ -9,7 +9,7 @@ import { getMissingHeaders } from "./get-missing-headers.js";
 import { getPayload } from "./get-payload.js";
 import { onUnhandledRequestDefault } from "./on-unhandled-request-default.js";
 
-export function createNodeMiddleware(options: Required<MiddlewareOptions>) {
+export function createNodeMiddleware(options: MiddlewareOptions) {
   const {
     log = createLogger(),
     path = "/api/github/webhooks",
