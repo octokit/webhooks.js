@@ -5,7 +5,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import type { Webhooks } from "../../index.js";
 import type { WebhookEventHandlerError } from "../../types.js";
 import type { MiddlewareOptions } from "./types.js";
-import { validateHeaders } from "./validate-headers.js";
+import { getMissingHeaders } from "./get-missing-headers.js";
 import { getPayload } from "./get-payload.js";
 import { onUnhandledRequestDefault } from "./on-unhandled-request-default.js";
 
@@ -58,8 +58,13 @@ export async function middleware(
     return true;
   }
 
-  if (validateHeaders(request, response)) {
-    return true;
+  const missingHeaders = getMissingHeaders(request);
+
+  if (missingHeaders) {
+    response.writeHead(400, {
+      "content-type": "application/json",
+    });
+    response.end(missingHeaders);
   }
 
   const eventName = request.headers["x-github-event"] as string;

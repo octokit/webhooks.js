@@ -270,25 +270,159 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const { port } = server.address() as AddressInfo;
 
-    const response = await fetch(
-      `http://localhost:${port}/api/github/webhooks`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-          // "X-GitHub-Event": "push",
-          "X-Hub-Signature-256": signatureSha256,
+    {
+      const response = await fetch(
+        `http://localhost:${port}/api/github/webhooks`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            "X-GitHub-Event": "push",
+            // "X-Hub-Signature-256": signatureSha256,
+          },
+          body: "invalid",
         },
-        body: "invalid",
-      },
-    );
+      );
 
-    expect(response.status).toEqual(400);
+      expect(response.status).toEqual(400);
 
-    await expect(response.text()).resolves.toMatch(
-      /Required header missing: x-github-event/,
-    );
+      await expect(response.text()).resolves.toMatch(
+        /Required header missing: x-github-signature-256/,
+      );
+    }
+
+    {
+      const response = await fetch(
+        `http://localhost:${port}/api/github/webhooks`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            "X-GitHub-Event": "push",
+            "X-Hub-Signature-256": signatureSha256,
+          },
+          body: "invalid",
+        },
+      );
+
+      expect(response.status).toEqual(400);
+
+      await expect(response.text()).resolves.toMatch(
+        /Required header missing: x-github-delivery/,
+      );
+    }
+
+    {
+      const response = await fetch(
+        `http://localhost:${port}/api/github/webhooks`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            // "X-GitHub-Event": "push",
+            "X-Hub-Signature-256": signatureSha256,
+          },
+          body: "invalid",
+        },
+      );
+
+      expect(response.status).toEqual(400);
+
+      await expect(response.text()).resolves.toMatch(
+        /Required header missing: x-github-event/,
+      );
+    }
+
+    {
+      const response = await fetch(
+        `http://localhost:${port}/api/github/webhooks`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            // "X-GitHub-Event": "push",
+            "X-Hub-Signature-256": signatureSha256,
+          },
+          body: "invalid",
+        },
+      );
+
+      expect(response.status).toEqual(400);
+
+      await expect(response.text()).resolves.toMatch(
+        /Required headers missing: x-github-event, x-github-delivery/,
+      );
+    }
+
+    {
+      const response = await fetch(
+        `http://localhost:${port}/api/github/webhooks`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            // "X-GitHub-Event": "push",
+            // "X-Hub-Signature-256": signatureSha256,
+          },
+          body: "invalid",
+        },
+      );
+
+      expect(response.status).toEqual(400);
+
+      await expect(response.text()).resolves.toMatch(
+        /Required headers missing: x-github-event, x-github-signature-256/,
+      );
+    }
+
+    {
+      const response = await fetch(
+        `http://localhost:${port}/api/github/webhooks`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            "X-GitHub-Event": "push",
+            // "X-Hub-Signature-256": signatureSha256,
+          },
+          body: "invalid",
+        },
+      );
+
+      expect(response.status).toEqual(400);
+
+      await expect(response.text()).resolves.toMatch(
+        /Required headers missing: x-github-signature-256, x-github-delivery/,
+      );
+    }
+
+    {
+      const response = await fetch(
+        `http://localhost:${port}/api/github/webhooks`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+            // "X-GitHub-Event": "push",
+            // "X-Hub-Signature-256": signatureSha256,
+          },
+          body: "invalid",
+        },
+      );
+
+      expect(response.status).toEqual(400);
+
+      await expect(response.text()).resolves.toMatch(
+        /Required headers missing: x-github-event, x-github-signature-256, x-github-delivery/,
+      );
+    }
 
     server.close();
   });
