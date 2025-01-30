@@ -17,7 +17,7 @@ const pushEventPayload = readFileSync(
 );
 let signatureSha256: string;
 
-describe("createNodeMiddleware(webhooks)", () => {
+describe("createNodeMiddleware({webhooks})", () => {
   beforeAll(async () => {
     signatureSha256 = await sign("mySecret", pushEventPayload);
   });
@@ -37,7 +37,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeMiddleware({ webhooks })).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -68,7 +68,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
     const dataChunks: any[] = [];
-    const middleware = createNodeMiddleware(webhooks);
+    const middleware = createNodeMiddleware({ webhooks });
 
     const server = createServer((req, res) => {
       req.once("data", (chunk) => dataChunks.push(chunk));
@@ -110,7 +110,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeMiddleware({ webhooks })).listen();
 
     const { port } = server.address() as AddressInfo;
     const response = await fetch(
@@ -140,7 +140,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeMiddleware({ webhooks })).listen();
 
     const { port } = server.address() as AddressInfo;
     const response = await fetch(
@@ -169,7 +169,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeMiddleware({ webhooks })).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -201,7 +201,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeMiddleware({ webhooks })).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -233,7 +233,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    const middleware = createNodeMiddleware(webhooks, {});
+    const middleware = createNodeMiddleware({ webhooks });
     const server = createServer(async (req, res) => {
       if (!(await middleware(req, res))) {
         res.writeHead(404, { "Content-Type": "text/plain" });
@@ -266,7 +266,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeMiddleware({ webhooks })).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -302,7 +302,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       throw new Error("boom");
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeMiddleware({ webhooks })).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -335,7 +335,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       throw new Error();
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeMiddleware({ webhooks })).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -373,7 +373,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       server.close();
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeMiddleware({ webhooks })).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -408,7 +408,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       throw new Error("oops");
     });
 
-    const server = createServer(createNodeMiddleware(webhooks)).listen();
+    const server = createServer(createNodeMiddleware({ webhooks })).listen();
 
     const { port } = server.address() as AddressInfo;
 
@@ -436,7 +436,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    app.use(createNodeMiddleware(webhooks));
+    app.use(createNodeMiddleware({ webhooks }));
     app.all("*", (_request: any, response: any) =>
       response.status(404).send("Dafuq"),
     );
@@ -463,7 +463,7 @@ describe("createNodeMiddleware(webhooks)", () => {
     });
 
     app.all("/foo", (_request: any, response: any) => response.end("ok\n"));
-    app.use(createNodeMiddleware(webhooks));
+    app.use(createNodeMiddleware({ webhooks }));
 
     const server = app.listen();
 
@@ -494,7 +494,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    app.use(createNodeMiddleware(webhooks, { path: "/test" }));
+    app.use(createNodeMiddleware({ webhooks, path: "/test" }));
     app.all("*", (_request: any, response: any) =>
       response.status(404).send("Dafuq"),
     );
@@ -526,7 +526,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       secret: "mySecret",
     });
 
-    app.post("/test", createNodeMiddleware(webhooks, { path: "/test" }));
+    app.post("/test", createNodeMiddleware({ webhooks, path: "/test" }));
     app.all("*", (_request: any, response: any) =>
       response.status(404).send("Dafuq"),
     );
@@ -561,7 +561,7 @@ describe("createNodeMiddleware(webhooks)", () => {
     const untilMiddlewareIsRan = new Promise<void>(function (resolve) {
       middlewareWasRan = resolve;
     });
-    const actualMiddleware = createNodeMiddleware(webhooks);
+    const actualMiddleware = createNodeMiddleware({ webhooks });
     const mockedMiddleware = async function (
       ...[req, ...rest]: Parameters<typeof actualMiddleware>
     ) {
@@ -613,7 +613,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       warn: vi.fn(),
       error: vi.fn(),
     };
-    const middleware = createNodeMiddleware(webhooks, { log });
+    const middleware = createNodeMiddleware({ webhooks, log });
     const server = createServer(middleware).listen();
 
     const { port } = server.address() as AddressInfo;
@@ -648,7 +648,7 @@ test("request.body is already an Object and has request.rawBody as Buffer (e.g. 
     secret: "mySecret",
   });
   const dataChunks: any[] = [];
-  const middleware = createNodeMiddleware(webhooks);
+  const middleware = createNodeMiddleware({ webhooks });
 
   const server = createServer((req, res) => {
     req.once("data", (chunk) => dataChunks.push(chunk));
