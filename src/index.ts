@@ -54,10 +54,12 @@ class Webhooks<TTransformed = unknown> {
 
     const state: State & {
       secret: string;
+      additionalSecrets?: string[] | undefined;
       eventHandler: EventHandler<TTransformed>;
     } = {
       eventHandler: createEventHandler(options),
       secret: options.secret,
+      additionalSecrets: options.additionalSecrets,
       hooks: {},
       log: createLogger(options.log),
     };
