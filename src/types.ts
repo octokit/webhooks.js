@@ -47,12 +47,12 @@ type TransformMethod<T> = (event: EmitterWebhookEvent) => T | PromiseLike<T>;
 
 export type HandlerFunction<
   TName extends EmitterWebhookEventName,
-  TTransformed,
+  TTransformed = unknown,
 > = (event: EmitterWebhookEvent<TName> & TTransformed) => any;
 
 export type RemoveHandlerFunction<
   TName extends EmitterWebhookEventName | "*",
-  TTransformed,
+  TTransformed = unknown,
 > = (event: EmitterWebhookEvent<Exclude<TName, "*">> & TTransformed) => any;
 
 type Hooks = {
