@@ -58,19 +58,13 @@ export async function middleware(
     return true;
   }
 
-  const missingHeaders = getMissingHeaders(request).join(", ");
+  const missingHeaders = getMissingHeaders(request);
 
   if (missingHeaders) {
     response.writeHead(400, {
       "content-type": "application/json",
     });
-    response.end(
-      JSON.stringify({
-        error: `Required headers missing: ${missingHeaders}`,
-      }),
-    );
-
-    return true;
+    response.end(missingHeaders);
   }
 
   const eventName = request.headers["x-github-event"] as string;
