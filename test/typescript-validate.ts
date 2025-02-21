@@ -188,7 +188,8 @@ export default async function () {
     console.log(firstError.request);
   });
 
-  createServer(createNodeMiddleware(webhooks)).listen(3000);
+  createServer(createNodeMiddleware({ webhooks })).listen(3000);
+  createServer(createNodeMiddleware({ webhooks })).listen(3000);
 }
 
 export function webhookErrorTest(error: WebhookError) {
