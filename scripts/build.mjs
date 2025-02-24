@@ -69,7 +69,7 @@ async function main() {
             default: "./dist-bundle/index.js",
           },
           "./types": {
-            types: "./dist-types/types.d.ts"
+            types: "./dist-types/types.d.ts",
           },
         },
         source: "dist-src/index.js",
