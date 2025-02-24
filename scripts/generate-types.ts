@@ -7,7 +7,7 @@ import { format } from "prettier";
 
 const schema = (await import("@octokit/openapi-webhooks")).schemas[
   "api.github.com"
-] as OpenAPI3;
+] as unknown as OpenAPI3;
 
 const getEmitterEvents = (): string[] => {
   return Array.from(events).sort();
