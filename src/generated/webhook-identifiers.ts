@@ -260,10 +260,12 @@ export type EventPayloadMap = {
     | WebhookEventDefinition<"repository-vulnerability-alert-resolve">;
   secret_scanning_alert:
     | WebhookEventDefinition<"secret-scanning-alert-created">
+    | WebhookEventDefinition<"secret-scanning-alert-publicly-leaked">
     | WebhookEventDefinition<"secret-scanning-alert-reopened">
     | WebhookEventDefinition<"secret-scanning-alert-resolved">
     | WebhookEventDefinition<"secret-scanning-alert-validated">;
   secret_scanning_alert_location: WebhookEventDefinition<"secret-scanning-alert-location-created">;
+  secret_scanning_scan: WebhookEventDefinition<"secret-scanning-scan-completed">;
   security_advisory:
     | WebhookEventDefinition<"security-advisory-published">
     | WebhookEventDefinition<"security-advisory-updated">
