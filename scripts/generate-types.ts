@@ -5,10 +5,9 @@ import * as fs from "node:fs";
 import type { OpenAPI3, OperationObject, PathItemObject } from "./types.js";
 import { format } from "prettier";
 
-// @ts-expect-error - There is no type definition for this package, your IDE may complain that this directive is unused but it is not
-const schema = (await import("@octokit/openapi-webhooks")).default.schemas[
+const schema = (await import("@octokit/openapi-webhooks")).schemas[
   "api.github.com"
-] as OpenAPI3;
+] as unknown as OpenAPI3;
 
 const getEmitterEvents = (): string[] => {
   return Array.from(events).sort();
