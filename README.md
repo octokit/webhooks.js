@@ -96,8 +96,9 @@ source.onmessage = (event) => {
 8. [webhooks.onError()](#webhooksonerror)
 9. [webhooks.removeListener()](#webhooksremovelistener)
 10. [createNodeMiddleware()](#createnodemiddleware)
-11. [Webhook events](#webhook-events)
-12. [emitterEventNames](#emittereventnames)
+11. [createWebMiddleware()](#createwebmiddleware)
+12. [Webhook events](#webhook-events)
+13. [emitterEventNames](#emittereventnames)
 
 ### Constructor
 
