@@ -2,6 +2,7 @@ import esbuild from "esbuild";
 import { copyFile, readFile, writeFile, rm } from "node:fs/promises";
 import { glob } from "glob";
 
+/** @type {esbuild.BuildOptions} */
 const sharedOptions = {
   sourcemap: "external",
   sourcesContent: true,
@@ -68,7 +69,7 @@ async function main() {
             default: "./dist-bundle/index.js",
           },
         },
-        module: "dist-src/index.js",
+        source: "dist-src/index.js",
         sideEffects: false,
       },
       null,
