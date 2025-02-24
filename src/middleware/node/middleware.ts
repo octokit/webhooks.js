@@ -4,7 +4,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 
 import type { Webhooks } from "../../index.js";
 import type { WebhookEventHandlerError } from "../../types.js";
-import type { MiddlewareOptions } from "./types.js";
+import type { MiddlewareOptions } from "../types.js";
 import { getMissingHeaders } from "./get-missing-headers.js";
 import { getPayload } from "./get-payload.js";
 import { onUnhandledRequestDefault } from "./on-unhandled-request-default.js";
