@@ -11,7 +11,7 @@ export async function middleware(
   webhooks: Webhooks,
   options: Required<MiddlewareOptions>,
   request: Request,
-) {
+): Promise<Response> {
   let pathname: string;
   try {
     pathname = new URL(request.url as string, "http://localhost").pathname;
