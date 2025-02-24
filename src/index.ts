@@ -20,7 +20,7 @@ import type {
 export { createNodeMiddleware } from "./middleware/node/index.js";
 export { createWebMiddleware } from "./middleware/web/index.js";
 export { emitterEventNames } from "./generated/webhook-names.js";
-export { validateEventNameOrNames, validatePayload } from "./validate-event.js"
+export { validateEventNameOrNames, validatePayload } from "./validate-event.js";
 
 // U holds the return value of `transform` function in Options
 class Webhooks<TTransformed = unknown> {
