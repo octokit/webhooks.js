@@ -96,8 +96,9 @@ source.onmessage = (event) => {
 8. [webhooks.onError()](#webhooksonerror)
 9. [webhooks.removeListener()](#webhooksremovelistener)
 10. [createNodeMiddleware()](#createnodemiddleware)
-11. [Webhook events](#webhook-events)
-12. [emitterEventNames](#emittereventnames)
+11. [createWebMiddleware()](#createwebmiddleware)
+12. [Webhook events](#webhook-events)
+13. [emitterEventNames](#emittereventnames)
 
 ### Constructor
 
@@ -529,6 +530,63 @@ createServer(async (req, res) => {
 
 The middleware returned from `createNodeMiddleware` can also serve as an
 `Express.js` middleware directly.
+
+<table width="100%">
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>webhooks</code>
+        <em>
+          Webhooks instance
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>path</code>
+        <em>
+          string
+        </em>
+      </td>
+      <td>
+        Custom path to match requests against. Defaults to <code>/api/github/webhooks</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>log</code>
+        <em>
+          object
+        </em>
+      </td>
+      <td>
+
+Used for internal logging. Defaults to [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) with `debug` and `info` doing nothing.
+
+</td>
+    </tr>
+  <tbody>
+</table>
+
+### createWebMiddleware()
+
+```js
+import { Webhooks, createWebMiddleware } from "@octokit/webhooks";
+
+const webhooks = new Webhooks({
+  secret: "mysecret",
+});
+
+const middleware = createWebMiddleware(webhooks, { path: "/webhooks" });
+
+// Example usage in Deno
+Deno.serve({ port: 3000 }, middleware);
+```
+
+The middleware returned from `createWebMiddleware` can also be used in serverless environments like AWS Lambda, Cloudflare Workers, and Vercel.
 
 <table width="100%">
   <tbody valign="top">
