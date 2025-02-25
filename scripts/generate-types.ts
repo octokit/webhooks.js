@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node-transpile-only
+#!/usr/bin/env -S npx tsx
 
 import { strict as assert } from "node:assert";
 import * as fs from "node:fs";
