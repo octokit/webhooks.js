@@ -10,8 +10,8 @@
   "scripts": {
     "build": "node scripts/build.mjs && tsc -p tsconfig.json",
     "generate-types": "tsx scripts/generate-types.ts",
-    "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json",
-    "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json",
+    "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json 'src/event-handler/README.md'",
+    "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json 'src/event-handler/README.md'",
     "pretest": "npm run -s lint",
     "test": "vitest",
     "validate:ts": "tsc --noEmit --noImplicitAny --target es2023 --esModuleInterop --moduleResolution node16 --module node16 --allowImportingTsExtensions test/typescript-validate.ts"
