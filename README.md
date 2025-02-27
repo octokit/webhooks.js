@@ -570,6 +570,78 @@ Used for internal logging. Defaults to [`console`](https://developer.mozilla.org
   <tbody>
 </table>
 
+### validateEventNameOrNames()
+
+```js
+validateEventNameOrNames(event);
+```
+
+<table width="100%">
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>event</code>
+        <em>
+          string | string[]
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        The event name or an array of event names to validate.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+Returns `true` if the provided event name(s) match a known event name; otherwise, returns `false`.
+
+Example:
+
+```js
+const event = "user.created";
+if (validateEventNameOrNames(event)) {
+  console.log("Event is valid!");
+}
+```
+
+---
+
+### validatePayload()
+
+```js
+validatePayload(input);
+```
+
+<table width="100%">
+  <tbody valign="top">
+    <tr>
+      <td>
+        <code>input</code>
+        <em>
+          Object
+        </em>
+      </td>
+      <td>
+        <strong>Required.</strong>
+        The JSON input to validate and type-cast to the event type. Should contain properties `name`, `id`, and `payload`.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+Returns a boolean value. If the input matches the expected structure and contains a valid event name, an ID, and a payload, it returns `true`. Otherwise, it returns `false`.
+
+Example:
+
+```js
+const webhookData = { name: 'user.created', id: '12345', payload: { ... } };
+
+if (validatePayload(webhookData)) {
+  // You can safely access webhookData as an EmitterWebhookEvent
+  console.log('Webhook payload is valid!');
+}
+```
+
 ### Webhook events
 
 See the full list of [event types with example payloads](https://docs.github.com/developers/webhooks-and-events/webhook-events-and-payloads/).
