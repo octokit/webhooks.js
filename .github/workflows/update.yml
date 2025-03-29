@@ -9,6 +9,12 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.OCTOKIT_APP_ID }}
+          private-key: ${{ secrets.OCTOKIT_APP_PRIVATE_KEY }}
+          owner: octokit
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -19,7 +25,7 @@ jobs:
       - name: create pull request
         uses: gr2m/create-or-update-pull-request-action@v1.x
         env:
-          GITHUB_TOKEN: ${{ secrets.OCTOKITBOT_PAT }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         with:
           title: 🚧 🤖📯 Webhooks changed
           body:
