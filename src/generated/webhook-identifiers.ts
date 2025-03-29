@@ -32,6 +32,7 @@ export type EventPayloadMap = {
   custom_property:
     | WebhookEventDefinition<"custom-property-created">
     | WebhookEventDefinition<"custom-property-deleted">
+    | WebhookEventDefinition<"custom-property-promoted-to-enterprise">
     | WebhookEventDefinition<"custom-property-updated">;
   custom_property_values: WebhookEventDefinition<"custom-property-values-updated">;
   delete: WebhookEventDefinition<"delete">;
@@ -103,10 +104,12 @@ export type EventPayloadMap = {
     | WebhookEventDefinition<"issues-pinned">
     | WebhookEventDefinition<"issues-reopened">
     | WebhookEventDefinition<"issues-transferred">
+    | WebhookEventDefinition<"issues-typed">
     | WebhookEventDefinition<"issues-unassigned">
     | WebhookEventDefinition<"issues-unlabeled">
     | WebhookEventDefinition<"issues-unlocked">
-    | WebhookEventDefinition<"issues-unpinned">;
+    | WebhookEventDefinition<"issues-unpinned">
+    | WebhookEventDefinition<"issues-untyped">;
   label:
     | WebhookEventDefinition<"label-created">
     | WebhookEventDefinition<"label-deleted">
