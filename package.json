@@ -44,12 +44,12 @@
     ]
   },
   "dependencies": {
-    "@octokit/openapi-webhooks-types": "10.4.0",
+    "@octokit/openapi-webhooks-types": "11.0.0",
     "@octokit/request-error": "^6.1.7",
     "@octokit/webhooks-methods": "^5.1.1"
   },
   "devDependencies": {
-    "@octokit/openapi-webhooks": "10.4.0",
+    "@octokit/openapi-webhooks": "11.0.0",
     "@octokit/tsconfig": "^4.0.0",
     "@types/node": "^22.0.0",
     "@vitest/coverage-v8": "^3.0.0",
