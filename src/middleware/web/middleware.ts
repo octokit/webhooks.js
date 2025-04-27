@@ -88,7 +88,7 @@ export async function middleware(
           headers: { "Content-Type": "text/plain" },
         }),
       );
-    }, 9000).unref();
+    }, 9000);
   });
 
   const processWebhook = async () => {
