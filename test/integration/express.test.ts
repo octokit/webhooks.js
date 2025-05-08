@@ -1,11 +1,10 @@
+import type { AddressInfo } from "node:net";
 import { describe, beforeAll, afterEach, expect, test, vi } from "vitest";
 import { readFileSync } from "node:fs";
 
 import { sign } from "@octokit/webhooks-methods";
 
-// import without types
-// @ts-expect-error
-const express = (await import("express")).default;
+import express from "express";
 
 import { createNodeMiddleware, Webhooks } from "../../src/index.ts";
 
@@ -31,13 +30,13 @@ describe("createNodeMiddleware(webhooks)", () => {
     });
 
     app.use(createNodeMiddleware(webhooks));
-    app.all("*", (_request: any, response: any) =>
+    app.all("*wildcard", (_request: any, response: any) =>
       response.status(404).send("Dafuq"),
     );
 
     const server = app.listen();
 
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(`http://localhost:${port}/test`, {
       method: "POST",
@@ -61,7 +60,7 @@ describe("createNodeMiddleware(webhooks)", () => {
 
     const server = app.listen();
 
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(`http://localhost:${port}/test`, {
       method: "POST",
@@ -89,13 +88,13 @@ describe("createNodeMiddleware(webhooks)", () => {
     });
 
     app.use(createNodeMiddleware(webhooks, { path: "/test" }));
-    app.all("*", (_request: any, response: any) =>
+    app.all("*wildcard", (_request: any, response: any) =>
       response.status(404).send("Dafuq"),
     );
 
     const server = app.listen();
 
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(`http://localhost:${port}/test`, {
       method: "POST",
@@ -121,13 +120,13 @@ describe("createNodeMiddleware(webhooks)", () => {
     });
 
     app.post("/test", createNodeMiddleware(webhooks, { path: "/test" }));
-    app.all("*", (_request: any, response: any) =>
+    app.all("*wildcard", (_request: any, response: any) =>
       response.status(404).send("Dafuq"),
     );
 
     const server = app.listen();
 
-    const { port } = server.address();
+    const { port } = server.address() as AddressInfo;
 
     const response = await fetch(`http://localhost:${port}/test`, {
       method: "POST",
