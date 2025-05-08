@@ -23,7 +23,7 @@ describe("getPayload", () => {
     const request = new EventEmitter();
     const promise = getPayload(request);
 
-    request.emit("data", Buffer.from("foobar"));
+    request.emit("data", new Uint8Array([0x66, 0x6f, 0x6f, 0x62, 0x61, 0x72])); // foobar
     request.emit("end");
 
     expect(await promise).toEqual("foobar");
@@ -33,8 +33,8 @@ describe("getPayload", () => {
     const request = new EventEmitter();
     const promise = getPayload(request);
 
-    request.emit("data", Buffer.from("foo"));
-    request.emit("data", Buffer.from("bar"));
+    request.emit("data", new Uint8Array([0x66, 0x6f, 0x6f])); // foo
+    request.emit("data", new Uint8Array([0x62, 0x61, 0x72])); // bar
     request.emit("end");
 
     expect(await promise).toEqual("foobar");
@@ -53,9 +53,9 @@ describe("getPayload", () => {
     const request = new EventEmitter();
     const promise = getPayload(request);
 
-    const doubleByteBuffer = Buffer.from("ݔ");
-    request.emit("data", doubleByteBuffer.subarray(0, 1));
-    request.emit("data", doubleByteBuffer.subarray(1, 2));
+    const doubleByteChar = new Uint8Array([0xdd, 0x94]); // "ݔ"
+    request.emit("data", doubleByteChar.subarray(0, 1));
+    request.emit("data", doubleByteChar.subarray(1, 2));
     request.emit("end");
 
     expect(await promise).toEqual("ݔ");
@@ -70,7 +70,7 @@ describe("getPayload", () => {
     const promise = getPayload(request);
 
     // we emit data, to ensure that the body attribute is preferred
-    request.emit("data", "bar");
+    request.emit("data", new Uint8Array([0x62, 0x61, 0x72])); // bar
     request.emit("end");
 
     expect(await promise).toEqual("foo");
@@ -85,7 +85,7 @@ describe("getPayload", () => {
     const promise = getPayload(request);
 
     // we emit data, to ensure that the body attribute is preferred
-    request.emit("data", "bar");
+    request.emit("data", new Uint8Array([0x62, 0x61, 0x72])); // bar
     request.emit("end");
 
     expect(await promise).toEqual("bar");

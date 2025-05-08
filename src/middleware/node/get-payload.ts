@@ -1,21 +1,18 @@
-// remove type imports from http for Deno compatibility
-// see https://github.com/octokit/octokit.js/issues/2075#issuecomment-817361886
-// import type { IncomingMessage } from "node:http";
-// declare module "node:http" {
-//    interface IncomingMessage {
-//      body?: string;
-//    }
-// }
+import { concatUint8Array } from "../common/concat-uint8array.js";
+
 type IncomingMessage = any;
+
+const textDecoder = new TextDecoder("utf-8");
+const decode = textDecoder.decode.bind(textDecoder);
 
 export function getPayload(request: IncomingMessage): Promise<string> {
   if (
     typeof request.body === "object" &&
     "rawBody" in request &&
-    request.rawBody instanceof Buffer
+    request.rawBody instanceof Uint8Array
   ) {
-    // The body is already an Object and rawBody is a Buffer (e.g. GCF)
-    return Promise.resolve(request.rawBody.toString("utf8"));
+    // The body is already an Object and rawBody is a Buffer/Uint8Array (e.g. GCF)
+    return Promise.resolve(decode(request.rawBody));
   } else if (typeof request.body === "string") {
     // The body is a String (e.g. Lambda)
     return Promise.resolve(request.body);
@@ -23,21 +20,15 @@ export function getPayload(request: IncomingMessage): Promise<string> {
 
   // We need to load the payload from the request (normal case of Node.js server)
   return new Promise((resolve, reject) => {
-    let data: Buffer[] = [];
+    let data: Uint8Array[] = [];
 
     request.on("error", (error: Error) =>
       reject(new AggregateError([error], error.message)),
     );
-    request.on("data", (chunk: Buffer) => data.push(chunk));
-    request.on("end", () =>
-      // setImmediate improves the throughput by reducing the pressure from
-      // the event loop
-      setImmediate(
-        resolve,
-        data.length === 1
-          ? data[0].toString("utf8")
-          : Buffer.concat(data).toString("utf8"),
-      ),
-    );
+    request.on("data", data.push.bind(data));
+    request.on("end", () => {
+      const result = concatUint8Array(data);
+      queueMicrotask(() => resolve(decode(result)));
+    });
   });
 }

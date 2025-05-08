@@ -10,6 +10,7 @@ import { sign } from "@octokit/webhooks-methods";
 const express = (await import("express")).default;
 
 import { createNodeMiddleware, Webhooks } from "../../src/index.ts";
+import { concatUint8Array } from "../../src/middleware/common/concat-uint8array.ts";
 
 const pushEventPayload = readFileSync(
   "test/fixtures/push-payload.json",
@@ -73,8 +74,10 @@ describe("createNodeMiddleware(webhooks)", () => {
     const server = createServer((req, res) => {
       req.once("data", (chunk) => dataChunks.push(chunk));
       req.once("end", () => {
+        const payload = concatUint8Array(dataChunks);
+
         // @ts-expect-error - TS2339: Property 'body' does not exist on type 'IncomingMessage'.
-        req.body = Buffer.concat(dataChunks).toString();
+        req.body = new TextDecoder("utf-8").decode(payload);
         middleware(req, res);
       });
     }).listen();
@@ -682,45 +685,52 @@ describe("createNodeMiddleware(webhooks)", () => {
   });
 });
 
-test("request.body is already an Object and has request.rawBody as Buffer (e.g. GCF)", async () => {
-  expect.assertions(3);
+test(
+  "request.body is already an Object and has request.rawBody as Buffer (e.g. GCF)",
+  { skip: typeof global.Buffer === "undefined" },
+  async () => {
+    expect.assertions(3);
 
-  const webhooks = new Webhooks({
-    secret: "mySecret",
-  });
-  const dataChunks: any[] = [];
-  const middleware = createNodeMiddleware(webhooks);
-
-  const server = createServer((req, res) => {
-    req.once("data", (chunk) => dataChunks.push(chunk));
-    req.once("end", () => {
-      // @ts-expect-error - TS2339: Property 'rawBody' does not exist on type 'IncomingMessage'.
-      req.rawBody = Buffer.concat(dataChunks);
-      // @ts-expect-error - TS2339: Property 'body' does not exist on type 'IncomingMessage'.
-      req.body = JSON.parse(req.rawBody);
-      middleware(req, res);
+    const webhooks = new Webhooks({
+      secret: "mySecret",
     });
-  }).listen();
+    const dataChunks: any[] = [];
+    const middleware = createNodeMiddleware(webhooks);
 
-  webhooks.on("push", (event) => {
-    expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
-  });
+    const server = createServer((req, res) => {
+      req.once("data", (chunk) => dataChunks.push(chunk));
+      req.once("end", () => {
+        // @ts-expect-error - TS2339: Property 'rawBody' does not exist on type 'IncomingMessage'.
+        req.rawBody = Buffer.concat(dataChunks);
+        // @ts-expect-error - TS2339: Property 'body' does not exist on type 'IncomingMessage'.
+        req.body = JSON.parse(req.rawBody);
+        middleware(req, res);
+      });
+    }).listen();
 
-  const { port } = server.address() as AddressInfo;
+    webhooks.on("push", (event) => {
+      expect(event.id).toBe("123e4567-e89b-12d3-a456-426655440000");
+    });
 
-  const response = await fetch(`http://localhost:${port}/api/github/webhooks`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-      "X-GitHub-Event": "push",
-      "X-Hub-Signature-256": signatureSha256,
-    },
-    body: pushEventPayload,
-  });
+    const { port } = server.address() as AddressInfo;
 
-  expect(response.status).toEqual(200);
-  expect(await response.text()).toEqual("ok\n");
+    const response = await fetch(
+      `http://localhost:${port}/api/github/webhooks`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+          "X-GitHub-Event": "push",
+          "X-Hub-Signature-256": signatureSha256,
+        },
+        body: pushEventPayload,
+      },
+    );
 
-  server.close();
-});
+    expect(response.status).toEqual(200);
+    expect(await response.text()).toEqual("ok\n");
+
+    server.close();
+  },
+);
