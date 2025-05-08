@@ -27,7 +27,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
     webhooks: Webhooks,
     options: Required<MiddlewareOptions>,
     request: IncomingMessage,
-    response: ServerResponse,
+    response?: ServerResponse,
     next?: Function,
   ): Promise<typeof response> {
     let pathname: string;
