@@ -4,8 +4,8 @@ import type {
   WebhookError,
   WebhookEventName,
   WebhookEventHandlerError,
-} from "../types.js";
-import { wrapErrorHandler } from "./wrap-error-handler.js";
+} from "../types.ts";
+import { wrapErrorHandler } from "./wrap-error-handler.ts";
 
 type EventAction = Extract<
   EmitterWebhookEvent["payload"],

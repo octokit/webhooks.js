@@ -1,8 +1,8 @@
-import type { WebhookEventName } from "../generated/webhook-identifiers.js";
+import type { WebhookEventName } from "../generated/webhook-identifiers.ts";
 
-import type { Webhooks } from "../index.js";
-import type { WebhookEventHandlerError } from "../types.js";
-import type { MiddlewareOptions } from "./types.js";
+import type { Webhooks } from "../index.ts";
+import type { WebhookEventHandlerError } from "../types.ts";
+import type { MiddlewareOptions } from "./types.ts";
 
 type CreateMiddlewareOptions = {
   handleResponse: (

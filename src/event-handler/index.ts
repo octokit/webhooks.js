@@ -1,4 +1,4 @@
-import { createLogger } from "../createLogger.js";
+import { createLogger } from "../createLogger.ts";
 import type {
   EmitterWebhookEvent,
   EmitterWebhookEventName,
@@ -7,14 +7,14 @@ import type {
   State,
   WebhookError,
   WebhookEventHandlerError,
-} from "../types.js";
+} from "../types.ts";
 import {
   receiverOn as on,
   receiverOnAny as onAny,
   receiverOnError as onError,
-} from "./on.js";
-import { receiverHandle as receive } from "./receive.js";
-import { removeListener } from "./remove-listener.js";
+} from "./on.ts";
+import { receiverHandle as receive } from "./receive.ts";
+import { removeListener } from "./remove-listener.ts";
 
 export interface EventHandler<TTransformed = unknown> {
   on<E extends EmitterWebhookEventName>(

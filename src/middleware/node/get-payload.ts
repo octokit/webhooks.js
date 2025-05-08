@@ -1,4 +1,4 @@
-import { concatUint8Array } from "../common/concat-uint8array.js";
+import { concatUint8Array } from "../common/concat-uint8array.ts";
 
 type IncomingMessage = any;
 

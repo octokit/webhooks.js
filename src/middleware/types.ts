@@ -1,4 +1,4 @@
-import type { Logger } from "../createLogger.js";
+import type { Logger } from "../createLogger.ts";
 
 export type MiddlewareOptions = {
   path?: string;

@@ -1,12 +1,12 @@
-import { createLogger } from "../../createLogger.js";
-import type { Webhooks } from "../../index.js";
-import type { MiddlewareOptions } from "../types.js";
+import { createLogger } from "../../createLogger.ts";
+import type { Webhooks } from "../../index.ts";
+import type { MiddlewareOptions } from "../types.ts";
 
-import { createMiddleware } from "../create-middleware.js";
-import { getMissingHeaders } from "./get-missing-headers.js";
-import { getPayload } from "./get-payload.js";
-import { getRequestHeader } from "./get-request-header.js";
-import { handleResponse } from "./handle-response.js";
+import { createMiddleware } from "../create-middleware.ts";
+import { getMissingHeaders } from "./get-missing-headers.ts";
+import { getPayload } from "./get-payload.ts";
+import { getRequestHeader } from "./get-request-header.ts";
+import { handleResponse } from "./handle-response.ts";
 
 export function createWebMiddleware(
   webhooks: Webhooks,
