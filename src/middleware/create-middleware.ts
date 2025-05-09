@@ -105,7 +105,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
       "x-github-event",
     );
     const signatureSHA256 = getRequestHeader(request, "x-hub-signature-256");
-    const id = getRequestHeader(request, "x-github-delivery") as string;
+    const id = getRequestHeader(request, "x-github-delivery");
 
     options.log.debug(`${eventName} event received (id: ${id})`);
 
