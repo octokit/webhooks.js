@@ -20,7 +20,7 @@ export function createNodeMiddleware(
     getRequestHeader,
     getPayload,
     getMissingHeaders,
-  }).bind(null, webhooks, {
+  })(webhooks, {
     path,
     log,
     timeout,

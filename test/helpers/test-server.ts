@@ -13,7 +13,7 @@ type TestServer = {
 };
 
 export async function instantiateTestServer(
-  runtime: "Node" | "Deno",
+  runtime: "Node" | "Deno" | "Bun",
   target: "Node" | "Web",
   webhooks: Webhooks,
   options?: MiddlewareOptions,
@@ -23,13 +23,27 @@ export async function instantiateTestServer(
   }
 
   const port = await findFreePort();
-  if (runtime === "Node" || (runtime === "Deno" && target === "Node")) {
+  if (
+    runtime === "Node" ||
+    (runtime === "Deno" && target === "Node") ||
+    (runtime === "Bun" && target === "Node")
+  ) {
     const server = createServer(createNodeMiddleware(webhooks, options)).listen(
       port,
     );
 
     return {
       closeTestServer: server.close.bind(server),
+      port,
+    };
+  } else if (runtime === "Bun" && target === "Web") {
+    const server = Bun.serve({
+      port,
+      fetch: createWebMiddleware(webhooks, options),
+    });
+
+    return {
+      closeTestServer: server.stop.bind(server),
       port,
     };
   } else {
