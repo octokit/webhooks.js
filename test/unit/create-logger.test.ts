@@ -1,5 +1,5 @@
 import { describe, it, assert } from "../testrunner.ts";
-import { createLogger } from "../../src/createLogger.ts";
+import { createLogger } from "../../src/create-logger.ts";
 
 const noop = () => {};
 

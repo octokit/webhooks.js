@@ -5,7 +5,7 @@ import {
   Webhooks,
 } from "../../src/index.ts";
 import { findFreePort } from "./find-free-port.ts";
-import { MiddlewareOptions } from "../../src/middleware/types.ts";
+import type { MiddlewareOptions } from "../../src/middleware/types.ts";
 
 type TestServer = {
   closeTestServer: Function;
@@ -18,10 +18,6 @@ export async function instantiateTestServer(
   webhooks: Webhooks,
   options?: MiddlewareOptions,
 ): Promise<TestServer> {
-  if (runtime === "Node" && target === "Web") {
-    throw new Error("Web target not supported in Node");
-  }
-
   const port = await findFreePort();
   if (
     runtime === "Node" ||
