@@ -8,7 +8,7 @@ name: Test
       - opened
       - synchronize
 jobs:
-  test_matrix:
+  test-node:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -16,6 +16,7 @@ jobs:
           - 18
           - 20
           - 22
+          - 24
     name: Node ${{ matrix.node_version }}
     steps:
       - uses: actions/checkout@v4
@@ -25,12 +26,26 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-  test:
+
+  test-deno:
     runs-on: ubuntu-latest
-    needs: test_matrix
+    needs: test-node
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x # Run with latest stable Deno.
+      - run: deno install
+      - run: deno test --watch --allow-env --allow-read --allow-net
+
+  validate-typescript:
+    runs-on: ubuntu-latest
+    needs:
+      - test-node
+      - test-deno
     steps:
       - run: exit 1
-        if: ${{ needs.test_matrix.result != 'success' }}
+        if: ${{ needs.test-node.result != 'success' || needs.test-deno.result != 'success' }}
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
