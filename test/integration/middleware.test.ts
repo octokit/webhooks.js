@@ -21,7 +21,7 @@ const signatureSha256: string = await sign("mySecret", pushEventPayload);
 const runtimes: ("Node" | "Deno")[] = ["Node"];
 const targets: ("Node" | "Web")[] = ["Node"];
 
-if (typeof Deno !== "undefined") {
+if ("Deno" in globalThis) {
   runtimes.push("Deno");
   targets.push("Web");
 }

@@ -4,10 +4,11 @@ export function handleResponse(
   headers = {} as Record<string, string>,
   response?: any,
 ) {
-  if (body !== null) {
-    headers["content-length"] = body.length.toString();
+  if (body === null) {
+    return false;
   }
 
+  headers["content-length"] = body.length.toString();
   response.writeHead(status, headers).end(body);
-  return response;
+  return true;
 }

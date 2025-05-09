@@ -48,7 +48,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
 
     if (pathname !== options.path) {
       next?.();
-      return false;
+      return handleResponse(null);
     } else if (request.method !== "POST") {
       return handleResponse(
         JSON.stringify({
