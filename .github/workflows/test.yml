@@ -36,7 +36,7 @@ jobs:
         with:
           deno-version: v2.x # Run with latest stable Deno.
       - run: deno install
-      - run: deno test --watch --allow-env --allow-read --allow-net
+      - run: deno test --allow-env --allow-read --allow-net
 
   validate-typescript:
     runs-on: ubuntu-latest
