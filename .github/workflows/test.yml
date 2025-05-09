@@ -1,5 +1,5 @@
 name: Test
-"on":
+on:
   push:
     branches:
       - dependabot/npm_and_yarn/**
@@ -7,6 +7,8 @@ name: Test
     types:
       - opened
       - synchronize
+      - reopened
+
 jobs:
   test-node:
     runs-on: ubuntu-latest
