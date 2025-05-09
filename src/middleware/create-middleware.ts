@@ -16,6 +16,8 @@ type CreateMiddlewareOptions = {
   getMissingHeaders: (request: Request) => string[];
 };
 
+const isApplicationJsonRE = /^\s*(application\/json)\s*(?:;|$)/u;
+
 type IncomingMessage = any;
 type ServerResponse = any;
 
@@ -71,7 +73,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
 
       if (
         typeof contentType !== "string" ||
-        !contentType!.startsWith("application/json")
+        !isApplicationJsonRE.test(contentType)
       ) {
         return handleResponse(
           JSON.stringify({
