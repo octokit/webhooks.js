@@ -1,9 +1,7 @@
 import { createConnection } from "node:net";
 
-const maxPort = 65534;
-
 function getRandomPort(): number {
-  return Math.floor(Math.random() * (maxPort - 1024 + 1)) + 1024;
+  return Math.floor(Math.random() * (65534 - 1024 + 1)) + 1024;
 }
 
 function isFreePort(port: number): Promise<boolean> {
@@ -30,16 +28,13 @@ export async function findFreePort(maxTries = 20): Promise<number> {
   let tries = 0;
   let port = getRandomPort();
 
-  while (port < maxPort) {
+  while (tries < maxTries) {
     if (await isFreePort(port)) {
       return port;
     }
     port = getRandomPort();
 
     tries++;
-    if (tries > maxTries) {
-      break;
-    }
   }
   throw new Error("No available ports");
 }
