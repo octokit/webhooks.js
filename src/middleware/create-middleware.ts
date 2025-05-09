@@ -13,7 +13,6 @@ type CreateMiddlewareOptions = {
   ) => any;
   getPayload: (request: Request) => Promise<string>;
   getRequestHeader: <T = string>(request: Request, key: string) => T;
-  getMissingHeaders: (request: Request) => string[];
 };
 
 const isApplicationJsonRE = /^\s*(application\/json)\s*(?:;|$)/u;
@@ -21,9 +20,14 @@ const isApplicationJsonRE = /^\s*(application\/json)\s*(?:;|$)/u;
 type IncomingMessage = any;
 type ServerResponse = any;
 
+const WEBHOOK_HEADERS = [
+  "x-github-event",
+  "x-hub-signature-256",
+  "x-github-delivery",
+];
+
 export function createMiddleware(options: CreateMiddlewareOptions) {
-  const { handleResponse, getRequestHeader, getPayload, getMissingHeaders } =
-    options;
+  const { handleResponse, getRequestHeader, getPayload } = options;
 
   return function middleware(
     webhooks: Webhooks,
@@ -88,7 +92,9 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
         );
       }
 
-      const missingHeaders = getMissingHeaders(request).join(", ");
+      const missingHeaders = WEBHOOK_HEADERS.filter((header) => {
+        return getRequestHeader(request, header) == undefined;
+      }).join(", ");
 
       if (missingHeaders) {
         return handleResponse(

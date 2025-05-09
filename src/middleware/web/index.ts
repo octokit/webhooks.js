@@ -3,7 +3,6 @@ import type { Webhooks } from "../../index.ts";
 import type { MiddlewareOptions } from "../types.ts";
 
 import { createMiddleware } from "../create-middleware.ts";
-import { getMissingHeaders } from "./get-missing-headers.ts";
 import { getPayload } from "./get-payload.ts";
 import { getRequestHeader } from "./get-request-header.ts";
 import { handleResponse } from "./handle-response.ts";
@@ -20,7 +19,6 @@ export function createWebMiddleware(
     handleResponse,
     getRequestHeader,
     getPayload,
-    getMissingHeaders,
   })(webhooks, {
     path,
     log,

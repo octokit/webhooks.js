@@ -5,7 +5,6 @@ import { createMiddleware } from "../create-middleware.ts";
 import { handleResponse } from "./handle-response.ts";
 import { getRequestHeader } from "./get-request-header.ts";
 import { getPayload } from "./get-payload.ts";
-import { getMissingHeaders } from "./get-missing-headers.ts";
 
 export function createNodeMiddleware(
   webhooks: Webhooks,
@@ -19,7 +18,6 @@ export function createNodeMiddleware(
     handleResponse,
     getRequestHeader,
     getPayload,
-    getMissingHeaders,
   })(webhooks, {
     path,
     log,
