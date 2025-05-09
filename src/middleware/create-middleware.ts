@@ -52,7 +52,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
     } else if (request.method !== "POST") {
       return handleResponse(
         JSON.stringify({
-          error: `Unknown route: ${request.method} ${request.url}`,
+          error: `Unknown route: ${request.method} ${pathname}`,
         }),
         404,
         {
@@ -127,7 +127,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
             response,
           ),
         );
-      }, 9000);
+      }, options.timeout);
     });
 
     const processWebhook = async () => {

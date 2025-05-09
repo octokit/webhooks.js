@@ -13,6 +13,7 @@ export function createWebMiddleware(
   {
     path = "/api/github/webhooks",
     log = createLogger(),
+    timeout = 9000,
   }: MiddlewareOptions = {},
 ) {
   return createMiddleware({
@@ -23,5 +24,6 @@ export function createWebMiddleware(
   }).bind(null, webhooks, {
     path,
     log,
+    timeout,
   } as Required<MiddlewareOptions>);
 }

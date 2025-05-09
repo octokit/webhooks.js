@@ -1,47 +1,54 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, it, assert } from "../testrunner.ts";
 import { createLogger } from "../../src/createLogger.ts";
 
 const noop = () => {};
 
 describe("createLogger", () => {
-  vi.spyOn(console, "warn").mockImplementation(noop);
-  vi.spyOn(console, "error").mockImplementation(noop);
+  console.debug = noop;
+  console.info = noop;
+  console.warn = noop;
+  console.error = noop;
 
-  describe("when nothing is passed", () => {
-    it("provides default implementations for all log levels", () => {
-      const logger = createLogger();
+  it("when nothing is passed provides default implementations for all log levels", () => {
+    const logger = createLogger();
 
-      expect(() => logger.debug("hello world")).not.toThrow();
-      expect(() => logger.info("hello world")).not.toThrow();
-      expect(() => logger.warn("hello world")).not.toThrow();
-      expect(() => logger.error("hello world")).not.toThrow();
-    });
+    logger.debug("hello world");
+    logger.info("hello world");
+    logger.warn("hello world");
+    logger.error("hello world");
   });
 
-  describe("when some log levels are provided", () => {
-    const partialLogger = {
-      debug: vi.fn(),
-      error: vi.fn(),
-    };
+  let debugCalls: any[][] = [];
+  let errorCalls: any[][] = [];
 
-    it("uses the provided implementations for the given log levels", () => {
-      const logger = createLogger(partialLogger);
+  const partialLogger = {
+    debug: (...args: any[]) => {
+      debugCalls.push(args);
+    },
+    error: (...args: any[]) => {
+      errorCalls.push(args);
+    },
+  };
 
-      logger.debug("hello world");
-      logger.error("hello world");
+  it("when some log levels are provided uses the provided implementations for the given log levels", () => {
+    const logger = createLogger(partialLogger);
 
-      expect(partialLogger.debug).toHaveBeenCalledTimes(1);
-      expect(partialLogger.debug).toHaveBeenCalledWith("hello world");
+    logger.debug("hello world");
+    logger.error("hello world");
 
-      expect(partialLogger.error).toHaveBeenCalledTimes(1);
-      expect(partialLogger.error).toHaveBeenCalledWith("hello world");
-    });
+    assert(debugCalls.length === 1);
+    assert(debugCalls[0].length === 1);
+    assert(debugCalls[0][0] === "hello world");
 
-    it("provides default implementations for the remaining log levels", () => {
-      const logger = createLogger(partialLogger);
+    assert(errorCalls.length === 1);
+    assert(errorCalls[0].length === 1);
+    assert(errorCalls[0][0] === "hello world");
+  });
 
-      expect(() => logger.info("hello world")).not.toThrow();
-      expect(() => logger.warn("hello world")).not.toThrow();
-    });
+  it("when some log levels are provided provides default implementations for the remaining log levels", () => {
+    const logger = createLogger(partialLogger);
+
+    logger.info("hello world");
+    logger.warn("hello world");
   });
 });

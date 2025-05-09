@@ -1,31 +1,37 @@
-import { test, expect, vi } from "vitest";
+import { it, describe, assert } from "../testrunner.ts";
 import { wrapErrorHandler } from "../../src/event-handler/wrap-error-handler.ts";
 
-const noop = () => {};
+describe("wrapErrorHandler", () => {
+  let logCalls: any[][] = [];
 
-test("error thrown in error handler", () => {
-  expect.assertions(2);
+  console.log = function (...args: any[]) {
+    logCalls.push(args);
+  };
 
-  const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(noop);
-  expect(() => {
+  it("error thrown in error handler", () => {
     wrapErrorHandler(() => {
       throw new Error("oopsydoopsy");
     }, new Error("oops"));
-  }).not.toThrow();
 
-  expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringMatching(/FATAL/));
-});
+    assert(logCalls.length === 2);
+    assert(/^FATAL/.test(logCalls[0][0]));
+    assert(logCalls[1][0] instanceof Error);
+    assert(logCalls[1][0].message === "oopsydoopsy");
 
-test("error handler returns rejected Error", () => {
-  expect.assertions(2);
+    logCalls = [];
+  });
 
-  const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(noop);
-  const promise = Promise.reject(new Error("oopsydoopsy"));
-  expect(() =>
+  it("error handler returns rejected Error", async () => {
+    const promise = Promise.reject(new Error("oopsydoopsy"));
+
     wrapErrorHandler(() => promise, new Error("oops")),
-  ).not.toThrow();
+      await promise.catch(() => {
+        assert(logCalls.length === 2);
+        assert(/^FATAL/.test(logCalls[0][0]));
+        assert(logCalls[1][0] instanceof Error);
+        assert(logCalls[1][0].message === "oopsydoopsy");
+      });
 
-  promise.catch(() => {
-    expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringMatching(/FATAL/));
+    logCalls = [];
   });
 });

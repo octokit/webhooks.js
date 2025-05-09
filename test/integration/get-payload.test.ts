@@ -1,13 +1,14 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, assert } from "../testrunner.ts";
 import EventEmitter from "node:events";
 import { getPayload } from "../../src/middleware/node/get-payload.ts";
+import { assertError } from "../helpers/assert-error.ts";
 
 describe("getPayload", () => {
   it("returns a promise", () => {
     const request = new EventEmitter();
     const promise = getPayload(request);
 
-    expect(promise).toBeInstanceOf(Promise);
+    assert(promise instanceof Promise);
   });
 
   it("resolves with a string when only receiving no chunk", async () => {
@@ -16,7 +17,7 @@ describe("getPayload", () => {
 
     request.emit("end");
 
-    expect(await promise).toEqual("");
+    assert((await promise) === "");
   });
 
   it("resolves with a string when only receiving one chunk", async () => {
@@ -26,7 +27,7 @@ describe("getPayload", () => {
     request.emit("data", new Uint8Array([0x66, 0x6f, 0x6f, 0x62, 0x61, 0x72])); // foobar
     request.emit("end");
 
-    expect(await promise).toEqual("foobar");
+    assert((await promise) === "foobar");
   });
 
   it("resolves with a string when receiving multiple chunks", async () => {
@@ -37,7 +38,7 @@ describe("getPayload", () => {
     request.emit("data", new Uint8Array([0x62, 0x61, 0x72])); // bar
     request.emit("end");
 
-    expect(await promise).toEqual("foobar");
+    assert((await promise) === "foobar");
   });
 
   it("rejects with an error", async () => {
@@ -46,7 +47,16 @@ describe("getPayload", () => {
 
     request.emit("error", new Error("test"));
 
-    await expect(promise).rejects.toThrow("test");
+    try {
+      await promise;
+      assert(false);
+    } catch (error) {
+      assertError<AggregateError>(error, AggregateError);
+      assert(error.message === "test");
+      assert(error.errors.length === 1);
+      assert(error.errors[0] instanceof Error);
+      assert(error.errors[0].message === "test");
+    }
   });
 
   it("resolves with a string with respecting the utf-8 encoding", async () => {
@@ -58,7 +68,7 @@ describe("getPayload", () => {
     request.emit("data", doubleByteChar.subarray(1, 2));
     request.emit("end");
 
-    expect(await promise).toEqual("ݔ");
+    assert((await promise) === "ݔ");
   });
 
   it("resolves with the body, if passed via the request", async () => {
@@ -73,7 +83,7 @@ describe("getPayload", () => {
     request.emit("data", new Uint8Array([0x62, 0x61, 0x72])); // bar
     request.emit("end");
 
-    expect(await promise).toEqual("foo");
+    assert((await promise) === "foo");
   });
 
   it("resolves with a string if the body key of the request is defined but value is undefined", async () => {
@@ -88,6 +98,6 @@ describe("getPayload", () => {
     request.emit("data", new Uint8Array([0x62, 0x61, 0x72])); // bar
     request.emit("end");
 
-    expect(await promise).toEqual("bar");
+    assert(await promise, "bar");
   });
 });

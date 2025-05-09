@@ -12,15 +12,17 @@ export function createNodeMiddleware(
   {
     path = "/api/github/webhooks",
     log = createLogger(),
+    timeout = 9000,
   }: MiddlewareOptions = {},
 ) {
   return createMiddleware({
-    handleResponse: handleResponse,
-    getRequestHeader: getRequestHeader,
-    getPayload: getPayload,
-    getMissingHeaders: getMissingHeaders,
+    handleResponse,
+    getRequestHeader,
+    getPayload,
+    getMissingHeaders,
   }).bind(null, webhooks, {
     path,
     log,
+    timeout,
   } as Required<MiddlewareOptions>);
 }
