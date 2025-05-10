@@ -1,7 +1,7 @@
-import { createLogger } from "../../createLogger.js";
-import type { Webhooks } from "../../index.js";
-import { middleware } from "./middleware.js";
-import type { MiddlewareOptions } from "../types.js";
+import { createLogger } from "../../createLogger.ts";
+import type { Webhooks } from "../../index.ts";
+import { middleware } from "./middleware.ts";
+import type { MiddlewareOptions } from "../types.ts";
 
 export function createWebMiddleware(
   webhooks: Webhooks,

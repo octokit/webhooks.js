@@ -1,4 +1,4 @@
-import { WebhookEventDefinition } from "../../src/types";
+import type { WebhookEventDefinition } from "../../src/types.ts";
 import pushEvent from "./push-payload.json";
 import installationCreatedEvent from "./installation-created-payload.json";
 import installationDeletedEvent from "./installation-deleted-payload.json";
