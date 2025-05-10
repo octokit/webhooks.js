@@ -114,7 +114,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
         request,
         "x-github-event",
       );
-      const signatureSHA256 = getRequestHeader(request, "x-hub-signature-256");
+      const signature = getRequestHeader(request, "x-hub-signature-256");
       const id = getRequestHeader(request, "x-github-delivery");
 
       options.log.debug(`${eventName} event received (id: ${id})`);
@@ -145,10 +145,10 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
           const payload = await getPayload(request);
 
           await webhooks.verifyAndReceive({
-            id: id,
+            id,
             name: eventName,
             payload,
-            signature: signatureSHA256,
+            signature,
           });
           clearTimeout(timeout);
 
