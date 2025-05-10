@@ -1,4 +1,4 @@
-import { createLogger } from "../createLogger.ts";
+import { createLogger } from "../create-logger.ts";
 import type {
   EmitterWebhookEvent,
   EmitterWebhookEventName,
