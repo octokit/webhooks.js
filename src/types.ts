@@ -1,7 +1,7 @@
 import type { RequestError } from "@octokit/request-error";
 import type { webhooks as OpenAPIWebhooks } from "@octokit/openapi-webhooks-types";
 import type { EventPayloadMap } from "./generated/webhook-identifiers.ts";
-import type { Logger } from "./createLogger.ts";
+import type { Logger } from "./create-logger.ts";
 import type { EventHandler } from "./event-handler/index.ts";
 import type { emitterEventNames } from "./generated/webhook-names.ts";
 
