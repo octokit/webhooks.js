@@ -4,8 +4,8 @@ import type {
   WebhookError,
   WebhookEventName,
   WebhookEventHandlerError,
-} from "../types.js";
-import { wrapErrorHandler } from "./wrap-error-handler.js";
+} from "../types.ts";
+import { wrapErrorHandler } from "./wrap-error-handler.ts";
 
 type EventAction = Extract<
   EmitterWebhookEvent["payload"],
@@ -30,7 +30,7 @@ function getHooks(
 export function receiverHandle(
   state: State,
   event: EmitterWebhookEvent | WebhookError,
-) {
+): Promise<void> {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {

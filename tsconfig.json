@@ -3,10 +3,13 @@
   "include": ["src/**/*"],
   "ts-node": {
     "compilerOptions": {
+      "allowImportingTsExtensions": true,
       "verbatimModuleSyntax": false
     }
   },
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
     "esModuleInterop": true,
     "declaration": true,
     "outDir": "pkg/dist-types",

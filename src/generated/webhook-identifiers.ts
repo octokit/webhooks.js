@@ -1,7 +1,7 @@
 // THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY
 // make edits in scripts/generate-types.ts
 
-import type { WebhookEventDefinition } from "../types.js";
+import type { WebhookEventDefinition } from "../types.ts";
 
 export type EventPayloadMap = {
   branch_protection_configuration:

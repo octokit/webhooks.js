@@ -1,10 +1,10 @@
-import { emitterEventNames } from "../generated/webhook-names.js";
+import { emitterEventNames } from "../generated/webhook-names.ts";
 import type {
   EmitterWebhookEvent,
   EmitterWebhookEventName,
   State,
   WebhookEventHandlerError,
-} from "../types.js";
+} from "../types.ts";
 
 function handleEventHandlers(
   state: State,

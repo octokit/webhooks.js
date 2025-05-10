@@ -1,6 +1,8 @@
 .nyc_output
 coverage
 node_modules
+deno.lock
+bun.lock
 
 # Build output folder
 pkg/

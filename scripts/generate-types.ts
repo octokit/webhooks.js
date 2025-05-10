@@ -2,7 +2,7 @@
 
 import { strict as assert } from "node:assert";
 import * as fs from "node:fs";
-import type { OpenAPI3, OperationObject, PathItemObject } from "./types.js";
+import type { OpenAPI3, OperationObject, PathItemObject } from "./types.ts";
 import { format } from "prettier";
 
 const schema = (await import("@octokit/openapi-webhooks")).schemas[

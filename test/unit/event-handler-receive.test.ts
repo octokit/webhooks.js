@@ -1,4 +1,4 @@
-import { test, expect } from "vitest";
+import { describe, it, assert } from "../testrunner.ts";
 import { receiverHandle as receive } from "../../src/event-handler/receive.ts";
 import type { State } from "../../src/types.ts";
 
@@ -8,21 +8,35 @@ const state: State = {
   log: console,
 };
 
-test("options: none", () => {
-  // @ts-expect-error
-  expect(() => receive(state)).toThrow();
-});
+describe("receive", () => {
+  it("options: none", async () => {
+    try {
+      // @ts-expect-error
+      await receive(state);
+      assert(false);
+    } catch (error) {
+      assert(error instanceof Error);
+      if (error instanceof Error) {
+        assert(error.message === "Event name not passed");
+      }
+    }
+  });
 
-test("options: name", () => {
-  expect(() => {
-    // @ts-expect-error
-    receive(state, { name: "foo" });
-  }).toThrow();
-});
+  it("options: name", async () => {
+    try {
+      // @ts-expect-error
+      await receive(state, { name: "foo" });
+      assert(false);
+    } catch (error) {
+      assert(error instanceof Error);
+      if (error instanceof Error) {
+        assert(error.message === "Event name not passed");
+      }
+    }
+  });
 
-test("options: name, payload", () => {
-  expect(() => {
+  it("options: name, payload", async () => {
     // @ts-expect-error
-    receive(state, { name: "foo", payload: {} });
-  }).not.toThrow();
+    await receive(state, { name: "foo", payload: {} });
+  });
 });

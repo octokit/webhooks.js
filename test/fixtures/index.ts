@@ -1,7 +1,7 @@
-import { WebhookEventDefinition } from "../../src/types";
-import pushEvent from "./push-payload.json";
-import installationCreatedEvent from "./installation-created-payload.json";
-import installationDeletedEvent from "./installation-deleted-payload.json";
+import type { WebhookEventDefinition } from "../../src/types.ts";
+import pushEvent from "./push-payload.json" with { type: "json" };
+import installationCreatedEvent from "./installation-created-payload.json" with { type: "json" };
+import installationDeletedEvent from "./installation-deleted-payload.json" with { type: "json" };
 
 // we have to typecast all the json imports as they're not imported with const,
 // meaning TypeScript complains about enum values not being assignable to strings

@@ -1,36 +1,59 @@
-import { test, expect, vi } from "vitest";
+import { it, assert } from "../testrunner.ts";
 import {
   Webhooks,
   createEventHandler,
   emitterEventNames,
 } from "../../src/index.ts";
 
-test("@octokit/webhooks", () => {
-  const emitWarningSpy = vi.spyOn(process, "emitWarning");
+const defaultEmitWarning = process.emitWarning;
+
+it("check exports of @octokit/webhooks", () => {
+  let warned = false;
+  process.emitWarning = () => {
+    warned = true;
+  };
+
   const api = new Webhooks({
     secret: "mysecret",
   });
 
-  expect(typeof api.sign).toBe("function");
-  expect(typeof api.verify).toBe("function");
-  expect(typeof api.on).toBe("function");
-  expect(typeof api.removeListener).toBe("function");
-  expect(typeof api.receive).toBe("function");
-  expect(typeof api.verifyAndReceive).toBe("function");
-  expect(emitWarningSpy).not.toHaveBeenCalled();
+  assert(typeof api === "object");
+  assert(typeof api.sign === "function");
+  assert(typeof api.verify === "function");
+  assert(typeof api.on === "function");
+  assert(typeof api.removeListener === "function");
+  assert(typeof api.receive === "function");
+  assert(typeof api.verifyAndReceive === "function");
+  assert(typeof api.onAny === "function");
+  assert(warned === false);
+
+  process.emitWarning = defaultEmitWarning;
 });
 
-test('require("@octokit/webhooks").createEventHandler', () => {
-  const emitWarningSpy = vi.spyOn(process, "emitWarning");
+it('require("@octokit/webhooks").createEventHandler', () => {
+  let warned = false;
 
-  expect(() => {
+  process.emitWarning = () => {
+    warned = true;
+  };
+
+  try {
     createEventHandler({});
-  }).not.toThrow();
-  expect(emitWarningSpy).not.toHaveBeenCalled();
+  } catch (error) {
+    assert(false);
+  }
+  assert(warned === false);
+
+  process.emitWarning = defaultEmitWarning;
 });
 
-test('require("@octokit/webhooks").emitterEventNames', () => {
+it('require("@octokit/webhooks").emitterEventNames', () => {
   const allEvents = emitterEventNames;
-  expect(typeof allEvents).toBe("object");
-  expect(typeof allEvents[0]).toBe("string");
+
+  assert(Array.isArray(allEvents));
+
+  assert(allEvents.length > 0);
+  for (let i = 0; i < allEvents.length; i++) {
+    assert(typeof allEvents[i] === "string");
+  }
 });
