@@ -70,7 +70,7 @@ describe("getPayload", () => {
     const promise = getPayload(request);
 
     // we emit data, to ensure that the body attribute is preferred
-    request.emit("data", "bar");
+    request.emit("data", Buffer.from("bar"));
     request.emit("end");
 
     expect(await promise).toEqual("foo");
@@ -85,9 +85,21 @@ describe("getPayload", () => {
     const promise = getPayload(request);
 
     // we emit data, to ensure that the body attribute is preferred
-    request.emit("data", "bar");
+    request.emit("data", Buffer.from("bar"));
     request.emit("end");
 
     expect(await promise).toEqual("bar");
+  });
+
+  it("should not throw an error if non-valid utf-8 payload was received", async () => {
+    const request = new EventEmitter();
+
+    const promise = getPayload(request);
+
+    // we emit data, to ensure that the body attribute is preferred
+    request.emit("data", new Uint8Array([226]));
+    request.emit("end");
+
+    expect(await promise).toEqual("�");
   });
 });
