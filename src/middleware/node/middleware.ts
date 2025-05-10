@@ -2,12 +2,12 @@
 // see https://github.com/octokit/octokit.js/issues/2075#issuecomment-817361886
 import type { IncomingMessage, ServerResponse } from "node:http";
 
-import type { Webhooks } from "../../index.js";
-import type { WebhookEventHandlerError } from "../../types.js";
-import type { MiddlewareOptions } from "../types.js";
-import { getMissingHeaders } from "./get-missing-headers.js";
-import { getPayload } from "./get-payload.js";
-import { onUnhandledRequestDefault } from "./on-unhandled-request-default.js";
+import type { Webhooks } from "../../index.ts";
+import type { WebhookEventHandlerError } from "../../types.ts";
+import type { MiddlewareOptions } from "../types.ts";
+import { getMissingHeaders } from "./get-missing-headers.ts";
+import { getPayload } from "./get-payload.ts";
+import { onUnhandledRequestDefault } from "./on-unhandled-request-default.ts";
 
 export async function middleware(
   webhooks: Webhooks,
