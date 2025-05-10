@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { createLogger } from "../../src/createLogger.ts";
+import { createLogger } from "../../src/create-logger.ts";
 
 const noop = () => {};
 
