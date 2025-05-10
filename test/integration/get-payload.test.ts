@@ -96,7 +96,6 @@ describe("getPayload", () => {
 
     const promise = getPayload(request);
 
-    // we emit data, to ensure that the body attribute is preferred
     request.emit("data", new Uint8Array([226]));
     request.emit("end");
 
