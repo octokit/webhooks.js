@@ -98,6 +98,17 @@ describe("getPayload", () => {
     request.emit("data", new Uint8Array([0x62, 0x61, 0x72])); // bar
     request.emit("end");
 
-    assert(await promise, "bar");
+    assert((await promise) === "bar");
+  });
+
+  it("should not throw an error if non-valid utf-8 payload was received", async () => {
+    const request = new EventEmitter();
+
+    const promise = getPayload(request);
+
+    request.emit("data", new Uint8Array([226]));
+    request.emit("end");
+
+    assert((await promise) === "�");
   });
 });

@@ -1,8 +1,8 @@
-import { concatUint8Array } from "../common/concat-uint8array.ts";
+import { concatUint8Array } from "../../concat-uint8array.ts";
 
 type IncomingMessage = any;
 
-const textDecoder = new TextDecoder("utf-8");
+const textDecoder = new TextDecoder("utf-8", { fatal: false });
 const decode = textDecoder.decode.bind(textDecoder);
 
 export async function getPayload(request: IncomingMessage): Promise<string> {

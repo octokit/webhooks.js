@@ -115,7 +115,7 @@ const run = async () => {
     "// THIS FILE IS GENERATED - DO NOT EDIT DIRECTLY",
     "// make edits in scripts/generate-types.ts",
     "",
-    "import type { WebhookEventDefinition } from '../types.js';",
+    "import type { WebhookEventDefinition } from '../types.ts';",
     "",
     "export type EventPayloadMap = {",
     ...Object.keys(eventsMap).map(
