@@ -10,7 +10,19 @@ on:
       - reopened
 
 jobs:
-  test-node:
+  test-building:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version: lts/*
+      - run: npm ci
+      - run: npm run build
+
+  test_matrix:
+    needs: test-building
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -51,11 +63,11 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - test-bun
-      - test-node
+      - test_matrix
       - test-deno
     steps:
       - run: exit 1
-        if: ${{ needs.test-node.result != 'success' ||  needs.test-bun.result != 'success' || needs.test-deno.result != 'success' }}
+        if: ${{ needs.test_matrix.result != 'success' ||  needs.test-bun.result != 'success' || needs.test-deno.result != 'success' }}
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
