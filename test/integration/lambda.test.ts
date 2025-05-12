@@ -7,7 +7,7 @@ import { sign } from "@octokit/webhooks-methods";
 
 import { createNodeMiddleware, Webhooks } from "../../src/index.ts";
 import { findFreePort } from "../helpers/find-free-port.ts";
-import { concatUint8Array } from "../../src/middleware/common/concat-uint8array.ts";
+import { concatUint8Array } from "../../src/concat-uint8array.ts";
 
 const pushEventPayload = readFileSync(
   "test/fixtures/push-payload.json",
