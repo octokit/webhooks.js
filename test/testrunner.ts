@@ -3,11 +3,7 @@ declare global {
 }
 
 let describe: Function, it: Function, assert: Function;
-if (process.env.VITEST_WORKER_ID) {
-  describe = await import("vitest").then((module) => module.describe);
-  it = await import("vitest").then((module) => module.it);
-  assert = await import("vitest").then((module) => module.assert);
-} else if ("Bun" in globalThis) {
+if ("Bun" in globalThis) {
   describe = function describe(name: string, fn: Function) {
     return globalThis.Bun.jest(caller()).describe(name, fn);
   };
@@ -32,6 +28,17 @@ if (process.env.VITEST_WORKER_ID) {
 
   /** V8 CallSite (subset). */
   type CallSite = { getFileName: () => string };
+} else if ("Deno" in globalThis) {
+  const nodeTest = await import("node:test");
+  const nodeAssert = await import("node:assert");
+
+  describe = nodeTest.describe;
+  it = nodeTest.it;
+  assert = nodeAssert.strict;
+} else if (process.env.VITEST_WORKER_ID) {
+  describe = await import("vitest").then((module) => module.describe);
+  it = await import("vitest").then((module) => module.it);
+  assert = await import("vitest").then((module) => module.assert);
 } else {
   const nodeTest = await import("node:test");
   const nodeAssert = await import("node:assert");
