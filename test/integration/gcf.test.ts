@@ -7,7 +7,7 @@ import type { AddressInfo } from "node:net";
 import { sign } from "@octokit/webhooks-methods";
 
 import { createNodeMiddleware, Webhooks } from "../../src/index.ts";
-import { findFreePort } from "../helpers/find-free-port.ts";
+import getPort from "get-port";
 
 const pushEventPayload = readFileSync(
   "test/fixtures/push-payload.json",
@@ -33,7 +33,7 @@ describe("createNodeMiddleware(webhooks)", () => {
         req.body = JSON.parse(req.rawBody);
         middleware(req, res);
       });
-    }).listen(await findFreePort());
+    }).listen(await getPort());
 
     webhooks.on("push", (event) => {
       assert(event.id === "123e4567-e89b-12d3-a456-426655440000");

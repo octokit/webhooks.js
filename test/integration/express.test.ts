@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import express from "express";
 import { sign } from "@octokit/webhooks-methods";
 
-import { findFreePort } from "../helpers/find-free-port.ts";
+import getPort from "get-port";
 import { describe, it, assert } from "../testrunner.ts";
 
 import { createNodeMiddleware, Webhooks } from "../../src/index.ts";
@@ -27,7 +27,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       response.status(404).send("Dafuq"),
     );
 
-    const server = app.listen(await findFreePort());
+    const server = app.listen(await getPort());
 
     const { port } = server.address() as AddressInfo;
 
@@ -53,7 +53,7 @@ describe("createNodeMiddleware(webhooks)", () => {
     app.all("/foo", (_request: any, response: any) => response.end("ok\n"));
     app.use(createNodeMiddleware(webhooks));
 
-    const server = app.listen(await findFreePort());
+    const server = app.listen(await getPort());
 
     const { port } = server.address() as AddressInfo;
 
@@ -89,7 +89,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       response.status(404).send("Dafuq"),
     );
 
-    const server = app.listen(await findFreePort());
+    const server = app.listen(await getPort());
 
     const { port } = server.address() as AddressInfo;
 
@@ -123,7 +123,7 @@ describe("createNodeMiddleware(webhooks)", () => {
       response.status(404).send("Dafuq"),
     );
 
-    const server = app.listen(await findFreePort());
+    const server = app.listen(await getPort());
 
     const { port } = server.address() as AddressInfo;
 

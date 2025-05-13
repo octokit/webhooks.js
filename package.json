@@ -15,7 +15,7 @@
     "pretest": "npm run -s lint",
     "test": "vitest run",
     "test:bun": "bun test",
-    "test:deno": "deno test --allow-env --allow-read --allow-net",
+    "test:deno": "deno test --allow-env --allow-read --allow-net --allow-sys --no-check",
     "test:node": "node --test",
     "validate:ts": "tsc --noEmit --noImplicitAny --target es2023 --esModuleInterop --moduleResolution node16 --module node16 --allowImportingTsExtensions test/typescript-validate.ts"
   },
@@ -59,6 +59,7 @@
     "@vitest/coverage-v8": "^3.0.0",
     "esbuild": "^0.25.0",
     "express": "^5.1.0",
+    "get-port": "^7.1.0",
     "prettier": "3.5.3",
     "prettier-plugin-packagejson": "^2.2.9",
     "tsx": "^4.19.3",

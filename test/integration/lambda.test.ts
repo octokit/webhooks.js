@@ -6,7 +6,7 @@ import type { AddressInfo } from "node:net";
 import { sign } from "@octokit/webhooks-methods";
 
 import { createNodeMiddleware, Webhooks } from "../../src/index.ts";
-import { findFreePort } from "../helpers/find-free-port.ts";
+import getPort from "get-port";
 import { concatUint8Array } from "../../src/concat-uint8array.ts";
 
 const pushEventPayload = readFileSync(
@@ -33,7 +33,7 @@ describe("createNodeMiddleware(webhooks)", () => {
         req.body = new TextDecoder("utf-8").decode(payload);
         middleware(req, res);
       });
-    }).listen(await findFreePort());
+    }).listen(await getPort());
 
     webhooks.on("push", (event) => {
       assert(event.id === "123e4567-e89b-12d3-a456-426655440000");

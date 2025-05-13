@@ -3,11 +3,11 @@ import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
 import type { AddressInfo } from "node:net";
 
+import getPort from "get-port";
 import { sign } from "@octokit/webhooks-methods";
 
 import { createNodeMiddleware, Webhooks } from "../../src/index.ts";
 import { instantiateTestServer } from "../helpers/test-server.ts";
-import { findFreePort } from "../helpers/find-free-port.ts";
 
 const pushEventPayload = readFileSync(
   "test/fixtures/push-payload.json",
@@ -227,7 +227,7 @@ runtimes.forEach((runtimeCase) => {
           res.write("nope.");
           res.end();
         }
-      }).listen(await findFreePort());
+      }).listen(await getPort());
 
       const { port } = server.address() as AddressInfo;
 
@@ -472,9 +472,7 @@ runtimes.forEach((runtimeCase) => {
         middlewareWasRan();
       };
 
-      const server = createServer(mockedMiddleware).listen(
-        await findFreePort(),
-      );
+      const server = createServer(mockedMiddleware).listen(await getPort());
 
       const { port } = server.address() as AddressInfo;
 

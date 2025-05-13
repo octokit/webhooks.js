@@ -4,7 +4,7 @@ import {
   createWebMiddleware,
   Webhooks,
 } from "../../src/index.ts";
-import { findFreePort } from "./find-free-port.ts";
+import getPort from "get-port";
 import type { MiddlewareOptions } from "../../src/middleware/types.ts";
 
 type TestServer = {
@@ -18,7 +18,7 @@ export async function instantiateTestServer(
   webhooks: Webhooks,
   options?: MiddlewareOptions,
 ): Promise<TestServer> {
-  const port = await findFreePort();
+  const port = await getPort();
   if (
     runtime === "Node" ||
     (runtime === "Deno" && target === "Node") ||
