@@ -1,17 +1,27 @@
 import { createLogger } from "../../create-logger.ts";
 import type { Webhooks } from "../../index.ts";
-import { middleware } from "./middleware.ts";
 import type { MiddlewareOptions } from "../types.ts";
+
+import { createMiddleware } from "../create-middleware.ts";
+import { getPayload } from "./get-payload.ts";
+import { getRequestHeader } from "./get-request-header.ts";
+import { handleResponse } from "./handle-response.ts";
 
 export function createWebMiddleware(
   webhooks: Webhooks,
   {
     path = "/api/github/webhooks",
     log = createLogger(),
+    timeout = 9000,
   }: MiddlewareOptions = {},
 ) {
-  return middleware.bind(null, webhooks, {
+  return createMiddleware({
+    handleResponse,
+    getRequestHeader,
+    getPayload,
+  })(webhooks, {
     path,
     log,
+    timeout,
   } as Required<MiddlewareOptions>);
 }
