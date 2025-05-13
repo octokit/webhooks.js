@@ -15,6 +15,7 @@ import type {
   WebhookError,
   WebhookEventHandlerError,
   EmitterWebhookEventWithStringPayloadAndSignature,
+  MiddlewareOptions,
 } from "./types.ts";
 
 export { createNodeMiddleware } from "./middleware/node/index.ts";
@@ -82,4 +83,5 @@ export {
   type EmitterWebhookEvent,
   type EmitterWebhookEventName,
   type WebhookError,
+  type MiddlewareOptions,
 };
