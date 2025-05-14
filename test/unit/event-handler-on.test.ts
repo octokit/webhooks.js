@@ -1,4 +1,4 @@
-import { expect, test, beforeEach, vi } from "vitest";
+import { it, assert } from "../testrunner.ts";
 import { receiverOn } from "../../src/event-handler/on.ts";
 import type { State } from "../../src/types.ts";
 
@@ -9,33 +9,55 @@ const state: State = {
   log: console,
 };
 
-beforeEach(() => {
-  vi.resetAllMocks();
-});
+it("receiver.on with invalid event name", () => {
+  const consoleWarn = console.warn;
+  let warnCalls: any[][] = [];
 
-// Test broken with TypeScript without the ignore
-test("receiver.on with invalid event name", () => {
-  const consoleWarnSpy = vi.spyOn(console, "warn").mockImplementation(noop);
+  console.warn = function (...args: any[]) {
+    warnCalls.push(args);
+  };
 
   // @ts-expect-error
   receiverOn(state, "foo", noop);
 
-  expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
-  expect(consoleWarnSpy).toHaveBeenLastCalledWith(
-    '"foo" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)',
+  assert(warnCalls.length === 1);
+  assert(
+    warnCalls[0][0] ===
+      '"foo" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)',
   );
+
+  // Restore the original console.warn function
+  console.warn = consoleWarn;
 });
 
-test("receiver.on with event name of '*' throws an error", () => {
-  // @ts-expect-error
-  expect(() => receiverOn(state, "*", noop)).toThrow(
-    'Using the "*" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.onAny() method instead',
-  );
+it("receiver.on with event name of '*' throws an error", () => {
+  try {
+    // @ts-expect-error
+    receiverOn(state, "*", noop);
+    assert(false);
+  } catch (error) {
+    assert(error instanceof Error);
+    if (error instanceof Error) {
+      assert(
+        error.message ===
+          'Using the "*" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.onAny() method instead',
+      );
+    }
+  }
 });
 
-test("receiver.on with event name of 'error' throws an error", () => {
-  // @ts-expect-error
-  expect(() => receiverOn(state, "error", noop)).toThrow(
-    'Using the "error" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.onError() method instead',
-  );
+it("receiver.on with event name of 'error' throws an error", () => {
+  try {
+    // @ts-expect-error
+    receiverOn(state, "error", noop);
+    assert(false);
+  } catch (error) {
+    assert(error instanceof Error);
+    if (error instanceof Error) {
+      assert(
+        error.message ===
+          'Using the "error" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.onError() method instead',
+      );
+    }
+  }
 });
