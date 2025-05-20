@@ -1,5 +1,5 @@
 name: Test
-"on":
+on:
   push:
     branches:
       - dependabot/npm_and_yarn/**
@@ -7,6 +7,8 @@ name: Test
     types:
       - opened
       - synchronize
+      - reopened
+
 jobs:
   test-building:
     runs-on: ubuntu-latest
@@ -20,8 +22,7 @@ jobs:
       - run: npm run build
 
   test_matrix:
-    needs:
-      - test-building
+    needs: test-building
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -39,14 +40,27 @@ jobs:
       - run: npm ci
       - run: npm test
 
-  test:
+  test-deno:
     runs-on: ubuntu-latest
-    needs:
-      - test-building
-      - test_matrix
     steps:
-      - run: exit 1
-        if: ${{ needs.test_matrix.result != 'success' }}
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x # Run with latest stable Deno.
+      - run: deno install
+      - run: deno test --allow-env --allow-read --allow-net --allow-sys --no-check
+
+  test-bun:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install
+      - run: bun test
+            
+  validate-typescript:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -54,4 +68,15 @@ jobs:
           node-version: lts/*
       - run: npm ci
       - run: npm run validate:ts
+
+  test:
+    runs-on: ubuntu-latest
+    needs:
+      - test-bun
+      - test_matrix
+      - test-deno
+      - validate-typescript
+    steps:
+      - run: exit 1
+        if: ${{ needs.test_matrix.result != 'success' ||  needs.test-bun.result != 'success' || needs.test-deno.result != 'success' }}
     if: ${{ always() }}

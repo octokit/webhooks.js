@@ -1,5 +1,5 @@
+import { describe, it, assert } from "../testrunner.ts";
 import { readFileSync } from "node:fs";
-import { describe, test, expect } from "vitest";
 import { sign } from "@octokit/webhooks-methods";
 
 import { Webhooks } from "../../src/index.ts";
@@ -10,21 +10,27 @@ const pushEventPayloadString = readFileSync(
 );
 
 describe("Webhooks", () => {
-  test("new Webhooks() without secret option", () => {
-    // @ts-expect-error
-    expect(() => new Webhooks()).toThrow(
-      "[@octokit/webhooks] options.secret required",
-    );
+  it("new Webhooks() without secret option", () => {
+    try {
+      // @ts-expect-error
+      new Webhooks();
+      assert(false);
+    } catch (error) {
+      assert(error instanceof Error);
+      if (error instanceof Error) {
+        assert(error.message === "[@octokit/webhooks] options.secret required");
+      }
+    }
   });
 
-  test("webhooks.sign(payload) with string payload", async () => {
+  it("webhooks.sign(payload) with string payload", async () => {
     const secret = "mysecret";
     const webhooks = new Webhooks({ secret });
 
     await webhooks.sign(pushEventPayloadString);
   });
 
-  test("webhooks.verify(payload, signature) with string payload", async () => {
+  it("webhooks.verify(payload, signature) with string payload", async () => {
     const secret = "mysecret";
     const webhooks = new Webhooks({ secret });
 
@@ -34,7 +40,7 @@ describe("Webhooks", () => {
     );
   });
 
-  test("webhooks.verifyAndReceive({ ...event, signature }) with string payload", async () => {
+  it("webhooks.verifyAndReceive({ ...event, signature }) with string payload", async () => {
     const secret = "mysecret";
     const webhooks = new Webhooks({ secret });
 
@@ -46,32 +52,56 @@ describe("Webhooks", () => {
     });
   });
 
-  test("webhooks.verifyAndReceive(event) with incorrect signature", async () => {
+  it("webhooks.verifyAndReceive(event) with incorrect signature", async () => {
     const webhooks = new Webhooks({ secret: "mysecret" });
 
     const pingPayload = "{}";
-    await expect(async () =>
-      webhooks.verifyAndReceive({
+
+    try {
+      await webhooks.verifyAndReceive({
         id: "1",
         name: "ping",
         payload: pingPayload,
         signature: "nope",
-      }),
-    ).rejects.toThrow(
-      "[@octokit/webhooks] signature does not match event payload and secret",
-    );
+      });
+    } catch (error) {
+      if (error instanceof AggregateError === false) {
+        assert(false);
+        return;
+      }
+      assert(
+        error.message ===
+          "[@octokit/webhooks] signature does not match event payload and secret",
+      );
+      assert(error.errors.length === 1);
+      assert(error.errors[0] instanceof Error);
+      assert(
+        error.errors[0].message ===
+          "[@octokit/webhooks] signature does not match event payload and secret",
+      );
+    }
   });
 
-  test("webhooks.receive(error)", async () => {
+  it("webhooks.receive(error)", async () => {
     const webhooks = new Webhooks({ secret: "mysecret" });
 
     webhooks.onError((error) => {
-      expect(error.message).toMatch(/oops/);
+      assert(/oops/.test(error.message));
     });
 
-    await expect(async () =>
+    try {
       // @ts-expect-error
-      webhooks.receive(new Error("oops")),
-    ).rejects.toThrow();
+      await webhooks.receive(new Error("oops"));
+      assert(false);
+    } catch (error) {
+      if (error instanceof AggregateError === false) {
+        assert(false);
+        return;
+      }
+      assert(error.message === "oops");
+      assert(error.errors.length === 1);
+      assert(error.errors[0] instanceof Error);
+      assert(error.errors[0].message === "oops");
+    }
   });
 });

@@ -1,4 +1,4 @@
-import { describe, test, expect, it } from "vitest";
+import { describe, it, assert } from "../testrunner.ts";
 import { createEventHandler } from "../../src/event-handler/index.ts";
 import type {
   EmitterWebhookEvent,
@@ -8,8 +8,9 @@ import {
   installationCreatedPayload,
   pushEventPayload,
 } from "../fixtures/index.ts";
+import { assertError } from "../helpers/assert-error.ts";
 
-test("events", async () => {
+it("ensure correct order of events", async () => {
   const eventHandler = createEventHandler({});
 
   const hooksCalled: string[] = [];
@@ -63,21 +64,17 @@ test("events", async () => {
     payload: installationCreatedPayload,
   });
 
-  expect(hooksCalled).toMatchInlineSnapshot(`
-    [
-      "hook2",
-      "* (push)",
-      "hook1",
-      "installation.created",
-      "installation",
-      "* (installation)",
-    ]
-  `);
+  assert(hooksCalled.length === 6);
+  assert(hooksCalled[0] === "hook2");
+  assert(hooksCalled[1] === "* (push)");
+  assert(hooksCalled[2] === "hook1");
+  assert(hooksCalled[3] === "installation.created");
+  assert(hooksCalled[4] === "installation");
+  assert(hooksCalled[5] === "* (installation)");
 });
 
 describe("when a handler throws an error", () => {
   it("throws an aggregated error", async () => {
-    expect.assertions(4);
     const eventHandler = createEventHandler({});
 
     eventHandler.on("push", () => {
@@ -90,32 +87,35 @@ describe("when a handler throws an error", () => {
         name: "push",
         payload: pushEventPayload,
       });
+      assert(false);
     } catch (error: any) {
-      expect(error.message).toMatch(/oops/);
+      assert(error.message === "oops");
 
       const errors = Array.from(error.errors);
-
-      expect(errors.length).toBe(1);
-      expect(
-        (Array.from(error.errors) as { message: string }[])[0].message,
-      ).toBe("oops");
-
-      expect(error instanceof Error).toBeTruthy();
+      assert(errors.length === 1);
+      assert(
+        (Array.from(error.errors) as { message: string }[])[0].message ===
+          "oops",
+      );
+      assert(error instanceof Error);
     }
   });
 
   it("calls any registered error handlers", async () => {
-    expect.assertions(2);
     const eventHandler = createEventHandler({});
+    let done = false;
 
     eventHandler.on("push", () => {
       throw new Error("oops");
     });
 
-    return new Promise<void>(async (resolve) => {
+    await new Promise<void>(async (resolve) => {
       eventHandler.onError((error: WebhookEventHandlerError) => {
-        expect(error.event.payload).toBeTruthy();
-        expect(error.message).toMatch(/oops/);
+        assert(error.event.payload);
+        assert(error.event.name === "push");
+        assert(error.event.id === "123");
+        assert(error.message === "oops");
+        done = true;
 
         resolve();
       });
@@ -130,31 +130,37 @@ describe("when a handler throws an error", () => {
         // ignore any errors
       }
     });
+
+    assert(done);
   });
 });
 
-test("options.transform", () => {
-  expect.assertions(2);
+it("options.transform", async () => {
+  let assertsCounted = 0;
 
   const eventHandler = createEventHandler({
     transform: (event) => {
-      expect(event.id).toBe("123");
+      assert(event.id === "123");
+      assertsCounted++;
       return "funky";
     },
   });
 
   eventHandler.on("push", (event: EmitterWebhookEvent) => {
-    expect(event).toBe("funky");
+    assert((event as unknown as string) === "funky");
+    assertsCounted++;
   });
 
-  eventHandler.receive({
+  await eventHandler.receive({
     id: "123",
     name: "push",
     payload: pushEventPayload,
   });
+  assert(assertsCounted === 2);
 });
 
-test("async options.transform", () => {
+it("async options.transform", async () => {
+  let done = false;
   const eventHandler = createEventHandler({
     transform: () => {
       return Promise.resolve("funky");
@@ -162,19 +168,20 @@ test("async options.transform", () => {
   });
 
   eventHandler.on("push", (event: EmitterWebhookEvent) => {
-    expect(event).toBe("funky");
+    assert((event as unknown as string) === "funky");
+    done = true;
   });
 
-  eventHandler.receive({
+  await eventHandler.receive({
     id: "123",
     name: "push",
     payload: pushEventPayload,
   });
+
+  assert(done);
 });
 
-test("multiple errors in same event handler", async () => {
-  expect.assertions(3);
-
+it("multiple errors in same event handler", async () => {
   const eventHandler = createEventHandler({});
 
   eventHandler.on("push", () => {
@@ -191,10 +198,10 @@ test("multiple errors in same event handler", async () => {
       name: "push",
       payload: pushEventPayload,
     });
+    assert(false);
   } catch (error: any) {
-    expect(error.message).toMatch("oops");
-    expect(Array.from(error.errors).length).toBe(2);
-
-    expect(error instanceof Error);
+    assertError<AggregateError>(error, AggregateError);
+    assert(error.message === "oops\noops");
+    assert(error.errors.length === 2);
   }
 });
