@@ -1,6 +1,5 @@
 import { createLogger } from "../../create-logger.ts";
-import type { Webhooks } from "../../index.ts";
-import type { MiddlewareOptions } from "../types.ts";
+import type { MiddlewareOptions, Webhooks } from "../../index.ts";
 
 import { createMiddleware } from "../create-middleware.ts";
 import { getPayload } from "./get-payload.ts";

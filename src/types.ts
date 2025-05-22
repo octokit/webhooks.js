@@ -5,6 +5,12 @@ import type { Logger } from "./create-logger.ts";
 import type { EventHandler } from "./event-handler/index.ts";
 import type { emitterEventNames } from "./generated/webhook-names.ts";
 
+export type MiddlewareOptions = {
+  timeout?: number;
+  path?: string;
+  log?: Logger;
+};
+
 export type WebhookEventName = keyof EventPayloadMap;
 export type ExtractEvents<TEventName> =
   TEventName extends `${infer _TWebhookEvent}.${infer _TAction}`
