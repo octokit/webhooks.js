@@ -30,7 +30,7 @@ function getHooks(
 export function receiverHandle(
   state: State,
   event: EmitterWebhookEvent | WebhookError,
-) {
+): Promise<void> {
   const errorHandlers = state.hooks.error || [];
 
   if (event instanceof Error) {

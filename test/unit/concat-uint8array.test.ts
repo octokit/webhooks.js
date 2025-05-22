@@ -1,4 +1,4 @@
-import { describe, it, assert } from "vitest";
+import { describe, it, assert } from "../testrunner.ts";
 
 import { concatUint8Array } from "../../src/concat-uint8array.ts";
 

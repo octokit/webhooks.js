@@ -13,7 +13,10 @@
     "lint": "prettier --check 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json 'src/event-handler/README.md'",
     "lint:fix": "prettier --write 'src/**/*.{ts,json}' 'scripts/**/*' 'test/**/*.ts' README.md package.json 'src/event-handler/README.md'",
     "pretest": "npm run -s lint",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:bun": "bun test",
+    "test:deno": "deno test --allow-env --allow-read --allow-net --allow-sys --no-check",
+    "test:node": "node --test",
     "validate:ts": "tsc --noEmit --noImplicitAny --target es2023 --esModuleInterop --moduleResolution node16 --module node16 --allowImportingTsExtensions test/typescript-validate.ts"
   },
   "prettier": {
@@ -45,16 +48,18 @@
   },
   "dependencies": {
     "@octokit/openapi-webhooks-types": "11.0.0",
-    "@octokit/request-error": "^6.1.7",
-    "@octokit/webhooks-methods": "^5.1.1"
+    "@octokit/request-error": "^7.0.0",
+    "@octokit/webhooks-methods": "^6.0.0"
   },
   "devDependencies": {
     "@octokit/openapi-webhooks": "11.0.0",
     "@octokit/tsconfig": "^4.0.0",
+    "@types/express": "^5.0.1",
     "@types/node": "^22.0.0",
     "@vitest/coverage-v8": "^3.0.0",
     "esbuild": "^0.25.0",
-    "express": "^4.17.1",
+    "express": "^5.1.0",
+    "get-port": "^7.1.0",
     "prettier": "3.5.3",
     "prettier-plugin-packagejson": "^2.2.9",
     "tsx": "^4.19.3",
@@ -62,7 +67,7 @@
     "vitest": "^3.0.0"
   },
   "engines": {
-    "node": ">= 18"
+    "node": ">= 20"
   },
   "publishConfig": {
     "access": "public",

@@ -36,8 +36,7 @@ export function getPayloadFromRequestStream(
     request.on("data", data.push.bind(data));
     request.on("end", () => {
       const result = concatUint8Array(data);
-      // Switch to queue microtask when we want to support bun and deno
-      setImmediate(resolve, result);
+      queueMicrotask(() => resolve(result));
     });
   });
 }
