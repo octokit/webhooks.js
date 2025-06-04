@@ -1,4 +1,4 @@
-import { describe, it, assert } from "../testrunner.ts";
+import { describe, it, assert, deepEqual } from "../testrunner.ts";
 import { readFileSync } from "node:fs";
 import { sign } from "@octokit/webhooks-methods";
 
@@ -80,6 +80,24 @@ describe("Webhooks", () => {
           "[@octokit/webhooks] signature does not match event payload and secret",
       );
     }
+  });
+
+  it("webhooks.verifyAndParse(event) with correct signature", async () => {
+    const secret = "mysecret";
+    const webhooks = new Webhooks({ secret });
+
+    const event = await webhooks.verifyAndParse({
+      id: "1",
+      name: "push",
+      payload: pushEventPayloadString,
+      signature: await sign(secret, pushEventPayloadString),
+    });
+    assert(typeof event === "object");
+    deepEqual(event, {
+      name: "push",
+      id: "1",
+      payload: JSON.parse(pushEventPayloadString),
+    });
   });
 
   it("webhooks.receive(error)", async () => {
