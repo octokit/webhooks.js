@@ -24,6 +24,7 @@ it("check exports of @octokit/webhooks", () => {
   assert(typeof api.removeListener === "function");
   assert(typeof api.receive === "function");
   assert(typeof api.verifyAndReceive === "function");
+  assert(typeof api.verifyAndParse === "function");
   assert(typeof api.onAny === "function");
   assert(warned === false);
 

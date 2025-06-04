@@ -16,6 +16,7 @@ import type {
   WebhookEventHandlerError,
   EmitterWebhookEventWithStringPayloadAndSignature,
 } from "./types.ts";
+import { verifyAndParse } from "./verify-and-parse.ts";
 
 export { createNodeMiddleware } from "./middleware/node/index.ts";
 export { createWebMiddleware } from "./middleware/web/index.ts";
@@ -47,6 +48,9 @@ class Webhooks<TTransformed = unknown> {
   public verifyAndReceive: (
     options: EmitterWebhookEventWithStringPayloadAndSignature,
   ) => Promise<void>;
+  verifyAndParse: (
+    event: EmitterWebhookEventWithStringPayloadAndSignature,
+  ) => Promise<EmitterWebhookEvent | WebhookError>;
 
   constructor(options: Options<TTransformed> & { secret: string }) {
     if (!options || !options.secret) {
@@ -73,6 +77,15 @@ class Webhooks<TTransformed = unknown> {
     this.removeListener = state.eventHandler.removeListener;
     this.receive = state.eventHandler.receive;
     this.verifyAndReceive = verifyAndReceive.bind(null, state);
+    this.verifyAndParse = async (
+      event: EmitterWebhookEventWithStringPayloadAndSignature,
+    ) => {
+      return verifyAndParse(
+        state.secret,
+        event,
+        state.additionalSecrets,
+      ) as Promise<EmitterWebhookEvent | WebhookError>;
+    };
   }
 }
 

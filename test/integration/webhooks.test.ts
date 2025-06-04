@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { sign } from "@octokit/webhooks-methods";
 
 import { Webhooks } from "../../src/index.ts";
+import { expect } from "vitest";
 
 const pushEventPayloadString = readFileSync(
   "test/fixtures/push-payload.json",
@@ -80,6 +81,24 @@ describe("Webhooks", () => {
           "[@octokit/webhooks] signature does not match event payload and secret",
       );
     }
+  });
+
+  it("webhooks.verifyAndParse(event) with correct signature", async () => {
+    const secret = "mysecret";
+    const webhooks = new Webhooks({ secret });
+
+    const event = await webhooks.verifyAndParse({
+      id: "1",
+      name: "push",
+      payload: pushEventPayloadString,
+      signature: await sign(secret, pushEventPayloadString),
+    });
+    assert(typeof event === "object");
+    expect(event).toEqual({
+      name: "push",
+      id: "1",
+      payload: JSON.parse(pushEventPayloadString),
+    });
   });
 
   it("webhooks.receive(error)", async () => {
