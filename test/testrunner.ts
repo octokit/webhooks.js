@@ -13,6 +13,11 @@ if ("Bun" in globalThis) {
   assert = function assert(value: unknown, message?: string) {
     return globalThis.Bun.jest(caller()).expect(value, message);
   };
+  deepEqual = function deepEqual(expected: any, actual: any, message?: string) {
+    return globalThis.Bun.jest(caller())
+      .expect(actual)
+      .toEqual(expected, message);
+  };
   /** Retrieve caller test file. */
   function caller() {
     const Trace = Error as unknown as {
