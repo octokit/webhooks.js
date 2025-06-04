@@ -40,7 +40,10 @@ if ("Bun" in globalThis) {
   describe = await import("vitest").then((module) => module.describe);
   it = await import("vitest").then((module) => module.it);
   assert = await import("vitest").then((module) => module.assert);
-  deepEqual = await import("vitest").then((module) => (expected: any, actual: any) => module.expect(actual).toEqual(expected));
+  deepEqual = await import("vitest").then(
+    (module) => (expected: any, actual: any) =>
+      module.expect(actual).toEqual(expected),
+  );
 } else {
   const nodeTest = await import("node:test");
   const nodeAssert = await import("node:assert");

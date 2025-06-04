@@ -80,11 +80,7 @@ class Webhooks<TTransformed = unknown> {
     this.verifyAndParse = async (
       event: EmitterWebhookEventWithStringPayloadAndSignature,
     ) => {
-      return verifyAndParse(
-        state.secret,
-        event,
-        state.additionalSecrets,
-      );
+      return verifyAndParse(state.secret, event, state.additionalSecrets);
     };
   }
 }

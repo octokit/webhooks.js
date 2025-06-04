@@ -93,7 +93,7 @@ describe("Webhooks", () => {
       signature: await sign(secret, pushEventPayloadString),
     });
     assert(typeof event === "object");
-    deepEqual(event,{
+    deepEqual(event, {
       name: "push",
       id: "1",
       payload: JSON.parse(pushEventPayloadString),
