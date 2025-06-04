@@ -1,9 +1,8 @@
-import { describe, it, assert } from "../testrunner.ts";
+import { describe, it, assert, deepEqual } from "../testrunner.ts";
 import { readFileSync } from "node:fs";
 import { sign } from "@octokit/webhooks-methods";
 
 import { Webhooks } from "../../src/index.ts";
-import { expect } from "vitest";
 
 const pushEventPayloadString = readFileSync(
   "test/fixtures/push-payload.json",
@@ -94,7 +93,7 @@ describe("Webhooks", () => {
       signature: await sign(secret, pushEventPayloadString),
     });
     assert(typeof event === "object");
-    expect(event).toEqual({
+    deepEqual(event,{
       name: "push",
       id: "1",
       payload: JSON.parse(pushEventPayloadString),

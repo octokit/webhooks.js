@@ -2,7 +2,7 @@ declare global {
   var Bun: any;
 }
 
-let describe: Function, it: Function, assert: Function;
+let describe: Function, it: Function, assert: Function, deepEqual: Function;
 if ("Bun" in globalThis) {
   describe = function describe(name: string, fn: Function) {
     return globalThis.Bun.jest(caller()).describe(name, fn);
@@ -35,10 +35,12 @@ if ("Bun" in globalThis) {
   describe = nodeTest.describe;
   it = nodeTest.it;
   assert = nodeAssert.strict;
+  deepEqual = nodeAssert.deepStrictEqual;
 } else if (process.env.VITEST_WORKER_ID) {
   describe = await import("vitest").then((module) => module.describe);
   it = await import("vitest").then((module) => module.it);
   assert = await import("vitest").then((module) => module.assert);
+  deepEqual = await import("vitest").then((module) => (expected: any, actual: any) => module.expect(actual).toEqual(expected));
 } else {
   const nodeTest = await import("node:test");
   const nodeAssert = await import("node:assert");
@@ -46,6 +48,7 @@ if ("Bun" in globalThis) {
   describe = nodeTest.describe;
   it = nodeTest.it;
   assert = nodeAssert.strict;
+  deepEqual = nodeAssert.deepStrictEqual;
 }
 
-export { describe, it, assert };
+export { describe, it, assert, deepEqual };
