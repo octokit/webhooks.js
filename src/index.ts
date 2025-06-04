@@ -84,7 +84,7 @@ class Webhooks<TTransformed = unknown> {
         state.secret,
         event,
         state.additionalSecrets,
-      ) as Promise<EmitterWebhookEvent | WebhookError>;
+      );
     };
   }
 }
