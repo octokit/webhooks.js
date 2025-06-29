@@ -22,6 +22,7 @@
   - [createNodeMiddleware()](#createnodemiddleware)
   - [Webhook events](#webhook-events)
   - [emitterEventNames](#emittereventnames)
+  - [validateEventName](#validateeventname)
 - [TypeScript](#typescript)
   - [`EmitterWebhookEventName`](#emitterwebhookeventname)
   - [`EmitterWebhookEvent`](#emitterwebhookevent)
@@ -87,18 +88,19 @@ source.onmessage = (event) => {
 ## API
 
 1. [Constructor](#constructor)
-2. [webhooks.sign()](#webhookssign)
-3. [webhooks.verify()](#webhooksverify)
-4. [webhooks.verifyAndReceive()](#webhooksverifyandreceive)
-5. [webhooks.receive()](#webhooksreceive)
-6. [webhooks.on()](#webhookson)
-7. [webhooks.onAny()](#webhooksonany)
-8. [webhooks.onError()](#webhooksonerror)
-9. [webhooks.removeListener()](#webhooksremovelistener)
-10. [createNodeMiddleware()](#createnodemiddleware)
-11. [createWebMiddleware()](#createwebmiddleware)
-12. [Webhook events](#webhook-events)
-13. [emitterEventNames](#emittereventnames)
+1. [webhooks.sign()](#webhookssign)
+1. [webhooks.verify()](#webhooksverify)
+1. [webhooks.verifyAndReceive()](#webhooksverifyandreceive)
+1. [webhooks.receive()](#webhooksreceive)
+1. [webhooks.on()](#webhookson)
+1. [webhooks.onAny()](#webhooksonany)
+1. [webhooks.onError()](#webhooksonerror)
+1. [webhooks.removeListener()](#webhooksremovelistener)
+1. [createNodeMiddleware()](#createnodemiddleware)
+1. [createWebMiddleware()](#createwebmiddleware)
+1. [Webhook events](#webhook-events)
+1. [emitterEventNames](#emittereventnames)
+1. [validateEventName](#validateeventname)
 
 ### Constructor
 
@@ -722,6 +724,34 @@ A read only tuple containing all the possible combinations of the webhook events
 ```js
 import { emitterEventNames } from "@octokit/webhooks";
 emitterEventNames; // ["check_run", "check_run.completed", ...]
+```
+
+### validateEventName
+
+The function `validateEventName` asserts that the provided event name is a valid event name or event/action combination.
+It throws an error if the event name is not valid, or '\*' or 'error' is passed.
+
+The second parameter is an optional options object that can be used to customize the behavior of the validation. You can set
+a `onUnknownEventName` property to `"warn"` to log a warning instead of throwing an error, and a `log` property to provide a custom logger object, which should have a `"warn"` method. You can also set `onUnknownEventName` to `"ignore"` to disable logging or throwing an error for unknown event names.
+
+```ts
+import { validateEventName } from "@octokit/webhooks";
+
+validateEventName("push"); // no error
+validateEventName("invalid_event"); // throws an error
+validateEventName("*"); // throws an error
+validateEventName("error"); // throws an error
+
+validateEventName("invalid_event", { onUnknownEventName: "warn" }); // logs a warning
+validateEventName("invalid_event", {
+  onUnknownEventName: false,
+  log: {
+    warn: console.info, // instead of warning we just log it via console.info
+  },
+});
+
+validateEventName("*", { onUnkownEventName: "ignore" }); // throws an error
+validateEventName("invalid_event", { onUnkownEventName: "ignore" }); // no error, no warning
 ```
 
 ## TypeScript

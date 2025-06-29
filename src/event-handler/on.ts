@@ -1,10 +1,10 @@
-import { emitterEventNames } from "../generated/webhook-names.ts";
 import type {
   EmitterWebhookEvent,
   EmitterWebhookEventName,
   State,
   WebhookEventHandlerError,
 } from "../types.ts";
+import { validateEventName } from "./validate-event-name.ts";
 
 function handleEventHandlers(
   state: State,
@@ -29,22 +29,10 @@ export function receiverOn(
     return;
   }
 
-  if (["*", "error"].includes(webhookNameOrNames)) {
-    const webhookName =
-      (webhookNameOrNames as string) === "*" ? "any" : webhookNameOrNames;
-
-    const message = `Using the "${webhookNameOrNames}" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.on${
-      webhookName.charAt(0).toUpperCase() + webhookName.slice(1)
-    }() method instead`;
-
-    throw new Error(message);
-  }
-
-  if (!emitterEventNames.includes(webhookNameOrNames)) {
-    state.log.warn(
-      `"${webhookNameOrNames}" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)`,
-    );
-  }
+  validateEventName(webhookNameOrNames, {
+    onUnknownEventName: "warn",
+    log: state.log,
+  });
 
   handleEventHandlers(state, webhookNameOrNames, handler);
 }
