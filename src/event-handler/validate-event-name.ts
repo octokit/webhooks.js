@@ -7,6 +7,9 @@ type ValidateEventNameOptions =
       onUnknownEventName?: undefined | "throw";
     }
   | {
+      onUnknownEventName: "ignore";
+    }
+  | {
       onUnknownEventName: "warn";
       log?: Pick<Logger, "warn">;
     };
@@ -16,9 +19,9 @@ export function validateEventName<
 >(
   eventName: EmitterWebhookEventName | (string & Record<never, never>),
   options: O = {} as O,
-): asserts eventName is O extends { onUnknownEventName: "warn" }
-  ? Exclude<string, "*" | "error">
-  : EmitterWebhookEventName {
+): asserts eventName is O extends { onUnknownEventName: "throw" }
+  ? EmitterWebhookEventName
+  : Exclude<string, "*" | "error"> {
   if (typeof eventName !== "string") {
     throw new TypeError("eventName must be of type string");
   }
@@ -31,6 +34,10 @@ export function validateEventName<
     throw new TypeError(
       `Using the "error" event with the regular Webhooks.on() function is not supported. Please use the Webhooks.onError() method instead`,
     );
+  }
+
+  if (options.onUnknownEventName === "ignore") {
+    return;
   }
 
   if (!emitterEventNames.includes(eventName as EmitterWebhookEventName)) {

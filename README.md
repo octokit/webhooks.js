@@ -732,7 +732,7 @@ The function `validateEventName` asserts that the provided event name is a valid
 It throws an error if the event name is not valid, or '\*' or 'error' is passed.
 
 The second parameter is an optional options object that can be used to customize the behavior of the validation. You can set
-a `onUnknownEventName` property to `warn` to log a warning instead of throwing an error, and a `log` property to provide a custom logger object, which should have a `warn` method.
+a `onUnknownEventName` property to `"warn"` to log a warning instead of throwing an error, and a `log` property to provide a custom logger object, which should have a `"warn"` method. You can also set `onUnknownEventName` to `"ignore"` to disable logging or throwing an error for unknown event names.
 
 ```ts
 import { validateEventName } from "@octokit/webhooks";
@@ -749,6 +749,9 @@ validateEventName("invalid_event", {
     warn: console.info, // instead of warning we just log it via console.info
   },
 });
+
+validateEventName("*", { onUnkownEventName: "ignore" }); // throws an error
+validateEventName("invalid_event", { onUnkownEventName: "ignore" }); // no error, no warning
 ```
 
 ## TypeScript
