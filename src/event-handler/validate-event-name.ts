@@ -15,11 +15,11 @@ type ValidateEventNameOptions =
     };
 
 export function validateEventName<
-  O extends ValidateEventNameOptions = ValidateEventNameOptions,
+  TOptions extends ValidateEventNameOptions = ValidateEventNameOptions,
 >(
   eventName: EmitterWebhookEventName | (string & Record<never, never>),
-  options: O = {} as O,
-): asserts eventName is O extends { onUnknownEventName: "throw" }
+  options: TOptions = {} as TOptions,
+): asserts eventName is TOptions extends { onUnknownEventName: "throw" }
   ? EmitterWebhookEventName
   : Exclude<string, "*" | "error"> {
   if (typeof eventName !== "string") {
