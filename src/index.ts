@@ -3,6 +3,7 @@ import {
   createEventHandler,
   type EventHandler,
 } from "./event-handler/index.ts";
+import { validateEventName } from "./event-handler/validate-event-name.ts";
 import { sign, verify } from "@octokit/webhooks-methods";
 import { verifyAndReceive } from "./verify-and-receive.ts";
 import type {
@@ -78,6 +79,7 @@ class Webhooks<TTransformed = unknown> {
 
 export {
   createEventHandler,
+  validateEventName,
   Webhooks,
   type EmitterWebhookEvent,
   type EmitterWebhookEventName,
