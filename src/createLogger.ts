@@ -5,10 +5,18 @@ export interface Logger {
   error: (...data: any[]) => void;
 }
 
-export const createLogger = (logger?: Partial<Logger>): Logger => ({
-  debug: () => {},
-  info: () => {},
-  warn: console.warn.bind(console),
-  error: console.error.bind(console),
-  ...logger,
-});
+export const createLogger = (logger = {} as Partial<Logger>): Logger => {
+  if (typeof logger.debug !== "function") {
+    logger.debug = () => {};
+  }
+  if (typeof logger.info !== "function") {
+    logger.info = () => {};
+  }
+  if (typeof logger.warn !== "function") {
+    logger.warn = console.warn.bind(console);
+  }
+  if (typeof logger.error !== "function") {
+    logger.error = console.error.bind(console);
+  }
+  return logger as Logger;
+};
