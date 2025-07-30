@@ -1,6 +1,7 @@
 import type { WebhookEventName } from "../generated/webhook-identifiers.ts";
 
 import type { Webhooks } from "../index.ts";
+import { stripTrailingSlashes } from "../strip-trailing-slashes.ts";
 import type { WebhookEventHandlerError } from "../types.ts";
 import type { MiddlewareOptions } from "./types.ts";
 
@@ -14,15 +15,6 @@ type CreateMiddlewareOptions = {
   getPayload: (request: Request) => Promise<string>;
   getRequestHeader: <T = string>(request: Request, key: string) => T;
 };
-
-const stripTrailingSlashRE = /^\/$|^\/?(\/+)$|(\/+)$/u;
-
-function stripTrailingSlash(path: string) {
-  if (path === "/") {
-    return path;
-  }
-  return path.replace(stripTrailingSlashRE, "");
-}
 
 const isApplicationJsonRE = /^\s*(application\/json)\s*(?:;|$)/u;
 
@@ -42,7 +34,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
     webhooks: Webhooks,
     options: Required<MiddlewareOptions>,
   ) {
-    const middlewarePath = stripTrailingSlash(options.path);
+    const middlewarePath = stripTrailingSlashes(options.path);
 
     return async function octokitWebhooksMiddleware(
       request: IncomingMessage,
@@ -52,7 +44,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
       let pathname: string;
       try {
         pathname = new URL(
-          stripTrailingSlash(request.url) as string,
+          stripTrailingSlashes(request.url) as string,
           "http://localhost",
         ).pathname;
       } catch (error) {
