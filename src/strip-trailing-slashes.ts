@@ -1,9 +1,14 @@
-const onlySlashesRE = /^\/+$/u;
-const stripTrailingSlashRE = /(\/+)$/u;
-
 export function stripTrailingSlashes(path: string) {
-  if (path.length === 0 || onlySlashesRE.test(path)) {
+  let i = path.length;
+  while (i > 0) {
+    if (path.charCodeAt(--i) !== 47 /* '/' */) {
+      break;
+    }
+  }
+
+  if (i === -1) {
     return "/";
   }
-  return path.replace(stripTrailingSlashRE, "");
+
+  return path.slice(0, i + 1);
 }

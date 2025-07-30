@@ -3,6 +3,7 @@ import { stripTrailingSlashes } from "../../src/strip-trailing-slashes.ts";
 
 describe("stripTrailingSlashes", () => {
   [
+    ["", ""],
     ["/", "/"],
     ["//", "/"],
     ["///", "/"],
