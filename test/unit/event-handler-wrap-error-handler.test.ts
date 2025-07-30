@@ -24,13 +24,13 @@ describe("wrapErrorHandler", () => {
   it("error handler returns rejected Error", async () => {
     const promise = Promise.reject(new Error("oopsydoopsy"));
 
-    (wrapErrorHandler(() => promise, new Error("oops")),
+    wrapErrorHandler(() => promise, new Error("oops")),
       await promise.catch(() => {
         assert(logCalls.length === 2);
         assert(/^FATAL/.test(logCalls[0][0]));
         assert(logCalls[1][0] instanceof Error);
         assert(logCalls[1][0].message === "oopsydoopsy");
-      }));
+      });
 
     logCalls = [];
   });

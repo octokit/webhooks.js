@@ -15,6 +15,15 @@ type CreateMiddlewareOptions = {
   getRequestHeader: <T = string>(request: Request, key: string) => T;
 };
 
+const stripTrailingSlashRE = /^\/$|^\/?(\/+)$|(\/+)$/u;
+
+function stripTrailingSlash(path: string) {
+  if (path === "/") {
+    return path;
+  }
+  return path.replace(stripTrailingSlashRE, "");
+}
+
 const isApplicationJsonRE = /^\s*(application\/json)\s*(?:;|$)/u;
 
 type IncomingMessage = any;
@@ -33,6 +42,8 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
     webhooks: Webhooks,
     options: Required<MiddlewareOptions>,
   ) {
+    const middlewarePath = stripTrailingSlash(options.path);
+
     return async function octokitWebhooksMiddleware(
       request: IncomingMessage,
       response?: ServerResponse,
@@ -40,7 +51,10 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
     ) {
       let pathname: string;
       try {
-        pathname = new URL(request.url as string, "http://localhost").pathname;
+        pathname = new URL(
+          stripTrailingSlash(request.url) as string,
+          "http://localhost",
+        ).pathname;
       } catch (error) {
         return handleResponse(
           JSON.stringify({
@@ -54,7 +68,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
         );
       }
 
-      if (pathname !== options.path) {
+      if (pathname !== middlewarePath) {
         next?.();
         return handleResponse(null);
       } else if (request.method !== "POST") {
