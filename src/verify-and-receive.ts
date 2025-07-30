@@ -23,11 +23,12 @@ export async function verifyAndReceive(
   if (!matchesSignature) {
     const error = new Error(
       "[@octokit/webhooks] signature does not match event payload and secret",
-    );
+    ) as WebhookError;
 
-    return state.eventHandler.receive(
-      Object.assign(error, { event, status: 400 }) as WebhookError,
-    );
+    error.event = event;
+    error.status = 400;
+
+    return state.eventHandler.receive(error);
   }
 
   let payload: EmitterWebhookEvent["payload"];
