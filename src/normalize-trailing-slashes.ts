@@ -1,5 +1,10 @@
-export function stripTrailingSlashes(path: string) {
+export function normalizeTrailingSlashes(path: string) {
   let i = path.length;
+
+  if (i === 0) {
+    return "/";
+  }
+
   while (i > 0) {
     if (path.charCodeAt(--i) !== 47 /* '/' */) {
       break;

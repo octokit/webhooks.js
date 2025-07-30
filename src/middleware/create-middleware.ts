@@ -1,7 +1,7 @@
 import type { WebhookEventName } from "../generated/webhook-identifiers.ts";
 
 import type { Webhooks } from "../index.ts";
-import { stripTrailingSlashes } from "../strip-trailing-slashes.ts";
+import { normalizeTrailingSlashes } from "../normalize-trailing-slashes.ts";
 import type { WebhookEventHandlerError } from "../types.ts";
 import type { MiddlewareOptions } from "./types.ts";
 
@@ -34,7 +34,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
     webhooks: Webhooks,
     options: Required<MiddlewareOptions>,
   ) {
-    const middlewarePath = stripTrailingSlashes(options.path);
+    const middlewarePath = normalizeTrailingSlashes(options.path);
 
     return async function octokitWebhooksMiddleware(
       request: IncomingMessage,
@@ -44,7 +44,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
       let pathname: string;
       try {
         pathname = new URL(
-          stripTrailingSlashes(request.url) as string,
+          normalizeTrailingSlashes(request.url) as string,
           "http://localhost",
         ).pathname;
       } catch (error) {
