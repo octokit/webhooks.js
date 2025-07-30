@@ -454,53 +454,6 @@ runtimes.forEach((runtimeCase) => {
       assert((await response.text()) === "still processing\n");
     });
 
-    it("Handles invalid URL", async () => {
-      const webhooks = new Webhooks({
-        secret: "mySecret",
-      });
-
-      let middlewareWasRan: () => void;
-      const untilMiddlewareIsRan = new Promise<void>(function (resolve) {
-        middlewareWasRan = resolve;
-      });
-      const actualMiddleware = createNodeMiddleware(webhooks);
-      const mockedMiddleware = async function (
-        ...[req, ...rest]: Parameters<typeof actualMiddleware>
-      ) {
-        req.url = "//";
-        await actualMiddleware(req, ...rest);
-        middlewareWasRan();
-      };
-
-      const server = createServer(mockedMiddleware).listen(await getPort());
-
-      const { port } = server.address() as AddressInfo;
-
-      const response = await fetch(
-        `http://localhost:${port}/api/github/webhooks`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
-            "X-GitHub-Event": "push",
-            "X-Hub-Signature-256": signatureSha256,
-          },
-          body: pushEventPayload,
-        },
-      );
-
-      await untilMiddlewareIsRan;
-
-      assert(response.status === 422);
-      assert(
-        (await response.text()) ===
-          '{"error":"Request URL could not be parsed: //"}',
-      );
-
-      server.close();
-    });
-
     it("Handles invalid signature", async () => {
       const webhooks = new Webhooks({
         secret: "mySecret",
@@ -590,6 +543,46 @@ runtimes.forEach((runtimeCase) => {
       assert((await response.text()) === "ok\n");
 
       closeTestServer();
+    });
+
+    ["/", "/api/github/webhooks"].forEach((webhooksPath) => {
+      ["", "/", "//", "///"].forEach((trailing) => {
+        it(`Handles trailing slashes - webhooksPath "${webhooksPath}" with trailing "${trailing}"`, async () => {
+          const webhooks = new Webhooks({
+            secret: "mySecret",
+          });
+
+          webhooks.on("push", (event) => {
+            assert(event.id === "123e4567-e89b-12d3-a456-426655440000");
+          });
+
+          const { port, closeTestServer } = await instantiateTestServer(
+            runtime,
+            target,
+            webhooks,
+            { path: webhooksPath },
+          );
+
+          const response = await fetch(
+            `http://localhost:${port}${webhooksPath}${trailing}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-GitHub-Delivery": "123e4567-e89b-12d3-a456-426655440000",
+                "X-GitHub-Event": "push",
+                "X-Hub-Signature-256": signatureSha256,
+              },
+              body: pushEventPayload,
+            },
+          );
+
+          assert(response.status === 200);
+          assert((await response.text()) === "ok\n");
+
+          closeTestServer();
+        });
+      });
     });
   });
 });
