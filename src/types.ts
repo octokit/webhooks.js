@@ -68,7 +68,10 @@ export interface State extends Options<any> {
 /**
  * Error object with optional properties coming from `octokit.request` errors
  */
-export type WebhookError = Error & Partial<RequestError>;
+export type WebhookError = Error &
+  Partial<RequestError> & {
+    event?: EmitterWebhookEventWithStringPayloadAndSignature | undefined;
+  };
 
 export interface AggregateWebhookError extends AggregateError {
   errors: WebhookError[];
