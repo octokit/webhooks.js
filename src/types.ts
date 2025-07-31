@@ -70,7 +70,7 @@ export interface State extends Options<any> {
  */
 export type WebhookError = Error &
   Partial<RequestError> & {
-    event?: EmitterWebhookEventWithStringPayloadAndSignature;
+    event?: EmitterWebhookEventWithStringPayloadAndSignature | undefined;
   };
 
 export interface AggregateWebhookError extends AggregateError {
