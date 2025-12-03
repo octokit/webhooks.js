@@ -91,6 +91,11 @@ export type EventPayloadMap = {
     | WebhookEventDefinition<"issue-comment-created">
     | WebhookEventDefinition<"issue-comment-deleted">
     | WebhookEventDefinition<"issue-comment-edited">;
+  issue_dependencies:
+    | WebhookEventDefinition<"issue-dependencies-blocked-by-added">
+    | WebhookEventDefinition<"issue-dependencies-blocked-by-removed">
+    | WebhookEventDefinition<"issue-dependencies-blocking-added">
+    | WebhookEventDefinition<"issue-dependencies-blocking-removed">;
   issues:
     | WebhookEventDefinition<"issues-assigned">
     | WebhookEventDefinition<"issues-closed">
@@ -262,10 +267,12 @@ export type EventPayloadMap = {
     | WebhookEventDefinition<"repository-vulnerability-alert-reopen">
     | WebhookEventDefinition<"repository-vulnerability-alert-resolve">;
   secret_scanning_alert:
+    | WebhookEventDefinition<"secret-scanning-alert-assigned">
     | WebhookEventDefinition<"secret-scanning-alert-created">
     | WebhookEventDefinition<"secret-scanning-alert-publicly-leaked">
     | WebhookEventDefinition<"secret-scanning-alert-reopened">
     | WebhookEventDefinition<"secret-scanning-alert-resolved">
+    | WebhookEventDefinition<"secret-scanning-alert-unassigned">
     | WebhookEventDefinition<"secret-scanning-alert-validated">;
   secret_scanning_alert_location: WebhookEventDefinition<"secret-scanning-alert-location-created">;
   secret_scanning_scan: WebhookEventDefinition<"secret-scanning-scan-completed">;
