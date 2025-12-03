@@ -78,8 +78,9 @@ export interface AggregateWebhookError extends AggregateError {
 }
 
 // todo: rename to "EmitterErrorEvent"
-export interface WebhookEventHandlerError<TTransformed = unknown>
-  extends AggregateWebhookError {
+export interface WebhookEventHandlerError<
+  TTransformed = unknown,
+> extends AggregateWebhookError {
   event: TTransformed extends unknown
     ? EmitterWebhookEvent
     : EmitterWebhookEvent & TTransformed;
