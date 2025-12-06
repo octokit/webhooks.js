@@ -192,7 +192,7 @@ export default async function () {
     console.log(error.event.foo);
     const [firstError] = Array.from(error.errors);
     console.log(firstError.status);
-    console.log(firstError?.request.headers);
+    console.log(firstError?.request?.headers);
     console.log(firstError.request);
   });
 
