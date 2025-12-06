@@ -173,6 +173,12 @@ export default async function () {
     console.log(event.foo);
   });
 
+  webhooks.onAny((event) => {
+    // Make sure that `TTransformed` is properly passed to `onAny`
+    // foo is set by options.transform
+    console.log(event.foo);
+  });
+
   // @ts-expect-error TS2345:
   //  Argument of type '"does_not_exist"' is not assignable to parameter of type ...
   webhooks.on("does_not_exist", (what) => {
@@ -182,9 +188,11 @@ export default async function () {
 
   webhooks.onError((error) => {
     console.log(error.event.name);
+    // Make sure that `TTransformed` is properly passed to `onError`
+    console.log(error.event.foo);
     const [firstError] = Array.from(error.errors);
     console.log(firstError.status);
-    console.log(firstError?.request.headers);
+    console.log(firstError?.request?.headers);
     console.log(firstError.request);
   });
 
