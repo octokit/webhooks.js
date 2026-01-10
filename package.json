@@ -55,7 +55,7 @@
     "@octokit/openapi-webhooks": "12.1.0",
     "@octokit/tsconfig": "^4.0.0",
     "@types/express": "^5.0.1",
-    "@types/node": "^22.0.0",
+    "@types/node": "^24.0.0",
     "@vitest/coverage-v8": "^4.0.0",
     "esbuild": "^0.25.0",
     "express": "^5.1.0",
