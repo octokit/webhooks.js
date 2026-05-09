@@ -1,4 +1,4 @@
-import type { WebhookEventName } from "../generated/webhook-identifiers.ts";
+import type { EmitterWebhookEventName } from "../types.ts";
 
 import type { Webhooks } from "../index.ts";
 import { normalizeTrailingSlashes } from "../normalize-trailing-slashes.ts";
@@ -116,7 +116,7 @@ export function createMiddleware(options: CreateMiddlewareOptions) {
         );
       }
 
-      const eventName = getRequestHeader<WebhookEventName>(
+      const eventName = getRequestHeader<EmitterWebhookEventName>(
         request,
         "x-github-event",
       );

@@ -25,7 +25,7 @@ export type EmitterWebhookEvent<
 
 export type EmitterWebhookEventWithStringPayloadAndSignature = {
   id: string;
-  name: string;
+  name: EmitterWebhookEventName;
   payload: string;
   signature: string;
 };

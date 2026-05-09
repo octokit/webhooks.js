@@ -40,6 +40,10 @@ export async function verifyAndReceive(
     throw new AggregateError([error], error.message);
   }
 
+  // Accept string name from HTTP headers (e.g. x-github-event) even though
+  // WebhookEventName is a union of literals. The middleware casts header values
+  // to WebhookEventName unsafely, so we must accept the broader string type
+  // to avoid breaking callers that pass plain strings from real webhook requests.
   return state.eventHandler.receive({
     id: event.id,
     name: event.name,
